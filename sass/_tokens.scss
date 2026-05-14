@@ -1,0 +1,134 @@
+// Design tokens — bastiengallay.com
+// Source: .impeccable.md (palette De Stijl mono-accent rouge, light default).
+// Toutes les couleurs en OKLCH ; les neutres sont tintés vers le hue accent (~25).
+
+:root {
+  // ──────────────────────────────────────────────────────────────
+  // Couleurs — light theme (par défaut)
+  // ──────────────────────────────────────────────────────────────
+
+  // Surfaces : blanc-cassé chaud tiré vers le sable.
+  --surface:      oklch(0.985 0.006 70);   // page background
+  --surface-sub:  oklch(0.965 0.008 65);   // léger relief (zones)
+  --surface-ink:  oklch(0.18  0.014 30);   // texte principal — noir tinté chaud
+
+  // Texte secondaire = teinte de la surface assombrie (pas de gris pur).
+  --ink-soft:     oklch(0.40  0.020 30);
+  --ink-mute:     oklch(0.55  0.018 35);
+
+  // Filets / borders fins.
+  --rule:         oklch(0.88  0.012 40);
+  --rule-strong:  oklch(0.75  0.018 35);
+
+  // Accent unique — rouge De Stijl, profond, saturé mais pas criard.
+  --accent:       oklch(0.52  0.205 25);
+  --accent-deep:  oklch(0.44  0.215 25);
+  --accent-soft:  oklch(0.92  0.045 30);   // wash très léger pour fonds rares
+
+  // Sélection texte : accent à faible chroma sur surface.
+  --selection-bg: oklch(0.85  0.090 28);
+  --selection-fg: var(--surface-ink);
+
+  // ──────────────────────────────────────────────────────────────
+  // Typographie
+  // ──────────────────────────────────────────────────────────────
+
+  --font-display: "Redaction", "Iowan Old Style", "Georgia", serif;
+  --font-body:    "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    "Geist Mono", ui-monospace, "SF Mono", "Menlo", monospace;
+
+  // Échelle fluide ; ratio ~1.33 (perfect fourth) entre les paliers display.
+  --text-xs:    0.78rem;
+  --text-sm:    0.92rem;
+  --text-base:  1.0625rem;   // ~17px ; lecture confortable
+  --text-lg:    1.25rem;
+  --text-xl:    clamp(1.5rem,   1.30rem + 1.0vw,  2.0rem);
+  --text-2xl:   clamp(2.0rem,   1.55rem + 2.2vw,  3.0rem);
+  --text-3xl:   clamp(2.75rem,  1.90rem + 4.4vw,  4.75rem);
+  --text-hero:  clamp(3.5rem,   2.20rem + 6.5vw,  7.5rem);
+
+  --leading-tight:   1.08;
+  --leading-snug:    1.22;
+  --leading-normal:  1.55;
+  --leading-loose:   1.72;
+
+  --tracking-tight:  -0.022em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.08em;
+  --tracking-caps:    0.14em;
+
+  // ──────────────────────────────────────────────────────────────
+  // Espace (4pt scale, noms sémantiques)
+  // ──────────────────────────────────────────────────────────────
+
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs:  0.75rem;
+  --space-sm:  1rem;
+  --space-md:  1.5rem;
+  --space-lg:  2rem;
+  --space-xl:  3rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: clamp(6rem, 4rem + 6vw, 10rem);
+
+  // Mesures de colonne.
+  --measure-narrow: 48ch;
+  --measure-base:   68ch;
+  --measure-wide:   78ch;
+
+  // Layout.
+  --rail-width:    14rem;   // largeur du menu latéral en desktop
+  --content-max:   72rem;
+
+  // ──────────────────────────────────────────────────────────────
+  // Motion
+  // ──────────────────────────────────────────────────────────────
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast:   140ms;
+  --dur-mid:    280ms;
+  --dur-slow:   520ms;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Dark theme — activé via [data-theme="dark"] sur <html>
+// ─────────────────────────────────────────────────────────────────
+
+:root[data-theme="dark"] {
+  --surface:      oklch(0.155 0.010 28);   // noir tinté rouge, jamais #000
+  --surface-sub:  oklch(0.205 0.012 28);
+  --surface-ink:  oklch(0.93  0.008 65);   // blanc cassé chaud
+
+  --ink-soft:     oklch(0.75  0.014 50);
+  --ink-mute:     oklch(0.60  0.012 45);
+
+  --rule:         oklch(0.30  0.012 30);
+  --rule-strong:  oklch(0.42  0.016 30);
+
+  --accent:       oklch(0.66  0.190 26);   // remonté pour contraste sur sombre
+  --accent-deep:  oklch(0.58  0.205 25);
+  --accent-soft:  oklch(0.32  0.085 28);
+
+  --selection-bg: oklch(0.45  0.130 28);
+  --selection-fg: oklch(0.98  0.005 70);
+}
+
+// Respect la pref système si l'utilisateur n'a pas choisi explicitement.
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    --surface:      oklch(0.155 0.010 28);
+    --surface-sub:  oklch(0.205 0.012 28);
+    --surface-ink:  oklch(0.93  0.008 65);
+    --ink-soft:     oklch(0.75  0.014 50);
+    --ink-mute:     oklch(0.60  0.012 45);
+    --rule:         oklch(0.30  0.012 30);
+    --rule-strong:  oklch(0.42  0.016 30);
+    --accent:       oklch(0.66  0.190 26);
+    --accent-deep:  oklch(0.58  0.205 25);
+    --accent-soft:  oklch(0.32  0.085 28);
+    --selection-bg: oklch(0.45  0.130 28);
+    --selection-fg: oklch(0.98  0.005 70);
+  }
+}

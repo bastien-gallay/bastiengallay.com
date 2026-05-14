@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero" id="intro" aria-labelledby="hero-title">
+  <p class="hero__meta">
+    <span class="hero__meta-rule" aria-hidden="true"></span>
+    <span>bastiengallay.com — 2026</span>
+  </p>
+
+  <h1 class="hero__title" id="hero-title">
+    Bastien Gallay<i class="hero__title-mark" aria-hidden="true">.</i>
+  </h1>
+
+  <p class="hero__lead">
+    Je fabrique des outils pour <em>mieux écrire</em> et
+    <em>mieux penser</em> — souvent open source.
+  </p>
+
+  <nav class="hero__anchors" aria-label="Aller à une section">
+    <a class="hero__anchor" href="#vedette">
+      <span class="hero__anchor-num numeric">02</span>
+      <span class="hero__anchor-label">Vedette&nbsp;: lucid-lint</span>
+    </a>
+    <a class="hero__anchor" href="#poles">
+      <span class="hero__anchor-num numeric">03</span>
+      <span class="hero__anchor-label">Les trois pôles</span>
+    </a>
+    <a class="hero__anchor" href="#ecrits">
+      <span class="hero__anchor-num numeric">04</span>
+      <span class="hero__anchor-label">Écrits récents</span>
+    </a>
+    <a class="hero__anchor" href="#contact">
+      <span class="hero__anchor-num numeric">06</span>
+      <span class="hero__anchor-label">Me joindre</span>
+    </a>
+  </nav>
+</section>
+
+{# Placeholders pour les prochains crafts — silhouettes minimales. #}
+<section class="section-placeholder" id="vedette" aria-labelledby="vedette-title">
+  <p class="section-placeholder__index">
+    <span class="section-placeholder__index-num numeric">02</span>
+    <span>Projet vedette</span>
+  </p>
+  <h2 class="section-placeholder__title" id="vedette-title">lucid-lint</h2>
+  <p class="section-placeholder__note">Section à venir (prochain craft).</p>
+</section>
+
+<section class="section-placeholder" id="poles" aria-labelledby="poles-title">
+  <p class="section-placeholder__index">
+    <span class="section-placeholder__index-num numeric">03</span>
+    <span>Les pôles</span>
+  </p>
+  <h2 class="section-placeholder__title" id="poles-title">
+    Trois familles, une démarche
+  </h2>
+  <p class="section-placeholder__note">Section à venir (prochain craft).</p>
+</section>
+
+<section class="section-placeholder" id="ecrits" aria-labelledby="ecrits-title">
+  <p class="section-placeholder__index">
+    <span class="section-placeholder__index-num numeric">04</span>
+    <span>Écrits</span>
+  </p>
+  <h2 class="section-placeholder__title" id="ecrits-title">Notes & articles</h2>
+  <p class="section-placeholder__note">Section à venir (prochain craft).</p>
+</section>
+
+<section class="section-placeholder" id="contact" aria-labelledby="contact-title">
+  <p class="section-placeholder__index">
+    <span class="section-placeholder__index-num numeric">06</span>
+    <span>Contact</span>
+  </p>
+  <h2 class="section-placeholder__title" id="contact-title">Me joindre</h2>
+  <p class="section-placeholder__note">Section à venir (prochain craft).</p>
+</section>
+{% endblock %}
