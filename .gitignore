@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# Local Claude / daily-ops state
+.claude/state/
+.claude/settings.local.json
+.claude/worktrees/
+.personal/
+
+# Zola
+public/
+static/processed_images/
