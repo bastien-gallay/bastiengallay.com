@@ -4,11 +4,24 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository status
 
-**Pre-implementation.** No code, build system, or stack chosen yet. Decisions were frozen on 2026-05-13 (see `brainstorm/20260513-homepage-oss.md`); the static-site stack (Astro / Eleventy / Hugo / other) is still an open question. Do not assume a framework — ask before scaffolding one.
+**Implémentation en cours.** Stack figée le 2026-05-14 : **Zola 0.22.1** (SSG Rust),
+templates Tera, Sass compilé par Zola. Déploiement GitHub Pages depuis
+`bastien-gallay/bastiengallay.com` via `.github/workflows/deploy.yml` (actions
+officielles `configure-pages` / `upload-pages-artifact` / `deploy-pages`).
+Custom domain `bastiengallay.com` actif avec HTTPS.
 
-Contents so far:
-- `README.md` — scope, target structure, open decisions
-- `brainstorm/20260513-homepage-oss.md` — full reasoning behind the scoping decisions
+Layout posé :
+
+- `.impeccable.md` — design context (palette De Stijl mono-accent rouge,
+  fontes Redaction display + Geist body, 5 design principles).
+- `sass/_tokens.scss` — tokens OKLCH, type scale fluide, spacing 4pt.
+- `templates/base.html` — shell grid avec rail latéral gauche style nin.com
+  + toggle light/dark (script pré-bootstrap pour éviter le FOUC).
+- `templates/index.html` — hero + 4 sections placeholder.
+- `static/theme.js` — toggle thème persisté + scrollspy IntersectionObserver.
+
+Sections à crafter ensuite : vedette lucid-lint, pôles, écrits, contact, `/now`.
+Voir `brainstorm/20260513-homepage-oss.md` pour le cadrage initial.
 
 ## What this site is
 
@@ -41,7 +54,7 @@ The README, brainstorm docs, and likely future content are in **French**. Keep p
 
 ## Working in a git worktree
 
-**Toujours travailler dans un git worktree, jamais directement sur la copie principale.** Une fois ce repo initialisé (`git init` + premier commit), toute session de travail Claude doit se faire dans un worktree isolé créé avec `EnterWorktree` (ou `git worktree add` manuel si besoin). La copie principale ne sert que comme référence de lecture et comme cible de merge des changements validés.
+**Toujours travailler dans un git worktree, jamais directement sur la copie principale.** Toute session de travail Claude se fait dans un worktree isolé créé avec `EnterWorktree` (ou `git worktree add` manuel si besoin). La copie principale ne sert que comme référence de lecture et comme cible de merge des changements validés.
 
 Raison : isole les expérimentations du tronc, permet de jeter un essai raté sans `git reset`, et rend les diffs explicites avant intégration.
 

@@ -2,7 +2,9 @@
 
 Site personnel pro de Bastien Gallay. Single-page identitaire qui pointe vers les projets OSS (lucid-lint, inflecv, daily-ops, skills) et la marque Teragone Factory, avec une section écrits et une `/now` page alimentée par `daily-ops`.
 
-**Statut** : pré-implémentation. Décisions de cadrage figées le 2026-05-13, stack et premier commit à venir.
+**Statut** : implémentation en cours. Stack [Zola](https://www.getzola.org/)
+(static site generator Rust). Hébergé sur GitHub Pages avec custom domain,
+déploiement automatisé via GitHub Actions à chaque push sur `main`.
 
 ## Domaines
 
@@ -43,8 +45,26 @@ Premiers articles en pipeline :
 
 Voir [`brainstorm/20260513-homepage-oss.md`](brainstorm/20260513-homepage-oss.md) pour le détail (grouping, modèle umbrella, choix de TLD, naming écartés, action items).
 
+## Stack & déploiement
+
+- **Static site generator** : Zola 0.22.1
+- **Templates** : Tera (`templates/`)
+- **Styles** : Sass compilé par Zola (`sass/main.scss`)
+- **Hébergement** : GitHub Pages depuis `bastien-gallay/bastiengallay.com`
+- **CI/CD** : `.github/workflows/deploy.yml` (actions/configure-pages,
+  upload-pages-artifact, deploy-pages — déploiement à chaque push sur `main`)
+- **Custom domain** : `bastiengallay.com` (CNAME dans `static/CNAME`)
+
+## Dev local
+
+```bash
+zola serve
+```
+
+Sert le site sur `http://127.0.0.1:1111` avec live-reload.
+
 ## Prochaines décisions à prendre
 
-- Stack site statique (Astro · Eleventy · Hugo · autre ?)
 - URL canonique pour Teragone Factory (`teragone-factory.fr` ? page org GitHub ?)
 - Script de digest hebdo `daily-ops → /now`
+- Redirect `bastiengallay.fr → bastiengallay.com` côté DNS/registrar
