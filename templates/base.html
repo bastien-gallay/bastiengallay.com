@@ -37,29 +37,30 @@
         <span class="rail__brand-tag">Atelier 2026</span>
       </a>
 
+      {# Liens préfixés par base_url pour fonctionner depuis n'importe quelle route. #}
       <nav class="rail__nav" aria-label="Sections">
         <p class="rail__nav-heading">Sommaire</p>
-        <a class="rail__link numeric" href="#intro">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#intro">
           <span class="rail__link-num">01</span>
           <span class="rail__link-label">Intro</span>
         </a>
-        <a class="rail__link numeric" href="#vedette">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#vedette">
           <span class="rail__link-num">02</span>
           <span class="rail__link-label">Vedette</span>
         </a>
-        <a class="rail__link numeric" href="#poles">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#poles">
           <span class="rail__link-num">03</span>
           <span class="rail__link-label">Pôles</span>
         </a>
-        <a class="rail__link numeric" href="#ecrits">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/ecrits/">
           <span class="rail__link-num">04</span>
           <span class="rail__link-label">Écrits</span>
         </a>
-        <a class="rail__link numeric" href="/now/">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/now/">
           <span class="rail__link-num">05</span>
           <span class="rail__link-label">Now</span>
         </a>
-        <a class="rail__link numeric" href="#contact">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#contact">
           <span class="rail__link-num">06</span>
           <span class="rail__link-label">Contact</span>
         </a>

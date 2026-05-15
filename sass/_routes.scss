@@ -1,0 +1,136 @@
+// Styles minimaux pour les routes /now et /ecrits — squelette uniquement,
+// à affiner quand le contenu sera figé.
+
+.now,
+.ecrits {
+  padding-block: clamp(var(--space-xl), 6vw, var(--space-3xl)) var(--space-2xl);
+  display: grid;
+  gap: var(--space-lg);
+  max-width: var(--measure-wide);
+}
+
+.now__index,
+.ecrits__index {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  color: var(--ink-mute);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums lining-nums;
+  margin: 0;
+}
+
+.now__index-num,
+.ecrits__index-num { color: var(--accent); font-weight: 500; }
+
+.now__title,
+.ecrits__title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  color: var(--surface-ink);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.now__title-mark,
+.ecrits__title-mark { color: var(--accent); font-style: normal; }
+
+.now__updated {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0;
+}
+
+.now__content,
+.ecrits__lead {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: var(--measure-base);
+}
+
+.now__content p,
+.ecrits__lead p { margin: 0 0 var(--space-sm); }
+
+.ecrits__list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-md) 0 0;
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.ecrit {
+  display: grid;
+  gap: var(--space-3xs);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--rule);
+}
+
+.ecrit__date {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.ecrit__title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 400;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.ecrit__title a {
+  color: var(--surface-ink);
+  border-bottom: 1px solid transparent;
+  transition: color var(--dur-fast) var(--ease-out-quart),
+              border-color var(--dur-fast) var(--ease-out-quart);
+}
+
+.ecrit__title a:hover {
+  color: var(--accent-deep);
+  border-bottom-color: var(--accent);
+  text-decoration: none;
+}
+
+.ecrit__desc {
+  font-size: var(--text-base);
+  color: var(--ink-soft);
+  max-width: var(--measure-base);
+  margin: 0;
+}
+
+.ecrits__empty {
+  font-style: italic;
+  color: var(--ink-mute);
+  border-top: 1px solid var(--rule);
+  padding-top: var(--space-md);
+}
+
+.now__back,
+.ecrits__back {
+  margin-top: var(--space-xl);
+  font-size: var(--text-sm);
+}
+
+.now__back a,
+.ecrits__back a {
+  color: var(--ink-mute);
+  transition: color var(--dur-fast) var(--ease-out-quart);
+}
+
+.now__back a:hover,
+.ecrits__back a:hover { color: var(--accent-deep); }

@@ -37,33 +37,126 @@
 </section>
 
 {# Placeholders pour les prochains crafts — silhouettes minimales. #}
-<section class="section-placeholder" id="vedette" aria-labelledby="vedette-title">
-  <p class="section-placeholder__index">
-    <span class="section-placeholder__index-num numeric">02</span>
+<section class="vedette" id="vedette" aria-labelledby="vedette-title">
+  <p class="vedette__index">
+    <span class="vedette__index-num numeric">02</span>
     <span>Projet vedette</span>
   </p>
-  <h2 class="section-placeholder__title" id="vedette-title">lucid-lint</h2>
-  <p class="section-placeholder__note">Section à venir (prochain craft).</p>
+
+  <h2 class="vedette__title" id="vedette-title">
+    lucid-lint<i class="vedette__title-mark" aria-hidden="true">.</i>
+  </h2>
+
+  <p class="vedette__tag">
+    {# TODO(wording) — baseline courte à affiner #}
+    Un linter pour rendre les textes lisibles, pas seulement corrects.
+  </p>
+
+  <p class="vedette__lead">
+    {# TODO(contenu) — paragraphe d'intro à écrire (Block B) #}
+    Outil en ligne de commande qui repère, dans un texte français,
+    les structures qui forcent le lecteur à relire — phrases empilées,
+    négations cumulées, références orphelines. Open source.
+  </p>
+
+  <ul class="vedette__points" aria-label="Points clés">
+    <li class="vedette__point">
+      {# TODO(contenu) — point clé à écrire #}
+      Détection ciblée des frictions cognitives, pas un correcteur de style.
+    </li>
+    <li class="vedette__point">
+      {# TODO(contenu) — point clé à écrire #}
+      Règles explicites, contestables, versionnées — pas une boîte noire.
+    </li>
+    <li class="vedette__point">
+      {# TODO(contenu) — point clé à écrire #}
+      Pensé pour s'intégrer dans un flux d'écriture, pas un outil de fin de course.
+    </li>
+  </ul>
+
+  <p class="vedette__cta">
+    <a class="vedette__cta-link" href="https://github.com/bastien-gallay/lucid-lint" rel="noopener" target="_blank">
+      <span>Voir le projet sur GitHub</span>
+      <span class="vedette__cta-arrow" aria-hidden="true">↗</span>
+    </a>
+  </p>
 </section>
 
-<section class="section-placeholder" id="poles" aria-labelledby="poles-title">
-  <p class="section-placeholder__index">
-    <span class="section-placeholder__index-num numeric">03</span>
+<section class="poles" id="poles" aria-labelledby="poles-title">
+  <p class="poles__index">
+    <span class="poles__index-num numeric">03</span>
     <span>Les pôles</span>
   </p>
-  <h2 class="section-placeholder__title" id="poles-title">
+
+  <h2 class="poles__title" id="poles-title">
     Trois familles, une démarche
   </h2>
-  <p class="section-placeholder__note">Section à venir (prochain craft).</p>
+
+  <p class="poles__lead">
+    {# TODO(wording) — phrase d'amorce à resserrer #}
+    Mes projets se rangent en trois pôles. Tous partagent une même question :
+    qu'est-ce qui aide vraiment à penser et à écrire ?
+  </p>
+
+  <ol class="poles__list" aria-label="Les trois pôles">
+    <li class="pole" id="pole-cogni">
+      <p class="pole__index">
+        <span class="pole__index-num numeric">01</span>
+        <span>Pôle</span>
+      </p>
+      <h3 class="pole__title">Accessibilité cognitive &amp; qualité du texte</h3>
+      <p class="pole__body">
+        {# TODO(contenu) — description courte du pôle #}
+        Rendre les textes lisibles pour tous les lecteurs, sans les lisser.
+        Le projet vedette de cette famille est <a href="#vedette">lucid-lint</a>.
+      </p>
+    </li>
+
+    <li class="pole" id="pole-productivite">
+      <p class="pole__index">
+        <span class="pole__index-num numeric">02</span>
+        <span>Pôle</span>
+      </p>
+      <h3 class="pole__title">Productivité du travail intellectuel avec l'IA</h3>
+      <p class="pole__body">
+        {# TODO(contenu) — description courte #}
+        Des outils pour structurer ce qui d'ordinaire reste flou : journées,
+        compétences, conventions de travail. Open source.
+      </p>
+      <ul class="pole__projects" aria-label="Projets de ce pôle">
+        <li><a href="https://github.com/bastien-gallay/daily-ops" rel="noopener" target="_blank">daily-ops <span aria-hidden="true">↗</span></a></li>
+        <li><a href="https://github.com/bastien-gallay/skills" rel="noopener" target="_blank">skills <span aria-hidden="true">↗</span></a></li>
+        <li><a href="https://github.com/bastien-gallay/inflecv" rel="noopener" target="_blank">inflecv <span aria-hidden="true">↗</span></a></li>
+      </ul>
+    </li>
+  </ol>
+
+  <aside class="poles__clients" aria-label="Réalisations clients">
+    <p class="poles__clients-label">Réalisations clients</p>
+    <p class="poles__clients-body">
+      {# TODO(wording) — note discrète, pas mise en avant #}
+      Quelques sites livrés pour des clients, notamment
+      <a href="https://gallay-avocat.fr" rel="noopener" target="_blank">gallay-avocat.fr <span aria-hidden="true">↗</span></a>.
+    </p>
+  </aside>
 </section>
 
-<section class="section-placeholder" id="ecrits" aria-labelledby="ecrits-title">
-  <p class="section-placeholder__index">
-    <span class="section-placeholder__index-num numeric">04</span>
+<section class="ecrits-teaser" id="ecrits" aria-labelledby="ecrits-teaser-title">
+  <p class="ecrits-teaser__index">
+    <span class="ecrits-teaser__index-num numeric">04</span>
     <span>Écrits</span>
   </p>
-  <h2 class="section-placeholder__title" id="ecrits-title">Notes & articles</h2>
-  <p class="section-placeholder__note">Section à venir (prochain craft).</p>
+  <h2 class="ecrits-teaser__title" id="ecrits-teaser-title">Notes &amp; articles</h2>
+  <p class="ecrits-teaser__body">
+    {# TODO(contenu) — accroche courte à écrire (Block B) #}
+    Quelques notes longues sur l'écriture, la lecture, et ce que je fabrique.
+  </p>
+  <p class="ecrits-teaser__cta">
+    <a class="ecrits-teaser__cta-link" href="{{ config.base_url | safe }}/ecrits/">
+      <span>Voir tous les écrits</span>
+      <span class="ecrits-teaser__cta-arrow" aria-hidden="true">→</span>
+    </a>
+  </p>
 </section>
 
 <section class="section-placeholder" id="contact" aria-labelledby="contact-title">

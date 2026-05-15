@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Écrits — Bastien Gallay{% endblock %}
+{% block description %}Notes et articles de Bastien Gallay.{% endblock %}
+
+{% block content %}
+<article class="ecrits" aria-labelledby="ecrits-index-title">
+  <p class="ecrits__index">
+    <span class="ecrits__index-num numeric">04</span>
+    <span>Écrits</span>
+  </p>
+
+  <h1 class="ecrits__title" id="ecrits-index-title">
+    Notes &amp; articles<i class="ecrits__title-mark" aria-hidden="true">.</i>
+  </h1>
+
+  <div class="ecrits__lead">
+    {{ section.content | safe }}
+  </div>
+
+  {% if section.pages %}
+  <ol class="ecrits__list" aria-label="Liste des écrits">
+    {% for page in section.pages %}
+    <li class="ecrit">
+      <p class="ecrit__date">
+        <time datetime="{{ page.date }}">{{ page.date | date(format='%-d %B %Y') }}</time>
+      </p>
+      <h2 class="ecrit__title">
+        <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+      </h2>
+      {% if page.description %}
+      <p class="ecrit__desc">{{ page.description }}</p>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+  {% else %}
+  <p class="ecrits__empty">
+    Rien à lire pour l'instant — le premier article est en chantier.
+  </p>
+  {% endif %}
+
+  <p class="ecrits__back">
+    <a href="{{ config.base_url | safe }}">← Retour à l'accueil</a>
+  </p>
+</article>
+{% endblock %}

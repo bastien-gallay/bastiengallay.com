@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Now — Bastien Gallay{% endblock %}
+{% block description %}Ce sur quoi je travaille en ce moment, mis à jour chaque semaine.{% endblock %}
+
+{% block content %}
+<article class="now" aria-labelledby="now-title">
+  <p class="now__index">
+    <span class="now__index-num numeric">05</span>
+    <span>Maintenant</span>
+  </p>
+
+  <h1 class="now__title" id="now-title">
+    Sur l'établi cette semaine<i class="now__title-mark" aria-hidden="true">.</i>
+  </h1>
+
+  <p class="now__updated">
+    {# TODO(pipeline) — date du dernier digest généré depuis daily-ops #}
+    Dernière mise à jour : <time datetime="2026-05-15">15 mai 2026</time>
+  </p>
+
+  <div class="now__content">
+    {{ section.content | safe }}
+  </div>
+
+  <p class="now__back">
+    <a href="{{ config.base_url | safe }}">← Retour à l'accueil</a>
+  </p>
+</article>
+{% endblock %}

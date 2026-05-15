@@ -150,6 +150,388 @@
   font-style: italic;
 }
 
+// ─── Vedette ────────────────────────────────────────────────────────────────
+// Section dédiée au projet phare. Plus dense que les pôles : titre fort,
+// tagline, lead, 3 points clés, CTA outbound.
+
+.vedette {
+  padding-block: var(--space-3xl) var(--space-2xl);
+  border-top: 1px solid var(--rule-strong);
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.vedette__index {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  color: var(--ink-mute);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.vedette__index-num { color: var(--accent); font-weight: 500; }
+
+.vedette__title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  color: var(--surface-ink);
+  margin: 0;
+}
+
+.vedette__title-mark { color: var(--accent); font-style: normal; }
+
+.vedette__tag {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  line-height: 1.32;
+  color: var(--ink-soft);
+  max-width: var(--measure-narrow);
+  font-weight: 500;
+  margin: 0;
+}
+
+.vedette__lead {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: var(--measure-narrow);
+  margin: 0;
+}
+
+.vedette__points {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-sm) 0 0;
+  display: grid;
+  gap: var(--space-sm);
+  border-top: 1px solid var(--rule);
+  padding-top: var(--space-md);
+}
+
+.vedette__point {
+  position: relative;
+  padding-left: var(--space-md);
+  font-size: var(--text-base);
+  color: var(--surface-ink);
+  max-width: var(--measure-base);
+  line-height: 1.5;
+}
+
+// Tiret marquant — distinct de la numérotation tabulaire du rail/hero.
+.vedette__point::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 0.6rem;
+  height: 1px;
+  background: var(--accent);
+}
+
+.vedette__cta { margin: var(--space-sm) 0 0; }
+
+.vedette__cta-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2xs);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--surface-ink);
+  border-bottom: 1px solid var(--rule-strong);
+  padding-bottom: 0.15em;
+  transition: color var(--dur-fast) var(--ease-out-quart),
+              border-color var(--dur-fast) var(--ease-out-quart);
+}
+
+.vedette__cta-link:hover {
+  color: var(--accent-deep);
+  border-bottom-color: var(--accent);
+  text-decoration: none;
+}
+
+.vedette__cta-arrow {
+  font-size: 0.9em;
+  color: var(--ink-mute);
+  transition: transform var(--dur-mid) var(--ease-out-expo),
+              color var(--dur-fast) var(--ease-out-quart);
+}
+
+.vedette__cta-link:hover .vedette__cta-arrow {
+  color: var(--accent);
+  transform: translate(0.1em, -0.1em);
+}
+
+// ─── Pôles ──────────────────────────────────────────────────────────────────
+// Trois cartes ordonnées. Pas un grid d'égales : numérotation forte,
+// hiérarchie visuelle entre titre du pôle et liste de projets.
+
+.poles {
+  padding-block: var(--space-3xl) var(--space-2xl);
+  border-top: 1px solid var(--rule);
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.poles__index {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  color: var(--ink-mute);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.poles__index-num { color: var(--accent); font-weight: 500; }
+
+.poles__title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 400;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.022em;
+  color: var(--surface-ink);
+  margin: 0;
+}
+
+.poles__lead {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  line-height: 1.35;
+  color: var(--ink-soft);
+  max-width: var(--measure-narrow);
+  margin: 0;
+}
+
+.poles__list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-md) 0 0;
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.pole {
+  display: grid;
+  gap: var(--space-sm);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--rule);
+}
+
+.pole__index {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2xs);
+  color: var(--ink-mute);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums lining-nums;
+  margin: 0;
+}
+
+.pole__index-num { color: var(--accent); font-weight: 500; }
+
+.pole__title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 400;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+  color: var(--surface-ink);
+  margin: 0;
+}
+
+.pole__body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: var(--measure-base);
+  margin: 0;
+}
+
+.pole__out { margin: 0; }
+
+.pole__out-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2xs);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--surface-ink);
+  border-bottom: 1px solid var(--rule-strong);
+  padding-bottom: 0.1em;
+  transition: color var(--dur-fast) var(--ease-out-quart),
+              border-color var(--dur-fast) var(--ease-out-quart);
+}
+
+.pole__out-link:hover {
+  color: var(--accent-deep);
+  border-bottom-color: var(--accent);
+  text-decoration: none;
+}
+
+.pole__out-arrow {
+  font-size: 0.9em;
+  color: var(--ink-mute);
+  transition: transform var(--dur-mid) var(--ease-out-expo),
+              color var(--dur-fast) var(--ease-out-quart);
+}
+
+.pole__out-link:hover .pole__out-arrow {
+  color: var(--accent);
+  transform: translate(0.1em, -0.1em);
+}
+
+.pole__projects {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-2xs) 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-md);
+  font-size: var(--text-base);
+}
+
+.pole__projects a {
+  color: var(--surface-ink);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.1em;
+  transition: color var(--dur-fast) var(--ease-out-quart),
+              border-color var(--dur-fast) var(--ease-out-quart);
+}
+
+.pole__projects a:hover {
+  color: var(--accent-deep);
+  border-bottom-color: var(--accent);
+  text-decoration: none;
+}
+
+// Réalisations clients — discret, pas mis en avant.
+.poles__clients {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: 1px dashed var(--rule);
+  display: grid;
+  gap: var(--space-2xs);
+}
+
+.poles__clients-label {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0;
+}
+
+.poles__clients-body {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  max-width: var(--measure-narrow);
+  margin: 0;
+}
+
+.poles__clients-body a {
+  color: var(--surface-ink);
+  border-bottom: 1px solid var(--rule);
+  transition: color var(--dur-fast) var(--ease-out-quart),
+              border-color var(--dur-fast) var(--ease-out-quart);
+}
+
+.poles__clients-body a:hover {
+  color: var(--accent-deep);
+  border-bottom-color: var(--accent);
+  text-decoration: none;
+}
+
+// ─── Écrits teaser ──────────────────────────────────────────────────────────
+// Bloc court sur la home qui renvoie vers la route /ecrits/ — pas un index
+// inline (l'index vit sur sa propre page).
+
+.ecrits-teaser {
+  padding-block: var(--space-3xl) var(--space-2xl);
+  border-top: 1px solid var(--rule);
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.ecrits-teaser__index {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  color: var(--ink-mute);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums lining-nums;
+  margin: 0;
+}
+
+.ecrits-teaser__index-num { color: var(--accent); font-weight: 500; }
+
+.ecrits-teaser__title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 400;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.022em;
+  color: var(--surface-ink);
+  margin: 0;
+}
+
+.ecrits-teaser__body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: var(--measure-narrow);
+  margin: 0;
+}
+
+.ecrits-teaser__cta { margin: var(--space-sm) 0 0; }
+
+.ecrits-teaser__cta-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2xs);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--surface-ink);
+  border-bottom: 1px solid var(--rule-strong);
+  padding-bottom: 0.1em;
+  transition: color var(--dur-fast) var(--ease-out-quart),
+              border-color var(--dur-fast) var(--ease-out-quart);
+}
+
+.ecrits-teaser__cta-link:hover {
+  color: var(--accent-deep);
+  border-bottom-color: var(--accent);
+  text-decoration: none;
+}
+
+.ecrits-teaser__cta-arrow {
+  color: var(--ink-mute);
+  transition: transform var(--dur-mid) var(--ease-out-expo),
+              color var(--dur-fast) var(--ease-out-quart);
+}
+
+.ecrits-teaser__cta-link:hover .ecrits-teaser__cta-arrow {
+  color: var(--accent);
+  transform: translateX(0.2em);
+}
+
 // Entrée échelonnée du hero. Une seule animation, à l'arrivée.
 @media (prefers-reduced-motion: no-preference) {
   .hero > * {
