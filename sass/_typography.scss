@@ -1,4 +1,21 @@
 // Hiérarchie typographique — Redaction (display) + Geist (body).
+// Redaction est self-hosted (Pangram Pangram, OFL — fork inclusif de Marie
+// Godefroy). Seul le Regular est servi ; l'italique (utilisé sur la tagline
+// du focus) est synthétisé par le navigateur, ce qui suffit pour un display.
+
+@font-face {
+  font-family: "Redaction";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Redaction-Regular.woff2") format("woff2");
+}
+
+// La feuille Google Fonts impose `font-synthesis: none` sur :root, ce qui
+// empêche le navigateur de synthétiser l'italique pour Redaction. On le
+// rétablit ici (seul le style nous intéresse, le poids reste fixé à 400).
+* { font-synthesis: style; }
+
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);

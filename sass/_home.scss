@@ -1,5 +1,5 @@
 // Home — hero seul pour ce premier passage.
-// Les sections (vedette, pôles, écrits, contact) restent en placeholder.
+// Les sections (focus, pôles, écrits, contact) restent en placeholder.
 
 .hero {
   padding-block: clamp(var(--space-xl), 8vw, var(--space-4xl)) var(--space-3xl);
@@ -112,6 +112,14 @@
   transform: translateY(0.15em);
 }
 
+// Ancres qui mènent vers une autre route (pas un scroll dans la page) :
+// flèche oblique ↗ plutôt que ↓, et l'animation au hover pousse
+// vers le haut-droit pour signaler la sortie.
+.hero__anchor--route .hero__anchor-label::after { content: "↗"; }
+.hero__anchor--route:hover .hero__anchor-label::after {
+  transform: translate(0.1em, -0.15em);
+}
+
 // Sections placeholder — silhouettes minimales en attendant les crafts suivants.
 .section-placeholder {
   padding-block: var(--space-3xl) var(--space-2xl);
@@ -154,14 +162,14 @@
 // Section dédiée au projet phare. Plus dense que les pôles : titre fort,
 // tagline, lead, 3 points clés, CTA outbound.
 
-.vedette {
+.focus {
   padding-block: var(--space-3xl) var(--space-2xl);
   border-top: 1px solid var(--rule-strong);
   display: grid;
   gap: var(--space-lg);
 }
 
-.vedette__index {
+.focus__index {
   display: flex;
   align-items: baseline;
   gap: var(--space-sm);
@@ -172,9 +180,9 @@
   font-variant-numeric: tabular-nums lining-nums;
 }
 
-.vedette__index-num { color: var(--accent); font-weight: 500; }
+.focus__index-num { color: var(--accent); font-weight: 500; }
 
-.vedette__title {
+.focus__title {
   font-family: var(--font-display);
   font-size: var(--text-3xl);
   font-weight: 400;
@@ -184,19 +192,25 @@
   margin: 0;
 }
 
-.vedette__title-mark { color: var(--accent); font-style: normal; }
+.focus__title-mark { color: var(--accent); font-style: normal; }
 
-.vedette__tag {
-  font-family: var(--font-body);
-  font-size: var(--text-lg);
-  line-height: 1.32;
-  color: var(--ink-soft);
+// Tagline éditoriale du focus : rendue en display italic pour signaler la
+// baseline (≠ paragraphe). Marche typo forte qui tient même sous le fallback
+// serif (Iowan / Georgia / serif système).
+.focus__tag {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-2xl);
+  line-height: 1.18;
+  letter-spacing: -0.018em;
+  color: var(--surface-ink);
   max-width: var(--measure-narrow);
-  font-weight: 500;
+  font-weight: 400;
   margin: 0;
+  text-wrap: balance;
 }
 
-.vedette__lead {
+.focus__lead {
   font-family: var(--font-body);
   font-size: var(--text-base);
   line-height: 1.55;
@@ -205,7 +219,7 @@
   margin: 0;
 }
 
-.vedette__points {
+.focus__points {
   list-style: none;
   padding: 0;
   margin: var(--space-sm) 0 0;
@@ -215,7 +229,7 @@
   padding-top: var(--space-md);
 }
 
-.vedette__point {
+.focus__point {
   position: relative;
   padding-left: var(--space-md);
   font-size: var(--text-base);
@@ -225,7 +239,7 @@
 }
 
 // Tiret marquant — distinct de la numérotation tabulaire du rail/hero.
-.vedette__point::before {
+.focus__point::before {
   content: "";
   position: absolute;
   left: 0;
@@ -235,9 +249,9 @@
   background: var(--accent);
 }
 
-.vedette__cta { margin: var(--space-sm) 0 0; }
+.focus__cta { margin: var(--space-sm) 0 0; }
 
-.vedette__cta-link {
+.focus__cta-link {
   display: inline-flex;
   align-items: baseline;
   gap: var(--space-2xs);
@@ -251,20 +265,20 @@
               border-color var(--dur-fast) var(--ease-out-quart);
 }
 
-.vedette__cta-link:hover {
+.focus__cta-link:hover {
   color: var(--accent-deep);
   border-bottom-color: var(--accent);
   text-decoration: none;
 }
 
-.vedette__cta-arrow {
+.focus__cta-arrow {
   font-size: 0.9em;
   color: var(--ink-mute);
   transition: transform var(--dur-mid) var(--ease-out-expo),
               color var(--dur-fast) var(--ease-out-quart);
 }
 
-.vedette__cta-link:hover .vedette__cta-arrow {
+.focus__cta-link:hover .focus__cta-arrow {
   color: var(--accent);
   transform: translate(0.1em, -0.1em);
 }
@@ -273,14 +287,14 @@
 // Trois cartes ordonnées. Pas un grid d'égales : numérotation forte,
 // hiérarchie visuelle entre titre du pôle et liste de projets.
 
-.poles {
+.familles {
   padding-block: var(--space-3xl) var(--space-2xl);
   border-top: 1px solid var(--rule);
   display: grid;
   gap: var(--space-lg);
 }
 
-.poles__index {
+.familles__index {
   display: flex;
   align-items: baseline;
   gap: var(--space-sm);
@@ -291,9 +305,9 @@
   font-variant-numeric: tabular-nums lining-nums;
 }
 
-.poles__index-num { color: var(--accent); font-weight: 500; }
+.familles__index-num { color: var(--accent); font-weight: 500; }
 
-.poles__title {
+.familles__title {
   font-family: var(--font-display);
   font-size: var(--text-3xl);
   font-weight: 400;
@@ -303,7 +317,7 @@
   margin: 0;
 }
 
-.poles__lead {
+.familles__lead {
   font-family: var(--font-body);
   font-size: var(--text-lg);
   line-height: 1.35;
@@ -312,7 +326,7 @@
   margin: 0;
 }
 
-.poles__list {
+.familles__list {
   list-style: none;
   padding: 0;
   margin: var(--space-md) 0 0;
@@ -320,28 +334,14 @@
   gap: var(--space-xl);
 }
 
-.pole {
+.famille {
   display: grid;
   gap: var(--space-sm);
   padding-top: var(--space-md);
   border-top: 1px solid var(--rule);
 }
 
-.pole__index {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-2xs);
-  color: var(--ink-mute);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  font-variant-numeric: tabular-nums lining-nums;
-  margin: 0;
-}
-
-.pole__index-num { color: var(--accent); font-weight: 500; }
-
-.pole__title {
+.famille__title {
   font-family: var(--font-display);
   font-size: var(--text-2xl);
   font-weight: 400;
@@ -351,7 +351,7 @@
   margin: 0;
 }
 
-.pole__body {
+.famille__body {
   font-family: var(--font-body);
   font-size: var(--text-base);
   line-height: 1.55;
@@ -360,9 +360,9 @@
   margin: 0;
 }
 
-.pole__out { margin: 0; }
+.famille__out { margin: 0; }
 
-.pole__out-link {
+.famille__out-link {
   display: inline-flex;
   align-items: baseline;
   gap: var(--space-2xs);
@@ -376,25 +376,25 @@
               border-color var(--dur-fast) var(--ease-out-quart);
 }
 
-.pole__out-link:hover {
+.famille__out-link:hover {
   color: var(--accent-deep);
   border-bottom-color: var(--accent);
   text-decoration: none;
 }
 
-.pole__out-arrow {
+.famille__out-arrow {
   font-size: 0.9em;
   color: var(--ink-mute);
   transition: transform var(--dur-mid) var(--ease-out-expo),
               color var(--dur-fast) var(--ease-out-quart);
 }
 
-.pole__out-link:hover .pole__out-arrow {
+.famille__out-link:hover .famille__out-arrow {
   color: var(--accent);
   transform: translate(0.1em, -0.1em);
 }
 
-.pole__projects {
+.famille__projects {
   list-style: none;
   padding: 0;
   margin: var(--space-2xs) 0 0;
@@ -404,7 +404,7 @@
   font-size: var(--text-base);
 }
 
-.pole__projects a {
+.famille__projects a {
   color: var(--surface-ink);
   border-bottom: 1px solid var(--rule);
   padding-bottom: 0.1em;
@@ -412,14 +412,14 @@
               border-color var(--dur-fast) var(--ease-out-quart);
 }
 
-.pole__projects a:hover {
+.famille__projects a:hover {
   color: var(--accent-deep);
   border-bottom-color: var(--accent);
   text-decoration: none;
 }
 
 // Réalisations clients — discret, pas mis en avant.
-.poles__clients {
+.familles__clients {
   margin-top: var(--space-xl);
   padding-top: var(--space-md);
   border-top: 1px dashed var(--rule);
@@ -427,7 +427,7 @@
   gap: var(--space-2xs);
 }
 
-.poles__clients-label {
+.familles__clients-label {
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
@@ -435,21 +435,21 @@
   margin: 0;
 }
 
-.poles__clients-body {
+.familles__clients-body {
   font-size: var(--text-sm);
   color: var(--ink-soft);
   max-width: var(--measure-narrow);
   margin: 0;
 }
 
-.poles__clients-body a {
+.familles__clients-body a {
   color: var(--surface-ink);
   border-bottom: 1px solid var(--rule);
   transition: color var(--dur-fast) var(--ease-out-quart),
               border-color var(--dur-fast) var(--ease-out-quart);
 }
 
-.poles__clients-body a:hover {
+.familles__clients-body a:hover {
   color: var(--accent-deep);
   border-bottom-color: var(--accent);
   text-decoration: none;
@@ -530,6 +530,82 @@
 .ecrits-teaser__cta-link:hover .ecrits-teaser__cta-arrow {
   color: var(--accent);
   transform: translateX(0.2em);
+}
+
+// ─── Contact ────────────────────────────────────────────────────────────────
+// Bloc terminal minimal — un seul canal pour l'instant (LinkedIn).
+
+.contact {
+  padding-block: var(--space-3xl) var(--space-2xl);
+  border-top: 1px solid var(--rule);
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.contact__index {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  color: var(--ink-mute);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums lining-nums;
+  margin: 0;
+}
+
+.contact__index-num { color: var(--accent); font-weight: 500; }
+
+.contact__title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 400;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.022em;
+  color: var(--surface-ink);
+  margin: 0;
+}
+
+.contact__body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: var(--measure-narrow);
+  margin: 0;
+}
+
+.contact__cta { margin: var(--space-sm) 0 0; }
+
+.contact__cta-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2xs);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--surface-ink);
+  border-bottom: 1px solid var(--rule-strong);
+  padding-bottom: 0.1em;
+  transition: color var(--dur-fast) var(--ease-out-quart),
+              border-color var(--dur-fast) var(--ease-out-quart);
+}
+
+.contact__cta-link:hover {
+  color: var(--accent-deep);
+  border-bottom-color: var(--accent);
+  text-decoration: none;
+}
+
+.contact__cta-arrow {
+  color: var(--ink-mute);
+  transition: transform var(--dur-mid) var(--ease-out-expo),
+              color var(--dur-fast) var(--ease-out-quart);
+}
+
+.contact__cta-link:hover .contact__cta-arrow {
+  color: var(--accent);
+  transform: translate(0.1em, -0.1em);
 }
 
 // Entrée échelonnée du hero. Une seule animation, à l'arrivée.

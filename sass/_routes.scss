@@ -126,11 +126,20 @@
   font-size: var(--text-sm);
 }
 
+// Lien de retour : assez présent pour ne pas paraître désactivé,
+// avec un soulignement subtil qui s'affirme au survol.
 .now__back a,
 .ecrits__back a {
-  color: var(--ink-mute);
-  transition: color var(--dur-fast) var(--ease-out-quart);
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.1em;
+  transition: color var(--dur-fast) var(--ease-out-quart),
+              border-color var(--dur-fast) var(--ease-out-quart);
 }
 
 .now__back a:hover,
-.ecrits__back a:hover { color: var(--accent-deep); }
+.ecrits__back a:hover {
+  color: var(--accent-deep);
+  border-bottom-color: var(--accent);
+  text-decoration: none;
+}

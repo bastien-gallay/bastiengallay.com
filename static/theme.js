@@ -35,12 +35,19 @@
 
   updateToggleLabel(currentTheme());
 
-  // Scrollspy — marque le lien de la section visible.
-  const links = Array.from(document.querySelectorAll(".rail__link[href^=\"#\"]"));
+  // Scrollspy — marque le lien de la section visible. Le rail utilise des
+  // URLs absolues pour fonctionner depuis n'importe quelle route ; on ne
+  // garde donc que les liens qui pointent vers la page courante avec un hash.
+  const here = location.pathname.replace(/\/+$/, "") || "/";
+  const links = Array.from(document.querySelectorAll(".rail__link")).filter((a) => {
+    const u = new URL(a.href, location.href);
+    const path = u.pathname.replace(/\/+$/, "") || "/";
+    return u.hash && path === here;
+  });
   if (links.length && "IntersectionObserver" in window) {
     const byId = new Map();
     links.forEach((a) => {
-      const id = a.getAttribute("href").slice(1);
+      const id = new URL(a.href, location.href).hash.slice(1);
       const target = document.getElementById(id);
       if (target) byId.set(target, a);
     });

@@ -18,11 +18,15 @@
     })();
   </script>
 
+  {# Redaction est self-hosted ; seul Geist passe encore par Google Fonts. #}
+  <link rel="preload" href="{{ get_url(path='fonts/Redaction-Regular.woff2') | safe }}" as="font" type="font/woff2" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Redaction:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap">
 
   <link rel="stylesheet" href="{{ get_url(path='main.css') | safe }}">
+
+  <link rel="icon" type="image/svg+xml" href="{{ get_url(path='favicon.svg') | safe }}">
 
   <meta name="theme-color" content="#f7f5f0" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1411" media="(prefers-color-scheme: dark)">
@@ -34,7 +38,7 @@
     <aside class="rail" aria-label="Navigation principale">
       <a href="{{ config.base_url | safe }}" class="rail__brand">
         <span class="rail__brand-name">Bastien Gallay</span>
-        <span class="rail__brand-tag">Atelier 2026</span>
+        <span class="rail__brand-tag">Atelier</span>
       </a>
 
       {# Liens préfixés par base_url pour fonctionner depuis n'importe quelle route. #}
@@ -44,13 +48,13 @@
           <span class="rail__link-num">01</span>
           <span class="rail__link-label">Intro</span>
         </a>
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#vedette">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#focus">
           <span class="rail__link-num">02</span>
-          <span class="rail__link-label">Vedette</span>
+          <span class="rail__link-label">Focus</span>
         </a>
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#poles">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#familles">
           <span class="rail__link-num">03</span>
-          <span class="rail__link-label">Pôles</span>
+          <span class="rail__link-label">Familles</span>
         </a>
         <a class="rail__link numeric" href="{{ config.base_url | safe }}/ecrits/">
           <span class="rail__link-num">04</span>
@@ -78,8 +82,8 @@
       {% block content %}{% endblock %}
 
       <footer class="colophon">
-        <span>© 2026 Bastien Gallay</span>
-        <span>Fait à la main · Zola</span>
+        <span>© {{ now() | date(format='%Y') }} Bastien Gallay</span>
+        <span>Fait à la main · <a class="colophon__link" href="https://www.getzola.org/" rel="noopener" target="_blank">Zola</a></span>
       </footer>
     </main>
   </div>

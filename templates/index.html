@@ -4,7 +4,7 @@
 <section class="hero" id="intro" aria-labelledby="hero-title">
   <p class="hero__meta">
     <span class="hero__meta-rule" aria-hidden="true"></span>
-    <span>bastiengallay.com — 2026</span>
+    <span>bastiengallay.com — {{ now() | date(format='%Y') }}</span>
   </p>
 
   <h1 class="hero__title" id="hero-title">
@@ -17,17 +17,21 @@
   </p>
 
   <nav class="hero__anchors" aria-label="Aller à une section">
-    <a class="hero__anchor" href="#vedette">
+    <a class="hero__anchor" href="#focus">
       <span class="hero__anchor-num numeric">02</span>
-      <span class="hero__anchor-label">Vedette&nbsp;: lucid-lint</span>
+      <span class="hero__anchor-label">Focus&nbsp;: lucid-lint</span>
     </a>
-    <a class="hero__anchor" href="#poles">
+    <a class="hero__anchor" href="#familles">
       <span class="hero__anchor-num numeric">03</span>
-      <span class="hero__anchor-label">Les trois pôles</span>
+      <span class="hero__anchor-label">Les deux familles</span>
     </a>
     <a class="hero__anchor" href="#ecrits">
       <span class="hero__anchor-num numeric">04</span>
       <span class="hero__anchor-label">Écrits récents</span>
+    </a>
+    <a class="hero__anchor hero__anchor--route" href="{{ config.base_url | safe }}/now/">
+      <span class="hero__anchor-num numeric">05</span>
+      <span class="hero__anchor-label">Maintenant</span>
     </a>
     <a class="hero__anchor" href="#contact">
       <span class="hero__anchor-num numeric">06</span>
@@ -37,93 +41,85 @@
 </section>
 
 {# Placeholders pour les prochains crafts — silhouettes minimales. #}
-<section class="vedette" id="vedette" aria-labelledby="vedette-title">
-  <p class="vedette__index">
-    <span class="vedette__index-num numeric">02</span>
-    <span>Projet vedette</span>
+<section class="focus" id="focus" aria-labelledby="focus-title">
+  <p class="focus__index">
+    <span class="focus__index-num numeric">02</span>
+    <span>Focus actuel</span>
   </p>
 
-  <h2 class="vedette__title" id="vedette-title">
-    lucid-lint<i class="vedette__title-mark" aria-hidden="true">.</i>
+  <h2 class="focus__title" id="focus-title">
+    lucid-lint<i class="focus__title-mark" aria-hidden="true">.</i>
   </h2>
 
-  <p class="vedette__tag">
+  <p class="focus__tag">
     {# TODO(wording) — baseline courte à affiner #}
     Un linter pour rendre les textes lisibles, pas seulement corrects.
   </p>
 
-  <p class="vedette__lead">
+  <p class="focus__lead">
     {# TODO(contenu) — paragraphe d'intro à écrire (Block B) #}
     Outil en ligne de commande qui repère, dans un texte français,
     les structures qui forcent le lecteur à relire — phrases empilées,
     négations cumulées, références orphelines. Open source.
   </p>
 
-  <ul class="vedette__points" aria-label="Points clés">
-    <li class="vedette__point">
+  <ul class="focus__points" aria-label="Points clés">
+    <li class="focus__point">
       {# TODO(contenu) — point clé à écrire #}
       Détection ciblée des frictions cognitives, pas un correcteur de style.
     </li>
-    <li class="vedette__point">
+    <li class="focus__point">
       {# TODO(contenu) — point clé à écrire #}
       Règles explicites, contestables, versionnées — pas une boîte noire.
     </li>
-    <li class="vedette__point">
+    <li class="focus__point">
       {# TODO(contenu) — point clé à écrire #}
       Pensé pour s'intégrer dans un flux d'écriture, pas un outil de fin de course.
     </li>
   </ul>
 
-  <p class="vedette__cta">
-    <a class="vedette__cta-link" href="https://github.com/bastien-gallay/lucid-lint" rel="noopener" target="_blank">
+  <p class="focus__cta">
+    <a class="focus__cta-link" href="https://github.com/bastien-gallay/lucid-lint" rel="noopener" target="_blank">
       <span>Voir le projet sur GitHub</span>
-      <span class="vedette__cta-arrow" aria-hidden="true">↗</span>
+      <span class="focus__cta-arrow" aria-hidden="true">↗</span>
     </a>
   </p>
 </section>
 
-<section class="poles" id="poles" aria-labelledby="poles-title">
-  <p class="poles__index">
-    <span class="poles__index-num numeric">03</span>
-    <span>Les pôles</span>
+<section class="familles" id="familles" aria-labelledby="familles-title">
+  <p class="familles__index">
+    <span class="familles__index-num numeric">03</span>
+    <span>Les familles</span>
   </p>
 
-  <h2 class="poles__title" id="poles-title">
-    Trois familles, une démarche
+  <h2 class="familles__title" id="familles-title">
+    Deux familles, une démarche
   </h2>
 
-  <p class="poles__lead">
+  <p class="familles__lead">
     {# TODO(wording) — phrase d'amorce à resserrer #}
-    Mes projets se rangent en trois pôles. Tous partagent une même question :
-    qu'est-ce qui aide vraiment à penser et à écrire ?
+    Mes projets se rangent en deux familles. Toutes deux partagent une même
+    question : qu'est-ce qui aide vraiment à penser et à écrire&nbsp;?
   </p>
 
-  <ol class="poles__list" aria-label="Les trois pôles">
-    <li class="pole" id="pole-cogni">
-      <p class="pole__index">
-        <span class="pole__index-num numeric">01</span>
-        <span>Pôle</span>
-      </p>
-      <h3 class="pole__title">Accessibilité cognitive &amp; qualité du texte</h3>
-      <p class="pole__body">
+  <ol class="familles__list" aria-label="Les deux familles">
+    <li class="famille" id="famille-cogni">
+      <h3 class="famille__title">Accessibilité cognitive &amp; qualité du texte</h3>
+      <p class="famille__body">
         {# TODO(contenu) — description courte du pôle #}
         Rendre les textes lisibles pour tous les lecteurs, sans les lisser.
-        Le projet vedette de cette famille est <a href="#vedette">lucid-lint</a>.
+        Le focus actuel de cette famille est <a href="#focus">lucid-lint</a>.
       </p>
     </li>
 
-    <li class="pole" id="pole-productivite">
-      <p class="pole__index">
-        <span class="pole__index-num numeric">02</span>
-        <span>Pôle</span>
-      </p>
-      <h3 class="pole__title">Productivité du travail intellectuel avec l'IA</h3>
-      <p class="pole__body">
+    <li class="famille" id="famille-productivite">
+      <h3 class="famille__title">Productivité du travail intellectuel avec l'IA</h3>
+      <p class="famille__body">
         {# TODO(contenu) — description courte #}
         Des outils pour structurer ce qui d'ordinaire reste flou : journées,
         compétences, conventions de travail. Open source.
       </p>
-      <ul class="pole__projects" aria-label="Projets de ce pôle">
+      <ul class="famille__projects" aria-label="Projets de cette famille">
         <li><a href="https://github.com/bastien-gallay/daily-ops" rel="noopener" target="_blank">daily-ops <span aria-hidden="true">↗</span></a></li>
         <li><a href="https://github.com/bastien-gallay/skills" rel="noopener" target="_blank">skills <span aria-hidden="true">↗</span></a></li>
         <li><a href="https://github.com/bastien-gallay/inflecv" rel="noopener" target="_blank">inflecv <span aria-hidden="true">↗</span></a></li>
@@ -131,9 +127,9 @@
     </li>
   </ol>
 
-  <aside class="poles__clients" aria-label="Réalisations clients">
-    <p class="poles__clients-label">Réalisations clients</p>
-    <p class="poles__clients-body">
+  <aside class="familles__clients" aria-label="Réalisations clients">
+    <p class="familles__clients-label">Réalisations clients</p>
+    <p class="familles__clients-body">
       {# TODO(wording) — note discrète, pas mise en avant #}
       Quelques sites livrés pour des clients, notamment
       <a href="https://gallay-avocat.fr" rel="noopener" target="_blank">gallay-avocat.fr <span aria-hidden="true">↗</span></a>.
@@ -159,12 +155,20 @@
   </p>
 </section>
 
-<section class="section-placeholder" id="contact" aria-labelledby="contact-title">
-  <p class="section-placeholder__index">
-    <span class="section-placeholder__index-num numeric">06</span>
+<section class="contact" id="contact" aria-labelledby="contact-title">
+  <p class="contact__index">
+    <span class="contact__index-num numeric">06</span>
     <span>Contact</span>
   </p>
-  <h2 class="section-placeholder__title" id="contact-title">Me joindre</h2>
-  <p class="section-placeholder__note">Section à venir (prochain craft).</p>
+  <h2 class="contact__title" id="contact-title">Me joindre</h2>
+  <p class="contact__body">
+    Le plus direct, pour l'instant&nbsp;: LinkedIn.
+  </p>
+  <p class="contact__cta">
+    <a class="contact__cta-link" href="https://www.linkedin.com/in/bastiengallay/" rel="noopener" target="_blank">
+      <span>linkedin.com/in/bastiengallay</span>
+      <span class="contact__cta-arrow" aria-hidden="true">↗</span>
+    </a>
+  </p>
 </section>
 {% endblock %}
