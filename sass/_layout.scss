@@ -182,6 +182,15 @@
   text-transform: uppercase;
 }
 
+.colophon__group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: baseline;
+}
+
+.colophon__meta { white-space: nowrap; }
+
 // Lien Zola — discret mais cliquable. Hérite des caps du parent.
 .colophon__link {
   color: inherit;

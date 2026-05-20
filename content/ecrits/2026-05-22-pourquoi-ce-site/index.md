@@ -1,15 +1,15 @@
 +++
 title = "Pourquoi ce site, et pourquoi maintenant"
 date = 2026-05-22
-description = "Premier billet : ce que ce site est, ce qu'il n'est pas, ce qu'on y trouvera."
+description = "D'un billard mal recopié sur Thomson TO9 à une discipline : pourquoi ce site existe."
 draft = true
 +++
 
-Un été, j'avais 9 ou 10 ans. Je tenais un hors-série du magazine *Tilt* avec
-des listings de programmes. J'ai encore la couverture en tête. Avec mon
-frère, nous avons copié plusieurs pages de listings en BASIC sur notre
+Un été, à 9 ou 10 ans, je tenais un hors-série du magazine *Tilt* avec
+des listings en BASIC. J'ai encore la couverture en tête. Avec mon
+frère, nous avons copié plusieurs pages de code sur notre
 Thomson TO9. Par séances de trente minutes à une heure, l'un dictait et
-relisait pendant que l'autre tapait ce code que nous ne comprenions qu'à
+relisait pendant que l'autre tapait ce programme que nous ne comprenions qu'à
 moitié. On a fini par abandonner. Vers la fin des vacances, j'ai repris le
 hors-série et j'ai terminé seul. J'ai enfin pu lancer le programme. La
 forme du billard et quelques billes s'affichaient. Mais un grand trait au
@@ -18,29 +18,30 @@ ne répondait à rien.
 
 ![Tilt - Micro Jeux - Numéro HS 05 - Août 1987 - Couverture](tilt-hs05-aout-1987.png)
 
-Patiemment, j'ai relu les lignes, me rendant compte que certains numéros de
+Patiemment, j'ai relu et comparé, me rendant compte que certains numéros de
 ligne en BASIC avaient été décalés. Je démarrais le programme à nouveau,
-voyant parfois un changement, parfois des erreurs de syntaxe nouvelles. Je
-l'ai corrigé avec le listing. Le listing était plus fiable que mes
+voyant parfois un changement, parfois des erreurs de syntaxe nouvelles. J'ai
+corrigé avec le listing. Il était plus fiable que mes
 déductions. L'erreur venait de la transcription. Le programme, lui,
-fonctionnait. La rentrée approchait. J'ai laissé tomber. Je n'ai plus
-jamais eu envie de revenir dessus.
+fonctionnait. La rentrée approchant, j'ai laissé tomber. Je n'avais plus
+envie de revenir dessus.
 
-Quelques années plus tôt, j'avais 7 ans. J'apprenais à lire et à écrire
-quand mes parents nous ont offert un Thomson TO9, sur lequel j'ai découvert
-le BASIC. Je pouvais maintenant lire tout seul *Un éléphant ça compte
-énormément* d'Helme Heine. Je collais une étiquette inscrite en minuscules
+Le décor de cet été-là s'était posé quelques années plus tôt.
+J'apprenais à lire et à écrire
+quand mes parents nous ont offert ce TO9, sur lequel j'ai découvert
+le BASIC. À cet âge, je pouvais lire tout seul *Un éléphant ça compte
+énormément* d'Helme Heine. Je collais une étiquette en minuscules
 cursives *garage de clarke*, et racontais *« Clarke a accéléré droit vers
 le tremplin. Il a pris son envol et atterri de l'autre côté de la rivière.
-Il avait échappé à l'avalanche. »*. Je tapais à deux doigts des GOTO
+Il avait échappé à l'avalanche. »* Je tapais à deux doigts des GOTO
 infinis, un jeu *« nombre secret »* avec des IF/PRINT/INPUT. J'essayais de
 dessiner un polygone avec POINT/LINE — il s'avérait mal fermé à l'affichage.
 
 ![« Un éléphant ça compte énormément » d'Helme Heine, folio benjamin.](elephant-ca-compte-enormement.png)
 
-Ce qu'un enfant ne pouvait pas deviner, c'était la synergie future de ce
-triptyque. Je cherchais la certitude d'un code qui fonctionne, et cela m'a
-ramené sans cesse à un parallèle avec la lecture et l'écriture.
+Ce qu'un enfant ne pouvait pas deviner, c'était comment ces trois gestes
+allaient n'en faire qu'un. Le code, la lecture, l'écriture : une seule
+discipline.
 
 Cette discipline est l'alignement de la pensée avec l'écrit. J'en ai appris
 l'exigence par le code, mais elle dépasse le code. Ce site existe pour
@@ -52,39 +53,41 @@ de position.
 J'ai l'habitude de tester la moindre idée qui me passe par la tête. Je
 stocke ces expériences dans un dossier `experiments/`. Je le trie
 systématiquement, impitoyablement : je compare chaque chantier 2 à 2. Seuls
-les plus pertinents restent. C'est le *death-match* du code pour gagner le
+les plus pertinents restent. C'est le *death-match* des prototypes pour gagner le
 droit d'être promu au rang de projet. Et le prochain sur la ligne d'arrivée
-est **Rhetorix** : analyser un article de presse en remontant ses arguments.
+est **Rhetorix** : décrypter la rhétorique d'un article de presse.
 En novembre 2025, pour ma recherche d'emploi, j'ai bricolé quelques scripts
 et prompts. J'en ai extrait [inflecv](https://github.com/bastien-gallay/inflecv),
-qui transforme une offre d'emploi en CV adapté. Dans la même logique de
-pilotage, [`/glance`](https://github.com/bastien-gallay/glance) formate les
-retours IA pour les rendre visuels et balayables. Pour m'assurer des
-évolutions utiles dans mes projets, `/feature-torture` est un banc de
+qui transforme une offre d'emploi en CV adapté. Toujours pour piloter
+l'IA, [`/glance`](https://github.com/bastien-gallay/glance) formate les
+retours IA pour les rendre simples à lire et à survoler. Pour vérifier qu'un projet
+évolue dans le bon sens, `/feature-torture` est un banc de
 dissection d'une fonctionnalité pour juger si elle survit, mute ou
 disparaît. Jusqu'ici, j'ai créé pour m'amuser ou me faciliter la vie. J'ai
-partagé afin de m'imposer la qualité minimum pour ne pas m'en vouloir dans
-quelques semaines ou quelques mois, quand je voudrai reprendre le travail.
+partagé afin de m'imposer un standard de qualité — la qualité minimum
+pour ne pas m'en vouloir, dans quelques semaines ou quelques mois,
+quand je voudrai reprendre le travail.
 C'est de cette matière que naissent les billets qu'on lit ici.
 
-Face à des projets et créations uniformes, l'impression que quelqu'un a
-repris, remanié et perfectionné 100 fois son travail me manque. Le danger
+Pourquoi tenir à ce soin-là en 2026 ? Face à des projets et créations
+uniformes, l'impression que quelqu'un a repris, remanié et perfectionné
+100 fois son travail me manque. Le danger
 de la génération automatique n'est pas le remplacement pur et simple, mais
-l'indifférenciation de notre contenu de celui de l'IA. Il y a un an, une
-vidéo IA montrait 3 bras. En 2026, la différence de forme entre les
-contenus automatiques ou manuels se réduit constamment. Quand je mets
-`lucid-lint`, `/feature-torture` ou un article en pause, je veux être sûr
-*qu'ils soient utilisables et que je pourrai les reprendre plus tard avec
+que notre contenu devienne indiscernable de celui de l'IA. Il y a un an, une
+vidéo IA montrait 3 bras par personne. En 2026, la différence de forme entre les
+contenus automatiques ou manuels s'amenuise. Quand je mets en pause
+`lucid-lint`, `/feature-torture` ou un article, je veux être sûr
+*qu'ils sont utilisables et que je pourrai les reprendre plus tard avec
 plaisir*. Lorsque je les démarre, l'IA me sert à construire plus vite les
 filets de sécurité, la documentation lisible, le suivi du projet. Demain
 ou dans un an, je saurai où j'en suis sur chaque projet, et chaque projet
-me racontera son histoire de manière limpide.
+me racontera son histoire.
 
 Cet article est une première page. Les personnages sont présentés : des
 expérimentations, des outils et des recherches. Je les mettrai en scène,
 les ferai parler, au fil des chapitres à venir : certains conteront
 l'échec d'un prototype ou l'excitation face à une idée prometteuse ;
-parfois, vous suivrez exclusivement l'histoire d'un protagoniste ; enfin,
-des séries analyseront les enjeux du code et de ses pratiques. La table
+parfois, vous suivrez un seul protagoniste de bout en bout ; enfin,
+des séries analyseront les enjeux du code et de ce qu'on en fait. La table
 des matières vous interpelle ? Écrivez-moi. Je prendrai le temps de vous
 lire et de répondre.

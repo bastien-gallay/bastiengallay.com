@@ -82,8 +82,13 @@
       {% block content %}{% endblock %}
 
       <footer class="colophon">
-        <span>© {{ now() | date(format='%Y') }} Bastien Gallay</span>
-        <span>Fait à la main · <a class="colophon__link" href="https://www.getzola.org/" rel="noopener" target="_blank">Zola</a></span>
+        <span class="colophon__group">
+          <span>© {{ now() | date(format='%Y') }} Bastien Gallay</span>
+          <a class="colophon__link" href="mailto:bastien@gallay.org">bastien@gallay.org</a>
+          <a class="colophon__link" href="https://www.linkedin.com/in/bastiengallay/" rel="noopener" target="_blank">LinkedIn ↗</a>
+          <a class="colophon__link" href="https://github.com/bastien-gallay" rel="noopener" target="_blank">GitHub ↗</a>
+        </span>
+        <span class="colophon__meta">Fait à la main · <a class="colophon__link" href="https://www.getzola.org/" rel="noopener" target="_blank">Zola</a></span>
       </footer>
     </main>
   </div>

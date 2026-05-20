@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} — Bastien Gallay{% endblock %}
+{% block description %}{{ page.description | default(value="Notes et articles de Bastien Gallay.") }}{% endblock %}
+
+{% block content %}
+<article class="ecrit-page" aria-labelledby="ecrit-page-title">
+  <p class="ecrit-page__index">
+    <span class="ecrit-page__index-num numeric">04</span>
+    <span>Écrits</span>
+  </p>
+
+  <p class="ecrit-page__meta">
+    <time datetime="{{ page.date }}">{{ page.date | date(format='%-d %B %Y') }}</time>
+    <span aria-hidden="true">·</span>
+    <span>{{ page.reading_time }} min</span>
+    <span aria-hidden="true">·</span>
+    <span>{{ page.word_count }} mots</span>
+  </p>
+
+  <h1 class="ecrit-page__title" id="ecrit-page-title">
+    {{ page.title }}<i class="ecrit-page__title-mark" aria-hidden="true">.</i>
+  </h1>
+
+  {% if page.description %}
+  <p class="ecrit-page__subtitle">{{ page.description }}</p>
+  {% endif %}
+
+  <div class="ecrit-page__content prose">
+    {{ page.content | safe }}
+  </div>
+
+  <aside class="ecrit-page__signature" aria-label="À propos de l'auteur">
+    <a class="ecrit-page__signature-name" href="{{ config.base_url | safe }}">Bastien Gallay</a>
+    <span class="ecrit-page__signature-bio">— outils open source pour mieux écrire et mieux penser.</span>
+  </aside>
+
+  <p class="ecrit-page__back">
+    <a href="{{ get_url(path='@/ecrits/_index.md') | safe }}">← Retour aux écrits</a>
+  </p>
+</article>
+{% endblock %}
