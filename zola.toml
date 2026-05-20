@@ -1,6 +1,9 @@
 # The URL the site will be built for
 base_url = "https://bastiengallay.com"
 
+# Site en français — affecte par défaut le filtre `date` et la i18n future.
+default_language = "fr"
+
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
 

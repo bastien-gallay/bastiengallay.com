@@ -69,6 +69,33 @@ pour ne pas m'en vouloir, dans quelques semaines ou quelques mois,
 quand je voudrai reprendre le travail.
 C'est de cette matière que naissent les billets qu'on lit ici.
 
+{% aside(side="right") %}
+experiments/
+├── ai
+│   ├── assist
+│   ├── audiobook-pipeline
+│   ├── autopreneur
+│   ├── bmad-context-viewer
+│   ├── mercurai
+│   ├── notebooklm-py
+│   ├── rhetorix
+│   └── SDD
+├── autopreneur
+│   └── voice-notes
+├── games
+│   ├── drop-escape-clone
+│   ├── lab-doku
+│   └── mdr-serious-game
+├── lang-tools
+│   ├── carbon
+│   └── lean4
+├── media
+│   └── music-gen
+└── misc
+
+22 directories, 0 files
+{% end %}
+
 Pourquoi tenir à ce soin-là en 2026 ? Face à des projets et créations
 uniformes, l'impression que quelqu'un a repris, remanié et perfectionné
 100 fois son travail me manque. Le danger
@@ -82,6 +109,24 @@ plaisir*. Lorsque je les démarre, l'IA me sert à construire plus vite les
 filets de sécurité, la documentation lisible, le suivi du projet. Demain
 ou dans un an, je saurai où j'en suis sur chaque projet, et chaque projet
 me racontera son histoire.
+
+<!-- markdownlint-disable MD031 -->
+{% aside(side="left") %}
+$ lucid-lint check --min-score=85 examples/sample.md
+  ~~~~~ ⟨ • ⟩ ─────  lucid-lint  v0.2.0
+                     cognitive accessibility linter · prose · EN / FR
+                     ────────────────────────────────────────────────
+…
+  score: 45/100
+         structure    █▎░░░  5/20
+         rhythm       █████  20/20
+         lexicon      █▎░░░  5/20
+         syntax       ██▌░░  10/20
+         readability  █▎░░░  5/20
+  $ echo "exit: $?"
+  exit: 1
+{% end %}
+<!-- markdownlint-enable MD031 -->
 
 Cet article est une première page. Les personnages sont présentés : des
 expérimentations, des outils et des recherches. Je les mettrai en scène,

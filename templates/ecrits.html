@@ -23,7 +23,7 @@
     {% for page in section.pages %}
     <li class="ecrit">
       <p class="ecrit__date">
-        <time datetime="{{ page.date }}">{{ page.date | date(format='%-d %B %Y') }}</time>
+        <time datetime="{{ page.date }}">{{ page.date | date(format='%-d %B %Y', locale='fr_FR') }}</time>
       </p>
       <h2 class="ecrit__title">
         <a href="{{ page.permalink | safe }}">{{ page.title }}</a>

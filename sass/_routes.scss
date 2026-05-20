@@ -62,8 +62,8 @@
   font-style: italic;
   font-size: var(--text-lg);
   line-height: var(--leading-snug);
-  color: var(--ink-soft);
-  max-width: var(--measure-narrow);
+  color: var(--surface-ink);
+  max-width: var(--measure-wide);
   margin: 0;
   text-wrap: balance;
 }
@@ -85,7 +85,7 @@
   font-family: var(--font-display);
   font-size: var(--text-base);
   color: var(--surface-ink);
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--ink-mute);
   padding-bottom: 0.1em;
   transition: color var(--dur-fast) var(--ease-out-quart),
               border-color var(--dur-fast) var(--ease-out-quart);
@@ -107,19 +107,48 @@
   line-height: var(--leading-normal);
   color: var(--ink-soft);
   max-width: var(--measure-base);
-  display: grid;
-  gap: var(--space-md);
   margin-top: var(--space-md);
 }
 
-.ecrit-page__content p { margin: 0; }
+.ecrit-page__content > * { margin: 0; }
+.ecrit-page__content > * + * { margin-top: var(--space-md); }
 
-.ecrit-page__content img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  margin-block: var(--space-sm);
+// Zola enveloppe `![]()` dans un `<p>`. On neutralise la marge de ce
+// wrapper pour que l'image flotte au contact du paragraphe suivant.
+.ecrit-page__content p:has(> img:only-child) {
+  margin: 0;
 }
+
+// Images flottées dans le paragraphe : alternance droite/gauche pour
+// donner du rythme. Sur petits écrans, on retombe en bloc plein.
+.ecrit-page__content img {
+  float: right;
+  max-width: min(45%, 18rem);
+  height: auto;
+  margin: 0.35em 0 var(--space-sm) var(--space-lg);
+  shape-outside: margin-box;
+}
+
+.ecrit-page__content p:has(> img:only-child):nth-of-type(even) > img {
+  float: left;
+  margin: 0.35em var(--space-lg) var(--space-sm) 0;
+}
+
+@media (max-width: 40rem) {
+  .ecrit-page__content img,
+  .ecrit-page__content p:has(> img:only-child):nth-of-type(even) > img {
+    float: none;
+    display: block;
+    max-width: 100%;
+    margin: var(--space-md) auto;
+  }
+}
+
+// Couper le flot du flottant avant la signature et autour des
+// séparateurs Markdown pour éviter qu'une image dépasse la section.
+.ecrit-page__content::after,
+.ecrit-page__content hr { clear: both; }
+.ecrit-page__content::after { content: ""; display: block; }
 
 .ecrit-page__content em { font-style: italic; }
 .ecrit-page__content strong { font-weight: 600; color: var(--surface-ink); }
@@ -132,11 +161,74 @@
   border-radius: 0.2em;
 }
 
+// Blocs `pre` standards : sobres, pleine mesure, désactivent le styling
+// inline-code interne.
+.ecrit-page__content pre {
+  clear: both;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, monospace);
+  font-size: 0.82em;
+  line-height: 1.45;
+  padding: var(--space-md) var(--space-lg);
+  background: var(--surface-soft, rgba(0,0,0,0.04));
+  border-left: 2px solid var(--rule);
+  overflow-x: auto;
+  max-width: var(--measure-base);
+  color: var(--ink-soft);
+}
+
+.ecrit-page__content pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+// Variante flottée (shortcode `aside`) : même comportement que les images
+// flottées, pour glisser un encart code/texte dans la marge.
+.ecrit-page__content pre.ecrit-page__aside {
+  clear: none;
+  max-width: min(45%, 18rem);
+  margin: 0.35em 0 var(--space-sm) var(--space-lg);
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.74em;
+  line-height: 1.35;
+  shape-outside: margin-box;
+}
+
+.ecrit-page__content pre.ecrit-page__aside--right { float: right; }
+.ecrit-page__content pre.ecrit-page__aside--left {
+  float: left;
+  margin: 0.35em var(--space-lg) var(--space-sm) 0;
+}
+
+@media (max-width: 40rem) {
+  .ecrit-page__content pre.ecrit-page__aside,
+  .ecrit-page__content pre.ecrit-page__aside--left,
+  .ecrit-page__content pre.ecrit-page__aside--right {
+    float: none;
+    max-width: 100%;
+    margin: var(--space-md) 0;
+  }
+}
+
+// Séparateur de section : trois points centrés, plus lisibles qu'une
+// fine règle qui se perdait sur fond clair comme sur fond sombre.
 .ecrit-page__content hr {
   border: 0;
-  border-top: 1px solid var(--rule);
-  margin-block: var(--space-md);
-  max-width: var(--measure-base);
+  height: auto;
+  margin-block: var(--space-xl);
+  text-align: center;
+  color: var(--ink-mute);
+  overflow: visible;
+}
+
+.ecrit-page__content hr::before {
+  content: "* * *";
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  letter-spacing: 0.6em;
+  color: var(--ink-mute);
 }
 
 .now__updated {
