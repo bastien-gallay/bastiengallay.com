@@ -427,9 +427,29 @@
   grid-template-columns: 1fr 1fr;
   gap: var(--space-lg);
   clear: both;
-  // Espace garanti au-dessus, même quand un listing flottant a poussé le
-  // clear loin sous le dernier paragraphe.
-  margin-top: var(--space-2xl);
+  // Padding-top plutôt que margin-top : margin est consommée par la
+  // clearance quand on clear un float, padding non.
+  padding-top: var(--space-2xl);
+  margin-top: var(--space-xl);
+}
+
+// Marges des listings flottants — scope `.ecrit-page__content` requis
+// pour battre `.ecrit-page__content > * { margin: 0 }` (spécificité).
+// Sans ça, seul le margin-top hérité de `> * + *` passe et les listings
+// collent à la prose latéralement et en bas.
+.ecrit-page__content .listing--right {
+  margin: var(--space-md) 0 var(--space-2xl) var(--space-lg);
+}
+
+.ecrit-page__content .listing--left {
+  margin: var(--space-md) var(--space-lg) var(--space-2xl) 0;
+}
+
+@media (max-width: 60rem) {
+  .ecrit-page__content .listing--right,
+  .ecrit-page__content .listing--left {
+    margin: var(--space-md) 0;
+  }
 }
 
 .ecrit-page__content .ours--cols .ours__col p {
