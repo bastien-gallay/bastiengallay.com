@@ -16,4 +16,6 @@ build_search_index = false
 theme = "catppuccin-mocha"
 
 [extra]
-# Put all your custom variables here
+# Méta de "pochette" affichée dans le colophon — pastiche presse assumé.
+zola_version = "0.22.1"
+print_run = "01"

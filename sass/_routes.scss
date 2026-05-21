@@ -47,32 +47,18 @@
 
 .ecrit-page__header {
   display: grid;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-sm);
-}
-
-.ecrit-page__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2xs);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  margin: 0;
-  margin-top: calc(var(--space-3xs) * -1);
-  font-variant-numeric: tabular-nums lining-nums;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
 }
 
 .ecrit-page__subtitle {
-  font-family: var(--font-body);
+  font-family: var(--font-display);
   font-style: italic;
-  font-size: var(--text-lg);
-  line-height: var(--leading-normal);
-  color: var(--surface-ink);
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
+  color: var(--ink-soft);
   max-width: var(--measure-wide);
   margin: 0;
-  margin-top: var(--space-3xs);
   text-wrap: balance;
 }
 
@@ -220,24 +206,10 @@
   }
 }
 
-// Séparateur de section : trois points centrés, plus lisibles qu'une
-// fine règle qui se perdait sur fond clair comme sur fond sombre.
-.ecrit-page__content hr {
-  border: 0;
-  height: auto;
-  margin-block: var(--space-xl);
-  text-align: center;
-  color: var(--ink-mute);
-  overflow: visible;
-}
-
-.ecrit-page__content hr::before {
-  content: "* * *";
-  font-family: var(--font-body);
-  font-size: var(--text-lg);
-  letter-spacing: 0.6em;
-  color: var(--ink-mute);
-}
+// Séparateur de section — l'ornement § § § est défini dans _editorial.scss
+// (.prose hr::before / .ecrit-page hr::before). On force juste le clear ici
+// pour éviter qu'une image flottée chevauche le séparateur.
+.ecrit-page__content hr { clear: both; }
 
 .now__updated {
   font-size: var(--text-xs);

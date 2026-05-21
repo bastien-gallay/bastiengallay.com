@@ -1,0 +1,272 @@
+// Composants éditoriaux — dispositif "revue d'atelier"
+// Issue-bar, badges, OURS, dropcap, ornement, marques typographiques.
+
+// ──────────────────────────────────────────────────────────────────
+// Issue-bar — bandeau haut de page (POCHETTE §NN · DATE · MIN)
+// ──────────────────────────────────────────────────────────────────
+
+.issue-bar {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em 1.2em;
+  padding-block: 0.6rem;
+  border-block: 1px solid var(--rule);
+  margin-bottom: var(--space-xl);
+}
+
+.issue-bar__sep {
+  color: var(--rule-strong);
+  user-select: none;
+}
+
+.issue-bar__num {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Big numéro de section (§01 géant en marge du hero)
+// ──────────────────────────────────────────────────────────────────
+
+.section-bignum {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 2rem + 8vw, 9rem);
+  line-height: 0.85;
+  color: var(--c-problem);
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.04em;
+  display: inline-block;
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Badges éditoriaux — EN COUVERTURE, HORS-SÉRIE, DANS CE NUMÉRO
+// ──────────────────────────────────────────────────────────────────
+
+.ed-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5em;
+  padding: 0;
+  margin-bottom: var(--space-sm);
+  color: var(--ink-mute);
+}
+
+.ed-badge::before {
+  content: "▌";
+  color: var(--c-problem);
+  font-size: 1.2em;
+  line-height: 0.8;
+}
+
+.ed-badge--feature::before { color: var(--c-problem); }
+.ed-badge--insert::before  { color: var(--c-info); }
+.ed-badge--toc::before     { color: var(--accent); }
+
+.ed-badge__num {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Marque "FIG. NN" pour caption d'image
+// ──────────────────────────────────────────────────────────────────
+
+.fig-mark {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: block;
+  margin-top: 0.4em;
+}
+
+.fig-mark::before {
+  content: "▌ ";
+  color: var(--c-info);
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Dropcap — première lettre du premier paragraphe d'article
+// ──────────────────────────────────────────────────────────────────
+
+.has-dropcap > p:first-of-type::first-letter,
+p.has-dropcap::first-letter {
+  font-family: var(--font-display);
+  font-size: 4.2em;
+  line-height: 0.85;
+  float: left;
+  margin: 0.05em 0.12em 0 0;
+  color: var(--c-problem);
+  font-weight: 400;
+}
+
+// Mobile : éviter de bouffer la largeur sur petits écrans.
+@media (max-width: 26rem) {
+  .has-dropcap > p:first-of-type::first-letter,
+  p.has-dropcap::first-letter {
+    font-size: 3em;
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Ornement — séparateur "§ § §" pour <hr>
+// ──────────────────────────────────────────────────────────────────
+
+.ornament {
+  text-align: center;
+  border: 0;
+  margin: var(--space-xl) auto;
+  color: var(--rule-strong);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  letter-spacing: 0.8em;
+  overflow: visible;
+  height: auto;
+}
+
+.ornament::before {
+  content: "§ § §";
+}
+
+// On remplace <hr> dans la prose par l'ornement (Zola compile `---` en <hr>).
+.prose hr,
+.ecrit-page hr {
+  text-align: center;
+  border: 0;
+  margin: var(--space-xl) auto;
+  height: auto;
+}
+
+.prose hr::before,
+.ecrit-page hr::before {
+  content: "§ § §";
+  color: var(--rule-strong);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  letter-spacing: 0.8em;
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Bloc "APPEL À RÉPONSE" — encadré clôturant un article
+// ──────────────────────────────────────────────────────────────────
+
+.callout {
+  background: var(--surface-sub);
+  border-top: 3px solid var(--accent);
+  padding: var(--space-md) var(--space-lg);
+  margin-block: var(--space-xl);
+  max-width: var(--measure-wide);
+}
+
+.callout__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0 0 var(--space-xs) 0;
+}
+
+.callout__label::before {
+  content: "▌ ";
+  color: var(--accent);
+}
+
+.callout__body { margin: 0; }
+
+.callout__sign {
+  display: block;
+  margin-top: var(--space-sm);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Bloc OURS — identification éditoriale en bas de contact
+// ──────────────────────────────────────────────────────────────────
+
+.ours {
+  background: var(--surface-sub);
+  border-left: 3px solid var(--c-info);
+  padding: var(--space-md) var(--space-lg);
+  margin-top: var(--space-xl);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--ink-soft);
+  max-width: var(--measure-wide);
+}
+
+.ours__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0 0 var(--space-xs) 0;
+}
+
+.ours__label::before {
+  content: "▍ ";
+  color: var(--c-info);
+}
+
+.ours p { margin: 0.2em 0; max-width: none; }
+.ours strong { color: var(--surface-ink); font-weight: 500; }
+
+// ──────────────────────────────────────────────────────────────────
+// Bloc "DANS CE NUMÉRO" — sommaire des écrits dans le teaser home
+// ──────────────────────────────────────────────────────────────────
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-sm) 0 var(--space-md) 0;
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.toc-list__item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.8em;
+  align-items: baseline;
+  padding-block: 0.35rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.toc-list__num {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+}
+
+.toc-list__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  color: var(--surface-ink);
+}
+
+.toc-list__meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 0.15em;
+  display: block;
+}

@@ -5,36 +5,35 @@
 
 {% block content %}
 <article class="ecrit-page" aria-labelledby="ecrit-page-title">
-  <header class="ecrit-page__header">
-    <p class="ecrit-page__index">
-      <span class="ecrit-page__index-num numeric">04</span>
-      <span>Écrits</span>
-    </p>
+  <p class="issue-bar">
+    <span class="issue-bar__num">POCHETTE §04.0{{ page.extra.numero | default(value="1") }}</span>
+    <span class="issue-bar__sep">·</span>
+    <span>ÉCRITS</span>
+    <span class="issue-bar__sep">·</span>
+    <span>{{ page.date | date(format='%d/%m/%Y') }}</span>
+    <span class="issue-bar__sep">·</span>
+    <span>{{ page.reading_time }} MIN</span>
+    <span class="issue-bar__sep">·</span>
+    <span>{{ page.word_count }} MOTS</span>
+  </p>
 
+  <header class="ecrit-page__header">
     <h1 class="ecrit-page__title" id="ecrit-page-title">
       {{ page.title }}<i class="ecrit-page__title-mark" aria-hidden="true">.</i>
     </h1>
-
-    <p class="ecrit-page__meta">
-      <time datetime="{{ page.date }}">{{ page.date | date(format='%-d %B %Y', locale='fr_FR') }}</time>
-      <span aria-hidden="true">·</span>
-      <span>{{ page.reading_time }} min</span>
-      <span aria-hidden="true">·</span>
-      <span>{{ page.word_count }} mots</span>
-    </p>
 
     {% if page.description %}
     <p class="ecrit-page__subtitle">{{ page.description }}</p>
     {% endif %}
   </header>
 
-  <div class="ecrit-page__content prose">
+  <div class="ecrit-page__content prose has-dropcap">
     {{ page.content | safe }}
   </div>
 
   <aside class="ecrit-page__signature" aria-label="À propos de l'auteur">
-    <a class="ecrit-page__signature-name" href="{{ config.base_url | safe }}">Bastien Gallay</a>
-    <span class="ecrit-page__signature-bio">— outils open source pour mieux écrire et mieux penser.</span>
+    <a class="ecrit-page__signature-name" href="{{ config.base_url | safe }}">— Bastien Gallay</a>
+    <span class="ecrit-page__signature-bio">outils open source pour mieux écrire et mieux penser.</span>
   </aside>
 
   <p class="ecrit-page__back">

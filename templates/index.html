@@ -2,49 +2,80 @@
 
 {% block content %}
 <section class="hero" id="intro" aria-labelledby="hero-title">
-  <p class="hero__meta">
-    <span class="hero__meta-rule" aria-hidden="true"></span>
-    <span>bastiengallay.com — {{ now() | date(format='%Y') }}</span>
+  <p class="issue-bar">
+    <span class="issue-bar__num">POCHETTE §01</span>
+    <span class="issue-bar__sep">·</span>
+    <span>ATELIER OUVERT</span>
+    <span class="issue-bar__sep">·</span>
+    <span>{{ now() | date(format='%d/%m/%Y') }}</span>
+    <span class="issue-bar__sep">·</span>
+    <span>7 SECTIONS</span>
   </p>
 
-  <h1 class="hero__title" id="hero-title">
-    Bastien Gallay<i class="hero__title-mark" aria-hidden="true">.</i>
-  </h1>
+  <div class="hero__head">
+    <span class="hero__bignum section-bignum" aria-hidden="true">§01</span>
+    <div class="hero__head-text">
+      <h1 class="hero__title" id="hero-title">
+        Bastien Gallay<i class="hero__title-mark" aria-hidden="true">.</i>
+      </h1>
+      <p class="hero__lead">
+        <em>Mieux écrire, mieux penser.</em>
+        Je fabrique les outils.
+      </p>
+    </div>
+  </div>
 
-  <p class="hero__lead">
-    <em>Mieux écrire, mieux penser.</em>
-    Je fabrique les outils.
-  </p>
-
-  <nav class="hero__anchors" aria-label="Aller à une section">
-    <a class="hero__anchor" href="#focus">
-      <span class="hero__anchor-num numeric">02</span>
-      <span class="hero__anchor-label">Focus&nbsp;: lucid-lint</span>
-    </a>
-    <a class="hero__anchor" href="#familles">
-      <span class="hero__anchor-num numeric">03</span>
-      <span class="hero__anchor-label">Les deux familles</span>
-    </a>
-    <a class="hero__anchor" href="#ecrits">
-      <span class="hero__anchor-num numeric">04</span>
-      <span class="hero__anchor-label">Écrits récents</span>
-    </a>
-    <a class="hero__anchor hero__anchor--route" href="{{ config.base_url | safe }}/now/">
-      <span class="hero__anchor-num numeric">05</span>
-      <span class="hero__anchor-label">Maintenant</span>
-    </a>
-    <a class="hero__anchor" href="#contact">
-      <span class="hero__anchor-num numeric">06</span>
-      <span class="hero__anchor-label">Me joindre</span>
-    </a>
+  <nav class="hero__sommaire" aria-label="Sommaire du numéro">
+    <p class="ed-badge ed-badge--toc"><span>SOMMAIRE DU NUMÉRO</span></p>
+    <ol class="hero__sommaire-list">
+      <li>
+        <a class="hero__sommaire-link" href="#focus">
+          <span class="hero__sommaire-num">§02</span>
+          <span class="hero__sommaire-rule" aria-hidden="true"></span>
+          <span class="hero__sommaire-title">Focus&nbsp;: lucid-lint</span>
+          <span class="hero__sommaire-arrow" aria-hidden="true">↓</span>
+        </a>
+      </li>
+      <li>
+        <a class="hero__sommaire-link" href="#familles">
+          <span class="hero__sommaire-num">§03</span>
+          <span class="hero__sommaire-rule" aria-hidden="true"></span>
+          <span class="hero__sommaire-title">Les deux familles</span>
+          <span class="hero__sommaire-arrow" aria-hidden="true">↓</span>
+        </a>
+      </li>
+      <li>
+        <a class="hero__sommaire-link" href="#ecrits">
+          <span class="hero__sommaire-num">§04</span>
+          <span class="hero__sommaire-rule" aria-hidden="true"></span>
+          <span class="hero__sommaire-title">Écrits récents</span>
+          <span class="hero__sommaire-arrow" aria-hidden="true">↓</span>
+        </a>
+      </li>
+      <li>
+        <a class="hero__sommaire-link hero__sommaire-link--route" href="{{ config.base_url | safe }}/now/">
+          <span class="hero__sommaire-num">§05</span>
+          <span class="hero__sommaire-rule" aria-hidden="true"></span>
+          <span class="hero__sommaire-title">Maintenant</span>
+          <span class="hero__sommaire-arrow" aria-hidden="true">↗</span>
+        </a>
+      </li>
+      <li>
+        <a class="hero__sommaire-link" href="#contact">
+          <span class="hero__sommaire-num">§06</span>
+          <span class="hero__sommaire-rule" aria-hidden="true"></span>
+          <span class="hero__sommaire-title">Me joindre</span>
+          <span class="hero__sommaire-arrow" aria-hidden="true">↓</span>
+        </a>
+      </li>
+    </ol>
   </nav>
 </section>
 
-{# Placeholders pour les prochains crafts — silhouettes minimales. #}
 <section class="focus" id="focus" aria-labelledby="focus-title">
-  <p class="focus__index">
-    <span class="focus__index-num numeric">02</span>
-    <span>Focus actuel</span>
+  <p class="ed-badge ed-badge--feature">
+    <span class="ed-badge__num">§02</span>
+    <span>EN COUVERTURE</span>
   </p>
 
   <h2 class="focus__title" id="focus-title">
@@ -52,32 +83,62 @@
   </h2>
 
   <p class="focus__tag">
-    {# TODO(wording) — baseline courte à affiner #}
     Un linter pour rendre les textes lisibles, pas seulement corrects.
   </p>
 
-  <p class="focus__lead">
-    Là où les linters de prose existants mesurent le style ou la grammaire
-    de surface, lucid-lint mesure la <em>charge cognitive</em> — combien
-    d'effort un lecteur déjà fatigué doit dépenser pour te comprendre.
-    Outil CLI en Rust, bilingue FR/EN, 25 règles déterministes,
-    intégrable en CI. Open source.
-  </p>
+  <div class="focus__body has-dropcap">
+    <p class="focus__lead">
+      Là où les linters de prose existants mesurent le style ou la grammaire
+      de surface, lucid-lint mesure la <em>charge cognitive</em> — combien
+      d'effort un lecteur déjà fatigué doit dépenser pour te comprendre.
+      Outil CLI en Rust, bilingue FR/EN, 25 règles déterministes,
+      intégrable en CI. Open source.
+    </p>
+  </div>
 
-  <ul class="focus__points" aria-label="Points clés">
+  {# Listing dark — sortie réelle de lucid-lint v0.2.0 sur un README. #}
+  <figure class="listing">
+    <figcaption class="listing__caption">LISTING 01 · LUCID-LINT v0.2.0</figcaption>
+    <pre class="listing__body"><code><span class="lt-mute">$</span> <span class="lt-strong">lucid-lint</span> check README.md
+<span class="lt-mute">~~~~~ ⟨ • ⟩ ─────</span>  <span class="lt-chrome">lucid-lint</span>  v0.2.0
+                    <span class="lt-mute">cognitive accessibility linter · prose · EN / FR</span>
+                    <span class="lt-mute">────────────────────────────────────────────────</span>
+
+<span class="lt-warning">warning</span> <span class="lt-mute">README.md:3:1</span>   Sentence is 29 words long (maximum 22). <span class="lt-rule">[structure.sentence-too-long]</span>
+<span class="lt-warning">warning</span> <span class="lt-mute">README.md:46:1</span>  Sentence has 4 commas (maximum 3). <span class="lt-rule">[syntax.dense-punctuation-burst]</span>
+<span class="lt-warning">warning</span> <span class="lt-mute">README.md:46:59</span> Acronym "TLD" is not defined on first use. <span class="lt-rule">[lexicon.undefined-acronym]</span>
+<span class="lt-info">info</span>    <span class="lt-mute">README.md:1:1</span>   Kandel-Moles ease score 72.9 (≈ grade 2.7) (target ≤ 9.0). <span class="lt-rule">[readability.score]</span>
+
+<span class="lt-mute">summary:</span> <span class="lt-warning">7 warnings</span>, <span class="lt-info">1 info</span>.
+<span class="lt-mute">→ run 'lucid-lint explain &lt;rule-id&gt;'</span>
+
+<span class="lt-strong">score:</span> <span class="lt-problem lt-strong">50/100</span>
+        <span class="lt-mute">structure</span>   <span class="lt-bar--bad">▓▓▓░░░░░░░░░░░░░░░░░</span>   5/20
+        <span class="lt-mute">rhythm</span>      <span class="lt-bar--ok">▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓</span>  20/20
+        <span class="lt-mute">lexicon</span>     <span class="lt-bar--bad">▓▓▓▓▓▓░░░░░░░░░░░░░░</span>  10/20
+        <span class="lt-mute">syntax</span>      <span class="lt-bar--bad">▓▓▓▓▓▓░░░░░░░░░░░░░░</span>  10/20
+        <span class="lt-mute">readability</span> <span class="lt-bar--bad">▓▓▓░░░░░░░░░░░░░░░░░</span>   5/20
+<span class="lt-strong">exit:</span> <span class="lt-problem">1</span>
+</code></pre>
+  </figure>
+
+  <p class="ed-badge ed-badge--feature focus__points-label">
+    <span>POINTS-CLÉS</span>
+  </p>
+  <ol class="focus__points" aria-label="Points clés">
     <li class="focus__point">
-      {# TODO(contenu) — point clé à écrire #}
+      <span class="focus__point-num">§2.1</span>
       Détection ciblée des frictions cognitives, pas un correcteur de style.
     </li>
     <li class="focus__point">
-      {# TODO(contenu) — point clé à écrire #}
+      <span class="focus__point-num">§2.2</span>
       Règles explicites, contestables, versionnées — pas une boîte noire.
     </li>
     <li class="focus__point">
-      {# TODO(contenu) — point clé à écrire #}
+      <span class="focus__point-num">§2.3</span>
       Pensé pour s'intégrer dans un flux d'écriture, pas un outil de fin de course.
     </li>
-  </ul>
+  </ol>
 
   <p class="focus__cta">
     <a class="focus__cta-link" href="https://github.com/bastien-gallay/lucid-lint" rel="noopener" target="_blank">
@@ -88,36 +149,35 @@
 </section>
 
 <section class="familles" id="familles" aria-labelledby="familles-title">
-  <p class="familles__index">
-    <span class="familles__index-num numeric">03</span>
-    <span>Les familles</span>
+  <p class="ed-badge ed-badge--toc">
+    <span class="ed-badge__num">§03</span>
+    <span>LES FAMILLES</span>
   </p>
 
   <h2 class="familles__title" id="familles-title">
-    Deux familles, une démarche
+    Deux familles, une démarche.
   </h2>
 
   <p class="familles__lead">
-    {# TODO(wording) — phrase d'amorce à resserrer #}
     Mes projets se rangent en deux familles. Toutes deux partagent une même
-    question : qu'est-ce qui aide vraiment à penser et à écrire&nbsp;?
+    question&nbsp;: qu'est-ce qui aide vraiment à penser et à écrire&nbsp;?
   </p>
 
   <ol class="familles__list" aria-label="Les deux familles">
     <li class="famille" id="famille-cogni">
+      <p class="famille__num">§3.1</p>
       <h3 class="famille__title">Accessibilité cognitive &amp; qualité du texte</h3>
       <p class="famille__body">
-        {# TODO(contenu) — description courte du pôle #}
         Rendre les textes lisibles pour tous les lecteurs, sans les lisser.
         Le focus actuel de cette famille est <a href="#focus">lucid-lint</a>.
       </p>
     </li>
 
     <li class="famille" id="famille-productivite">
+      <p class="famille__num">§3.2</p>
       <h3 class="famille__title">Productivité du travail intellectuel avec l'IA</h3>
       <p class="famille__body">
-        {# TODO(contenu) — description courte #}
-        Des outils pour structurer ce qui d'ordinaire reste flou : journées,
+        Des outils pour structurer ce qui d'ordinaire reste flou&nbsp;: journées,
         compétences, conventions de travail. Open source.
       </p>
       <ul class="famille__projects" aria-label="Projets de cette famille">
@@ -129,9 +189,8 @@
   </ol>
 
   <aside class="familles__clients" aria-label="Réalisations clients">
-    <p class="familles__clients-label">Réalisations clients</p>
+    <p class="familles__clients-label">▍ HORS-SÉRIE · RÉALISATIONS CLIENTS</p>
     <p class="familles__clients-body">
-      {# TODO(wording) — note discrète, pas mise en avant #}
       Quelques sites livrés pour des clients, notamment
       <a href="https://gallay-avocat.fr" rel="noopener" target="_blank">gallay-avocat.fr <span aria-hidden="true">↗</span></a>.
     </p>
@@ -139,15 +198,28 @@
 </section>
 
 <section class="ecrits-teaser" id="ecrits" aria-labelledby="ecrits-teaser-title">
-  <p class="ecrits-teaser__index">
-    <span class="ecrits-teaser__index-num numeric">04</span>
-    <span>Écrits</span>
+  <p class="ed-badge ed-badge--toc">
+    <span class="ed-badge__num">§04</span>
+    <span>ÉCRITS</span>
   </p>
-  <h2 class="ecrits-teaser__title" id="ecrits-teaser-title">Notes &amp; articles</h2>
+  <h2 class="ecrits-teaser__title" id="ecrits-teaser-title">Notes &amp; articles.</h2>
   <p class="ecrits-teaser__body">
-    {# TODO(contenu) — accroche courte à écrire (Block B) #}
     Quelques notes longues sur l'écriture, la lecture, et ce que je fabrique.
   </p>
+
+  <p class="ed-badge ed-badge--insert"><span>DANS CE NUMÉRO</span></p>
+  <ol class="toc-list">
+    <li class="toc-list__item">
+      <span class="toc-list__num">§04.01</span>
+      <span>
+        <a class="toc-list__title" href="{{ config.base_url | safe }}/ecrits/pourquoi-ce-site/">
+          Pourquoi ce site, et pourquoi maintenant.
+        </a>
+        <span class="toc-list__meta">22/05/2026 · 8 MIN · D'un billard mal recopié à une discipline.</span>
+      </span>
+    </li>
+  </ol>
+
   <p class="ecrits-teaser__cta">
     <a class="ecrits-teaser__cta-link" href="{{ config.base_url | safe }}/ecrits/">
       <span>Voir tous les écrits</span>
@@ -157,11 +229,11 @@
 </section>
 
 <section class="contact" id="contact" aria-labelledby="contact-title">
-  <p class="contact__index">
-    <span class="contact__index-num numeric">06</span>
-    <span>Contact</span>
+  <p class="ed-badge ed-badge--toc">
+    <span class="ed-badge__num">§06</span>
+    <span>ME JOINDRE</span>
   </p>
-  <h2 class="contact__title" id="contact-title">Me joindre</h2>
+  <h2 class="contact__title" id="contact-title">Me joindre.</h2>
   <p class="contact__body">
     Le plus direct, pour l'instant&nbsp;: LinkedIn. Mon CV est aussi disponible en téléchargement.
   </p>
@@ -177,5 +249,13 @@
       <span class="contact__cta-arrow" aria-hidden="true">↓</span>
     </a>
   </p>
+
+  <aside class="ours" aria-label="Identification éditoriale">
+    <p class="ours__label">OURS</p>
+    <p><strong>Direction, rédaction, illustrations, ouverture de paquets</strong>&nbsp;: Bastien Gallay.</p>
+    <p><strong>Coordination IA</strong>&nbsp;: Claude (Anthropic).</p>
+    <p><strong>Imprimerie</strong>&nbsp;: Zola 0.22.1, GitHub Pages.</p>
+    <p><strong>Diffusion</strong>&nbsp;: illimitée, non commerciale (CC BY-NC).</p>
+  </aside>
 </section>
 {% endblock %}

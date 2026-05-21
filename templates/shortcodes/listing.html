@@ -1,0 +1,7 @@
+{%- set side_class = side | default(value="") -%}
+<figure class="listing{% if side_class %} listing--{{ side_class }}{% endif %}">
+{%- if caption %}
+  <figcaption class="listing__caption">{{ caption | safe }}</figcaption>
+{%- endif %}
+  <pre class="listing__body"><code>{{ body | safe }}</code></pre>
+</figure>

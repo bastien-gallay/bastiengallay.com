@@ -41,31 +41,31 @@
         <span class="rail__brand-tag">Atelier</span>
       </a>
 
-      {# Liens préfixés par base_url pour fonctionner depuis n'importe quelle route. #}
+      {# Rail-marquepage : numéros §NN seuls, libellé révélé en flyout au hover. #}
+      {# Le sommaire complet vit dans le hero ; le rail sert de position dans la pochette. #}
       <nav class="rail__nav" aria-label="Sections">
-        <p class="rail__nav-heading">Sommaire</p>
         <a class="rail__link numeric" href="{{ config.base_url | safe }}/#intro">
-          <span class="rail__link-num">01</span>
+          <span class="rail__link-num">§01</span>
           <span class="rail__link-label">Intro</span>
         </a>
         <a class="rail__link numeric" href="{{ config.base_url | safe }}/#focus">
-          <span class="rail__link-num">02</span>
+          <span class="rail__link-num">§02</span>
           <span class="rail__link-label">Focus</span>
         </a>
         <a class="rail__link numeric" href="{{ config.base_url | safe }}/#familles">
-          <span class="rail__link-num">03</span>
+          <span class="rail__link-num">§03</span>
           <span class="rail__link-label">Familles</span>
         </a>
         <a class="rail__link numeric" href="{{ config.base_url | safe }}/ecrits/">
-          <span class="rail__link-num">04</span>
+          <span class="rail__link-num">§04</span>
           <span class="rail__link-label">Écrits</span>
         </a>
         <a class="rail__link numeric" href="{{ config.base_url | safe }}/now/">
-          <span class="rail__link-num">05</span>
+          <span class="rail__link-num">§05</span>
           <span class="rail__link-label">Now</span>
         </a>
         <a class="rail__link numeric" href="{{ config.base_url | safe }}/#contact">
-          <span class="rail__link-num">06</span>
+          <span class="rail__link-num">§06</span>
           <span class="rail__link-label">Contact</span>
         </a>
       </nav>
@@ -83,12 +83,12 @@
 
       <footer class="colophon">
         <span class="colophon__group">
-          <span>© {{ now() | date(format='%Y') }} Bastien Gallay</span>
+          <span>POCHETTE §{{ config.extra.print_run | default(value="01") }} · © {{ now() | date(format='%Y') }} · TIRAGE LIMITÉ</span>
           <a class="colophon__link" href="mailto:bastien@gallay.org">bastien@gallay.org</a>
           <a class="colophon__link" href="https://www.linkedin.com/in/bastiengallay/" rel="noopener" target="_blank">LinkedIn ↗</a>
           <a class="colophon__link" href="https://github.com/bastien-gallay" rel="noopener" target="_blank">GitHub ↗</a>
         </span>
-        <span class="colophon__meta">Fait à la main · <a class="colophon__link" href="https://www.getzola.org/" rel="noopener" target="_blank">Zola</a></span>
+        <span class="colophon__meta">IMPRIMÉ À LA DEMANDE · <a class="colophon__link" href="https://www.getzola.org/" rel="noopener" target="_blank">ZOLA</a>&nbsp;{{ config.extra.zola_version | default(value="0.22.1") }} · COMMIT&nbsp;{{ get_env(name="COMMIT_HASH", default="dev") | truncate(length=7, end="") }} · CC&nbsp;BY-NC</span>
       </footer>
     </main>
   </div>

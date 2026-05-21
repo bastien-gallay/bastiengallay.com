@@ -69,7 +69,7 @@ pour ne pas m'en vouloir, dans quelques semaines ou quelques mois,
 quand je voudrai reprendre le travail.
 C'est de cette matière que naissent les billets qu'on lit ici.
 
-{% aside(side="right") %}
+{% listing(side="right", caption="LISTING 1 · ARBORESCENCE EXPERIMENTS") %}
 experiments/
 ├── ai
 │   ├── assist
@@ -111,20 +111,23 @@ ou dans un an, je saurai où j'en suis sur chaque projet, et chaque projet
 me racontera son histoire.
 
 <!-- markdownlint-disable MD031 -->
-{% aside(side="left") %}
-$ lucid-lint check --min-score=85 examples/sample.md
+{% listing(side="left", caption="LISTING 2 · LUCID-LINT v0.2.0") %}
+$ lucid-lint check examples/sample.md
 ~~~~~ ⟨ • ⟩ ─────  lucid-lint  v0.2.0
                     cognitive accessibility linter · prose · EN / FR
                     ────────────────────────────────────────────────
-…
-score: 45/100
-        structure    █▎░░░  5/20
-        rhythm       █████  20/20
-        lexicon      █▎░░░  5/20
-        syntax       ██▌░░  10/20
-        readability  █▎░░░  5/20
-        
-$ echo "exit: $?"
+warning  sample.md:3:1   Sentence is 29 words long (maximum 22).
+warning  sample.md:46:1  Sentence has 4 commas (maximum 3).
+info     sample.md:1:1   Kandel-Moles ease score 72.9 (target ≤ 9.0).
+
+summary: 7 warnings, 1 info.
+
+score: 50/100
+        structure    ▓▓▓░░░░░░░░░░░░░░░░░   5/20
+        rhythm       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  20/20
+        lexicon      ▓▓▓▓▓▓░░░░░░░░░░░░░░  10/20
+        syntax       ▓▓▓▓▓▓░░░░░░░░░░░░░░  10/20
+        readability  ▓▓▓░░░░░░░░░░░░░░░░░   5/20
 exit: 1
 {% end %}
 <!-- markdownlint-enable MD031 -->
