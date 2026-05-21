@@ -204,7 +204,7 @@
 .colophon__pill {
   display: inline-block;
   background: var(--accent);
-  color: oklch(0.155 0.010 28);
+  color: var(--surface);
   padding: 0.18em 0.55em;
   font-family: var(--font-mono);
   font-size: var(--text-xs);

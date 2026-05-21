@@ -6,7 +6,7 @@
 {% block content %}
 <article class="ecrit-page" aria-labelledby="ecrit-page-title">
   <p class="issue-bar">
-    <span class="issue-bar__pill">POCHETTE §04.0{{ page.extra.numero | default(value="1") }}</span>
+    <span class="issue-bar__pill">NUMÉRO §04.{{ page.extra.numero | default(value="01") }}</span>
     <span>ÉCRITS</span>
     <span class="issue-bar__sep">·</span>
     <span>{{ page.date | date(format='%d/%m/%Y') }}</span>

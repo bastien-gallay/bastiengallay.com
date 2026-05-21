@@ -17,6 +17,7 @@
   padding-block: 0.6rem;
   border-block: 1px solid var(--rule);
   margin-bottom: var(--space-xl);
+  max-width: none;     // override la max-width 68ch des <p>
 }
 
 .issue-bar__sep {
@@ -29,12 +30,12 @@
   font-weight: 500;
 }
 
-// Pill inversée : fond plein --section-color avec texte ink fixe.
-// Le ink est verrouillé sombre indépendamment du thème pour garantir
-// le contraste sur fond saturé (AA atteint sur les 6 couleurs site).
+// Pill inversée : fond plein --section-color, texte qui flip avec le thème
+// via --surface (cream en light, ink en dark). Toujours en opposition avec
+// le fond pill saturé, contraste AA stable dans les deux modes.
 .issue-bar__pill {
   background: var(--section-color, var(--c-problem));
-  color: oklch(0.155 0.010 28);
+  color: var(--surface);
   padding: 0.18em 0.6em;
   font-weight: 600;
   letter-spacing: 0.18em;
