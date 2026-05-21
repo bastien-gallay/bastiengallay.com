@@ -1,42 +1,88 @@
-// Layout général — rail latéral gauche fixe (style nin.com "à l'ancienne")
-// + colonne contenu fluide. Mobile = nav top sticky compacte.
+// Layout général — header sticky haut "masthead de revue".
+// Le rail latéral nin.com a fusionné dans une bande haute (logo + sommaire
+// §NN horizontal + toggle thème). Le bloc texte du brand reste caché tant
+// que le hero est en viewport ; il apparaît au scroll (cf. theme.js
+// IntersectionObserver, ajoute .rail--scrolled).
 
 .shell {
   display: grid;
-  grid-template-columns: var(--rail-width) minmax(0, 1fr);
-  gap: clamp(var(--space-lg), 4vw, var(--space-3xl));
+  grid-template-columns: minmax(0, 1fr);
   max-width: var(--content-max);
   margin: 0 auto;
-  padding: clamp(var(--space-lg), 4vw, var(--space-2xl))
-           clamp(var(--space-md), 4vw, var(--space-2xl));
+  padding: 0 clamp(var(--space-md), 4vw, var(--space-2xl));
   min-height: 100dvh;
 }
 
 // ─────────────────────────────────────────────────────────────────
-// Rail latéral — desktop
+// Rail = header sticky haut, grille 3-col
 // ─────────────────────────────────────────────────────────────────
 
 .rail {
   position: sticky;
-  top: clamp(var(--space-lg), 4vw, var(--space-2xl));
-  align-self: start;
-  height: max-content;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2xl);
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
+  align-items: center;
+  gap: clamp(var(--space-sm), 2vw, var(--space-lg));
+  padding: var(--space-sm) 0;
+  background: color-mix(in oklch, var(--surface) 92%, transparent);
+  backdrop-filter: saturate(140%) blur(8px);
+  border-bottom: 1px solid var(--rule);
+  // Étend le fond au-delà du padding horizontal de .shell pour couvrir
+  // toute la largeur viewport au sticky.
+  margin-inline: calc(clamp(var(--space-md), 4vw, var(--space-2xl)) * -1);
+  padding-inline: clamp(var(--space-md), 4vw, var(--space-2xl));
 }
 
 .rail__brand {
   display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  color: var(--surface-ink);
+}
+
+// Carré rouge De Stijl — toujours visible, repère minimum.
+.rail__mark {
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--accent);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+// Texte du brand caché tant que le hero est en viewport.
+.rail__brand-text {
+  display: inline-flex;
   flex-direction: column;
   gap: var(--space-3xs);
-  color: var(--surface-ink);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-4px);
+  transition: opacity var(--dur-mid) var(--ease-out-quart),
+              transform var(--dur-mid) var(--ease-out-quart),
+              visibility 0s linear var(--dur-mid);
+}
+
+.rail--scrolled .rail__brand-text {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  transition: opacity var(--dur-mid) var(--ease-out-quart),
+              transform var(--dur-mid) var(--ease-out-quart),
+              visibility 0s;
+}
+
+// Respect motion réduit : pas de transition, juste un swap.
+@media (prefers-reduced-motion: reduce) {
+  .rail__brand-text,
+  .rail--scrolled .rail__brand-text { transition: none; transform: none; }
 }
 
 .rail__brand-name {
   font-family: var(--font-display);
-  font-size: var(--text-lg);
-  font-weight: 700;
+  font-size: var(--text-base);
+  font-weight: 400;
   line-height: 1;
   letter-spacing: -0.01em;
 }
@@ -49,84 +95,72 @@
   color: var(--ink-mute);
 }
 
-// Petit point rouge avant le nom — un seul accent visuel, signature.
-.rail__brand::before {
-  content: "";
-  display: block;
-  width: 0.55rem;
-  height: 0.55rem;
-  background: var(--accent);
-  margin-bottom: var(--space-2xs);
-  // Pas de border-radius : carré franc, ton De Stijl.
-}
-
-// Nav verticale. Chaque item : nº cadratin + libellé.
+// Nav horizontale au centre — sommaire §NN compact.
 .rail__nav {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-}
-
-.rail__nav-heading {
-  font-family: var(--font-body);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  margin: 0 0 var(--space-2xs);
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(var(--space-xs), 2vw, var(--space-md));
+  min-width: 0;
 }
 
 .rail__link {
-  display: grid;
-  grid-template-columns: 1.75rem auto;
+  display: inline-flex;
   align-items: baseline;
-  gap: var(--space-xs);
-  padding: var(--space-2xs) 0;
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--surface-ink);
+  padding: var(--space-3xs) 0;
+  color: var(--ink-mute);
+  font-family: var(--font-mono);
   transition: color var(--dur-fast) var(--ease-out-quart);
 }
 
 .rail__link-num {
-  font-size: var(--text-xs);
-  font-weight: 400;
-  color: var(--ink-mute);
-  font-variant-numeric: tabular-nums lining-nums;
+  display: inline-block;
+  font-size: var(--text-sm);
+  font-weight: 500;
   letter-spacing: 0;
-  transition: color var(--dur-fast) var(--ease-out-quart);
+  font-variant-numeric: tabular-nums lining-nums;
+  color: inherit;
+  transition: color var(--dur-fast) var(--ease-out-quart),
+              text-shadow var(--dur-fast) var(--ease-out-quart);
+}
+
+// Doctrine §NN : gris muted au repos partout, bicolore section au
+// hover/focus/[aria-current]. La couleur active reprend la --link-color
+// / --link-shadow (paire associée à chaque section, exposée en inline
+// style sur les liens).
+.rail__link:hover .rail__link-num,
+.rail__link:focus-visible .rail__link-num,
+.rail__link[aria-current="true"] .rail__link-num {
+  color: var(--link-color, var(--c-info));
+  text-shadow: 1.5px 1.5px 0 var(--link-shadow, var(--accent));
 }
 
 .rail__link:hover,
 .rail__link:focus-visible {
-  color: var(--accent-deep);
   text-decoration: none;
   outline: none;
 }
 
-.rail__link:hover .rail__link-num,
-.rail__link:focus-visible .rail__link-num {
-  color: var(--accent);
-}
-
-// État actif : nº en rouge, label tiré vers la droite via une barre fine.
-.rail__link[aria-current="true"] {
-  color: var(--accent-deep);
-}
-
 .rail__link[aria-current="true"] .rail__link-num {
-  color: var(--accent);
+  font-weight: 600;
 }
 
-// Bas du rail : toggle thème + ext links.
+// Label = invisible en desktop dans le header sticky (les numéros parlent
+// déjà ; le title= natif donne le tooltip pour les souris).
+.rail__link-label {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+// Bas du rail : toggle thème à droite.
 .rail__foot {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: var(--space-xs);
-  padding-top: var(--space-md);
-  border-top: 1px solid var(--rule);
+  justify-self: end;
 }
 
 .theme-toggle {
@@ -142,7 +176,6 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2xs);
-  width: max-content;
   transition: border-color var(--dur-fast) var(--ease-out-quart),
               color var(--dur-fast) var(--ease-out-quart);
 }
@@ -164,38 +197,63 @@
 // ─────────────────────────────────────────────────────────────────
 
 .main {
-  min-width: 0; // évite blow-up en grid avec contenu long
+  min-width: 0;
+  // Padding minimal : l'issue-bar prend immédiatement le relais du
+  // header sticky, comme une suite naturelle de la masthead.
+  padding-top: var(--space-md);
 }
 
-// Filet de bas de page minimaliste.
+// Colophon éditorial : grid 4 colonnes, plein cadre.
 .colophon {
-  margin-top: var(--space-4xl);
-  padding-top: var(--space-md);
+  max-width: var(--content-max);
+  margin: var(--space-4xl) auto 0;
+  padding: var(--space-md) clamp(var(--space-md), 4vw, var(--space-2xl)) var(--space-2xl);
   border-top: 1px solid var(--rule);
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(11rem, 100%), 1fr));
+  gap: clamp(var(--space-md), 2.5vw, var(--space-lg));
+}
+
+.colophon__col {
+  display: grid;
+  gap: var(--space-2xs);
+  align-content: start;
+}
+
+.colophon__label {
+  font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--ink-mute);
   letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0 0 var(--space-2xs);
+}
+
+.colophon__label::first-letter { color: var(--accent); }
+
+.colophon__value {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  color: var(--ink-soft);
+}
+
+.colophon__pill {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--surface);
+  padding: 0.18em 0.55em;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
-.colophon__group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
-  align-items: baseline;
-}
-
-.colophon__meta { white-space: nowrap; }
-
-// Lien Zola — discret mais cliquable. Hérite des caps du parent.
 .colophon__link {
-  color: inherit;
+  color: var(--surface-ink);
   border-bottom: 1px solid var(--rule);
-  padding-bottom: 0.1em;
+  padding-bottom: 0.05em;
   transition: color var(--dur-fast) var(--ease-out-quart),
               border-color var(--dur-fast) var(--ease-out-quart);
 }
@@ -207,69 +265,22 @@
 }
 
 // ─────────────────────────────────────────────────────────────────
-// Mobile / Tablette : rail bascule en bandeau top sticky.
-// Pas d'amputation : tous les liens restent visibles, scroll horiz.
+// Mobile : sommaire en bande scroll horizontale.
 // ─────────────────────────────────────────────────────────────────
 
 @media (max-width: 48rem) {
-  .shell {
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
-    padding: var(--space-md);
-  }
-
   .rail {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    height: auto;
-    flex-direction: column;
+    grid-template-columns: auto 1fr auto;
     gap: var(--space-sm);
-    padding: var(--space-sm) 0;
-    background: color-mix(in oklch, var(--surface) 92%, transparent);
-    backdrop-filter: saturate(140%) blur(8px);
-    margin: calc(var(--space-md) * -1) calc(var(--space-md) * -1) 0;
-    padding-inline: var(--space-md);
-    border-bottom: 1px solid var(--rule);
   }
-
-  .rail__brand::before { display: none; }
-
-  .rail__brand {
-    flex-direction: row;
-    align-items: baseline;
-    gap: var(--space-2xs);
-  }
-
-  .rail__brand-name { font-size: var(--text-base); }
-
-  .rail__nav-heading { display: none; }
 
   .rail__nav {
-    flex-direction: row;
-    gap: var(--space-md);
     overflow-x: auto;
     scrollbar-width: none;
-    margin-inline: calc(var(--space-md) * -1);
-    padding-inline: var(--space-md);
+    flex-wrap: nowrap;
+    justify-content: flex-start;
   }
-
   .rail__nav::-webkit-scrollbar { display: none; }
 
-  .rail__link {
-    grid-template-columns: auto;
-    padding: 0;
-    flex-shrink: 0;
-    white-space: nowrap;
-  }
-
-  .rail__link-num { display: none; }
-
-  .rail__foot {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    border-top: none;
-    padding-top: 0;
-  }
+  .theme-toggle__dot + [data-theme-label] { display: none; }
 }

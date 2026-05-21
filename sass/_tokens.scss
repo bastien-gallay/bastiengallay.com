@@ -25,6 +25,14 @@
   --accent-deep:  oklch(0.44  0.215 25);
   --accent-soft:  oklch(0.92  0.045 30);   // wash très léger pour fonds rares
 
+  // Couleurs sémantiques (héritées de la sortie lucid-lint).
+  // Light mode : valeurs acceptables, à raffiner dans une phase ultérieure.
+  --c-warning:    oklch(0.55  0.16  80);   // warning lucid-lint, mesure intermédiaire
+  --c-info:       oklch(0.42  0.18  250);  // info lucid-lint, méta, citation
+  --c-problem:    oklch(0.52  0.22  5);    // score insuffisant ; ouverture/feature
+  --c-success:    oklch(0.48  0.16  155);  // score atteint, état OK
+  --c-chrome:     oklch(0.50  0.10  220);  // header cyan des listings lucid-lint
+
   // Sélection texte : accent à faible chroma sur surface.
   --selection-bg: oklch(0.85  0.090 28);
   --selection-fg: var(--surface-ink);
@@ -78,7 +86,7 @@
   --measure-wide:   78ch;
 
   // Layout.
-  --rail-width:    14rem;   // largeur du menu latéral en desktop
+  --rail-width:    4rem;    // rail-marquepage : juste les §NN, étroit
   --content-max:   72rem;
 
   // ──────────────────────────────────────────────────────────────
@@ -111,6 +119,13 @@
   --accent-deep:  oklch(0.58  0.205 25);
   --accent-soft:  oklch(0.32  0.085 28);
 
+  // Couleurs sémantiques (héritées de la sortie lucid-lint), calibrées dark.
+  --c-warning:    oklch(0.88  0.17  95);   // ~11:1 sur surface dark
+  --c-info:       oklch(0.68  0.16  250);  // ~5.9:1 sur surface dark
+  --c-problem:    oklch(0.68  0.23  5);    // ~5.4:1 sur surface dark
+  --c-success:    oklch(0.78  0.16  155);  // ~8:1 sur surface dark
+  --c-chrome:     oklch(0.78  0.10  220);  // ~7.4:1 sur surface dark
+
   --selection-bg: oklch(0.45  0.130 28);
   --selection-fg: oklch(0.98  0.005 70);
 }
@@ -128,6 +143,11 @@
     --accent:       oklch(0.66  0.190 26);
     --accent-deep:  oklch(0.58  0.205 25);
     --accent-soft:  oklch(0.32  0.085 28);
+    --c-warning:    oklch(0.88  0.17  95);
+    --c-info:       oklch(0.68  0.16  250);
+    --c-problem:    oklch(0.68  0.23  5);
+    --c-success:    oklch(0.78  0.16  155);
+    --c-chrome:     oklch(0.78  0.10  220);
     --selection-bg: oklch(0.45  0.130 28);
     --selection-fg: oklch(0.98  0.005 70);
   }

@@ -1,0 +1,354 @@
+// Composants éditoriaux — dispositif "revue d'atelier"
+// Issue-bar, badges, OURS, dropcap, ornement, marques typographiques.
+
+// ──────────────────────────────────────────────────────────────────
+// Issue-bar — bandeau haut de page (POCHETTE §NN · DATE · MIN)
+// ──────────────────────────────────────────────────────────────────
+
+// Issue-bar 3 colonnes façon header de journal :
+// gauche (pill + label) | centre (date) | droite (méta).
+.issue-bar {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-md);
+  padding-block: 0.55rem;
+  border-block: 1px solid var(--rule);
+  margin: 0 0 var(--space-lg);
+  max-width: none;
+}
+
+.issue-bar__left,
+.issue-bar__mid,
+.issue-bar__right {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  min-width: 0;
+}
+
+.issue-bar__left  { justify-self: start; }
+.issue-bar__mid   { justify-self: center; text-align: center; }
+.issue-bar__right { justify-self: end;   text-align: right; }
+
+// Repli mobile : grille s'aplatit en pile gauche.
+@media (max-width: 36rem) {
+  .issue-bar {
+    grid-template-columns: 1fr;
+    gap: 0.4em;
+  }
+  .issue-bar__mid,
+  .issue-bar__right { justify-self: start; text-align: left; }
+}
+
+.issue-bar__sep {
+  color: var(--rule-strong);
+  user-select: none;
+}
+
+.issue-bar__num {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+// Pill inversée : fond plein --section-color, texte qui flip avec le thème
+// via --surface (cream en light, ink en dark). Toujours en opposition avec
+// le fond pill saturé, contraste AA stable dans les deux modes.
+.issue-bar__pill {
+  background: var(--section-color, var(--c-problem));
+  color: var(--surface);
+  padding: 0.18em 0.6em;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Big numéro de section (§NN géant en marge)
+// Lit `--section-color` (couleur primaire) et `--section-shadow`
+// (couleur d'ombre décalée). Effet poster 2-couleurs.
+// ──────────────────────────────────────────────────────────────────
+
+.section-bignum {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 2rem + 8vw, 9rem);
+  line-height: 0.85;
+  color: var(--section-color, var(--c-problem));
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.04em;
+  display: inline-block;
+  text-shadow:
+    clamp(2px, 0.4vw, 5px) clamp(2px, 0.4vw, 5px) 0
+    var(--section-shadow, var(--c-info));
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Couleurs par section (item #10 : overlines per-section)
+// Définit --section-color et --section-shadow sur chaque section ;
+// les composants enfants (badges, bignum) en héritent.
+// ──────────────────────────────────────────────────────────────────
+
+.section--pink   { --section-color: var(--c-problem); --section-shadow: var(--c-info); }
+.section--blue   { --section-color: var(--c-info);    --section-shadow: var(--c-problem); }
+.section--yellow { --section-color: var(--c-warning); --section-shadow: var(--c-problem); }
+.section--mint   { --section-color: var(--c-success); --section-shadow: var(--c-info); }
+.section--cyan   { --section-color: var(--c-chrome);  --section-shadow: var(--c-problem); }
+.section--rouge  { --section-color: var(--accent);    --section-shadow: var(--c-info); }
+
+// ──────────────────────────────────────────────────────────────────
+// Badges éditoriaux — EN COUVERTURE, HORS-SÉRIE, DANS CE NUMÉRO
+// ──────────────────────────────────────────────────────────────────
+
+.ed-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5em;
+  padding: 0;
+  margin-bottom: var(--space-sm);
+  color: var(--ink-mute);
+}
+
+// Tout hérite de --section-color. Les distinctions sémantiques entre
+// overline (§NN · LABEL) et sub-label (POINTS-CLÉS, DANS CE NUMÉRO)
+// vivent dans le texte, pas dans la couleur.
+.ed-badge::before {
+  content: "▌";
+  color: var(--section-color, var(--accent));
+  font-size: 1.2em;
+  line-height: 0.8;
+}
+
+.ed-badge__num {
+  color: var(--section-color, var(--accent));
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Marque "FIG. NN" pour caption d'image
+// ──────────────────────────────────────────────────────────────────
+
+.fig-mark {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: block;
+  margin-top: 0.4em;
+}
+
+.fig-mark::before {
+  content: "▌ ";
+  color: var(--c-info);
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Dropcap — première lettre du premier paragraphe d'article
+// ──────────────────────────────────────────────────────────────────
+
+.has-dropcap > p:first-of-type::first-letter,
+p.has-dropcap::first-letter {
+  font-family: var(--font-display);
+  font-size: 4.2em;
+  line-height: 0.85;
+  float: left;
+  margin: 0.05em 0.12em 0 0;
+  color: var(--c-problem);
+  font-weight: 400;
+}
+
+// Mobile : éviter de bouffer la largeur sur petits écrans.
+@media (max-width: 26rem) {
+  .has-dropcap > p:first-of-type::first-letter,
+  p.has-dropcap::first-letter {
+    font-size: 3em;
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Ornement — séparateur "§ § §" pour <hr>
+// ──────────────────────────────────────────────────────────────────
+
+.ornament {
+  text-align: center;
+  border: 0;
+  margin: var(--space-xl) auto;
+  color: var(--rule-strong);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  letter-spacing: 0.8em;
+  overflow: visible;
+  height: auto;
+}
+
+.ornament::before {
+  content: "§ § §";
+}
+
+// On remplace <hr> dans la prose par l'ornement (Zola compile `---` en <hr>).
+.prose hr,
+.ecrit-page hr {
+  text-align: center;
+  border: 0;
+  margin: var(--space-xl) auto;
+  height: auto;
+}
+
+.prose hr::before,
+.ecrit-page hr::before {
+  content: "§ § §";
+  color: var(--rule-strong);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  letter-spacing: 0.8em;
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Bloc "APPEL À RÉPONSE" — encadré clôturant un article
+// ──────────────────────────────────────────────────────────────────
+
+.callout {
+  background: var(--surface-sub);
+  border-top: 3px solid var(--accent);
+  padding: var(--space-md) var(--space-lg);
+  margin-block: var(--space-xl);
+  max-width: var(--measure-wide);
+}
+
+.callout__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0 0 var(--space-xs) 0;
+}
+
+.callout__label::before {
+  content: "▌ ";
+  color: var(--accent);
+}
+
+.callout__body { margin: 0; }
+
+.callout__sign {
+  display: block;
+  margin-top: var(--space-sm);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Bloc OURS — identification éditoriale en bas de contact
+// ──────────────────────────────────────────────────────────────────
+
+// Bloc OURS : cadre plein cohérent avec le cadre hero (pas de side-stripe).
+// Label en section-color, marque ▍ pour signifier "bloc d'identification".
+.ours {
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  padding: var(--space-md) var(--space-lg);
+  margin-top: var(--space-xl);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--ink-soft);
+  max-width: var(--measure-wide);
+}
+
+.ours__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0 0 var(--space-xs) 0;
+}
+
+.ours__label::before {
+  content: "▍ ";
+  color: var(--section-color, var(--accent));
+}
+
+.ours p { margin: 0.2em 0; max-width: none; }
+.ours strong { color: var(--surface-ink); font-weight: 500; }
+
+// ──────────────────────────────────────────────────────────────────
+// Mark — emphase yellow style poster, deux variants
+// .mark : fond yellow plein, signature forte, pour titres et passages-clés
+// .mark--soft : underline yellow 3px, discrète, pour prose courante
+// ──────────────────────────────────────────────────────────────────
+
+.mark {
+  background: #ffd900;                  // poster yellow, fixe, theme-indep
+  color: oklch(0.155 0.010 28);
+  padding: 0.05em 0.3em;
+  font-weight: inherit;
+  box-decoration-break: clone;          // bien rendre les wraps multiligne
+  -webkit-box-decoration-break: clone;
+}
+
+.mark--soft {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  text-decoration: underline #ffd900;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 0.12em;
+  text-decoration-skip-ink: none;
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Bloc "DANS CE NUMÉRO" — sommaire des écrits dans le teaser home
+// ──────────────────────────────────────────────────────────────────
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-sm) 0 var(--space-md) 0;
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.toc-list__item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.8em;
+  align-items: baseline;
+  padding-block: 0.35rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.toc-list__num {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  color: var(--section-color, var(--accent));
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+}
+
+.toc-list__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  color: var(--surface-ink);
+}
+
+.toc-list__meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 0.15em;
+  display: block;
+}

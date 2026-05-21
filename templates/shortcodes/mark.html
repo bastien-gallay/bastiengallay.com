@@ -1,0 +1,2 @@
+{%- set variant = variant | default(value="") -%}
+<mark class="mark{% if variant %} mark--{{ variant }}{% endif %}">{{ body | safe }}</mark>

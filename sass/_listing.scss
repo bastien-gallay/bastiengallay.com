@@ -1,0 +1,167 @@
+// Listings radical-style — héritent les couleurs sémantiques de lucid-lint.
+// Stratégie contraste cohérente : sombre/cream en light, moyen/sombre en dark.
+
+// ──────────────────────────────────────────────────────────────────
+// Tokens locaux : listing-bg adapte selon le thème
+// ──────────────────────────────────────────────────────────────────
+
+.listing {
+  // Light mode et défaut : fond sombre maximal pour contraste sur cream.
+  --listing-bg: oklch(0.155 0.010 28);
+  --listing-fg: oklch(0.93  0.008 65);
+  // Taille du body : pleine en pleine largeur, réduite en floating.
+  --listing-body-size: 0.92rem;
+  --listing-body-leading: 1.65;
+
+  margin: var(--space-md) 0 var(--space-lg);
+  font-family: var(--font-mono);
+  max-width: 100%;
+  overflow: hidden;
+}
+
+// Dark mode : un cran plus clair que la surface pour ressortir sans
+// pure inversion identique au light.
+:root[data-theme="dark"] .listing {
+  --listing-bg: oklch(0.22 0.012 28);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .listing {
+    --listing-bg: oklch(0.22 0.012 28);
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Header inversé avec caption + type-tag optionnel
+// ──────────────────────────────────────────────────────────────────
+
+.listing__header {
+  display: flex;
+  align-items: stretch;
+  background: var(--listing-bg);
+  color: var(--listing-fg);
+  border: 1px solid var(--rule-strong);
+  border-bottom: 0;
+}
+
+.listing__caption {
+  flex: 1;
+  padding: 0.6rem var(--space-md);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: oklch(0.75 0.014 50);
+  align-self: center;
+  margin: 0;
+}
+
+.listing__caption::before {
+  content: "▍ ";
+  color: var(--c-info);
+}
+
+.listing__tag {
+  background: var(--tag-color, var(--c-warning));
+  color: oklch(0.155 0.010 28);
+  padding: 0.6rem var(--space-md);
+  font-size: var(--text-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Body
+// ──────────────────────────────────────────────────────────────────
+
+.listing__body {
+  margin: 0;
+  padding: var(--space-lg) var(--space-md);
+  background: var(--listing-bg);
+  color: var(--listing-fg);
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  overflow-x: auto;
+  white-space: pre;
+  tab-size: 4;
+  font-size: var(--listing-body-size);
+  line-height: var(--listing-body-leading);
+  scrollbar-color: var(--rule-strong) transparent;
+  scrollbar-width: thin;
+}
+
+// Si le header est présent, le body perd son top border pour fusionner.
+.listing__header + .listing__body {
+  border-top: 0;
+}
+
+.listing__body code {
+  font: inherit;
+  color: inherit;
+  background: none;
+  padding: 0;
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Tokens de coloration — utilisables dans le contenu pré-formaté
+// ──────────────────────────────────────────────────────────────────
+
+.lt-warning  { color: var(--c-warning); }
+.lt-info     { color: var(--c-info);    }
+.lt-problem  { color: var(--c-problem); }
+.lt-success  { color: var(--c-success); }
+.lt-chrome   { color: var(--c-chrome);  font-weight: 500; }
+.lt-accent   { color: var(--accent);    }
+.lt-mute     { color: oklch(0.62 0.010 50); }
+.lt-rule     { color: var(--c-problem); }      // rule-id type [structure.xxx]
+.lt-strong   { font-weight: 500; }
+.lt-bar      { display: inline-block; min-width: 1ch; }
+.lt-bar--ok  { color: var(--c-success); }
+.lt-bar--bad { color: var(--c-problem); }
+.lt-num      { font-variant-numeric: tabular-nums lining-nums; }
+
+// ──────────────────────────────────────────────────────────────────
+// Modificateurs côté (gauche/droite) — pour listings flottés en article
+// ──────────────────────────────────────────────────────────────────
+
+// Floating : body shrink à ~0.78rem pour respirer dans la colonne étroite
+// et s'aligner sur la cadence de la prose alentour. Header reste lisible.
+.listing--right,
+.listing--left {
+  --listing-body-size: 0.78rem;
+  --listing-body-leading: 1.55;
+  max-width: 32rem;
+  width: 45%;
+  shape-outside: margin-box;
+}
+
+// Marges resserrées pour floats — la prose vient au contact, l'aside ne
+// flotte plus dans le vide. Padding interne du body également tassé.
+.listing--right {
+  float: right;
+  margin: 0.5em 0 0.8em 1em;
+}
+
+.listing--left {
+  float: left;
+  margin: 0.5em 1em 0.8em 0;
+}
+
+.listing--right .listing__body,
+.listing--left  .listing__body {
+  padding: var(--space-sm) var(--space-md);
+}
+
+// En sous de 60rem, on dé-flotte : le listing reprend toute la largeur.
+@media (max-width: 60rem) {
+  .listing--right,
+  .listing--left {
+    float: none;
+    width: 100%;
+    max-width: 100%;
+    margin-inline: 0;
+  }
+}

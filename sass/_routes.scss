@@ -47,32 +47,18 @@
 
 .ecrit-page__header {
   display: grid;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-sm);
-}
-
-.ecrit-page__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2xs);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  margin: 0;
-  margin-top: calc(var(--space-3xs) * -1);
-  font-variant-numeric: tabular-nums lining-nums;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
 }
 
 .ecrit-page__subtitle {
-  font-family: var(--font-body);
+  font-family: var(--font-display);
   font-style: italic;
-  font-size: var(--text-lg);
-  line-height: var(--leading-normal);
-  color: var(--surface-ink);
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
+  color: var(--ink-soft);
   max-width: var(--measure-wide);
   margin: 0;
-  margin-top: var(--space-3xs);
   text-wrap: balance;
 }
 
@@ -161,30 +147,65 @@
 .ecrit-page__content em { font-style: italic; }
 .ecrit-page__content strong { font-weight: 600; color: var(--surface-ink); }
 
-.ecrit-page__content code {
+// Inline code uniquement (`mot`) — pas dans les fenced blocks ni les
+// listings. Sans cette restriction, le bg --surface-sub écrasait le fond
+// sombre des listings → texte cream invisible en light mode.
+.ecrit-page__content :not(pre) > code {
   font-family: var(--font-mono, ui-monospace, SFMono-Regular, monospace);
   font-size: 0.92em;
   padding: 0.1em 0.3em;
-  background: var(--surface-soft, rgba(0,0,0,0.04));
-  border-radius: 0.2em;
+  background: var(--surface-sub);
+  border-radius: 2px;
 }
 
-// Blocs `pre` standards : sobres, pleine mesure, désactivent le styling
-// inline-code interne.
-.ecrit-page__content pre {
+// Fenced code blocks markdown (```rust ... ```) : stratégie radical contrast
+// cohérente avec les .listing — sombre/cream en light, moyen/sombre en dark.
+// :not(.listing__body) pour ne pas écraser le <pre> des shortcodes listing.
+.ecrit-page__content pre:not(.listing__body) {
+  --listing-bg: oklch(0.155 0.010 28);
+  --listing-fg: oklch(0.93  0.008 65);
+
   clear: both;
   font-family: var(--font-mono, ui-monospace, SFMono-Regular, monospace);
   font-size: 0.82em;
-  line-height: 1.45;
-  padding: var(--space-md) var(--space-lg);
-  background: var(--surface-soft, rgba(0,0,0,0.04));
-  border-left: 2px solid var(--rule);
+  line-height: 1.6;
+  padding: var(--space-lg) var(--space-md);
+  background: var(--listing-bg);
+  color: var(--listing-fg);
+  border: 1px solid var(--rule-strong);
   overflow-x: auto;
   max-width: var(--measure-base);
-  color: var(--ink-soft);
+  position: relative;
+  scrollbar-color: var(--rule-strong) transparent;
+  scrollbar-width: thin;
 }
 
-.ecrit-page__content pre code {
+:root[data-theme="dark"] .ecrit-page__content pre:not(.listing__body) {
+  --listing-bg: oklch(0.22 0.012 28);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ecrit-page__content pre:not(.listing__body) {
+    --listing-bg: oklch(0.22 0.012 28);
+  }
+}
+
+// Type-tag automatique pour les fenced blocks Zola qui ont un data-lang.
+.ecrit-page__content pre[data-lang]:not(.listing__body)::before {
+  content: attr(data-lang);
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--c-warning);
+  color: oklch(0.155 0.010 28);
+  padding: 0.4rem var(--space-sm);
+  font-size: var(--text-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.ecrit-page__content pre:not(.listing__body) code {
   background: none;
   padding: 0;
   border-radius: 0;
@@ -192,52 +213,43 @@
   color: inherit;
 }
 
-// Variante flottée (shortcode `aside`) : même comportement que les images
-// flottées, pour glisser un encart code/texte dans la marge.
-.ecrit-page__content pre.ecrit-page__aside {
-  clear: none;
-  max-width: min(45%, 18rem);
-  margin: 0.35em 0 var(--space-sm) var(--space-lg);
-  padding: var(--space-sm) var(--space-md);
-  font-size: 0.74em;
-  line-height: 1.35;
-  shape-outside: margin-box;
-}
-
-.ecrit-page__content pre.ecrit-page__aside--right { float: right; }
-.ecrit-page__content pre.ecrit-page__aside--left {
-  float: left;
-  margin: 0.35em var(--space-lg) var(--space-sm) 0;
-}
-
-@media (max-width: 60rem) {
-  .ecrit-page__content pre.ecrit-page__aside,
-  .ecrit-page__content pre.ecrit-page__aside--left,
-  .ecrit-page__content pre.ecrit-page__aside--right {
-    float: none;
-    max-width: 100%;
-    margin: var(--space-md) 0;
-  }
-}
-
-// Séparateur de section : trois points centrés, plus lisibles qu'une
-// fine règle qui se perdait sur fond clair comme sur fond sombre.
-.ecrit-page__content hr {
-  border: 0;
-  height: auto;
-  margin-block: var(--space-xl);
-  text-align: center;
-  color: var(--ink-mute);
-  overflow: visible;
-}
-
-.ecrit-page__content hr::before {
-  content: "* * *";
-  font-family: var(--font-body);
+// Blockquotes éditorial : guillemet décoratif en --section-color, italique,
+// pas de side-stripe (ban skill). Filets top + bottom seulement.
+.ecrit-page__content blockquote {
+  font-family: var(--font-display);
+  font-style: italic;
   font-size: var(--text-lg);
-  letter-spacing: 0.6em;
-  color: var(--ink-mute);
+  line-height: var(--leading-snug);
+  color: var(--surface-ink);
+  margin: var(--space-xl) 0;
+  padding: var(--space-md) 0 var(--space-md) var(--space-xl);
+  border-block: 1px solid var(--rule);
+  position: relative;
+  max-width: var(--measure-base);
 }
+
+.ecrit-page__content blockquote::before {
+  content: "«";
+  font-family: var(--font-display);
+  font-size: 3em;
+  line-height: 0.8;
+  color: var(--accent);
+  position: absolute;
+  left: 0;
+  top: 0.4em;
+}
+
+.ecrit-page__content blockquote p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.ecrit-page__content blockquote p + p { margin-top: var(--space-sm); }
+
+// Séparateur de section — l'ornement § § § est défini dans _editorial.scss
+// (.prose hr::before / .ecrit-page hr::before). On force juste le clear ici
+// pour éviter qu'une image flottée chevauche le séparateur.
+.ecrit-page__content hr { clear: both; }
 
 .now__updated {
   font-size: var(--text-xs);

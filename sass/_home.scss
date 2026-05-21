@@ -1,29 +1,56 @@
-// Home — hero seul pour ce premier passage.
-// Les sections (focus, pôles, écrits, contact) restent en placeholder.
+// Home — pochette d'une revue d'atelier.
+// Composition : issue-bar, hero avec §01 géant et sommaire, focus en couverture,
+// familles en cards, écrits en table des matières, contact + OURS.
+
+// ─── Hero / la pochette ─────────────────────────────────────────────────────
 
 .hero {
-  padding-block: clamp(var(--space-xl), 8vw, var(--space-4xl)) var(--space-3xl);
+  // padding-top supprimé : l'issue-bar prend directement le relais du
+  // header sticky, comme une suite naturelle de la masthead.
+  padding-block: 0 var(--space-3xl);
   display: grid;
   gap: var(--space-lg);
-  // Composition asymétrique : titre déborde un peu côté gauche en desktop
-  // via grid auto, mais reste left-aligned pour le scan de lecture.
-  grid-template-columns: minmax(0, 1fr);
 }
 
-.hero__meta {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  color: var(--ink-mute);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
+// Cadre double-border autour du titre + sommaire (item poster #1).
+// L'issue-bar reste au-dessus, hors cadre, comme dans la maquette.
+.hero__cadre {
+  position: relative;
+  border: 3px solid var(--surface-ink);
+  padding: clamp(var(--space-md), 3vw, var(--space-xl))
+           clamp(var(--space-md), 4vw, var(--space-2xl))
+           clamp(var(--space-lg), 4vw, var(--space-2xl));
+  display: grid;
+  gap: var(--space-lg);
 }
 
-.hero__meta-rule {
-  flex: 0 1 6rem;
-  height: 1px;
-  background: var(--rule-strong);
+.hero__cadre::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--surface-ink);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+// Bloc titre : §01 géant à gauche du nom + lead (grid asymétrique).
+.hero__head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: clamp(var(--space-sm), 3vw, var(--space-xl));
+  margin-top: var(--space-md);
+}
+
+.hero__bignum {
+  margin-top: -0.15em;          // remonte sur la baseline du titre
+  align-self: start;
+}
+
+.hero__head-text {
+  display: grid;
+  gap: var(--space-md);
+  min-width: 0;
 }
 
 .hero__title {
@@ -34,14 +61,13 @@
   letter-spacing: -0.03em;
   color: var(--surface-ink);
   text-wrap: balance;
+  margin: 0;
 }
 
-// Accentuation du prénom : taille égale, mais le rouge tombe sur un signe
-// typographique discret, pas sur le mot lui-même (pas de gradient text).
+// Le point rouge De Stijl — signature visuelle, isolée du mot.
 .hero__title-mark {
   color: var(--accent);
   font-style: normal;
-  // Le point rouge De Stijl, isolé, fonctionne comme une signature.
 }
 
 .hero__lead {
@@ -52,6 +78,7 @@
   max-width: 38ch;
   color: var(--ink-soft);
   font-weight: 400;
+  margin: 0;
 }
 
 .hero__lead em {
@@ -59,128 +86,110 @@
   color: var(--surface-ink);
 }
 
-// Ancres vers les sections — pas des boutons, des liens "à l'ancienne"
-// avec numérotation et arrow.
-.hero__anchors {
-  margin-top: var(--space-md);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-md) var(--space-xl);
+// Sommaire du numéro — table des matières façon revue avec règle pointillée.
+.hero__sommaire {
+  margin-top: var(--space-lg);
   padding-top: var(--space-md);
   border-top: 1px solid var(--rule);
+  display: grid;
+  gap: var(--space-sm);
 }
 
-.hero__anchor {
-  display: inline-flex;
-  flex-direction: column;
-  gap: var(--space-3xs);
-  font-family: var(--font-body);
+.hero__sommaire-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.1rem;
+}
+
+.hero__sommaire-link {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding-block: 0.6rem;
+  border-bottom: 1px solid var(--rule);
   color: var(--surface-ink);
   transition: color var(--dur-fast) var(--ease-out-quart);
 }
 
-.hero__anchor-num {
-  font-size: var(--text-xs);
-  font-weight: 400;
-  color: var(--ink-mute);
-  letter-spacing: 0;
-  font-variant-numeric: tabular-nums lining-nums;
-}
-
-.hero__anchor-label {
-  font-size: var(--text-base);
+// Doctrine §NN — sommaire en repos toujours gris muted. La paire bicolore
+// associée à la section apparaît uniquement au hover/focus du lien.
+.hero__sommaire-num {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
   font-weight: 500;
-  letter-spacing: -0.01em;
-  display: inline-flex;
-  align-items: baseline;
-  gap: var(--space-2xs);
+  color: var(--ink-mute);
+  font-variant-numeric: tabular-nums lining-nums;
+  text-shadow: 1.5px 1.5px 0 transparent;
+  transition: color var(--dur-fast) var(--ease-out-quart),
+              text-shadow var(--dur-fast) var(--ease-out-quart);
 }
 
-.hero__anchor-label::after {
-  content: "↓";
-  font-size: 0.85em;
-  color: var(--ink-mute);
+.hero__sommaire-link:hover .hero__sommaire-num,
+.hero__sommaire-link:focus-visible .hero__sommaire-num {
+  color: var(--link-color, var(--c-info));
+  text-shadow: 1.5px 1.5px 0 var(--link-shadow, var(--accent));
+}
+
+.hero__sommaire-rule {
+  align-self: center;
+  height: 1px;
+  background: var(--rule);
+  margin-inline: var(--space-2xs);
   transform: translateY(-0.05em);
+}
+
+.hero__sommaire-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  letter-spacing: -0.012em;
+}
+
+.hero__sommaire-arrow {
+  color: var(--ink-mute);
+  font-size: 0.95em;
   transition: transform var(--dur-mid) var(--ease-out-expo),
               color var(--dur-fast) var(--ease-out-quart);
 }
 
-.hero__anchor:hover { color: var(--accent-deep); text-decoration: none; }
-.hero__anchor:hover .hero__anchor-num { color: var(--accent); }
-.hero__anchor:hover .hero__anchor-label::after {
-  color: var(--accent);
+.hero__sommaire-link:hover,
+.hero__sommaire-link:focus-visible {
+  color: var(--link-color, var(--accent-deep));
+  text-decoration: none;
+  outline: none;
+}
+
+.hero__sommaire-link:hover .hero__sommaire-arrow {
+  color: var(--link-color, var(--accent));
   transform: translateY(0.15em);
 }
 
-// Ancres qui mènent vers une autre route (pas un scroll dans la page) :
-// flèche oblique ↗ plutôt que ↓, et l'animation au hover pousse
-// vers le haut-droit pour signaler la sortie.
-.hero__anchor--route .hero__anchor-label::after { content: "↗"; }
-.hero__anchor--route:hover .hero__anchor-label::after {
+.hero__sommaire-link--route:hover .hero__sommaire-arrow {
   transform: translate(0.1em, -0.15em);
 }
 
-// Sections placeholder — silhouettes minimales en attendant les crafts suivants.
-.section-placeholder {
-  padding-block: var(--space-3xl) var(--space-2xl);
-  border-top: 1px solid var(--rule);
-  display: grid;
-  gap: var(--space-md);
+// Sur les écrans étroits, le §01 géant passe au-dessus du titre.
+@media (max-width: 36rem) {
+  .hero__head {
+    grid-template-columns: 1fr;
+  }
+  .hero__bignum { font-size: clamp(3.5rem, 14vw, 5rem); }
+  .hero__sommaire-link {
+    grid-template-columns: auto 1fr auto;
+  }
+  .hero__sommaire-rule { display: none; }
 }
 
-.section-placeholder__index {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-sm);
-  color: var(--ink-mute);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  font-variant-numeric: tabular-nums lining-nums;
-}
-
-.section-placeholder__index-num { color: var(--accent); font-weight: 500; }
-
-.section-placeholder__title {
-  font-family: var(--font-display);
-  font-size: var(--text-3xl);
-  font-weight: 400;
-  line-height: var(--leading-tight);
-  letter-spacing: -0.022em;
-  color: var(--surface-ink);
-  margin: 0;
-}
-
-.section-placeholder__note {
-  font-size: var(--text-base);
-  color: var(--ink-soft);
-  max-width: var(--measure-narrow);
-  font-style: italic;
-}
-
-// ─── Vedette ────────────────────────────────────────────────────────────────
-// Section dédiée au projet phare. Plus dense que les pôles : titre fort,
-// tagline, lead, 3 points clés, CTA outbound.
+// ─── Vedette / article de couverture ────────────────────────────────────────
 
 .focus {
   padding-block: var(--space-3xl) var(--space-2xl);
   border-top: 1px solid var(--rule-strong);
   display: grid;
-  gap: var(--space-lg);
+  gap: var(--space-md);
 }
-
-.focus__index {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-sm);
-  color: var(--ink-mute);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  font-variant-numeric: tabular-nums lining-nums;
-}
-
-.focus__index-num { color: var(--accent); font-weight: 500; }
 
 .focus__title {
   font-family: var(--font-display);
@@ -194,9 +203,6 @@
 
 .focus__title-mark { color: var(--accent); font-style: normal; }
 
-// Tagline éditoriale du focus : rendue en display italic pour signaler la
-// baseline (≠ paragraphe). Marche typo forte qui tient même sous le fallback
-// serif (Iowan / Georgia / serif système).
 .focus__tag {
   font-family: var(--font-display);
   font-style: italic;
@@ -210,43 +216,56 @@
   text-wrap: balance;
 }
 
+.focus__body {
+  margin-top: var(--space-sm);
+}
+
 .focus__lead {
   font-family: var(--font-body);
   font-size: var(--text-base);
   line-height: 1.55;
-  color: var(--ink-soft);
-  max-width: var(--measure-narrow);
+  color: var(--surface-ink);
+  max-width: var(--measure-base);
   margin: 0;
+}
+
+.focus__lead em {
+  font-style: italic;
+  color: var(--accent-deep);
+}
+
+.focus__points-label {
+  margin-top: var(--space-md);
 }
 
 .focus__points {
   list-style: none;
   padding: 0;
-  margin: var(--space-sm) 0 0;
+  margin: 0;
   display: grid;
   gap: var(--space-sm);
-  border-top: 1px solid var(--rule);
-  padding-top: var(--space-md);
 }
 
 .focus__point {
-  position: relative;
-  padding-left: var(--space-md);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-sm);
   font-size: var(--text-base);
   color: var(--surface-ink);
   max-width: var(--measure-base);
   line-height: 1.5;
+  padding-block: var(--space-2xs);
+  border-bottom: 1px dotted var(--rule);
 }
 
-// Tiret marquant — distinct de la numérotation tabulaire du rail/hero.
-.focus__point::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.7em;
-  width: 0.6rem;
-  height: 1px;
-  background: var(--accent);
+.focus__point-num {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--section-color, var(--accent));
+  font-variant-numeric: tabular-nums lining-nums;
+  font-weight: 500;
+  white-space: nowrap;
+  align-self: baseline;
 }
 
 .focus__cta { margin: var(--space-sm) 0 0; }
@@ -283,29 +302,14 @@
   transform: translate(0.1em, -0.1em);
 }
 
-// ─── Pôles ──────────────────────────────────────────────────────────────────
-// Trois cartes ordonnées. Pas un grid d'égales : numérotation forte,
-// hiérarchie visuelle entre titre du pôle et liste de projets.
+// ─── Pôles / les familles ───────────────────────────────────────────────────
 
 .familles {
   padding-block: var(--space-3xl) var(--space-2xl);
   border-top: 1px solid var(--rule);
   display: grid;
-  gap: var(--space-lg);
+  gap: var(--space-md);
 }
-
-.familles__index {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-sm);
-  color: var(--ink-mute);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  font-variant-numeric: tabular-nums lining-nums;
-}
-
-.familles__index-num { color: var(--accent); font-weight: 500; }
 
 .familles__title {
   font-family: var(--font-display);
@@ -326,29 +330,42 @@
   margin: 0;
 }
 
+// Deux familles côte à côte en desktop, empilées en mobile.
 .familles__list {
   list-style: none;
   padding: 0;
   margin: var(--space-md) 0 0;
   display: grid;
-  gap: var(--space-xl);
+  grid-template-columns: repeat(auto-fit, minmax(min(28rem, 100%), 1fr));
+  gap: var(--space-lg);
 }
 
 .famille {
   display: grid;
-  gap: var(--space-sm);
-  padding-top: var(--space-md);
-  border-top: 1px solid var(--rule);
+  gap: var(--space-xs);
+  padding: var(--space-md) 0 0;
+  border-top: 2px solid var(--rule-strong);
+}
+
+.famille__num {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  color: var(--section-color, var(--accent));
+  font-variant-numeric: tabular-nums lining-nums;
+  font-weight: 500;
+  margin: 0;
 }
 
 .famille__title {
   font-family: var(--font-display);
-  font-size: var(--text-2xl);
+  font-size: var(--text-xl);
   font-weight: 400;
   line-height: var(--leading-tight);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.018em;
   color: var(--surface-ink);
   margin: 0;
+  text-wrap: balance;
 }
 
 .famille__body {
@@ -356,42 +373,7 @@
   font-size: var(--text-base);
   line-height: 1.55;
   color: var(--ink-soft);
-  max-width: var(--measure-base);
   margin: 0;
-}
-
-.famille__out { margin: 0; }
-
-.famille__out-link {
-  display: inline-flex;
-  align-items: baseline;
-  gap: var(--space-2xs);
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  font-weight: 500;
-  color: var(--surface-ink);
-  border-bottom: 1px solid var(--rule-strong);
-  padding-bottom: 0.1em;
-  transition: color var(--dur-fast) var(--ease-out-quart),
-              border-color var(--dur-fast) var(--ease-out-quart);
-}
-
-.famille__out-link:hover {
-  color: var(--accent-deep);
-  border-bottom-color: var(--accent);
-  text-decoration: none;
-}
-
-.famille__out-arrow {
-  font-size: 0.9em;
-  color: var(--ink-mute);
-  transition: transform var(--dur-mid) var(--ease-out-expo),
-              color var(--dur-fast) var(--ease-out-quart);
-}
-
-.famille__out-link:hover .famille__out-arrow {
-  color: var(--accent);
-  transform: translate(0.1em, -0.1em);
 }
 
 .famille__projects {
@@ -404,21 +386,24 @@
   font-size: var(--text-base);
 }
 
+// Liens projets : underline plus marqué que --rule pour être lisibles
+// d'emblée comme liens cliquables (sinon ils ressemblent à du texte plat).
 .famille__projects a {
   color: var(--surface-ink);
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule-strong);
   padding-bottom: 0.1em;
   transition: color var(--dur-fast) var(--ease-out-quart),
-              border-color var(--dur-fast) var(--ease-out-quart);
+              border-color var(--dur-fast) var(--ease-out-quart),
+              border-bottom-width var(--dur-fast) var(--ease-out-quart);
 }
 
 .famille__projects a:hover {
   color: var(--accent-deep);
-  border-bottom-color: var(--accent);
+  border-bottom: 2px solid var(--accent);
   text-decoration: none;
 }
 
-// Réalisations clients — discret, pas mis en avant.
+// Réalisations clients — HORS-SÉRIE, discret, jamais mis en avant.
 .familles__clients {
   margin-top: var(--space-xl);
   padding-top: var(--space-md);
@@ -428,6 +413,7 @@
 }
 
 .familles__clients-label {
+  font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
@@ -456,8 +442,6 @@
 }
 
 // ─── Écrits teaser ──────────────────────────────────────────────────────────
-// Bloc court sur la home qui renvoie vers la route /ecrits/ — pas un index
-// inline (l'index vit sur sa propre page).
 
 .ecrits-teaser {
   padding-block: var(--space-3xl) var(--space-2xl);
@@ -465,20 +449,6 @@
   display: grid;
   gap: var(--space-sm);
 }
-
-.ecrits-teaser__index {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-sm);
-  color: var(--ink-mute);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  font-variant-numeric: tabular-nums lining-nums;
-  margin: 0;
-}
-
-.ecrits-teaser__index-num { color: var(--accent); font-weight: 500; }
 
 .ecrits-teaser__title {
   font-family: var(--font-display);
@@ -532,8 +502,7 @@
   transform: translateX(0.2em);
 }
 
-// ─── Contact ────────────────────────────────────────────────────────────────
-// Bloc terminal minimal — un seul canal pour l'instant (LinkedIn).
+// ─── Contact + OURS ─────────────────────────────────────────────────────────
 
 .contact {
   padding-block: var(--space-3xl) var(--space-2xl);
@@ -541,20 +510,6 @@
   display: grid;
   gap: var(--space-sm);
 }
-
-.contact__index {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-sm);
-  color: var(--ink-mute);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  font-variant-numeric: tabular-nums lining-nums;
-  margin: 0;
-}
-
-.contact__index-num { color: var(--accent); font-weight: 500; }
 
 .contact__title {
   font-family: var(--font-display);
@@ -608,7 +563,8 @@
   transform: translate(0.1em, -0.1em);
 }
 
-// Entrée échelonnée du hero. Une seule animation, à l'arrivée.
+// ─── Entrée échelonnée du hero ──────────────────────────────────────────────
+
 @media (prefers-reduced-motion: no-preference) {
   .hero > * {
     opacity: 0;
@@ -616,10 +572,9 @@
     animation: hero-in var(--dur-slow) var(--ease-out-expo) forwards;
   }
 
-  .hero__meta   { animation-delay:   60ms; }
-  .hero__title  { animation-delay:  140ms; }
-  .hero__lead   { animation-delay:  340ms; }
-  .hero__anchors{ animation-delay:  520ms; }
+  .hero .issue-bar  { animation-delay:   60ms; }
+  .hero__head       { animation-delay:  180ms; }
+  .hero__sommaire   { animation-delay:  420ms; }
 }
 
 @keyframes hero-in {

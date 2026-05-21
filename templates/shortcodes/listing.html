@@ -1,13 +1,11 @@
-{#- aside : alias historique de listing avec floating par défaut. -#}
-{#- Préfère {% listing(side="...") %} pour les nouveaux usages. -#}
-{%- set side = side | default(value="right") -%}
+{%- set side_class = side | default(value="") -%}
 {%- set has_header = caption or tag -%}
-<figure class="listing listing--{{ side }}">
+<figure class="listing{% if side_class %} listing--{{ side_class }}{% endif %}">
 {%- if has_header %}
   <figcaption class="listing__header">
     {%- if caption %}<span class="listing__caption">{{ caption | safe }}</span>{%- endif %}
     {%- if tag %}<span class="listing__tag"{% if tag_color %} style="--tag-color: {{ tag_color | safe }};"{% endif %}>{{ tag | safe }}</span>{%- endif %}
   </figcaption>
 {%- endif %}
-  <pre class="listing__body"><code>{{ body | trim | safe }}</code></pre>
+  <pre class="listing__body"><code>{{ body | safe }}</code></pre>
 </figure>
