@@ -34,7 +34,7 @@
 
   <aside class="ecrit-page__signature" aria-label="À propos de l'auteur">
     <a class="ecrit-page__signature-name" href="{{ config.base_url | safe }}">— Bastien Gallay</a>
-    <span class="ecrit-page__signature-bio">outils open source pour mieux écrire et mieux penser.</span>
+    <span class="ecrit-page__signature-bio">{{ page.extra.signature_bio | default(value="outils open source pour mieux écrire et mieux penser.") }}</span>
   </aside>
 
   <p class="ecrit-page__back">

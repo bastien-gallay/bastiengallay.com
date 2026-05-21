@@ -147,6 +147,28 @@
 .ecrit-page__content em { font-style: italic; }
 .ecrit-page__content strong { font-weight: 600; color: var(--surface-ink); }
 
+// Liens inline dans la prose : underline accent 1px discret par défaut,
+// s'affermit au survol. Exclut les liens du listing (déjà sombres sur
+// fond cream du listing) où l'underline accent serait visuellement faux.
+.ecrit-page__content a:not(.listing a) {
+  color: var(--surface-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-skip-ink: auto;
+  transition: text-decoration-thickness var(--dur-fast) var(--ease-out-quart),
+              color var(--dur-fast) var(--ease-out-quart);
+}
+
+.ecrit-page__content a:not(.listing a):hover {
+  color: var(--accent-deep);
+  text-decoration-thickness: 2px;
+}
+
+// Dans figcaption et OURS, les liens sont déjà petits (text-xs / text-sm) ;
+// le 1px d'underline est suffisamment lisible. Pas de surcharge.
+
 // Inline code uniquement (`mot`) — pas dans les fenced blocks ni les
 // listings. Sans cette restriction, le bg --surface-sub écrasait le fond
 // sombre des listings → texte cream invisible en light mode.
@@ -356,4 +378,67 @@
   color: var(--accent-deep);
   border-bottom-color: var(--accent);
   text-decoration: none;
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Figure éditoriale (image + figcaption) — float alterné droite/gauche
+// comme les images Markdown brutes, mais portant un crédit FIG. NN.
+// ──────────────────────────────────────────────────────────────────
+
+.ecrit-page__content figure.ecrit-figure {
+  float: right;
+  max-width: min(45%, 18rem);
+  margin: 0.35em 0 var(--space-sm) var(--space-lg);
+  shape-outside: margin-box;
+}
+
+.ecrit-page__content figure.ecrit-figure:nth-of-type(even) {
+  float: left;
+  margin: 0.35em var(--space-lg) var(--space-sm) 0;
+}
+
+.ecrit-page__content figure.ecrit-figure img {
+  float: none;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+
+.ecrit-page__content figure.ecrit-figure .fig-mark {
+  margin-top: 0.4em;
+}
+
+@media (max-width: 60rem) {
+  .ecrit-page__content figure.ecrit-figure,
+  .ecrit-page__content figure.ecrit-figure:nth-of-type(even) {
+    float: none;
+    max-width: 100%;
+    margin: var(--space-md) auto;
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────
+// OURS — variante 2 colonnes (références + outils cités en fin d'article)
+// ──────────────────────────────────────────────────────────────────
+
+.ecrit-page__content .ours--cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  clear: both;
+}
+
+.ecrit-page__content .ours--cols .ours__col p {
+  margin: 0.2em 0;
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  max-width: none;
+}
+
+@media (max-width: 48rem) {
+  .ecrit-page__content .ours--cols {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
 }

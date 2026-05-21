@@ -129,25 +129,27 @@
 
 // Floating : body shrink à ~0.78rem pour respirer dans la colonne étroite
 // et s'aligner sur la cadence de la prose alentour. Header reste lisible.
+// Width 40% au lieu de 45% : laisse ~60cc à la prose autour (seuil de
+// confort de lecture), évite l'étranglement à 50cc.
 .listing--right,
 .listing--left {
   --listing-body-size: 0.78rem;
   --listing-body-leading: 1.55;
-  max-width: 32rem;
-  width: 45%;
+  max-width: 28rem;
+  width: 40%;
   shape-outside: margin-box;
 }
 
-// Marges resserrées pour floats — la prose vient au contact, l'aside ne
-// flotte plus dans le vide. Padding interne du body également tassé.
+// Marges verticales élargies pour éviter que deux listings flottants
+// consécutifs se télescopent quand la prose qui les sépare est courte.
 .listing--right {
   float: right;
-  margin: 0.5em 0 0.8em 1em;
+  margin: 1em 0 1.2em 1.2em;
 }
 
 .listing--left {
   float: left;
-  margin: 0.5em 1em 0.8em 0;
+  margin: 1em 1.2em 1.2em 0;
 }
 
 .listing--right .listing__body,
