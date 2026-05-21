@@ -2,6 +2,7 @@
 title = "Pourquoi ce site, et pourquoi maintenant"
 date = 2026-05-22
 description = "D'un billard mal recopié sur Thomson TO9 à une discipline : pourquoi ce site existe."
+draft = true
 
 [extra]
 heading_html = "Pourquoi ce site, et pourquoi <mark class=\"mark\">maintenant</mark>"
