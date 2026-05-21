@@ -211,18 +211,28 @@
     Quelques notes longues sur l'écriture, la lecture, et ce que je fabrique.
   </p>
 
+  {#- Teaser dynamique : Zola exclut déjà les drafts de section.pages quand on
+      build sans --drafts. On filtre en plus les pages futures pour éviter de
+      teaser une amorce datée demain. Bloc masqué si rien à montrer. -#}
+  {%- set ecrits = get_section(path="ecrits/_index.md") -%}
+  {%- set today = now() | date(format="%Y-%m-%d") -%}
+  {%- set visible = ecrits.pages | filter(attribute="draft", value=false) -%}
+  {% if visible | length > 0 %}
   <p class="ed-badge"><span>DANS CE NUMÉRO</span></p>
   <ol class="toc-list">
+    {% for p in visible %}
+      {% if p.date | date(format="%Y-%m-%d") <= today %}
     <li class="toc-list__item">
-      <span class="toc-list__num">§04.01</span>
+      <span class="toc-list__num">§04.{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
       <span>
-        <a class="toc-list__title" href="{{ config.base_url | safe }}/ecrits/pourquoi-ce-site/">
-          Pourquoi ce site, et pourquoi maintenant.
-        </a>
-        <span class="toc-list__meta">22/05/2026 · 8 MIN · D'un billard mal recopié à une discipline.</span>
+        <a class="toc-list__title" href="{{ p.permalink | safe }}">{{ p.title }}.</a>
+        <span class="toc-list__meta">{{ p.date | date(format="%d/%m/%Y") }} · {{ p.reading_time }} MIN{% if p.description %} · {{ p.description }}{% endif %}</span>
       </span>
     </li>
+      {% endif %}
+    {% endfor %}
   </ol>
+  {% endif %}
 
   <p class="ecrits-teaser__cta">
     <a class="ecrits-teaser__cta-link" href="{{ config.base_url | safe }}/ecrits/">
