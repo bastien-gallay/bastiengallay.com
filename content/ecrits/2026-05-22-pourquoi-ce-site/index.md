@@ -53,25 +53,6 @@ de position.
 
 ---
 
-J'ai l'habitude de tester la moindre idée qui me passe par la tête. Je
-stocke ces expériences dans un dossier `experiments/`. Je le trie
-systématiquement, impitoyablement : je compare chaque chantier 2 à 2. Seuls
-les plus pertinents restent. C'est le *death-match* des prototypes pour gagner le
-droit d'être promu au rang de projet. Et le prochain sur la ligne d'arrivée
-est **Rhetorix** : décrypter la rhétorique d'un article de presse.
-En novembre 2025, pour ma recherche d'emploi, j'ai bricolé quelques scripts
-et prompts. J'en ai extrait [inflecv](https://github.com/bastien-gallay/inflecv),
-qui transforme une offre d'emploi en CV adapté. Toujours pour piloter
-l'IA, [`/glance`](https://github.com/bastien-gallay/glance) formate les
-retours IA pour les rendre simples à lire et à survoler. Pour vérifier qu'un projet
-évolue dans le bon sens, `/feature-torture` est un banc de
-dissection d'une fonctionnalité pour juger si elle survit, mute ou
-disparaît. Jusqu'ici, j'ai créé pour m'amuser ou me faciliter la vie. J'ai
-partagé afin de m'imposer un standard de qualité — la qualité minimum
-pour ne pas m'en vouloir, dans quelques semaines ou quelques mois,
-quand je voudrai reprendre le travail.
-C'est de cette matière que naissent les billets qu'on lit ici.
-
 {% listing(side="right", caption="LISTING 1 · ARBORESCENCE", tag="TREE", tag_color="var(--c-info)") %}
 experiments/
 ├── ai
@@ -98,6 +79,25 @@ experiments/
 
 22 directories
 {% end %}
+
+J'ai l'habitude de tester la moindre idée qui me passe par la tête. Je
+stocke ces expériences dans un dossier `experiments/`. Je le trie
+systématiquement, impitoyablement : je compare chaque chantier 2 à 2. Seuls
+les plus pertinents restent. C'est le *death-match* des prototypes pour gagner le
+droit d'être promu au rang de projet. Et le prochain sur la ligne d'arrivée
+est **Rhetorix** : décrypter la rhétorique d'un article de presse.
+En novembre 2025, pour ma recherche d'emploi, j'ai bricolé quelques scripts
+et prompts. J'en ai extrait [inflecv](https://github.com/bastien-gallay/inflecv),
+qui transforme une offre d'emploi en CV adapté. Toujours pour piloter
+l'IA, [`/glance`](https://github.com/bastien-gallay/glance) formate les
+retours IA pour les rendre simples à lire et à survoler. Pour vérifier qu'un projet
+évolue dans le bon sens, `/feature-torture` est un banc de
+dissection d'une fonctionnalité pour juger si elle survit, mute ou
+disparaît. Jusqu'ici, j'ai créé pour m'amuser ou me faciliter la vie. J'ai
+partagé afin de m'imposer un standard de qualité — la qualité minimum
+pour ne pas m'en vouloir, dans quelques semaines ou quelques mois,
+quand je voudrai reprendre le travail.
+C'est de cette matière que naissent les billets qu'on lit ici.
 
 Pourquoi tenir à ce soin-là en 2026 ? Face à des projets et créations
 uniformes, l'impression que quelqu'un a repris, remanié et perfectionné
