@@ -198,7 +198,9 @@
 
 .main {
   min-width: 0;
-  padding-top: clamp(var(--space-lg), 4vw, var(--space-2xl));
+  // Padding minimal : l'issue-bar prend immédiatement le relais du
+  // header sticky, comme une suite naturelle de la masthead.
+  padding-top: var(--space-md);
 }
 
 // Colophon éditorial : grid 4 colonnes, plein cadre.

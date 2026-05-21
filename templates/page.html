@@ -6,14 +6,12 @@
 {% block content %}
 <article class="ecrit-page" aria-labelledby="ecrit-page-title">
   <p class="issue-bar">
-    <span class="issue-bar__pill">NUMÉRO §04.{{ page.extra.numero | default(value="01") }}</span>
-    <span>ÉCRITS</span>
-    <span class="issue-bar__sep">·</span>
-    <span>{{ page.date | date(format='%d/%m/%Y') }}</span>
-    <span class="issue-bar__sep">·</span>
-    <span>{{ page.reading_time }} MIN</span>
-    <span class="issue-bar__sep">·</span>
-    <span>{{ page.word_count }} MOTS</span>
+    <span class="issue-bar__left">
+      <span class="issue-bar__pill">NUMÉRO §04.{{ page.extra.numero | default(value="01") }}</span>
+      <span>ÉCRITS</span>
+    </span>
+    <span class="issue-bar__mid">{{ page.date | date(format='%d/%m/%Y') }}</span>
+    <span class="issue-bar__right">{{ page.reading_time }} MIN · {{ page.word_count }} MOTS</span>
   </p>
 
   <header class="ecrit-page__header">

@@ -3,12 +3,12 @@
 {% block content %}
 <section class="hero section--pink" id="intro" aria-labelledby="hero-title">
   <p class="issue-bar">
-    <span class="issue-bar__pill">NUMÉRO §01</span>
-    <span>ATELIER OUVERT</span>
-    <span class="issue-bar__sep">·</span>
-    <span>{{ now() | date(format='%d/%m/%Y') }}</span>
-    <span class="issue-bar__sep">·</span>
-    <span>6 SECTIONS</span>
+    <span class="issue-bar__left">
+      <span class="issue-bar__pill">NUMÉRO §01</span>
+      <span>ATELIER OUVERT</span>
+    </span>
+    <span class="issue-bar__mid">{{ now() | date(format='%d/%m/%Y') }}</span>
+    <span class="issue-bar__right">6 SECTIONS</span>
   </p>
 
   <div class="hero__cadre">

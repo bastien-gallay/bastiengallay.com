@@ -5,7 +5,9 @@
 // ─── Hero / la pochette ─────────────────────────────────────────────────────
 
 .hero {
-  padding-block: clamp(var(--space-md), 4vw, var(--space-2xl)) var(--space-3xl);
+  // padding-top supprimé : l'issue-bar prend directement le relais du
+  // header sticky, comme une suite naturelle de la masthead.
+  padding-block: 0 var(--space-3xl);
   display: grid;
   gap: var(--space-lg);
 }

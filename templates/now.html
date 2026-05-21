@@ -6,12 +6,12 @@
 {% block content %}
 <article class="now ecrit-page section--cyan" aria-labelledby="now-title">
   <p class="issue-bar">
-    <span class="issue-bar__pill">NUMÉRO §05</span>
-    <span>MAINTENANT</span>
-    <span class="issue-bar__sep">·</span>
-    <span>MIS À JOUR {{ section.extra.last_update | default(value="21/05/2026") }}</span>
-    <span class="issue-bar__sep">·</span>
-    <span>SUR L'ÉTABLI</span>
+    <span class="issue-bar__left">
+      <span class="issue-bar__pill">NUMÉRO §05</span>
+      <span>MAINTENANT</span>
+    </span>
+    <span class="issue-bar__mid">MIS À JOUR {{ section.extra.last_update | default(value="21/05/2026") }}</span>
+    <span class="issue-bar__right">SUR L'ÉTABLI</span>
   </p>
 
   <header class="ecrit-page__header">

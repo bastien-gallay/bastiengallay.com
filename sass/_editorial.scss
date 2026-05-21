@@ -5,19 +5,45 @@
 // Issue-bar — bandeau haut de page (POCHETTE §NN · DATE · MIN)
 // ──────────────────────────────────────────────────────────────────
 
+// Issue-bar 3 colonnes façon header de journal :
+// gauche (pill + label) | centre (date) | droite (méta).
 .issue-bar {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
   color: var(--ink-mute);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4em 1.2em;
-  padding-block: 0.6rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-md);
+  padding-block: 0.55rem;
   border-block: 1px solid var(--rule);
-  margin-bottom: var(--space-xl);
-  max-width: none;     // override la max-width 68ch des <p>
+  margin: 0 0 var(--space-lg);
+  max-width: none;
+}
+
+.issue-bar__left,
+.issue-bar__mid,
+.issue-bar__right {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  min-width: 0;
+}
+
+.issue-bar__left  { justify-self: start; }
+.issue-bar__mid   { justify-self: center; text-align: center; }
+.issue-bar__right { justify-self: end;   text-align: right; }
+
+// Repli mobile : grille s'aplatit en pile gauche.
+@media (max-width: 36rem) {
+  .issue-bar {
+    grid-template-columns: 1fr;
+    gap: 0.4em;
+  }
+  .issue-bar__mid,
+  .issue-bar__right { justify-self: start; text-align: left; }
 }
 
 .issue-bar__sep {
