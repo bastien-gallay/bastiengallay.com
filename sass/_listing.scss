@@ -140,16 +140,17 @@
   shape-outside: margin-box;
 }
 
-// Marges verticales élargies pour éviter que deux listings flottants
-// consécutifs se télescopent quand la prose qui les sépare est courte.
+// Marges respiratoires : haut/bas pour ne pas coller à la prose verticalement
+// ni au bloc OURS qui clôt l'article, latéral pour donner ~1.5em entre le
+// listing et le texte qui l'enveloppe.
 .listing--right {
   float: right;
-  margin: 1em 0 1.2em 1.2em;
+  margin: var(--space-md) 0 var(--space-xl) var(--space-lg);
 }
 
 .listing--left {
   float: left;
-  margin: 1em 1.2em 1.2em 0;
+  margin: var(--space-md) var(--space-lg) var(--space-xl) 0;
 }
 
 .listing--right .listing__body,

@@ -215,13 +215,14 @@
       build sans --drafts. On filtre en plus les pages futures pour éviter de
       teaser une amorce datée demain. Bloc masqué si rien à montrer. -#}
   {%- set ecrits = get_section(path="ecrits/_index.md") -%}
-  {%- set today = now() | date(format="%Y-%m-%d") -%}
+  {%- set today_int = now() | date(format="%Y%m%d") | int -%}
   {%- set visible = ecrits.pages | filter(attribute="draft", value=false) -%}
   {% if visible | length > 0 %}
   <p class="ed-badge"><span>DANS CE NUMÉRO</span></p>
   <ol class="toc-list">
     {% for p in visible %}
-      {% if p.date | date(format="%Y-%m-%d") <= today %}
+      {%- set page_int = p.date | date(format="%Y%m%d") | int -%}
+      {% if page_int <= today_int %}
     <li class="toc-list__item">
       <span class="toc-list__num">§04.{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
       <span>

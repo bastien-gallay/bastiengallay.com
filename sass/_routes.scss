@@ -427,6 +427,9 @@
   grid-template-columns: 1fr 1fr;
   gap: var(--space-lg);
   clear: both;
+  // Espace garanti au-dessus, même quand un listing flottant a poussé le
+  // clear loin sous le dernier paragraphe.
+  margin-top: var(--space-2xl);
 }
 
 .ecrit-page__content .ours--cols .ours__col p {
