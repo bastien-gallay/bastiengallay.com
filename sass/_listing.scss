@@ -9,11 +9,12 @@
   // Light mode et défaut : fond sombre maximal pour contraste sur cream.
   --listing-bg: oklch(0.155 0.010 28);
   --listing-fg: oklch(0.93  0.008 65);
+  // Taille du body : pleine en pleine largeur, réduite en floating.
+  --listing-body-size: 0.92rem;
+  --listing-body-leading: 1.65;
 
   margin: var(--space-md) 0 var(--space-lg);
   font-family: var(--font-mono);
-  font-size: 0.92rem;
-  line-height: 1.65;
   max-width: 100%;
   overflow: hidden;
 }
@@ -86,6 +87,8 @@
   overflow-x: auto;
   white-space: pre;
   tab-size: 4;
+  font-size: var(--listing-body-size);
+  line-height: var(--listing-body-leading);
   scrollbar-color: var(--rule-strong) transparent;
   scrollbar-width: thin;
 }
@@ -124,22 +127,27 @@
 // Modificateurs côté (gauche/droite) — pour listings flottés en article
 // ──────────────────────────────────────────────────────────────────
 
+// Floating : body shrink à ~0.78rem pour respirer dans la colonne étroite
+// et s'aligner sur la cadence de la prose alentour. Header reste lisible.
+.listing--right,
+.listing--left {
+  --listing-body-size: 0.78rem;
+  --listing-body-leading: 1.55;
+  max-width: 32rem;
+  width: 45%;
+  shape-outside: margin-box;
+}
+
 .listing--right {
   float: right;
   margin-left: var(--space-lg);
   margin-bottom: var(--space-md);
-  max-width: 32rem;
-  width: 45%;
-  shape-outside: margin-box;
 }
 
 .listing--left {
   float: left;
   margin-right: var(--space-lg);
   margin-bottom: var(--space-md);
-  max-width: 32rem;
-  width: 45%;
-  shape-outside: margin-box;
 }
 
 // En sous de 60rem, on dé-flotte : le listing reprend toute la largeur.
