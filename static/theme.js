@@ -35,6 +35,23 @@
 
   updateToggleLabel(currentTheme());
 
+  // Rail brand fade — le bloc texte du brand n'apparaît qu'après scroll
+  // hors du hero. Évite le doublon "Bastien Gallay" rail + hero quand le
+  // hero est à l'écran. Cible #intro si présent, sinon le premier .hero.
+  const rail = document.querySelector("[data-rail]");
+  const heroEl = document.getElementById("intro") || document.querySelector(".hero");
+  if (rail && heroEl && "IntersectionObserver" in window) {
+    const railIo = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        rail.classList.toggle("rail--scrolled", !e.isIntersecting);
+      });
+    }, { rootMargin: "-20% 0px 0px 0px", threshold: 0 });
+    railIo.observe(heroEl);
+  } else if (rail) {
+    // Pas de hero : afficher le brand tout de suite.
+    rail.classList.add("rail--scrolled");
+  }
+
   // Scrollspy — marque le lien de la section visible. Le rail utilise des
   // URLs absolues pour fonctionner depuis n'importe quelle route ; on ne
   // garde donc que les liens qui pointent vers la page courante avec un hash.

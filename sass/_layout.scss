@@ -1,42 +1,88 @@
-// Layout général — rail latéral gauche fixe (style nin.com "à l'ancienne")
-// + colonne contenu fluide. Mobile = nav top sticky compacte.
+// Layout général — header sticky haut "masthead de revue".
+// Le rail latéral nin.com a fusionné dans une bande haute (logo + sommaire
+// §NN horizontal + toggle thème). Le bloc texte du brand reste caché tant
+// que le hero est en viewport ; il apparaît au scroll (cf. theme.js
+// IntersectionObserver, ajoute .rail--scrolled).
 
 .shell {
   display: grid;
-  grid-template-columns: var(--rail-width) minmax(0, 1fr);
-  gap: clamp(var(--space-lg), 4vw, var(--space-3xl));
+  grid-template-columns: minmax(0, 1fr);
   max-width: var(--content-max);
   margin: 0 auto;
-  padding: clamp(var(--space-lg), 4vw, var(--space-2xl))
-           clamp(var(--space-md), 4vw, var(--space-2xl));
+  padding: 0 clamp(var(--space-md), 4vw, var(--space-2xl));
   min-height: 100dvh;
 }
 
 // ─────────────────────────────────────────────────────────────────
-// Rail latéral — desktop
+// Rail = header sticky haut, grille 3-col
 // ─────────────────────────────────────────────────────────────────
 
 .rail {
   position: sticky;
-  top: clamp(var(--space-lg), 4vw, var(--space-2xl));
-  align-self: start;
-  height: max-content;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2xl);
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
+  align-items: center;
+  gap: clamp(var(--space-sm), 2vw, var(--space-lg));
+  padding: var(--space-sm) 0;
+  background: color-mix(in oklch, var(--surface) 92%, transparent);
+  backdrop-filter: saturate(140%) blur(8px);
+  border-bottom: 1px solid var(--rule);
+  // Étend le fond au-delà du padding horizontal de .shell pour couvrir
+  // toute la largeur viewport au sticky.
+  margin-inline: calc(clamp(var(--space-md), 4vw, var(--space-2xl)) * -1);
+  padding-inline: clamp(var(--space-md), 4vw, var(--space-2xl));
 }
 
 .rail__brand {
   display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  color: var(--surface-ink);
+}
+
+// Carré rouge De Stijl — toujours visible, repère minimum.
+.rail__mark {
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--accent);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+// Texte du brand caché tant que le hero est en viewport.
+.rail__brand-text {
+  display: inline-flex;
   flex-direction: column;
   gap: var(--space-3xs);
-  color: var(--surface-ink);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-4px);
+  transition: opacity var(--dur-mid) var(--ease-out-quart),
+              transform var(--dur-mid) var(--ease-out-quart),
+              visibility 0s linear var(--dur-mid);
+}
+
+.rail--scrolled .rail__brand-text {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  transition: opacity var(--dur-mid) var(--ease-out-quart),
+              transform var(--dur-mid) var(--ease-out-quart),
+              visibility 0s;
+}
+
+// Respect motion réduit : pas de transition, juste un swap.
+@media (prefers-reduced-motion: reduce) {
+  .rail__brand-text,
+  .rail--scrolled .rail__brand-text { transition: none; transform: none; }
 }
 
 .rail__brand-name {
   font-family: var(--font-display);
-  font-size: var(--text-lg);
-  font-weight: 700;
+  font-size: var(--text-base);
+  font-weight: 400;
   line-height: 1;
   letter-spacing: -0.01em;
 }
@@ -49,36 +95,26 @@
   color: var(--ink-mute);
 }
 
-// Petit point rouge avant le nom — un seul accent visuel, signature.
-.rail__brand::before {
-  content: "";
-  display: block;
-  width: 0.55rem;
-  height: 0.55rem;
-  background: var(--accent);
-  margin-bottom: var(--space-2xs);
-  // Pas de border-radius : carré franc, ton De Stijl.
-}
-
-// Rail-marquepage : numéros §NN visibles. Le label vit en sr-only pour les
-// lecteurs d'écran ; le tooltip visuel utilise l'attribut title natif du lien
-// (pas de flyout positionné qui chevauche le contenu).
+// Nav horizontale au centre — sommaire §NN compact.
 .rail__nav {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-2xs);
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(var(--space-xs), 2vw, var(--space-md));
+  min-width: 0;
 }
 
 .rail__link {
-  display: block;
-  padding: var(--space-2xs) 0;
-  font-family: var(--font-mono);
+  display: inline-flex;
+  align-items: baseline;
+  padding: var(--space-3xs) 0;
   color: var(--ink-mute);
+  font-family: var(--font-mono);
   transition: color var(--dur-fast) var(--ease-out-quart);
 }
 
 .rail__link-num {
-  display: block;
+  display: inline-block;
   font-size: var(--text-sm);
   font-weight: 500;
   letter-spacing: 0;
@@ -88,16 +124,29 @@
               text-shadow var(--dur-fast) var(--ease-out-quart);
 }
 
-// Bicolore au hover et à l'état actif uniquement : signale l'engagement
-// sans bruit visuel sur les liens inactifs (texte muet, pas le bon support
-// pour un shadow saturé).
+// Doctrine §NN : gris muted au repos partout, bicolore section au
+// hover/focus/[aria-current]. La couleur active reprend la --link-color
+// / --link-shadow (paire associée à chaque section, exposée en inline
+// style sur les liens).
 .rail__link:hover .rail__link-num,
 .rail__link:focus-visible .rail__link-num,
 .rail__link[aria-current="true"] .rail__link-num {
-  text-shadow: 1.5px 1.5px 0 var(--link-shadow, transparent);
+  color: var(--link-color, var(--c-info));
+  text-shadow: 1.5px 1.5px 0 var(--link-shadow, var(--accent));
 }
 
-// Label conservé dans le DOM mais visuellement caché (a11y only).
+.rail__link:hover,
+.rail__link:focus-visible {
+  text-decoration: none;
+  outline: none;
+}
+
+.rail__link[aria-current="true"] .rail__link-num {
+  font-weight: 600;
+}
+
+// Label = invisible en desktop dans le header sticky (les numéros parlent
+// déjà ; le title= natif donne le tooltip pour les souris).
 .rail__link-label {
   position: absolute;
   width: 1px; height: 1px;
@@ -106,30 +155,12 @@
   white-space: nowrap;
 }
 
-.rail__link:hover,
-.rail__link:focus-visible {
-  color: var(--link-color, var(--accent));
-  text-decoration: none;
-  outline: none;
-}
-
-// État actif : nº prend la couleur de la section visée — "tu es ici" est
-// signalé dans la teinte de la pochette en cours de lecture.
-.rail__link[aria-current="true"] {
-  color: var(--link-color, var(--c-problem));
-}
-
-.rail__link[aria-current="true"] .rail__link-num {
-  font-weight: 600;
-}
-
-// Bas du rail : toggle thème + ext links.
+// Bas du rail : toggle thème à droite.
 .rail__foot {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: var(--space-xs);
-  padding-top: var(--space-md);
-  border-top: 1px solid var(--rule);
+  justify-self: end;
 }
 
 .theme-toggle {
@@ -145,7 +176,6 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2xs);
-  width: max-content;
   transition: border-color var(--dur-fast) var(--ease-out-quart),
               color var(--dur-fast) var(--ease-out-quart);
 }
@@ -167,12 +197,11 @@
 // ─────────────────────────────────────────────────────────────────
 
 .main {
-  min-width: 0; // évite blow-up en grid avec contenu long
+  min-width: 0;
+  padding-top: clamp(var(--space-lg), 4vw, var(--space-2xl));
 }
 
-// Colophon éditorial : grid 4 colonnes, plein cadre rail+content.
-// Vit hors de .shell pour s'étaler sur toute la largeur ; respecte la
-// même max-width que le contenu (content-max).
+// Colophon éditorial : grid 4 colonnes, plein cadre.
 .colophon {
   max-width: var(--content-max);
   margin: var(--space-4xl) auto 0;
@@ -198,11 +227,7 @@
   margin: 0 0 var(--space-2xs);
 }
 
-.colophon__label::first-letter {
-  // Marque ▍ : récupère --section-color via les sections du shell.
-  // Sur le colophon hors-shell, on retombe sur accent.
-  color: var(--accent);
-}
+.colophon__label::first-letter { color: var(--accent); }
 
 .colophon__value {
   margin: 0;
@@ -238,83 +263,22 @@
 }
 
 // ─────────────────────────────────────────────────────────────────
-// Mobile / Tablette : rail bascule en bandeau top sticky.
-// Pas d'amputation : tous les liens restent visibles, scroll horiz.
+// Mobile : sommaire en bande scroll horizontale.
 // ─────────────────────────────────────────────────────────────────
 
 @media (max-width: 48rem) {
-  .shell {
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
-    padding: var(--space-md);
-  }
-
   .rail {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    height: auto;
-    flex-direction: column;
+    grid-template-columns: auto 1fr auto;
     gap: var(--space-sm);
-    padding: var(--space-sm) 0;
-    background: color-mix(in oklch, var(--surface) 92%, transparent);
-    backdrop-filter: saturate(140%) blur(8px);
-    margin: calc(var(--space-md) * -1) calc(var(--space-md) * -1) 0;
-    padding-inline: var(--space-md);
-    border-bottom: 1px solid var(--rule);
   }
 
-  .rail__brand::before { display: none; }
-
-  .rail__brand {
-    flex-direction: row;
-    align-items: baseline;
-    gap: var(--space-2xs);
-  }
-
-  .rail__brand-name { font-size: var(--text-base); }
-
-  // Mobile : rail devient une bande horizontale de §NN compacts.
-  // Pas de flyout (touch), l'état actif suffit comme signal.
   .rail__nav {
-    flex-direction: row;
-    gap: var(--space-sm);
     overflow-x: auto;
     scrollbar-width: none;
-    margin-inline: calc(var(--space-md) * -1);
-    padding-inline: var(--space-md);
+    flex-wrap: nowrap;
+    justify-content: flex-start;
   }
-
   .rail__nav::-webkit-scrollbar { display: none; }
 
-  .rail__link {
-    padding: 0;
-    flex-shrink: 0;
-    white-space: nowrap;
-  }
-
-  .rail__link-label {
-    // En mobile, on cache complètement (sr-only-like).
-    position: absolute;
-    width: 1px; height: 1px;
-    padding: 0; margin: -1px;
-    overflow: hidden; clip: rect(0, 0, 0, 0);
-    opacity: 0;
-    transform: none;
-    transition: none;
-  }
-
-  // Désactiver le flyout au hover en mobile.
-  .rail__link:hover .rail__link-label,
-  .rail__link:focus-visible .rail__link-label {
-    opacity: 0;
-  }
-
-  .rail__foot {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    border-top: none;
-    padding-top: 0;
-  }
+  .theme-toggle__dot + [data-theme-label] { display: none; }
 }

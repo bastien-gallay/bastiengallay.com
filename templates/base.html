@@ -35,10 +35,13 @@
   <a href="#main" class="sr-only">Aller au contenu</a>
 
   <div class="shell">
-    <aside class="rail" aria-label="Navigation principale">
+    <header class="rail" aria-label="Navigation principale" data-rail>
       <a href="{{ config.base_url | safe }}" class="rail__brand">
-        <span class="rail__brand-name">Bastien Gallay</span>
-        <span class="rail__brand-tag">Atelier</span>
+        <span class="rail__mark" aria-hidden="true"></span>
+        <span class="rail__brand-text">
+          <span class="rail__brand-name">Bastien Gallay</span>
+          <span class="rail__brand-tag">Atelier</span>
+        </span>
       </a>
 
       {# Rail-marquepage : numéros §NN seuls, libellé révélé en flyout au hover. #}
@@ -76,7 +79,7 @@
           <span data-theme-label>Thème</span>
         </button>
       </div>
-    </aside>
+    </header>
 
     <main class="main" id="main">
       {% block content %}{% endblock %}
