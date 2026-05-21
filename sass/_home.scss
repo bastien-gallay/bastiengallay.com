@@ -114,14 +114,23 @@
   transition: color var(--dur-fast) var(--ease-out-quart);
 }
 
+// Doctrine §NN — sommaire en repos toujours gris muted. La paire bicolore
+// associée à la section apparaît uniquement au hover/focus du lien.
 .hero__sommaire-num {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: 500;
-  color: var(--link-color, var(--accent));
+  color: var(--ink-mute);
   font-variant-numeric: tabular-nums lining-nums;
-  text-shadow: 1.5px 1.5px 0 var(--link-shadow, transparent);
-  transition: color var(--dur-fast) var(--ease-out-quart);
+  text-shadow: 1.5px 1.5px 0 transparent;
+  transition: color var(--dur-fast) var(--ease-out-quart),
+              text-shadow var(--dur-fast) var(--ease-out-quart);
+}
+
+.hero__sommaire-link:hover .hero__sommaire-num,
+.hero__sommaire-link:focus-visible .hero__sommaire-num {
+  color: var(--link-color, var(--c-info));
+  text-shadow: 1.5px 1.5px 0 var(--link-shadow, var(--accent));
 }
 
 .hero__sommaire-rule {
