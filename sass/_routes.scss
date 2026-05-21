@@ -45,6 +45,12 @@
 .ecrits__title-mark,
 .ecrit-page__title-mark { color: var(--accent); font-style: normal; }
 
+.ecrit-page__header {
+  display: grid;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+}
+
 .ecrit-page__meta {
   display: flex;
   flex-wrap: wrap;
@@ -54,6 +60,7 @@
   text-transform: uppercase;
   color: var(--ink-mute);
   margin: 0;
+  margin-top: calc(var(--space-3xs) * -1);
   font-variant-numeric: tabular-nums lining-nums;
 }
 
@@ -61,10 +68,11 @@
   font-family: var(--font-body);
   font-style: italic;
   font-size: var(--text-lg);
-  line-height: var(--leading-snug);
+  line-height: var(--leading-normal);
   color: var(--surface-ink);
   max-width: var(--measure-wide);
   margin: 0;
+  margin-top: var(--space-3xs);
   text-wrap: balance;
 }
 
@@ -134,7 +142,7 @@
   margin: 0.35em var(--space-lg) var(--space-sm) 0;
 }
 
-@media (max-width: 40rem) {
+@media (max-width: 60rem) {
   .ecrit-page__content img,
   .ecrit-page__content p:has(> img:only-child):nth-of-type(even) > img {
     float: none;
@@ -202,7 +210,7 @@
   margin: 0.35em var(--space-lg) var(--space-sm) 0;
 }
 
-@media (max-width: 40rem) {
+@media (max-width: 60rem) {
   .ecrit-page__content pre.ecrit-page__aside,
   .ecrit-page__content pre.ecrit-page__aside--left,
   .ecrit-page__content pre.ecrit-page__aside--right {

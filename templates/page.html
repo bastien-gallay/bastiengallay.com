@@ -5,26 +5,28 @@
 
 {% block content %}
 <article class="ecrit-page" aria-labelledby="ecrit-page-title">
-  <p class="ecrit-page__index">
-    <span class="ecrit-page__index-num numeric">04</span>
-    <span>Écrits</span>
-  </p>
+  <header class="ecrit-page__header">
+    <p class="ecrit-page__index">
+      <span class="ecrit-page__index-num numeric">04</span>
+      <span>Écrits</span>
+    </p>
 
-  <p class="ecrit-page__meta">
-    <time datetime="{{ page.date }}">{{ page.date | date(format='%-d %B %Y', locale='fr_FR') }}</time>
-    <span aria-hidden="true">·</span>
-    <span>{{ page.reading_time }} min</span>
-    <span aria-hidden="true">·</span>
-    <span>{{ page.word_count }} mots</span>
-  </p>
+    <h1 class="ecrit-page__title" id="ecrit-page-title">
+      {{ page.title }}<i class="ecrit-page__title-mark" aria-hidden="true">.</i>
+    </h1>
 
-  <h1 class="ecrit-page__title" id="ecrit-page-title">
-    {{ page.title }}<i class="ecrit-page__title-mark" aria-hidden="true">.</i>
-  </h1>
+    <p class="ecrit-page__meta">
+      <time datetime="{{ page.date }}">{{ page.date | date(format='%-d %B %Y', locale='fr_FR') }}</time>
+      <span aria-hidden="true">·</span>
+      <span>{{ page.reading_time }} min</span>
+      <span aria-hidden="true">·</span>
+      <span>{{ page.word_count }} mots</span>
+    </p>
 
-  {% if page.description %}
-  <p class="ecrit-page__subtitle">{{ page.description }}</p>
-  {% endif %}
+    {% if page.description %}
+    <p class="ecrit-page__subtitle">{{ page.description }}</p>
+    {% endif %}
+  </header>
 
   <div class="ecrit-page__content prose">
     {{ page.content | safe }}
