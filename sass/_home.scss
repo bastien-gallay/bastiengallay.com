@@ -118,6 +118,7 @@
   font-weight: 500;
   color: var(--link-color, var(--accent));
   font-variant-numeric: tabular-nums lining-nums;
+  text-shadow: 1.5px 1.5px 0 var(--link-shadow, transparent);
   transition: color var(--dur-fast) var(--ease-out-quart);
 }
 

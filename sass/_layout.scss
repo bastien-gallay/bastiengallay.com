@@ -84,7 +84,17 @@
   letter-spacing: 0;
   font-variant-numeric: tabular-nums lining-nums;
   color: inherit;
-  transition: color var(--dur-fast) var(--ease-out-quart);
+  transition: color var(--dur-fast) var(--ease-out-quart),
+              text-shadow var(--dur-fast) var(--ease-out-quart);
+}
+
+// Bicolore au hover et à l'état actif uniquement : signale l'engagement
+// sans bruit visuel sur les liens inactifs (texte muet, pas le bon support
+// pour un shadow saturé).
+.rail__link:hover .rail__link-num,
+.rail__link:focus-visible .rail__link-num,
+.rail__link[aria-current="true"] .rail__link-num {
+  text-shadow: 1.5px 1.5px 0 var(--link-shadow, transparent);
 }
 
 // Label conservé dans le DOM mais visuellement caché (a11y only).

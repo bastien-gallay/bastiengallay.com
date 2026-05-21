@@ -44,27 +44,27 @@
       {# Rail-marquepage : numéros §NN seuls, libellé révélé en flyout au hover. #}
       {# Le sommaire complet vit dans le hero ; le rail sert de position dans la pochette. #}
       <nav class="rail__nav" aria-label="Sections">
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#intro" title="Intro" style="--link-color: var(--c-problem);">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#intro" title="Intro" style="--link-color: var(--c-problem); --link-shadow: var(--c-info);">
           <span class="rail__link-num">§01</span>
           <span class="rail__link-label">Intro</span>
         </a>
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#focus" title="Focus : lucid-lint" style="--link-color: var(--c-info);">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#focus" title="Focus : lucid-lint" style="--link-color: var(--c-info); --link-shadow: var(--c-problem);">
           <span class="rail__link-num">§02</span>
           <span class="rail__link-label">Focus</span>
         </a>
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#familles" title="Les deux familles" style="--link-color: var(--c-warning);">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#familles" title="Les deux familles" style="--link-color: var(--c-warning); --link-shadow: var(--c-problem);">
           <span class="rail__link-num">§03</span>
           <span class="rail__link-label">Familles</span>
         </a>
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/ecrits/" title="Écrits récents" style="--link-color: var(--c-success);">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/ecrits/" title="Écrits récents" style="--link-color: var(--c-success); --link-shadow: var(--c-info);">
           <span class="rail__link-num">§04</span>
           <span class="rail__link-label">Écrits</span>
         </a>
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/now/" title="Maintenant" style="--link-color: var(--c-chrome);">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/now/" title="Maintenant" style="--link-color: var(--c-chrome); --link-shadow: var(--c-problem);">
           <span class="rail__link-num">§05</span>
           <span class="rail__link-label">Now</span>
         </a>
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#contact" title="Me joindre" style="--link-color: var(--accent);">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#contact" title="Me joindre" style="--link-color: var(--accent); --link-shadow: var(--c-info);">
           <span class="rail__link-num">§06</span>
           <span class="rail__link-label">Contact</span>
         </a>
@@ -110,8 +110,8 @@
     <div class="colophon__col">
       <p class="colophon__label">▍ Tirage</p>
       <p class="colophon__value">
-        <span class="colophon__pill">NUMÉRO §{{ config.extra.print_run | default(value="01") }}</span><br>
-        <a class="colophon__link" href="https://www.getzola.org/" rel="noopener" target="_blank">Zola&nbsp;{{ config.extra.zola_version | default(value="0.22.1") }}</a> · commit&nbsp;{{ get_env(name="COMMIT_HASH", default="dev") | truncate(length=7, end="") }}<br>
+        Imprimé sur <a class="colophon__link" href="https://www.getzola.org/" rel="noopener" target="_blank">Zola&nbsp;{{ config.extra.zola_version | default(value="0.22.1") }}</a><br>
+        commit&nbsp;{{ get_env(name="COMMIT_HASH", default="dev") | truncate(length=7, end="") }}<br>
         © {{ now() | date(format='%Y') }} · CC&nbsp;BY-NC
       </p>
     </div>
