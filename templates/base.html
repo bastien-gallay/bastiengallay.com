@@ -80,18 +80,42 @@
 
     <main class="main" id="main">
       {% block content %}{% endblock %}
-
-      <footer class="colophon">
-        <span class="colophon__group">
-          <span>POCHETTE §{{ config.extra.print_run | default(value="01") }} · © {{ now() | date(format='%Y') }} · TIRAGE LIMITÉ</span>
-          <a class="colophon__link" href="mailto:bastien@gallay.org">bastien@gallay.org</a>
-          <a class="colophon__link" href="https://www.linkedin.com/in/bastiengallay/" rel="noopener" target="_blank">LinkedIn ↗</a>
-          <a class="colophon__link" href="https://github.com/bastien-gallay" rel="noopener" target="_blank">GitHub ↗</a>
-        </span>
-        <span class="colophon__meta">IMPRIMÉ À LA DEMANDE · <a class="colophon__link" href="https://www.getzola.org/" rel="noopener" target="_blank">ZOLA</a>&nbsp;{{ config.extra.zola_version | default(value="0.22.1") }} · COMMIT&nbsp;{{ get_env(name="COMMIT_HASH", default="dev") | truncate(length=7, end="") }} · CC&nbsp;BY-NC</span>
-      </footer>
     </main>
   </div>
+
+  <footer class="colophon" aria-label="Identification et liens">
+    <div class="colophon__col">
+      <p class="colophon__label">▍ Atelier</p>
+      <p class="colophon__value">
+        Bastien Gallay<br>
+        outils open source pour mieux écrire et mieux penser
+      </p>
+    </div>
+
+    <div class="colophon__col">
+      <p class="colophon__label">▍ Contact</p>
+      <p class="colophon__value">
+        <a class="colophon__link" href="mailto:bastien@gallay.org">bastien@gallay.org</a>
+      </p>
+    </div>
+
+    <div class="colophon__col">
+      <p class="colophon__label">▍ Ailleurs</p>
+      <p class="colophon__value">
+        <a class="colophon__link" href="https://www.linkedin.com/in/bastiengallay/" rel="noopener" target="_blank">linkedin.com/in/bastiengallay <span aria-hidden="true">↗</span></a><br>
+        <a class="colophon__link" href="https://github.com/bastien-gallay" rel="noopener" target="_blank">github.com/bastien-gallay <span aria-hidden="true">↗</span></a>
+      </p>
+    </div>
+
+    <div class="colophon__col">
+      <p class="colophon__label">▍ Tirage</p>
+      <p class="colophon__value">
+        <span class="colophon__pill">POCHETTE §{{ config.extra.print_run | default(value="01") }}</span><br>
+        <a class="colophon__link" href="https://www.getzola.org/" rel="noopener" target="_blank">Zola&nbsp;{{ config.extra.zola_version | default(value="0.22.1") }}</a> · commit&nbsp;{{ get_env(name="COMMIT_HASH", default="dev") | truncate(length=7, end="") }}<br>
+        © {{ now() | date(format='%Y') }} · CC&nbsp;BY-NC
+      </p>
+    </div>
+  </footer>
 
   <script src="{{ get_url(path='theme.js') | safe }}" defer></script>
 </body>

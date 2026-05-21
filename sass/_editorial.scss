@@ -29,6 +29,17 @@
   font-weight: 500;
 }
 
+// Pill inversée : fond plein --section-color avec texte ink fixe.
+// Le ink est verrouillé sombre indépendamment du thème pour garantir
+// le contraste sur fond saturé (AA atteint sur les 6 couleurs site).
+.issue-bar__pill {
+  background: var(--section-color, var(--c-problem));
+  color: oklch(0.155 0.010 28);
+  padding: 0.18em 0.6em;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
 // ──────────────────────────────────────────────────────────────────
 // Big numéro de section (§NN géant en marge)
 // Lit `--section-color` (couleur primaire) et `--section-shadow`
