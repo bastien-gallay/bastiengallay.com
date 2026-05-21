@@ -1,29 +1,33 @@
 {% extends "base.html" %}
 
-{% block title %}Now — Bastien Gallay{% endblock %}
-{% block description %}Ce sur quoi je travaille en ce moment, mis à jour chaque semaine.{% endblock %}
+{% block title %}Maintenant — Bastien Gallay{% endblock %}
+{% block description %}Ce sur quoi je travaille en ce moment, mis à jour ponctuellement.{% endblock %}
 
 {% block content %}
-<article class="now" aria-labelledby="now-title">
-  <p class="now__index">
-    <span class="now__index-num numeric">05</span>
-    <span>Maintenant</span>
+<article class="now ecrit-page section--cyan" aria-labelledby="now-title">
+  <p class="issue-bar">
+    <span class="issue-bar__pill">NUMÉRO §05</span>
+    <span>MAINTENANT</span>
+    <span class="issue-bar__sep">·</span>
+    <span>MIS À JOUR {{ section.extra.last_update | default(value="21/05/2026") }}</span>
+    <span class="issue-bar__sep">·</span>
+    <span>SUR L'ÉTABLI</span>
   </p>
 
-  <h1 class="now__title" id="now-title">
-    Sur l'établi cette semaine<i class="now__title-mark" aria-hidden="true">.</i>
-  </h1>
+  <header class="ecrit-page__header">
+    <h1 class="ecrit-page__title" id="now-title">
+      Sur l'établi<i class="ecrit-page__title-mark" aria-hidden="true">.</i>
+    </h1>
+    {% if section.description %}
+    <p class="ecrit-page__subtitle">{{ section.description }}</p>
+    {% endif %}
+  </header>
 
-  <p class="now__updated">
-    {# TODO(pipeline) — date du dernier digest généré depuis daily-ops #}
-    Dernière mise à jour : <time datetime="2026-05-15">15 mai 2026</time>
-  </p>
-
-  <div class="now__content">
+  <div class="ecrit-page__content prose">
     {{ section.content | safe }}
   </div>
 
-  <p class="now__back">
+  <p class="ecrit-page__back">
     <a href="{{ config.base_url | safe }}">← Retour à l'accueil</a>
   </p>
 </article>
