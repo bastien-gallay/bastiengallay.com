@@ -3,6 +3,9 @@ title = "Pourquoi ce site, et pourquoi maintenant"
 date = 2026-05-22
 description = "D'un billard mal recopié sur Thomson TO9 à une discipline : pourquoi ce site existe."
 draft = true
+
+[extra]
+heading_html = "Pourquoi ce site, et pourquoi <mark class=\"mark\">maintenant</mark>"
 +++
 
 Un été, à 9 ou 10 ans, je tenais un hors-série du magazine *Tilt* avec
@@ -43,8 +46,8 @@ Ce qu'un enfant ne pouvait pas deviner, c'était comment ces trois gestes
 allaient n'en faire qu'un. Le code, la lecture, l'écriture : une seule
 discipline.
 
-Cette discipline est l'alignement de la pensée avec l'écrit. J'en ai appris
-l'exigence par le code, mais elle dépasse le code. Ce site existe pour
+Cette discipline est {% mark(variant="soft") %}l'alignement de la pensée avec l'écrit{% end %}.
+J'en ai appris l'exigence par le code, mais elle dépasse le code. Ce site existe pour
 incarner cette exigence, par des objets concrets : outils, écrits, prises
 de position.
 
@@ -69,7 +72,7 @@ pour ne pas m'en vouloir, dans quelques semaines ou quelques mois,
 quand je voudrai reprendre le travail.
 C'est de cette matière que naissent les billets qu'on lit ici.
 
-{% listing(side="right", caption="LISTING 1 · ARBORESCENCE EXPERIMENTS") %}
+{% listing(side="right", caption="LISTING 1 · ARBORESCENCE", tag="TREE", tag_color="var(--c-info)") %}
 experiments/
 ├── ai
 │   ├── assist
@@ -111,7 +114,7 @@ ou dans un an, je saurai où j'en suis sur chaque projet, et chaque projet
 me racontera son histoire.
 
 <!-- markdownlint-disable MD031 -->
-{% listing(side="left", caption="LISTING 2 · LUCID-LINT v0.2.0") %}
+{% listing(side="left", caption="LISTING 2 · LUCID-LINT", tag="v0.2.0", tag_color="var(--c-warning)") %}
 $ lucid-lint check examples/sample.md
 ~~~~~ ⟨ • ⟩ ─────  lucid-lint  v0.2.0
                     cognitive accessibility linter · prose · EN / FR

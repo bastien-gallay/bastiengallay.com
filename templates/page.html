@@ -18,7 +18,11 @@
 
   <header class="ecrit-page__header">
     <h1 class="ecrit-page__title" id="ecrit-page-title">
-      {{ page.title }}<i class="ecrit-page__title-mark" aria-hidden="true">.</i>
+      {%- if page.extra.heading_html -%}
+        {{ page.extra.heading_html | safe }}
+      {%- else -%}
+        {{ page.title }}
+      {%- endif -%}<i class="ecrit-page__title-mark" aria-hidden="true">.</i>
     </h1>
 
     {% if page.description %}

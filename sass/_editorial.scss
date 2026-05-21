@@ -256,6 +256,31 @@ p.has-dropcap::first-letter {
 .ours strong { color: var(--surface-ink); font-weight: 500; }
 
 // ──────────────────────────────────────────────────────────────────
+// Mark — emphase yellow style poster, deux variants
+// .mark : fond yellow plein, signature forte, pour titres et passages-clés
+// .mark--soft : underline yellow 3px, discrète, pour prose courante
+// ──────────────────────────────────────────────────────────────────
+
+.mark {
+  background: #ffd900;                  // poster yellow, fixe, theme-indep
+  color: oklch(0.155 0.010 28);
+  padding: 0.05em 0.3em;
+  font-weight: inherit;
+  box-decoration-break: clone;          // bien rendre les wraps multiligne
+  -webkit-box-decoration-break: clone;
+}
+
+.mark--soft {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  text-decoration: underline #ffd900;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 0.12em;
+  text-decoration-skip-ink: none;
+}
+
+// ──────────────────────────────────────────────────────────────────
 // Bloc "DANS CE NUMÉRO" — sommaire des écrits dans le teaser home
 // ──────────────────────────────────────────────────────────────────
 
