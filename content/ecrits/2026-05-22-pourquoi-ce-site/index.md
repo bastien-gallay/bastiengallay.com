@@ -93,7 +93,7 @@ experiments/
 │   └── music-gen
 └── misc
 
-22 directories, 0 files
+22 directories
 {% end %}
 
 Pourquoi tenir à ce soin-là en 2026 ? Face à des projets et créations
@@ -113,18 +113,19 @@ me racontera son histoire.
 <!-- markdownlint-disable MD031 -->
 {% aside(side="left") %}
 $ lucid-lint check --min-score=85 examples/sample.md
-  ~~~~~ ⟨ • ⟩ ─────  lucid-lint  v0.2.0
-                     cognitive accessibility linter · prose · EN / FR
-                     ────────────────────────────────────────────────
+~~~~~ ⟨ • ⟩ ─────  lucid-lint  v0.2.0
+                    cognitive accessibility linter · prose · EN / FR
+                    ────────────────────────────────────────────────
 …
-  score: 45/100
-         structure    █▎░░░  5/20
-         rhythm       █████  20/20
-         lexicon      █▎░░░  5/20
-         syntax       ██▌░░  10/20
-         readability  █▎░░░  5/20
-  $ echo "exit: $?"
-  exit: 1
+score: 45/100
+        structure    █▎░░░  5/20
+        rhythm       █████  20/20
+        lexicon      █▎░░░  5/20
+        syntax       ██▌░░  10/20
+        readability  █▎░░░  5/20
+        
+$ echo "exit: $?"
+exit: 1
 {% end %}
 <!-- markdownlint-enable MD031 -->
 
