@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-05-21T19:00:00Z",
+  "title": "Design System: bastiengallay.com",
+  "extensions": {
+    "colorMeta": {
+      "surface":      { "role": "neutral",   "displayName": "Crème Atelier",        "canonical": "oklch(0.985 0.006 70)",  "tonalRamp": ["oklch(0.155 0.010 28)","oklch(0.30 0.012 30)","oklch(0.45 0.014 35)","oklch(0.60 0.016 40)","oklch(0.75 0.014 50)","oklch(0.88 0.012 50)","oklch(0.96 0.008 60)","oklch(0.985 0.006 70)"] },
+      "surface-sub":  { "role": "neutral",   "displayName": "Crème Sous",           "canonical": "oklch(0.965 0.008 65)",  "tonalRamp": ["oklch(0.18 0.012 30)","oklch(0.30 0.012 30)","oklch(0.45 0.014 35)","oklch(0.60 0.016 40)","oklch(0.75 0.014 50)","oklch(0.88 0.012 50)","oklch(0.94 0.010 60)","oklch(0.965 0.008 65)"] },
+      "surface-ink":  { "role": "neutral",   "displayName": "Encre Chaude",         "canonical": "oklch(0.18 0.014 30)",   "tonalRamp": ["oklch(0.10 0.012 28)","oklch(0.18 0.014 30)","oklch(0.30 0.018 32)","oklch(0.40 0.020 30)","oklch(0.55 0.018 35)","oklch(0.70 0.014 40)","oklch(0.85 0.010 50)","oklch(0.95 0.006 60)"] },
+      "ink-soft":     { "role": "neutral",   "displayName": "Encre Soft",           "canonical": "oklch(0.40 0.020 30)",   "tonalRamp": ["oklch(0.18 0.014 30)","oklch(0.28 0.018 30)","oklch(0.40 0.020 30)","oklch(0.50 0.020 32)","oklch(0.60 0.018 34)","oklch(0.72 0.014 38)","oklch(0.85 0.010 45)","oklch(0.95 0.006 60)"] },
+      "ink-mute":     { "role": "neutral",   "displayName": "Encre Muette",         "canonical": "oklch(0.55 0.018 35)",   "tonalRamp": ["oklch(0.20 0.014 30)","oklch(0.32 0.016 32)","oklch(0.45 0.018 34)","oklch(0.55 0.018 35)","oklch(0.65 0.016 36)","oklch(0.78 0.012 40)","oklch(0.88 0.010 45)","oklch(0.96 0.006 60)"] },
+      "rule":         { "role": "neutral",   "displayName": "Filet",                "canonical": "oklch(0.88 0.012 40)",   "tonalRamp": ["oklch(0.30 0.012 30)","oklch(0.45 0.014 35)","oklch(0.60 0.014 38)","oklch(0.72 0.014 40)","oklch(0.82 0.012 40)","oklch(0.88 0.012 40)","oklch(0.93 0.010 50)","oklch(0.98 0.006 60)"] },
+      "rule-strong":  { "role": "neutral",   "displayName": "Filet Fort",           "canonical": "oklch(0.75 0.018 35)",   "tonalRamp": ["oklch(0.30 0.012 30)","oklch(0.42 0.016 30)","oklch(0.55 0.018 32)","oklch(0.65 0.018 34)","oklch(0.75 0.018 35)","oklch(0.85 0.014 40)","oklch(0.92 0.010 50)","oklch(0.98 0.006 60)"] },
+      "accent":       { "role": "primary",   "displayName": "Rouge De Stijl",       "canonical": "oklch(0.52 0.205 25)",   "tonalRamp": ["oklch(0.20 0.090 25)","oklch(0.30 0.130 25)","oklch(0.40 0.175 25)","oklch(0.44 0.215 25)","oklch(0.52 0.205 25)","oklch(0.66 0.190 26)","oklch(0.80 0.130 28)","oklch(0.92 0.045 30)"] },
+      "accent-deep":  { "role": "primary",   "displayName": "Rouge De Stijl Profond","canonical": "oklch(0.44 0.215 25)",  "tonalRamp": ["oklch(0.20 0.090 25)","oklch(0.30 0.130 25)","oklch(0.40 0.175 25)","oklch(0.44 0.215 25)","oklch(0.52 0.205 25)","oklch(0.66 0.190 26)","oklch(0.80 0.130 28)","oklch(0.92 0.045 30)"] },
+      "accent-soft":  { "role": "primary",   "displayName": "Rouge De Stijl Lavé",  "canonical": "oklch(0.92 0.045 30)",   "tonalRamp": ["oklch(0.30 0.130 25)","oklch(0.44 0.215 25)","oklch(0.52 0.205 25)","oklch(0.66 0.190 26)","oklch(0.80 0.130 28)","oklch(0.88 0.080 28)","oklch(0.92 0.045 30)","oklch(0.97 0.020 32)"] },
+      "c-info":       { "role": "secondary", "displayName": "Bleu Information",     "canonical": "oklch(0.42 0.18 250)",   "tonalRamp": ["oklch(0.18 0.090 250)","oklch(0.30 0.140 250)","oklch(0.42 0.18 250)","oklch(0.52 0.175 250)","oklch(0.62 0.165 245)","oklch(0.74 0.140 240)","oklch(0.86 0.090 240)","oklch(0.96 0.030 245)"] },
+      "c-warning":    { "role": "tertiary",  "displayName": "Jaune Poster",         "canonical": "oklch(0.55 0.16 80)",    "tonalRamp": ["oklch(0.25 0.080 80)","oklch(0.40 0.130 80)","oklch(0.55 0.16 80)","oklch(0.68 0.165 85)","oklch(0.78 0.170 90)","oklch(0.88 0.17 95)","oklch(0.94 0.110 95)","oklch(0.98 0.040 95)"] },
+      "c-problem":    { "role": "tertiary",  "displayName": "Rose Problème",        "canonical": "oklch(0.52 0.22 5)",     "tonalRamp": ["oklch(0.22 0.110 5)","oklch(0.36 0.170 5)","oklch(0.52 0.22 5)","oklch(0.60 0.225 5)","oklch(0.68 0.23 5)","oklch(0.80 0.180 8)","oklch(0.90 0.110 10)","oklch(0.97 0.040 15)"] },
+      "c-success":    { "role": "tertiary",  "displayName": "Vert Succès",          "canonical": "oklch(0.48 0.16 155)",   "tonalRamp": ["oklch(0.22 0.080 155)","oklch(0.35 0.130 155)","oklch(0.48 0.16 155)","oklch(0.60 0.160 155)","oklch(0.70 0.160 155)","oklch(0.78 0.16 155)","oklch(0.88 0.100 155)","oklch(0.97 0.040 155)"] },
+      "c-chrome":     { "role": "tertiary",  "displayName": "Cyan Chrome",          "canonical": "oklch(0.50 0.10 220)",   "tonalRamp": ["oklch(0.22 0.060 220)","oklch(0.36 0.085 220)","oklch(0.50 0.10 220)","oklch(0.60 0.100 220)","oklch(0.68 0.100 220)","oklch(0.78 0.10 220)","oklch(0.88 0.070 220)","oklch(0.97 0.030 220)"] }
+    },
+    "typographyMeta": {
+      "display":  { "displayName": "Redaction Display", "purpose": "Hero titles, h1 ; signature De Stijl. Une fois par page." },
+      "headline": { "displayName": "Redaction Headline", "purpose": "Titres de section h2." },
+      "title":    { "displayName": "Redaction Title", "purpose": "Sous-titres h3, items de sommaire." },
+      "lead":     { "displayName": "Geist Lead", "purpose": "Chapeau du hero, baseline de focus. Cap à --measure-narrow." },
+      "body":     { "displayName": "Geist Body", "purpose": "Prose long-form, cap à 68ch." },
+      "label":    { "displayName": "Geist Label Caps", "purpose": "Meta, badges, labels colophon ; uppercase tracking 0.14em." },
+      "mono":     { "displayName": "Geist Mono", "purpose": "Listings, inline code, numérotation §NN tabulaire." }
+    },
+    "shadows": [
+      { "name": "bicolor-num", "value": "text-shadow: 1.5px 1.5px 0 var(--link-shadow, var(--accent))", "purpose": "Effet poster bicolore sur les §NN actifs/hover. La seule 'ombre' du système — typographique, pas d'élévation." },
+      { "name": "bicolor-bignum", "value": "text-shadow: clamp(2px,0.4vw,5px) clamp(2px,0.4vw,5px) 0 var(--section-shadow, var(--c-info))", "purpose": "Variante monumentale pour le §01 géant du hero." }
+    ],
+    "motion": [
+      { "name": "ease-out-quart", "value": "cubic-bezier(0.25, 1, 0.5, 1)", "purpose": "Easing par défaut des state transitions." },
+      { "name": "ease-out-expo",  "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Easing des micro-mouvements (flèches sommaire, scroll-driven)." },
+      { "name": "dur-fast", "value": "140ms", "purpose": "Hover, focus, micro-transitions." },
+      { "name": "dur-mid",  "value": "280ms", "purpose": "Fade-in brand au scroll, transitions de bloc." },
+      { "name": "dur-slow", "value": "520ms", "purpose": "Réservé aux entrées d'animation (utilisé sur le hero)." }
+    ],
+    "breakpoints": [
+      { "name": "issue-bar-stack", "value": "36rem" },
+      { "name": "mobile",          "value": "48rem" },
+      { "name": "aside-defloat",   "value": "60rem" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Header Sticky (Rail)",
+      "kind": "nav",
+      "refersTo": "rail-sticky",
+      "description": "Bande horizontale sticky en haut. Brand caché tant que le hero est visible, sommaire §NN centré, toggle thème à droite.",
+      "html": "<header class=\"ds-rail ds-rail--scrolled\"><a href=\"#\" class=\"ds-rail__brand\"><span class=\"ds-rail__mark\"></span><span class=\"ds-rail__brand-text\"><span class=\"ds-rail__brand-name\">Bastien Gallay</span><span class=\"ds-rail__brand-tag\">Atelier</span></span></a><nav class=\"ds-rail__nav\"><a class=\"ds-rail__link\" href=\"#\"><span class=\"ds-rail__link-num\">§01</span></a><a class=\"ds-rail__link\" href=\"#\" aria-current=\"true\"><span class=\"ds-rail__link-num\">§02</span></a><a class=\"ds-rail__link\" href=\"#\"><span class=\"ds-rail__link-num\">§03</span></a></nav><button class=\"ds-theme-toggle\"><span class=\"ds-theme-toggle__dot\"></span>Passer en sombre</button></header>",
+      "css": ".ds-rail{position:sticky;top:0;z-index:20;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1rem;padding:1rem clamp(1.5rem,4vw,4rem);background:color-mix(in oklch,oklch(0.985 0.006 70) 92%,transparent);backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid oklch(0.88 0.012 40);font-family:'Geist',sans-serif}.ds-rail__brand{display:inline-flex;align-items:center;gap:0.5rem;color:oklch(0.18 0.014 30);text-decoration:none}.ds-rail__mark{width:0.55rem;height:0.55rem;background:oklch(0.52 0.205 25);display:inline-block}.ds-rail__brand-text{display:inline-flex;flex-direction:column;gap:0.25rem}.ds-rail__brand-name{font-family:'Redaction',serif;font-size:1.0625rem;line-height:1}.ds-rail__brand-tag{font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.55 0.018 35)}.ds-rail__nav{display:flex;justify-content:center;gap:clamp(0.75rem,2vw,1.5rem)}.ds-rail__link{color:oklch(0.55 0.018 35);text-decoration:none;font-family:'Geist Mono',monospace;font-size:0.92rem;transition:color 140ms cubic-bezier(0.25,1,0.5,1)}.ds-rail__link-num{font-variant-numeric:tabular-nums lining-nums;transition:color 140ms,text-shadow 140ms}.ds-rail__link:hover .ds-rail__link-num,.ds-rail__link[aria-current='true'] .ds-rail__link-num{color:oklch(0.42 0.18 250);text-shadow:1.5px 1.5px 0 oklch(0.52 0.205 25)}.ds-rail__link[aria-current='true'] .ds-rail__link-num{font-weight:600}.ds-theme-toggle{background:transparent;border:1px solid oklch(0.88 0.012 40);color:oklch(0.18 0.014 30);padding:0.5rem 0.75rem;font:0.78rem/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;display:inline-flex;align-items:center;gap:0.5rem;transition:border-color 140ms,color 140ms}.ds-theme-toggle:hover{border-color:oklch(0.75 0.018 35);color:oklch(0.44 0.215 25)}.ds-theme-toggle__dot{width:0.55rem;height:0.55rem;background:currentColor;display:inline-block}"
+    },
+    {
+      "name": "Issue-bar",
+      "kind": "custom",
+      "refersTo": "issue-bar",
+      "description": "Bandeau presse 3-col immédiatement sous le header : pill NUMÉRO §NN + label section à gauche, date au centre, méta à droite.",
+      "html": "<p class=\"ds-issue-bar\"><span class=\"ds-issue-bar__left\"><span class=\"ds-issue-bar__pill\">NUMÉRO §01</span><span>ATELIER OUVERT</span></span><span class=\"ds-issue-bar__mid\">21/05/2026</span><span class=\"ds-issue-bar__right\">6 SECTIONS</span></p>",
+      "css": ".ds-issue-bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1.5rem;padding-block:0.55rem;border-block:1px solid oklch(0.88 0.012 40);font-family:'Geist Mono',monospace;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.55 0.018 35);font-variant-numeric:tabular-nums lining-nums;margin:0 0 2rem}.ds-issue-bar__left{justify-self:start;display:inline-flex;align-items:center;gap:0.6em}.ds-issue-bar__mid{justify-self:center}.ds-issue-bar__right{justify-self:end}.ds-issue-bar__pill{background:oklch(0.52 0.22 5);color:oklch(0.985 0.006 70);padding:0.18em 0.6em;font-weight:600;letter-spacing:0.18em}"
+    },
+    {
+      "name": "Listing Radical",
+      "kind": "custom",
+      "refersTo": "listing-radical",
+      "description": "Bloc code sombre avec header inversé (caption ▍ + type-tag). Sortie technique fidèle d'un outil (lucid-lint, tree, terminal).",
+      "html": "<figure class=\"ds-listing\"><figcaption class=\"ds-listing__header\"><span class=\"ds-listing__caption\">LISTING 1 · ARBORESCENCE</span><span class=\"ds-listing__tag\">TREE</span></figcaption><pre class=\"ds-listing__body\"><code>experiments/\n├── ai\n│   ├── assist\n│   └── audiobook-pipeline\n├── lang-tools\n│   ├── carbon\n│   └── lean4\n└── misc\n\n3 directories, 5 files</code></pre></figure>",
+      "css": ".ds-listing{margin:1.5rem 0 2rem;font-family:'Geist Mono',monospace;max-width:100%;overflow:hidden}.ds-listing__header{display:flex;background:oklch(0.155 0.010 28);color:oklch(0.93 0.008 65);border:1px solid oklch(0.75 0.018 35);border-bottom:0}.ds-listing__caption{flex:1;padding:0.6rem 1.5rem;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.75 0.014 50);align-self:center;margin:0}.ds-listing__caption::before{content:'▍ ';color:oklch(0.68 0.16 250)}.ds-listing__tag{background:oklch(0.42 0.18 250);color:oklch(0.155 0.010 28);padding:0.6rem 1.5rem;font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;display:flex;align-items:center}.ds-listing__body{margin:0;padding:2rem 1.5rem;background:oklch(0.155 0.010 28);color:oklch(0.93 0.008 65);border:1px solid oklch(0.75 0.018 35);border-top:0;overflow-x:auto;white-space:pre;font-size:0.92rem;line-height:1.65}"
+    },
+    {
+      "name": "Mark (Highlight)",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Emphase yellow fixe theme-independent : mark plein pour titres, soft underline 3px pour prose.",
+      "html": "<p style=\"font-family:'Geist',sans-serif;font-size:1.0625rem;line-height:1.55;color:oklch(0.40 0.020 30);max-width:60ch\">Cette discipline est <mark class=\"ds-mark--soft\">l'alignement de la pensée avec l'écrit</mark>. Le titre, lui, porte un <mark class=\"ds-mark\">marker plein</mark> pour les passages-clés.</p>",
+      "css": ".ds-mark{background:#ffd900;color:oklch(0.155 0.010 28);padding:0.05em 0.3em;font-weight:inherit;box-decoration-break:clone;-webkit-box-decoration-break:clone}.ds-mark--soft{background:transparent;color:inherit;padding:0;text-decoration:underline #ffd900;text-decoration-thickness:3px;text-underline-offset:0.12em;text-decoration-skip-ink:none}"
+    },
+    {
+      "name": "Toggle Thème",
+      "kind": "button",
+      "refersTo": "button-toggle",
+      "description": "Inline pill border 1px, carré encre + label dynamique d'action.",
+      "html": "<button class=\"ds-btn-toggle\" type=\"button\"><span class=\"ds-btn-toggle__dot\"></span><span>Passer en sombre</span></button>",
+      "css": ".ds-btn-toggle{appearance:none;background:transparent;border:1px solid oklch(0.88 0.012 40);color:oklch(0.18 0.014 30);padding:0.5rem 0.75rem;font:0.78rem/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;display:inline-flex;align-items:center;gap:0.5rem;transition:border-color 140ms cubic-bezier(0.25,1,0.5,1),color 140ms cubic-bezier(0.25,1,0.5,1)}.ds-btn-toggle:hover{border-color:oklch(0.75 0.018 35);color:oklch(0.44 0.215 25)}.ds-btn-toggle__dot{width:0.55rem;height:0.55rem;background:currentColor;display:inline-block}"
+    },
+    {
+      "name": "Sommaire (toc-list)",
+      "kind": "nav",
+      "refersTo": "toc-list-item",
+      "description": "Lignes §NN [filet] [Titre] [↓/↗] avec doctrine bicolore : §NN gris au repos, paire bicolore section au hover.",
+      "html": "<ol class=\"ds-toc\"><li class=\"ds-toc__item\"><a class=\"ds-toc__link\" href=\"#\" style=\"--link-color:oklch(0.42 0.18 250);--link-shadow:oklch(0.52 0.205 25)\"><span class=\"ds-toc__num\">§02</span><span class=\"ds-toc__rule\"></span><span class=\"ds-toc__title\">Focus : lucid-lint</span><span class=\"ds-toc__arrow\">↓</span></a></li><li class=\"ds-toc__item\"><a class=\"ds-toc__link\" href=\"#\" style=\"--link-color:oklch(0.55 0.16 80);--link-shadow:oklch(0.52 0.205 25)\"><span class=\"ds-toc__num\">§03</span><span class=\"ds-toc__rule\"></span><span class=\"ds-toc__title\">Les deux familles</span><span class=\"ds-toc__arrow\">↓</span></a></li></ol>",
+      "css": ".ds-toc{list-style:none;padding:0;margin:0;display:grid;gap:0.1rem;font-family:'Geist',sans-serif}.ds-toc__item{display:contents}.ds-toc__link{display:grid;grid-template-columns:auto 1fr auto auto;align-items:baseline;gap:1rem;padding-block:0.6rem;border-bottom:1px solid oklch(0.88 0.012 40);color:oklch(0.18 0.014 30);text-decoration:none;transition:color 140ms cubic-bezier(0.25,1,0.5,1)}.ds-toc__num{font-family:'Geist Mono',monospace;font-size:0.92rem;font-weight:500;color:oklch(0.55 0.018 35);font-variant-numeric:tabular-nums lining-nums;text-shadow:1.5px 1.5px 0 transparent;transition:color 140ms,text-shadow 140ms}.ds-toc__rule{align-self:center;height:1px;background:oklch(0.88 0.012 40);margin-inline:0.5rem}.ds-toc__title{font-family:'Redaction',serif;font-size:1.25rem;line-height:1.22;letter-spacing:-0.012em}.ds-toc__arrow{color:oklch(0.55 0.018 35);transition:transform 280ms cubic-bezier(0.16,1,0.3,1),color 140ms}.ds-toc__link:hover{color:oklch(0.44 0.215 25)}.ds-toc__link:hover .ds-toc__num{color:var(--link-color);text-shadow:1.5px 1.5px 0 var(--link-shadow)}.ds-toc__link:hover .ds-toc__arrow{transform:translateY(0.15em);color:var(--link-color)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "La Revue d'Atelier",
+    "overview": "Le site est tenu comme un numéro de revue auto-publiée. Une couverture (§01), un sommaire, des sections numérotées en §NN, une masthead sticky, un OURS en pied. Le code est l'argument visuel : un listing radical de lucid-lint v0.2.0 tient lieu de héros pour le projet phare. L'esthétique vient d'un croisement assumé entre la sobriété typographique des sites perso devs (rauno.me, paco.me) et la composition magazine atypique (ai-2027.com, Tilt hors-série 1987). Une polychromie sémantique inspirée de lucid-lint est réservée aux signaux qui codent une information réelle. Jamais décorative.",
+    "keyCharacteristics": [
+      "Atelier ouvert, traces de fabrication assumées (numéros bicolores, marques ▌ ▍, ornement § § §, OURS en pied)",
+      "Cadres francs, géométrie sans border-radius (sauf inline-code 2px)",
+      "Light par défaut (lecture diurne), dark calibré AA, toggle persistant",
+      "Polychromie sémantique 1:1 — chaque couleur encode un état ou une rubrique",
+      "Mobile : adaptation, pas amputation. Le rail bascule en bande scroll horizontale"
+    ],
+    "rules": [
+      { "name": "La Règle Un Accent", "body": "L'accent rouge porte ≤10 % du poids visuel d'un écran. Sa rareté est le point. Pas de second accent.", "section": "colors" },
+      { "name": "La Règle Polychromie Sémantique", "body": "Toute couleur ajoutée code une information réelle (warning / info / problem / success / chrome). Aucun usage décoratif.", "section": "colors" },
+      { "name": "La Règle Bicolore §NN", "body": "Les numéros de section partent toujours en ink-mute au repos. La paire bicolore s'allume uniquement au hover/focus ou sur l'item actif. Hors hero monumental, un §NN coloré au repos est un bug.", "section": "colors" },
+      { "name": "La Règle 68ch", "body": "Le body de prose s'arrête à 68ch. Le lead descend à 48ch. Aucun paragraphe ne dépasse.", "section": "typography" },
+      { "name": "La Règle du Point Terminal", "body": "Les titres affichent un . final coloré accent. C'est la signature De Stijl, le point rouge.", "section": "typography" },
+      { "name": "La Règle de l'Italique Synthétisé", "body": "Redaction Italic n'est pas livré ; le navigateur synthétise. Le font-synthesis: style est rétabli explicitement sur *.", "section": "typography" },
+      { "name": "La Règle Plat-Par-Défaut", "body": "Aucune surface n'a d'ombre au repos. Les blocs sont posés à plat, séparés par 1px de filet ou par leur fond plein.", "section": "elevation" },
+      { "name": "La Règle Backdrop Utilitaire", "body": "Le backdrop-filter est réservé à un usage : la sticky header. Pas de glass-card, pas de modal-glass.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do poser toutes les couleurs en OKLCH. Tinte les neutres vers le hue accent (~25-70) à chroma 0.005-0.020. Jamais #fff ni #000 purs.",
+      "Do utiliser la marque ▌ (pleine, item édito) et ▍ (intermédiaire, aside/caption) pour ouvrir les labels caps.",
+      "Do suffixer les titres principaux d'un . accent rouge. C'est la signature.",
+      "Do numéroter chaque section en §NN, sous-section en §NN.NN avec leading zero (§04.01, pas §4.1).",
+      "Do garder le §NN en ink-mute au repos partout (rail, sommaire, badges) sauf hero monumental.",
+      "Do capper la prose à 68ch et le lead à 48ch.",
+      "Do tester chaque interaction sous prefers-reduced-motion: reduce.",
+      "Do servir Redaction self-hosted via preload + font-display: swap."
+    ],
+    "donts": [
+      "Don't utiliser border-left ou border-right > 1px comme accent coloré. Pattern admin/dashboard, banni.",
+      "Don't appliquer background-clip: text avec un gradient. Aucune gradient text.",
+      "Don't poser une ombre décorative box-shadow. Doctrine plate. Seule l'ombre typographique bicolore §NN est autorisée.",
+      "Don't utiliser de glassmorphism décoratif. Seul le backdrop-filter de .rail sticky est autorisé.",
+      "Don't empiler des cards icône + titre + corps répétées en grille. Cliché SaaS.",
+      "Don't poser une template hero-metric (big number + small label + supporting stats).",
+      "Don't ouvrir un modal pour résoudre un problème de scope. Privilégier inline / progressive disclosure / nouvelle route.",
+      "Don't écrire d'em-dashes (—, --) dans la copy.",
+      "Don't importer de fonte Fraunces, Instrument Serif, Syne, Plex, Inter, DM Sans, Plus Jakarta.",
+      "Don't utiliser une couleur sémantique pour décorer.",
+      "Don't ajouter une couleur secondaire de soutien en plus de l'accent rouge.",
+      "Don't sortir le rail latéral nin.com de sa forme actuelle ni le remplacer par un hamburger en mobile."
+    ]
+  }
+}
