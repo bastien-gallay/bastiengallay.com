@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} — Lab — Bastien Gallay{% endblock %}
+{% block description %}{{ page.description | default(value="Page d'essai, atelier de Bastien Gallay.") }}{% endblock %}
+
+{% block content %}
+<article class="ecrit-page lab-page" aria-labelledby="lab-title">
+  <p class="issue-bar">
+    <span class="issue-bar__pill" style="--section-color: var(--c-chrome);">LAB</span>
+    <span>ATELIER D'ESSAIS</span>
+    <span class="issue-bar__sep">·</span>
+    <span>{{ page.date | date(format='%d/%m/%Y') }}</span>
+    <span class="issue-bar__sep">·</span>
+    <span>NON LISTÉE</span>
+  </p>
+
+  <header class="ecrit-page__header">
+    <h1 class="ecrit-page__title" id="lab-title">
+      {{ page.title }}<i class="ecrit-page__title-mark" aria-hidden="true">.</i>
+    </h1>
+    {% if page.description %}
+    <p class="ecrit-page__subtitle">{{ page.description }}</p>
+    {% endif %}
+  </header>
+
+  <div class="ecrit-page__content prose">
+    {{ page.content | safe }}
+  </div>
+
+  <p class="ecrit-page__back">
+    <a href="{{ config.base_url | safe }}">← Retour à l'accueil</a>
+  </p>
+</article>
+{% endblock %}
