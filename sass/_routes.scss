@@ -147,7 +147,10 @@
 .ecrit-page__content em { font-style: italic; }
 .ecrit-page__content strong { font-weight: 600; color: var(--surface-ink); }
 
-.ecrit-page__content code {
+// Inline code uniquement (`mot`) — pas dans les fenced blocks ni les
+// listings. Sans cette restriction, le bg --surface-sub écrasait le fond
+// sombre des listings → texte cream invisible en light mode.
+.ecrit-page__content :not(pre) > code {
   font-family: var(--font-mono, ui-monospace, SFMono-Regular, monospace);
   font-size: 0.92em;
   padding: 0.1em 0.3em;

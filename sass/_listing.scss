@@ -138,16 +138,21 @@
   shape-outside: margin-box;
 }
 
+// Marges resserrées pour floats — la prose vient au contact, l'aside ne
+// flotte plus dans le vide. Padding interne du body également tassé.
 .listing--right {
   float: right;
-  margin-left: var(--space-lg);
-  margin-bottom: var(--space-md);
+  margin: 0.5em 0 0.8em 1em;
 }
 
 .listing--left {
   float: left;
-  margin-right: var(--space-lg);
-  margin-bottom: var(--space-md);
+  margin: 0.5em 1em 0.8em 0;
+}
+
+.listing--right .listing__body,
+.listing--left  .listing__body {
+  padding: var(--space-sm) var(--space-md);
 }
 
 // En sous de 60rem, on dé-flotte : le listing reprend toute la largeur.
