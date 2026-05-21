@@ -7,18 +7,18 @@
   // Couleurs — light theme (par défaut)
   // ──────────────────────────────────────────────────────────────
 
-  // Surfaces : blanc-cassé chaud tiré vers le sable.
-  --surface:      oklch(0.985 0.006 70);   // page background
-  --surface-sub:  oklch(0.965 0.008 65);   // léger relief (zones)
+  // Surfaces : papier magazine neuf, chroma bas pour éviter le jaunissement.
+  --surface:      oklch(0.992 0.003 60);   // page background — cream lavé
+  --surface-sub:  oklch(0.945 0.005 50);   // creux franc, callout/encart d'imprimerie
   --surface-ink:  oklch(0.18  0.014 30);   // texte principal — noir tinté chaud
 
   // Texte secondaire = teinte de la surface assombrie (pas de gris pur).
-  --ink-soft:     oklch(0.40  0.020 30);
+  --ink-soft:     oklch(0.34  0.020 30);   // prose plus dense, lecture appuyée
   --ink-mute:     oklch(0.55  0.018 35);
 
-  // Filets / borders fins.
-  --rule:         oklch(0.88  0.012 40);
-  --rule-strong:  oklch(0.75  0.018 35);
+  // Filets / borders fins — durcis pour porter les coupures éditoriales.
+  --rule:         oklch(0.78  0.015 40);
+  --rule-strong:  oklch(0.62  0.020 35);
 
   // Accent unique — rouge De Stijl, profond, saturé mais pas criard.
   --accent:       oklch(0.52  0.205 25);
