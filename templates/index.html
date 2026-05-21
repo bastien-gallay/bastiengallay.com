@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="hero" id="intro" aria-labelledby="hero-title">
+<section class="hero section--pink" id="intro" aria-labelledby="hero-title">
   <p class="issue-bar">
     <span class="issue-bar__num">POCHETTE §01</span>
     <span class="issue-bar__sep">·</span>
@@ -12,24 +12,25 @@
     <span>7 SECTIONS</span>
   </p>
 
-  <div class="hero__head">
-    <span class="hero__bignum section-bignum" aria-hidden="true">§01</span>
-    <div class="hero__head-text">
-      <h1 class="hero__title" id="hero-title">
-        Bastien Gallay<i class="hero__title-mark" aria-hidden="true">.</i>
-      </h1>
-      <p class="hero__lead">
-        <em>Mieux écrire, mieux penser.</em>
-        Je fabrique les outils.
-      </p>
+  <div class="hero__cadre">
+    <div class="hero__head">
+      <span class="hero__bignum section-bignum" aria-hidden="true">§01</span>
+      <div class="hero__head-text">
+        <h1 class="hero__title" id="hero-title">
+          Bastien Gallay<i class="hero__title-mark" aria-hidden="true">.</i>
+        </h1>
+        <p class="hero__lead">
+          <em>Mieux écrire, mieux penser.</em>
+          Je fabrique les outils.
+        </p>
+      </div>
     </div>
-  </div>
 
-  <nav class="hero__sommaire" aria-label="Sommaire du numéro">
-    <p class="ed-badge ed-badge--toc"><span>SOMMAIRE DU NUMÉRO</span></p>
+    <nav class="hero__sommaire" aria-label="Sommaire du numéro">
+      <p class="ed-badge"><span>SOMMAIRE DU NUMÉRO</span></p>
     <ol class="hero__sommaire-list">
       <li>
-        <a class="hero__sommaire-link" href="#focus">
+        <a class="hero__sommaire-link" href="#focus" style="--link-color: var(--c-info);">
           <span class="hero__sommaire-num">§02</span>
           <span class="hero__sommaire-rule" aria-hidden="true"></span>
           <span class="hero__sommaire-title">Focus&nbsp;: lucid-lint</span>
@@ -37,7 +38,7 @@
         </a>
       </li>
       <li>
-        <a class="hero__sommaire-link" href="#familles">
+        <a class="hero__sommaire-link" href="#familles" style="--link-color: var(--c-warning);">
           <span class="hero__sommaire-num">§03</span>
           <span class="hero__sommaire-rule" aria-hidden="true"></span>
           <span class="hero__sommaire-title">Les deux familles</span>
@@ -45,7 +46,7 @@
         </a>
       </li>
       <li>
-        <a class="hero__sommaire-link" href="#ecrits">
+        <a class="hero__sommaire-link" href="#ecrits" style="--link-color: var(--c-success);">
           <span class="hero__sommaire-num">§04</span>
           <span class="hero__sommaire-rule" aria-hidden="true"></span>
           <span class="hero__sommaire-title">Écrits récents</span>
@@ -53,7 +54,7 @@
         </a>
       </li>
       <li>
-        <a class="hero__sommaire-link hero__sommaire-link--route" href="{{ config.base_url | safe }}/now/">
+        <a class="hero__sommaire-link hero__sommaire-link--route" href="{{ config.base_url | safe }}/now/" style="--link-color: var(--c-chrome);">
           <span class="hero__sommaire-num">§05</span>
           <span class="hero__sommaire-rule" aria-hidden="true"></span>
           <span class="hero__sommaire-title">Maintenant</span>
@@ -61,7 +62,7 @@
         </a>
       </li>
       <li>
-        <a class="hero__sommaire-link" href="#contact">
+        <a class="hero__sommaire-link" href="#contact" style="--link-color: var(--accent);">
           <span class="hero__sommaire-num">§06</span>
           <span class="hero__sommaire-rule" aria-hidden="true"></span>
           <span class="hero__sommaire-title">Me joindre</span>
@@ -70,10 +71,11 @@
       </li>
     </ol>
   </nav>
+  </div>
 </section>
 
-<section class="focus" id="focus" aria-labelledby="focus-title">
-  <p class="ed-badge ed-badge--feature">
+<section class="focus section--blue" id="focus" aria-labelledby="focus-title">
+  <p class="ed-badge">
     <span class="ed-badge__num">§02</span>
     <span>EN COUVERTURE</span>
   </p>
@@ -122,7 +124,7 @@
 </code></pre>
   </figure>
 
-  <p class="ed-badge ed-badge--feature focus__points-label">
+  <p class="ed-badge focus__points-label">
     <span>POINTS-CLÉS</span>
   </p>
   <ol class="focus__points" aria-label="Points clés">
@@ -148,8 +150,8 @@
   </p>
 </section>
 
-<section class="familles" id="familles" aria-labelledby="familles-title">
-  <p class="ed-badge ed-badge--toc">
+<section class="familles section--yellow" id="familles" aria-labelledby="familles-title">
+  <p class="ed-badge">
     <span class="ed-badge__num">§03</span>
     <span>LES FAMILLES</span>
   </p>
@@ -197,8 +199,8 @@
   </aside>
 </section>
 
-<section class="ecrits-teaser" id="ecrits" aria-labelledby="ecrits-teaser-title">
-  <p class="ed-badge ed-badge--toc">
+<section class="ecrits-teaser section--mint" id="ecrits" aria-labelledby="ecrits-teaser-title">
+  <p class="ed-badge">
     <span class="ed-badge__num">§04</span>
     <span>ÉCRITS</span>
   </p>
@@ -207,7 +209,7 @@
     Quelques notes longues sur l'écriture, la lecture, et ce que je fabrique.
   </p>
 
-  <p class="ed-badge ed-badge--insert"><span>DANS CE NUMÉRO</span></p>
+  <p class="ed-badge"><span>DANS CE NUMÉRO</span></p>
   <ol class="toc-list">
     <li class="toc-list__item">
       <span class="toc-list__num">§04.01</span>
@@ -228,8 +230,8 @@
   </p>
 </section>
 
-<section class="contact" id="contact" aria-labelledby="contact-title">
-  <p class="ed-badge ed-badge--toc">
+<section class="contact section--rouge" id="contact" aria-labelledby="contact-title">
+  <p class="ed-badge">
     <span class="ed-badge__num">§06</span>
     <span>ME JOINDRE</span>
   </p>

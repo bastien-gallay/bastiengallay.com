@@ -44,27 +44,27 @@
       {# Rail-marquepage : numéros §NN seuls, libellé révélé en flyout au hover. #}
       {# Le sommaire complet vit dans le hero ; le rail sert de position dans la pochette. #}
       <nav class="rail__nav" aria-label="Sections">
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#intro">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#intro" title="Intro" style="--link-color: var(--c-problem);">
           <span class="rail__link-num">§01</span>
           <span class="rail__link-label">Intro</span>
         </a>
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#focus">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#focus" title="Focus : lucid-lint" style="--link-color: var(--c-info);">
           <span class="rail__link-num">§02</span>
           <span class="rail__link-label">Focus</span>
         </a>
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#familles">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#familles" title="Les deux familles" style="--link-color: var(--c-warning);">
           <span class="rail__link-num">§03</span>
           <span class="rail__link-label">Familles</span>
         </a>
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/ecrits/">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/ecrits/" title="Écrits récents" style="--link-color: var(--c-success);">
           <span class="rail__link-num">§04</span>
           <span class="rail__link-label">Écrits</span>
         </a>
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/now/">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/now/" title="Maintenant" style="--link-color: var(--c-chrome);">
           <span class="rail__link-num">§05</span>
           <span class="rail__link-label">Now</span>
         </a>
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#contact">
+        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#contact" title="Me joindre" style="--link-color: var(--accent);">
           <span class="rail__link-num">§06</span>
           <span class="rail__link-label">Contact</span>
         </a>

@@ -10,6 +10,27 @@
   gap: var(--space-lg);
 }
 
+// Cadre double-border autour du titre + sommaire (item poster #1).
+// L'issue-bar reste au-dessus, hors cadre, comme dans la maquette.
+.hero__cadre {
+  position: relative;
+  border: 3px solid var(--surface-ink);
+  padding: clamp(var(--space-md), 3vw, var(--space-xl))
+           clamp(var(--space-md), 4vw, var(--space-2xl))
+           clamp(var(--space-lg), 4vw, var(--space-2xl));
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.hero__cadre::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--surface-ink);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
 // Bloc titre : §01 géant à gauche du nom + lead (grid asymétrique).
 .hero__head {
   display: grid;
@@ -95,8 +116,9 @@
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: 500;
-  color: var(--accent);
+  color: var(--link-color, var(--accent));
   font-variant-numeric: tabular-nums lining-nums;
+  transition: color var(--dur-fast) var(--ease-out-quart);
 }
 
 .hero__sommaire-rule {
@@ -122,13 +144,13 @@
 
 .hero__sommaire-link:hover,
 .hero__sommaire-link:focus-visible {
-  color: var(--accent-deep);
+  color: var(--link-color, var(--accent-deep));
   text-decoration: none;
   outline: none;
 }
 
 .hero__sommaire-link:hover .hero__sommaire-arrow {
-  color: var(--accent);
+  color: var(--link-color, var(--accent));
   transform: translateY(0.15em);
 }
 
@@ -227,7 +249,7 @@
 .focus__point-num {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  color: var(--accent);
+  color: var(--section-color, var(--accent));
   font-variant-numeric: tabular-nums lining-nums;
   font-weight: 500;
   white-space: nowrap;
@@ -317,7 +339,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-caps);
-  color: var(--accent);
+  color: var(--section-color, var(--accent));
   font-variant-numeric: tabular-nums lining-nums;
   font-weight: 500;
   margin: 0;

@@ -60,8 +60,9 @@
   // Pas de border-radius : carré franc, ton De Stijl.
 }
 
-// Rail-marquepage : numéros §NN visibles, libellé en flyout au hover.
-// Métaphore : un doigt qui marque la page dans le bouquin.
+// Rail-marquepage : numéros §NN visibles. Le label vit en sr-only pour les
+// lecteurs d'écran ; le tooltip visuel utilise l'attribut title natif du lien
+// (pas de flyout positionné qui chevauche le contenu).
 .rail__nav {
   display: flex;
   flex-direction: column;
@@ -69,7 +70,6 @@
 }
 
 .rail__link {
-  position: relative;
   display: block;
   padding: var(--space-2xs) 0;
   font-family: var(--font-mono);
@@ -87,46 +87,26 @@
   transition: color var(--dur-fast) var(--ease-out-quart);
 }
 
-// Label en flyout — visible au hover/focus uniquement. Conservé dans le DOM
-// pour les lecteurs d'écran ; positionné offscreen tant qu'invisible.
+// Label conservé dans le DOM mais visuellement caché (a11y only).
 .rail__link-label {
   position: absolute;
-  left: calc(100% + var(--space-xs));
-  top: 50%;
-  transform: translate(-0.4rem, -50%);
-  background: var(--surface-ink);
-  color: var(--surface);
-  padding: 0.3em 0.6em;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
   white-space: nowrap;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  opacity: 0;
-  pointer-events: none;
-  border-radius: 2px;
-  z-index: 5;
-  transition: opacity var(--dur-fast) var(--ease-out-quart),
-              transform var(--dur-fast) var(--ease-out-quart);
 }
 
 .rail__link:hover,
 .rail__link:focus-visible {
-  color: var(--accent);
+  color: var(--link-color, var(--accent));
   text-decoration: none;
   outline: none;
 }
 
-.rail__link:hover .rail__link-label,
-.rail__link:focus-visible .rail__link-label {
-  opacity: 1;
-  transform: translate(0, -50%);
-}
-
-// État actif : nº en pink — sémantique "tu es ici" dans la pochette.
+// État actif : nº prend la couleur de la section visée — "tu es ici" est
+// signalé dans la teinte de la pochette en cours de lecture.
 .rail__link[aria-current="true"] {
-  color: var(--c-problem);
+  color: var(--link-color, var(--c-problem));
 }
 
 .rail__link[aria-current="true"] .rail__link-num {
