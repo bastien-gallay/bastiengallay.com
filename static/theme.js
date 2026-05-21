@@ -23,7 +23,8 @@
   function updateToggleLabel(theme) {
     const label = document.querySelector("[data-theme-label]");
     if (!label) return;
-    label.textContent = theme === "dark" ? "Clair" : "Sombre";
+    // Indique l'action, pas l'état courant — moins ambigu.
+    label.textContent = theme === "dark" ? "Passer en clair" : "Passer en sombre";
   }
 
   document.querySelectorAll("[data-theme-toggle]").forEach((btn) => {
