@@ -32,13 +32,9 @@ Depuis quatre semaines, je corrige les bugs de cette élégance. Fusion accident
 
 Bilan : quelques heures pour produire l'outil. Quatre semaines pour le rendre utilisable.
 
-<!-- NOTE BASTIEN : si tu veux ajouter une phrase de leçon brute personnelle ici, c'est le moment. Quelque chose comme "j'aurais codé plus lentement au départ, j'aurais livré plus vite au total" — mais dans ta voix. -->
-
 Pourtant, je suis depuis longtemps convaincu de deux choses : tout est logiciel — de la simple feuille Excel au script qui génère des PDF — et il faut très vite décider de le supprimer ou de le pérenniser avant qu'il ne se complexifie. Tout logiciel pérenne doit, au plus tôt, bénéficier d'un filet de sécurité pour ne pas baisser en qualité.
 
 Avec l'IA, la complexité arrive plus vite. Et plus discrètement que le bon vieux Excel qui commençait à crouler sous ses six formules à références croisées.
-
-<!--FIN AJOUT BASTIEN -->
 
 C'est cette expérience, répétée sous plusieurs formes au cours des derniers mois, qui m'a fait basculer. **Depuis, je code plus lentement. Et je produis plus.**
 
@@ -70,11 +66,7 @@ Avant de commencer, les développeurs prédisaient un gain de temps de 24&nbsp;%
 
 L'écart entre la perception et la réalité dépassait les 39 points. Ces développeurs n'étaient ni naïfs ni hostiles à l'IA. Ils étaient simplement convaincus d'aller plus vite quand ils allaient en réalité plus lentement.
 
-<!-- NOTE BASTIEN : c'est ici une bonne place pour glisser une observation personnelle — par exemple, est-ce que tu as toi-même remarqué cet écart entre ton ressenti et ce que tu pouvais mesurer en revoyant ton activité ? Une phrase suffit. -->
-
 J'ai moi-même vécu cet écart. Il y a deux ans, avec des modèles bien moins performants, ce qui m'aurait pris une ou deux heures me prenait souvent une demi-journée. Encore aujourd'hui, il m'arrive par réflexe de demander à Claude Code l'édition d'un fichier qu'il fera en trente secondes, là où j'aurais pu terminer en dix.
-
-<!--FIN AJOUT BASTIEN -->
 
 Les études antérieures, qui annonçaient 56&nbsp;% ou 21&nbsp;% d'accélération [3], reposaient sur des tâches synthétiques. Or les conditions synthétiques masquent ce qui rend les vrais projets coûteux : la cohérence avec l'existant, la dette technique, les conventions tacites, les contraintes invisibles.
 
@@ -112,11 +104,7 @@ L'étude GitClear, qui a analysé 211 millions de lignes de code modifiées entr
 - Le code "churned" — réécrit dans les deux semaines suivant son commit — a doublé : de 3,1&nbsp;% à 5,7&nbsp;%.
 - En 2024, pour la première fois, les lignes copy-pastées ont dépassé les lignes "déplacées" (refactorisées).
 
-<!-- NOTE BASTIEN : tu peux ici glisser un bref commentaire personnel — par exemple sur ce que ces chiffres évoquent pour toi en tant qu'auditeur de code multi-langages. Une phrase, pas plus. -->
-
 Lorsque j'ouvre les projets en audit de code, je découvre de plus en plus souvent des fonctions de 800 lignes, empilées au fil des commits automatiques, et des tests unitaires identiques dans trois fichiers différents.
-
-<!--FIN AJOUT BASTIEN -->
 
 Le rapport DORA 2024 de Google, qui suit la performance de livraison logicielle depuis une décennie, confirme la tension : une augmentation de 25&nbsp;% de l'adoption IA accélère les revues de code mais diminue la stabilité de livraison de 7,2&nbsp;% [6].
 
@@ -135,11 +123,7 @@ Une citation d'Armando Solar-Lezama, professeur au MIT, résume mieux que je ne 
 
 Une dimension manque presque toujours dans les études : à quel stade d'apprentissage sont les développeurs mesurés ? Les outils évoluent à un rythme qui rend la stabilisation d'une pratique difficile. Entre Cursor début 2025, Cursor mi-2025, Claude Code à l'automne 2025, et les agents autonomes qu'on déploie en 2026, ce ne sont plus les mêmes objets.
 
-<!-- NOTE BASTIEN : ici il y a une vraie matière pour TOI à développer en 2-3 phrases. Tu vis cette évolution constante, tu fais de la veille permanente, tu as observé tes propres ré-apprentissages. C'est exactement le genre d'observation qui ne peut venir que de quelqu'un qui pratique. Une anecdote ou un constat de premier main serait précieux ici. -->
-
 J'ai commencé par l'autocomplétion intelligente, avec Tabnine en 2018, puis Copilot. Codium — devenu Qodo — a été mon premier reviewer IA. Au printemps 2024, je faisais mes premiers Code Katas en ping-pong avec une IA. L'été suivant, un collègue m'a dit qu'il avait codé un projet entier sans écrire la moindre ligne lui-même. J'ai voulu essayer et j'ai constaté très vite que c'était plus efficace que de mixer ma production et celle de l'IA. À chaque transition, j'ai dû réapprendre à faire du vélo.
-
-<!--FIN AJOUT BASTIEN -->
 
 ### La success story est visible, l'incident l'est moins
 
@@ -177,27 +161,12 @@ Ces chiffres méritent d'être discutés. Les méthodologies varient. Mais le si
 
 ## La vitesse n'est pas la précipitation
 
-<!-- NOTE BASTIEN : section centrale, où la voix doit être la plus tienne. Voici l'argument et la structure, à rédiger dans tes mots. C'est ici que tu dois VRAIMENT prendre la parole. -->
-
-<!-- Argument à développer en 200-300 mots :
-
-- La vitesse, c'est faire correctement ce qui doit être fait, à un bon rythme.
-- La précipitation, c'est faire vite ce qui semble être ce qu'il faut faire.
-- L'IA accélère les deux indistinctement, parce qu'elle ne distingue pas l'un de l'autre.
-- C'est au développeur de réinstaller cette distinction, et ça demande de la lenteur.
-- Lenteur ici ne veut pas dire écrire moins de code. Ça veut dire reprendre la décision avant d'écrire.
-- Un développeur expérimenté qui code plus lentement avec l'IA n'est pas un développeur moins productif. C'est un développeur qui refuse d'accumuler la dette qu'on vient de mesurer dans les études précédentes.
-
-Tu peux ici ajouter une citation, un exemple personnel, ou la formule qui te plaît. La section doit être courte et frappante. -->
-
 Lorsqu'on compare le temps de trajet en avion ou en voiture, on compare de porte à porte plutôt que le temps passé dans le véhicule. C'est la vitesse. Sauter dans le premier bus arrivé et se rendre compte que ce n'est pas la bonne direction, c'est de la précipitation. Automatiser une tâche de développement peut relever de l'un ou de l'autre. L'IA ne fait pas la différence entre les deux. C'est le développeur qui décide où et comment l'utiliser. Personne n'aime s'apercevoir que la mémoire de Claude Code a mélangé le nom d'un client avec un autre le jour de la démo. Cet arbitrage régulier prend du temps. Un temps incompressible mais indispensable qui se prend avant d'écrire. C'est le temps nécessaire à la qualité. Si je devais résumer en deux formules&nbsp;:
 
 - précipitation = accélération - attention
 - vitesse = accélération + réflexion + qualité
 
 Avant l'IA, nous passions 10&nbsp;% de notre temps à écrire du code, et 90&nbsp;% à le relire, le concevoir, le réfléchir, le réorganiser et aller lire de la documentation. Si nous possédons un outil qui peut accélérer ces 10&nbsp;%, le gain est faible à long terme. Il ne peut être pérenne qu'à deux conditions&nbsp;: savoir accélérer une part des 90&nbsp;% et investir plus de temps sur ce qu'on n'accélère pas.
-
-<!--FIN AJOUT BASTIEN -->
 
 ---
 
