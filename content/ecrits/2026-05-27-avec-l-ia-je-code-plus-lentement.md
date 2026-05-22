@@ -78,7 +78,7 @@ Les études antérieures, qui annonçaient 56&nbsp;% ou 21&nbsp;% d'accélérati
 
 ### On mesure la rédaction, pas la livraison
 
-Une étude conduite sur la télémétrie de 22 000 développeurs et deux ans d'historique a documenté une déconnexion massive entre productivité individuelle ressentie et performance de l'entreprise [4]. Les développeurs disent travailler plus vite. Les entreprises ne voient pas d'amélioration mesurable de la vélocité de livraison ni des résultats business.
+Une étude conduite sur la télémétrie de 22 000 développeurs et deux ans d'historique a documenté une déconnexion entre productivité individuelle ressentie et performance de l'entreprise [4]. Les développeurs disent travailler plus vite. Les entreprises ne voient pas d'amélioration mesurable de la vélocité de livraison ni des résultats business.
 
 Le rapport explique pourquoi : les métriques de vendeurs traquent l'activité — commits, pull requests, lignes de code — qui gonflent mécaniquement avec l'usage IA. La vélocité de livraison, elle, dépend d'une chaîne complète : revue, tests, intégration, déploiement, opérations. Cette chaîne n'a pas accéléré au même rythme.
 
@@ -103,7 +103,7 @@ L'étude Faros sur le même sujet est encore plus précise : les développeurs i
   Placement : encart latéral OU figure pleine largeur en bas de la sous-section
 -->
 
-L'étude GitClear, qui a analysé 211 millions de lignes de code modifiées entre 2020 et 2024 chez Google, Microsoft, Meta et plusieurs entreprises cotées, mesure une transformation préoccupante des pratiques [5] :
+L'étude GitClear, qui a analysé 211 millions de lignes de code modifiées entre 2020 et 2024 chez Google, Microsoft, Meta et plusieurs entreprises cotées, mesure une transformation des pratiques [5] :
 
 - La part de copy-paste dans le code livré est passée de 8,3&nbsp;% à 12,3&nbsp;%.
 - Le refactoring, lui, est passé de 24,1&nbsp;% à 9,5&nbsp;%.
@@ -153,7 +153,7 @@ Le dernier biais est statistique : on entend ceux qui réussissent avec l'IA. On
   Placement : encart latéral OU bandeau pleine largeur sous le paragraphe
 -->
 
-Et pourtant, les incidents s'accumulent. La CVE-2025-48757 a exposé une faille systémique chez Lovable, plateforme de codage IA, qui générait des schémas de base de données sans politiques de sécurité au niveau ligne. Plus de 170 applications en production affectées [8]. La faille Moltbook a leaké 1,5 million de tokens d'authentification, parce que les endpoints API générés ne vérifiaient pas les autorisations [8].
+Et pourtant, les incidents s'accumulent. La CVE-2025-48757 a exposé une faille chez Lovable, plateforme de codage IA, qui générait des schémas de base de données sans politiques de sécurité au niveau ligne. Plus de 170 applications en production affectées [8]. La faille Moltbook a leaké 1,5 million de tokens d'authentification, parce que les endpoints API générés ne vérifiaient pas les autorisations [8].
 
 Plus structurellement : selon Veracode, 45&nbsp;% du code généré par IA contient au moins une vulnérabilité OWASP [9]. Une autre étude mesure que ce code contient 2,74 fois plus de vulnérabilités que le code écrit par des humains [10].
 
@@ -212,7 +212,7 @@ Si la vitesse mesurée n'est pas la productivité réelle, et si la discipline n
 
 Une recherche honnête doit reconnaître ce qui pourrait l'invalider. Quatre objections que je trouve sérieuses :
 
-**Le biais d'early-adopter.** Mon vécu, comme celui des seize développeurs de l'étude METR, est celui de praticiens expérimentés. Il est tout à fait possible qu'un développeur en début de carrière connaisse un autre rapport à l'IA, peut-être plus directement accélérateur, parce qu'il n'a pas encore l'intuition de la dette à venir. Cela n'invalide pas la thèse : ça précise son public.
+**Le biais d'early-adopter.** Mon vécu, comme celui des seize développeurs de l'étude METR, est celui de praticiens expérimentés. Un développeur en début de carrière connaît peut-être un autre rapport à l'IA, plus directement accélérateur, parce qu'il n'a pas encore l'intuition de la dette à venir. Cela n'invalide pas la thèse : ça précise son public.
 
 **Le biais temporel.** Les études citées portent sur la période 2024-début 2025. Les outils évoluent. Il est possible que les agents 2026 changent la donne. Mais le sens du changement n'est pas évident : les outils plus autonomes accentuent aussi la dimension *« il faut quelqu'un pour rattraper »*, comme le suggèrent les chiffres récents sur les incidents Claude Code et Copilot [11].
 
