@@ -5,6 +5,8 @@ description = "Pourquoi le discours dominant sur la productivité IA mesure ce q
 draft = true
 
 [extra]
+heading_html = "Avec l'IA, je code plus <mark class=\"mark\">lentement</mark>"
+signature_bio = "fabrique des outils OSS pour penser, écrire et coder comme une seule discipline."
 series = "coder-avec-l-ia"
 series_title = "Coder avec l'IA"
 series_index = 1
@@ -171,7 +173,6 @@ Ces chiffres méritent d'être discutés. Les méthodologies varient. Mais le si
   Placement : pleine largeur, en clôture de la section "Ce que les chiffres ne mesurent pas", juste avant la transition vers "La vitesse n'est pas la précipitation".
 -->
 
-
 ---
 
 ## La vitesse n'est pas la précipitation
@@ -222,20 +223,17 @@ Une recherche honnête doit reconnaître ce qui pourrait l'invalider. Quatre obj
 
 ---
 
-## Notes et références
-
-[1] Second Talent, *AI Coding Assistant Statistics & Trends [2026]*, secondtalent.com, 2026.
-[2] Stack Overflow, *Developer Survey 2025*, stackoverflow.blog.
-[3] Becker, J. et al., *Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity*, METR, arXiv:2507.09089, juillet 2025.
-[4] Faros AI, *The AI Productivity Paradox Research Report*, faros.ai, 2025.
-[5] GitClear, *AI Copilot Code Quality 2025 Research Report*, gitclear.com, février 2025.
-[6] Google, *DORA Report 2024*, dora.dev.
-[7] Solar-Lezama, A., interview au *Wall Street Journal*, citée dans DevOps.com, *AI in Software Development: Productivity at the Cost of Code Quality?*, 2025.
-[8] Vibe Coder Blog, *Security Researchers Sound the Alarm on AI Code Vulnerabilities*, blog.vibecoder.me, avril 2026.
-[9] Veracode, *2025 GenAI Code Security Report*, veracode.com.
-[10] SoftwareSeni, analyse de Veracode 2025 et Apiiro, softwareseni.com, février 2026.
-[11] Futurity, *AI-generated code is vulnerable*, futurity.org, 2026.
-
----
-
-- *Bastien Gallay — Articles, OSS, et réflexions sur le code, l'IA et la charge cognitive. bastiengallay.com*
+<aside class="ours" aria-label="Notes et références">
+  <p class="ours__label">Notes et références</p>
+  <p>[1] Second Talent, <em>AI Coding Assistant Statistics &amp; Trends [2026]</em>, secondtalent.com, 2026.</p>
+  <p>[2] Stack Overflow, <em>Developer Survey 2025</em>, stackoverflow.blog.</p>
+  <p>[3] Becker, J. et al., <em>Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity</em>, METR, arXiv:2507.09089, juillet 2025.</p>
+  <p>[4] Faros AI, <em>The AI Productivity Paradox Research Report</em>, faros.ai, 2025.</p>
+  <p>[5] GitClear, <em>AI Copilot Code Quality 2025 Research Report</em>, gitclear.com, février 2025.</p>
+  <p>[6] Google, <em>DORA Report 2024</em>, dora.dev.</p>
+  <p>[7] Solar-Lezama, A., interview au <em>Wall Street Journal</em>, citée dans DevOps.com, <em>AI in Software Development: Productivity at the Cost of Code Quality?</em>, 2025.</p>
+  <p>[8] Vibe Coder Blog, <em>Security Researchers Sound the Alarm on AI Code Vulnerabilities</em>, blog.vibecoder.me, avril 2026.</p>
+  <p>[9] Veracode, <em>2025 GenAI Code Security Report</em>, veracode.com.</p>
+  <p>[10] SoftwareSeni, analyse de Veracode 2025 et Apiiro, softwareseni.com, février 2026.</p>
+  <p>[11] Futurity, <em>AI-generated code is vulnerable</em>, futurity.org, 2026.</p>
+</aside>
