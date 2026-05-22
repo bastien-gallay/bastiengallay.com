@@ -170,8 +170,9 @@
   transform: translate(0.1em, -0.15em);
 }
 
-// Sur les écrans étroits, le §01 géant passe au-dessus du titre.
-@media (max-width: 36rem) {
+// Sur les écrans étroits et moyens, le §01 géant passe au-dessus du titre —
+// sinon il vole la largeur dont "Bastien Gallay" a besoin pour tenir sur une ligne.
+@media (max-width: 48rem) {
   .hero__head {
     grid-template-columns: 1fr;
   }
