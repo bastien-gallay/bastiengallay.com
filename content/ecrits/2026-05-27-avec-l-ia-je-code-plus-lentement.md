@@ -56,6 +56,14 @@ Ces chiffres sont sincères. Ils ne sont simplement pas la mesure de ce qu'on cr
 
 En 2025, une équipe de chercheurs de METR a conduit une expérience contrôlée randomisée [3]. Seize développeurs open source expérimentés, chacun avec en moyenne cinq ans de pratique sur les projets qu'ils maintenaient. 246 tâches réelles, pas synthétiques. Outils utilisés : Cursor Pro et Claude 3.5/3.7 Sonnet.
 
+<!-- VISUEL-1 : Perception vs réalité (étude METR)
+  Type      : barres horizontales (3 valeurs)
+  Données   : prédit +24%, perçu +20%, mesuré -19%
+  Légende   : "Un écart de 39 points entre ce que les développeurs croient et ce que la mesure révèle."
+  Source    : METR Becker 2025 [3]
+  Placement : encart latéral (side frame) à droite du paragraphe
+-->
+
 Avant de commencer, les développeurs prédisaient un gain de temps de 24&nbsp;% grâce à l'IA. Après l'étude, ils estimaient ce gain à 20&nbsp;%. La mesure objective, elle, montrait une augmentation du temps de complétion de 19&nbsp;%.
 
 L'écart entre la perception et la réalité dépassait les 39 points. Ces développeurs n'étaient ni naïfs ni hostiles à l'IA. Ils étaient simplement convaincus d'aller plus vite quand ils allaient en réalité plus lentement.
@@ -74,9 +82,26 @@ Une étude conduite sur la télémétrie de 22 000 développeurs et deux ans d'h
 
 Le rapport explique pourquoi : les métriques de vendeurs traquent l'activité — commits, pull requests, lignes de code — qui gonflent mécaniquement avec l'usage IA. La vélocité de livraison, elle, dépend d'une chaîne complète : revue, tests, intégration, déploiement, opérations. Cette chaîne n'a pas accéléré au même rythme.
 
+<!-- VISUEL-2 : Le gain individuel s'évanouit en file d'attente (Faros)
+  Type      : 3 flèches ou barres horizontales (échelle commune)
+  Données   : individus +21% tâches · revue +91% temps · équipes +98% PR
+  Légende   : "Plus on accélère en amont, plus la file s'allonge en aval."
+  Source    : Faros AI 2025 [4]
+  Placement : encart latéral (side frame)
+-->
+
 L'étude Faros sur le même sujet est encore plus précise : les développeurs individuels complètent 21&nbsp;% de tâches en plus, mais le temps de revue augmente de 91&nbsp;%, et les équipes génèrent 98&nbsp;% de pull requests supplémentaires [4]. Les gains se transforment en files d'attente.
 
 ### La dette technique devient invisible
+
+<!-- VISUEL-3 : L'inversion 2020-2024 (GitClear)
+  Type      : 2 courbes croisées sur l'axe temps (2020 → 2024)
+  Données   : copy-paste 8,3% → 12,3% (↗) · refactoring 24,1% → 9,5% (↘)
+  Variante  : ajouter le churn (3,1% → 5,7%) en pointillé ou en tooltip
+  Légende   : "Le code se duplique plus vite qu'il ne se range." — possibilité d'utiliser la citation Solar-Lezama (L.96) comme légende.
+  Source    : GitClear AI Copilot Code Quality 2025 [5]
+  Placement : encart latéral OU figure pleine largeur en bas de la sous-section
+-->
 
 L'étude GitClear, qui a analysé 211 millions de lignes de code modifiées entre 2020 et 2024 chez Google, Microsoft, Meta et plusieurs entreprises cotées, mesure une transformation préoccupante des pratiques [5] :
 
@@ -92,6 +117,15 @@ Lorsque j'ouvre les projets en audit de code, je découvre de plus en plus souve
 <!--FIN AJOUT BASTIEN -->
 
 Le rapport DORA 2024 de Google, qui suit la performance de livraison logicielle depuis une décennie, confirme la tension : une augmentation de 25&nbsp;% de l'adoption IA accélère les revues de code mais diminue la stabilité de livraison de 7,2&nbsp;% [6].
+
+<!-- VISUEL-5 : Pull-quote Solar-Lezama
+  Type      : citation isolée en grand caractère, façon "side quote" ou bloc pleine largeur
+  Texte     : « L'IA est comme une carte de crédit toute neuve qui va nous permettre d'accumuler de la dette technique d'une manière qu'on n'avait jamais pu auparavant. »
+  Attribution: Armando Solar-Lezama, MIT
+  Source    : Wall Street Journal, cité dans DevOps.com 2025 [7]
+  Placement : pull-quote en marge OU bloc citation pleine largeur
+  Note      : peut aussi servir de légende au VISUEL-3 si pull-quote séparée non retenue.
+-->
 
 Une citation d'Armando Solar-Lezama, professeur au MIT, résume mieux que je ne saurais le faire : *« L'IA est comme une carte de crédit toute neuve qui va nous permettre d'accumuler de la dette technique d'une manière qu'on n'avait jamais pu auparavant »* [7].
 
@@ -109,11 +143,34 @@ J'ai commencé par l'autocomplétion intelligente, avec Tabnine en 2018, puis Co
 
 Le dernier biais est statistique : on entend ceux qui réussissent avec l'IA. On entend moins ceux qui ont stabilisé pendant trois semaines un outil construit en trois jours.
 
+<!-- VISUEL-4 : Incidents 2025-2026
+  Type      : 2 cases compactes côte à côte (ou empilées) — façon "fiches incident"
+  Cases     :
+    1) CVE-2025-48757 / Lovable — schémas DB sans row-level security — > 170 apps en prod
+    2) Moltbook — endpoints API sans contrôle d'autorisation — 1,5 M tokens leakés
+  Légende   : "Deux incidents 2025-2026 emblématiques du trade-off."
+  Source    : Vibe Coder Blog 2026 [8] (à vérifier / consolider)
+  Placement : encart latéral OU bandeau pleine largeur sous le paragraphe
+-->
+
 Et pourtant, les incidents s'accumulent. La CVE-2025-48757 a exposé une faille systémique chez Lovable, plateforme de codage IA, qui générait des schémas de base de données sans politiques de sécurité au niveau ligne. Plus de 170 applications en production affectées [8]. La faille Moltbook a leaké 1,5 million de tokens d'authentification, parce que les endpoints API générés ne vérifiaient pas les autorisations [8].
 
 Plus structurellement : selon Veracode, 45&nbsp;% du code généré par IA contient au moins une vulnérabilité OWASP [9]. Une autre étude mesure que ce code contient 2,74 fois plus de vulnérabilités que le code écrit par des humains [10].
 
 Ces chiffres méritent d'être discutés. Les méthodologies varient. Mais le signal converge : il y a un trade-off entre vitesse de production et qualité de livraison, qui n'apparaît pas dans les métriques d'adoption.
+
+<!-- VISUEL-6 : Tableau récap des 4 biais (synthèse de section)
+  Type      : tableau 4 lignes × 3 colonnes
+  Colonnes  : Ce que les métriques ratent | Chiffre-clé | Source
+  Lignes    :
+    1) Perception ≠ réalité            | -19% (vs +24% attendu)        | METR [3]
+    2) Rédaction ≠ livraison           | revue +91%, PR +98%           | Faros [4]
+    3) Dette technique invisible       | copy-paste 8,3% → 12,3%       | GitClear [5] + DORA [6]
+    4) Success ≠ incident              | 45% du code IA = ≥ 1 CVE OWASP| Veracode [9]
+  Légende   : "Quatre angles morts du discours dominant."
+  Placement : pleine largeur, en clôture de la section "Ce que les chiffres ne mesurent pas", juste avant la transition vers "La vitesse n'est pas la précipitation".
+-->
+
 
 ---
 
