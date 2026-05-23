@@ -107,14 +107,16 @@
 .rail__link {
   display: inline-flex;
   align-items: baseline;
+  gap: var(--space-3xs);
   padding: var(--space-3xs) 0;
   color: var(--ink-mute);
-  font-family: var(--font-mono);
   transition: color var(--dur-fast) var(--ease-out-quart);
 }
 
+// §NN = préfixe éditorial mono, tabular pour l'alignement vertical.
 .rail__link-num {
   display: inline-block;
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: 500;
   letter-spacing: 0;
@@ -124,35 +126,58 @@
               text-shadow var(--dur-fast) var(--ease-out-quart);
 }
 
-// Doctrine §NN : gris muted au repos partout, bicolore section au
+// Le mot porte le sens : visible au repos pour qu'on lise la destination
+// sans survol (recall → recognition). Couleur muette comme le numéro.
+.rail__link-label {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: inherit;
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease-out-quart);
+}
+
+// §04/§05 mènent à une page : « → » fin, muet, distinct du « ↗ » externe
+// du colophon. Décoratif (le title= et l'href portent déjà l'info).
+.rail__link--route .rail__link-label::after {
+  content: "→";
+  margin-inline-start: 0.3em;
+  font-size: 0.85em;
+  opacity: 0.55;
+}
+
+// Doctrine §NN : gris muted au repos, bicolore section au
 // hover/focus/[aria-current]. La couleur active reprend la --link-color
 // / --link-shadow (paire associée à chaque section, exposée en inline
-// style sur les liens).
+// style sur les liens). Le numéro garde le double-ton ludique ;
+// le mot prend juste la couleur, sans ombre, pour rester lisible.
 .rail__link:hover .rail__link-num,
 .rail__link:focus-visible .rail__link-num,
-.rail__link[aria-current="true"] .rail__link-num {
+.rail__link[aria-current="true"] .rail__link-num,
+.rail__link[aria-current="page"] .rail__link-num {
   color: var(--link-color, var(--c-info));
   text-shadow: 1.5px 1.5px 0 var(--link-shadow, var(--accent));
 }
 
+.rail__link:hover .rail__link-label,
+.rail__link:focus-visible .rail__link-label,
+.rail__link[aria-current="true"] .rail__link-label,
+.rail__link[aria-current="page"] .rail__link-label {
+  color: var(--link-color, var(--c-info));
+}
+
+// Pas de soulignement parasite (a:hover en ajoute un) ; on garde en revanche
+// l'outline accent global sur :focus-visible — l'indicateur clavier ne doit
+// pas reposer sur la seule couleur (WCAG 2.4.7).
 .rail__link:hover,
 .rail__link:focus-visible {
   text-decoration: none;
-  outline: none;
 }
 
-.rail__link[aria-current="true"] .rail__link-num {
+.rail__link[aria-current="true"] .rail__link-num,
+.rail__link[aria-current="true"] .rail__link-label,
+.rail__link[aria-current="page"] .rail__link-num,
+.rail__link[aria-current="page"] .rail__link-label {
   font-weight: 600;
-}
-
-// Label = invisible en desktop dans le header sticky (les numéros parlent
-// déjà ; le title= natif donne le tooltip pour les souris).
-.rail__link-label {
-  position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
 }
 
 // Bas du rail : toggle thème à droite.
@@ -279,8 +304,19 @@
     scrollbar-width: none;
     flex-wrap: nowrap;
     justify-content: flex-start;
+    // Marge de fuite : §06 ne colle pas au bord, et le scroll s'arrête net
+    // sur un item plutôt qu'à mi-mot.
+    padding-inline-end: var(--space-sm);
+    scroll-snap-type: x proximity;
   }
   .rail__nav::-webkit-scrollbar { display: none; }
+
+  .rail__link {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    // Cible tactile confortable : ~44px de haut au lieu de ~22px.
+    padding-block: var(--space-xs);
+  }
 
   .theme-toggle__dot + [data-theme-label] { display: none; }
 }
