@@ -394,26 +394,100 @@ p.has-dropcap::first-letter {
   max-width: 32rem;             // ~ 512 px : figure de magazine, pas pleine page
   border: 1px solid var(--rule-strong);
   padding: 0 var(--space-lg) var(--space-md);
-  background: transparent;
+  // Léger wash accent en fond — différencie la figure de la prose sans alourdir.
+  background: color-mix(in oklch, var(--accent-soft) 28%, var(--surface) 72%);
+}
+
+// Dark mode : la grille pointillée disparaissait sur fond sombre (rule trop
+// proche de la surface), le refactoring en ink-soft restait borderline. On
+// remonte les valeurs spécifiquement pour le contraste AA.
+:root[data-theme="dark"] .visuel,
+:root:not([data-theme="light"]) .visuel {
+  background: color-mix(in oklch, var(--accent-soft) 18%, var(--surface-sub) 82%);
+
+  .visuel__grid line {
+    stroke: var(--rule-strong);
+    stroke-width: 0.7;
+  }
+
+  .visuel__line--refactor {
+    stroke: var(--surface-ink);
+    opacity: 0.78;
+  }
+
+  .visuel__cross-pill { fill: var(--accent-deep); }
+  .visuel__cross { stroke: var(--surface-sub); }
+}
+
+// Variante --side : la figure migre dans la piste de marge sticky.
+// Plus compacte, signature visuelle conservée.
+.ecrit-page__content .visuel--side {
+  margin: 0;
+  max-width: 100%;
+  padding: 0 var(--space-md) var(--space-sm);
+  font-size: var(--text-sm);
+
+  .visuel__band {
+    padding-inline: var(--space-md);
+    margin-inline: calc(-1 * var(--space-md));
+    font-size: 0.7rem;
+  }
+
+  .visuel__title {
+    font-size: var(--text-base);
+    margin-bottom: var(--space-2xs);
+  }
+
+  .visuel__legend {
+    gap: var(--space-sm);
+    margin-bottom: var(--space-2xs);
+    font-size: 0.7rem;
+  }
+
+  .visuel__svg { font-size: 9px; }
+
+  .visuel__caption {
+    margin-top: var(--space-2xs);
+    padding-top: var(--space-2xs);
+    font-size: var(--text-xs);
+  }
+}
+
+// Variante --inline : forçage de la version centrée pleine prose, utile
+// pour les tableaux ou figures qui ne supportent pas le rétrécissement
+// (V6 par exemple).
+.ecrit-page__content .visuel--inline {
+  margin: var(--space-xl) auto;
+  max-width: 32rem;
 }
 
 // Band éditorial en haut : marque, numéro, tag de section. Signature presse.
+// Fond accent appuyé pour signaler la nature "figure" et marquer visuellement
+// la frontière avec la prose — inspiration aside de code et magazine.
 .visuel__band {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: var(--space-xs);
-  padding: var(--space-2xs, 0.35em) 0;
-  border-bottom: 1px solid var(--rule);
+  padding: 0.4em var(--space-lg);
   margin: 0 calc(-1 * var(--space-lg)) var(--space-sm);
-  padding-inline: var(--space-lg);
+  background: var(--accent);
+  color: var(--surface);
+  border-bottom: 2px solid var(--accent-deep);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
+  font-weight: 500;
 }
-.visuel__band-mark { color: var(--accent); font-size: 1.2em; line-height: 1; }
-.visuel__band-num  { color: var(--surface-ink); font-weight: 500; }
-.visuel__band-tag  { color: var(--ink-mute); margin-left: auto; }
+.visuel__band-mark { color: var(--surface); font-size: 1.1em; line-height: 1; opacity: 0.85; }
+.visuel__band-num  { color: var(--surface); }
+.visuel__band-tag  {
+  color: var(--surface);
+  margin-left: auto;
+  opacity: 0.78;
+  font-weight: 400;
+  font-style: italic;
+}
 
 // Titre interne (sans recourir à la prose au-dessous).
 .visuel__title {
@@ -433,6 +507,7 @@ p.has-dropcap::first-letter {
 }
 
 // Légende avec swatches : trait plein accent + trait pointillé neutre.
+// Plus discrète qu'avant — la signature est portée par le band, pas ici.
 .visuel__legend {
   list-style: none;
   padding: 0;
@@ -441,35 +516,36 @@ p.has-dropcap::first-letter {
   gap: var(--space-md);
   flex-wrap: wrap;
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: 0.7rem;
 }
 .visuel__legend-item {
   display: inline-flex;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.4em;
   color: var(--ink-soft);
 }
 .visuel__swatch {
   display: inline-block;
-  width: 1.4em;
-  height: 0.15em;
+  width: 1.6em;
+  height: 0.18em;
   flex-shrink: 0;
 }
 .visuel__swatch--copypaste {
   background: var(--accent);
-  height: 0.2em;
+  height: 0.22em;
 }
 .visuel__swatch--refactor {
   background: linear-gradient(to right,
-    var(--ink-mute) 0 40%,
+    currentColor 0 40%,
     transparent 40% 60%,
-    var(--ink-mute) 60% 100%
+    currentColor 60% 100%
   );
+  color: var(--ink-soft);  // utilisé par currentColor du gradient
 }
 .visuel__legend-label {
-  letter-spacing: var(--tracking-caps);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--surface-ink);
+  color: var(--ink-soft);
   font-weight: 500;
 }
 .visuel__legend-delta {
@@ -483,22 +559,31 @@ p.has-dropcap::first-letter {
   display: block;
   font-family: var(--font-mono);
   font-size: 11px;
+  // Autorise les labels d'axe à dépasser légèrement le viewBox (sinon
+  // "22,5 %" et "2024" sont rognés). Le wrapper .visuel a un padding qui
+  // laisse l'espace nécessaire.
+  overflow: visible;
 }
 
-// Grille de fond — traits fins en --rule, presque invisibles.
+// Grille de fond — pointillés discrets. Stroke-width et dasharray exprimés
+// en unités viewBox (rendu à ~0.5× en --side).
 .visuel__grid line {
-  stroke: var(--rule);
-  stroke-width: 0.5;
-  stroke-dasharray: 2 4;
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+  stroke-dasharray: 3 6;
+  opacity: 0.55;
 }
 
-// Étiquettes d'axes (mono, --ink-mute).
+// Étiquettes d'axes (mono, --ink-mute). Taille en unités viewBox (600x420)
+// — le SVG est rendu à environ 0.5× au format --side, donc 20px viewBox
+// ≈ 10px visuels. À ajuster si on change la largeur de figure.
 .visuel__axis-label text {
   fill: var(--ink-mute);
-  letter-spacing: var(--tracking-caps);
-  font-size: 10px;
+  letter-spacing: 0.08em;
+  font-size: 20px;
+  font-weight: 500;
 }
-.visuel__axis-label--y text { font-size: 10px; }
+.visuel__axis-label--y text { font-size: 20px; }
 
 // Courbes — refactoring : neutre, pointillé épais ; copy-paste : accent plein.
 .visuel__line {
@@ -507,43 +592,45 @@ p.has-dropcap::first-letter {
   stroke-linecap: round;
 }
 .visuel__line--refactor {
-  stroke: var(--ink-mute);
-  stroke-width: 2;
-  stroke-dasharray: 5 4;
+  stroke: var(--ink-soft);
+  stroke-width: 4;
+  stroke-dasharray: 8 6;
 }
 .visuel__line--copypaste {
   stroke: var(--accent);
-  stroke-width: 2.5;
+  stroke-width: 5;
 }
 
-// Marqueur de crossover : disque accent + label discret au-dessus.
+// Marqueur de crossover : disque accent + pill éditorial + filet de rappel.
 .visuel__cross {
   fill: var(--accent);
   stroke: var(--surface);
+  stroke-width: 3;
+}
+.visuel__cross-tick {
+  stroke: var(--accent);
   stroke-width: 2;
+  stroke-dasharray: 4 4;
+}
+.visuel__cross-pill {
+  fill: var(--accent);
+  stroke: none;
 }
 .visuel__cross-label {
-  fill: var(--accent-deep);
-  font-size: 9px;
-  letter-spacing: var(--tracking-caps);
+  fill: var(--surface);
+  font-size: 22px;            // viewBox units → ~11px visuels en --side
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-}
-
-// Étiquettes de série en bout de courbe.
-.visuel__series {
-  font-size: 10px;
-  letter-spacing: 0.02em;
+  font-weight: 600;
   dominant-baseline: middle;
 }
-.visuel__series--copypaste { fill: var(--accent-deep); font-weight: 600; }
-.visuel__series--refactor  { fill: var(--ink-soft); font-style: italic; }
 
-// Caption — grille à 3 cellules : numéro (Fig. VN) · texte · source.
+// Caption — pile simple : texte explicatif + source. Le numéro est déjà
+// porté par le band éditorial en haut, plus de doublon ici.
 .visuel__caption {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  column-gap: var(--space-sm);
-  row-gap: var(--space-2xs);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
   margin-top: var(--space-sm);
   padding-top: var(--space-sm);
   border-top: 1px solid var(--rule);
@@ -551,18 +638,7 @@ p.has-dropcap::first-letter {
   line-height: var(--leading-normal);
   color: var(--ink-soft);
 }
-.visuel__caption-num {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  align-self: start;
-  padding-top: 0.15em;
-}
-.visuel__caption-text { grid-column: 2; }
 .visuel__caption-source {
-  grid-column: 2;
   font-size: var(--text-xs);
   color: var(--ink-mute);
 }

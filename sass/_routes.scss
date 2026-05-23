@@ -10,6 +10,25 @@
   max-width: var(--measure-wide);
 }
 
+// Sur les pages d'écrit, la prose s'élargit pour laisser une piste de marge
+// aux figures sticky (variante ai-2027). En dessous de 60rem, on retombe sur
+// la largeur de lecture standard.
+.ecrit-page {
+  --side-track: 22rem;     // largeur de la piste de marge
+  --side-gap:   var(--space-lg);
+
+  @media (min-width: 60rem) {
+    max-width: calc(var(--measure-base) + var(--side-track) + var(--side-gap));
+  }
+}
+
+// Le titre, l'entête et la signature restent à la largeur de prose.
+.ecrit-page__header,
+.ecrit-page__signature,
+.ecrit-page__index {
+  max-width: var(--measure-base);
+}
+
 .now__index,
 .ecrits__index,
 .ecrit-page__index {
@@ -106,6 +125,39 @@
 
 .ecrit-page__content > * { margin: 0; }
 .ecrit-page__content > * + * { margin-top: var(--space-md); }
+
+// Figures de marge — pattern ai-2027 en float-right qui sort de la prose
+// vers la gouttière droite via marge négative. La prose s'enroule autour.
+// CSS-only ; pas de sticky (cf. note ci-dessous). Le placement dans le
+// markdown détermine l'ancre visuelle : le shortcode est inséré au-dessus
+// du paragraphe que la figure illustre, et le wrap-text crée l'alignement.
+//
+// Trade-off vs ai-2027 vrai sticky : la figure ne suit pas le scroll. Pour
+// l'avoir, il faudrait un IntersectionObserver JS — déféré au prochain pass
+// si l'usage le justifie (cf. "follow-up: sticky JS" dans .impeccable.md).
+@media (min-width: 60rem) {
+  .ecrit-page__content > .visuel--side {
+    float: right;
+    width: var(--side-track);
+    margin: 0 calc(-1 * (var(--side-track) + var(--side-gap))) var(--space-md) var(--side-gap);
+    shape-outside: margin-box;
+  }
+
+  // Quand un block veut clore le wrap (h3, hr), forcer le clear.
+  .ecrit-page__content > h2,
+  .ecrit-page__content > h3,
+  .ecrit-page__content > hr { clear: right; }
+}
+
+// Sous 60rem : la figure redevient un bloc inline pleine mesure.
+@media (max-width: calc(60rem - 1px)) {
+  .ecrit-page__content > .visuel--side {
+    float: none;
+    width: 100%;
+    max-width: 32rem;
+    margin: var(--space-xl) auto;
+  }
+}
 
 // Zola enveloppe `![]()` dans un `<p>`. On neutralise la marge de ce
 // wrapper pour que l'image flotte au contact du paragraphe suivant.

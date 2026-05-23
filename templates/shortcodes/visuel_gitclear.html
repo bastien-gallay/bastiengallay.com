@@ -13,24 +13,29 @@
     2024  · 12,3 %     ·  9,5 %
 
   Espace de tracé (viewBox 600x420) :
-    margin left 60 · right 20 · top 40 · bottom 60
-    x : 2020→x=60, 2024→x=580 (step 130)
+    margin left 80 · right 20 · top 40 · bottom 60
+    x : 2020→x=80, 2024→x=580 (step 125)
     y : 0%→y=360, 30%→y=40 (échelle 10.67 / %)
+    Le margin gauche 80 (vs 60) laisse la place aux labels Y mono à 20px
+    viewBox sans clipping sur "22,5 %".
 
   Usage :
     {{ visuel_gitclear() }}
 -#}
-{#- NOTE renumérotation : "V3" est l'identifiant de travail. À la
-    publication, remplacer par "Fig. 3" (ou le numéro final dans la
-    série de visuels de l'article). -#}
-<figure class="visuel visuel--chart" role="figure" aria-labelledby="v3-title v3-desc">
+{#- Variante de placement : "side" (défaut, marge sticky ai-2027),
+    "inline" (centré pleine prose, à utiliser pour figures peu réductibles),
+    "float-right" / "float-left" (anciens flottements internes prose).
+    NOTE renumérotation : "V3" est l'identifiant de travail. À la
+    publication, remplacer par "Fig. 3". -#}
+{%- set pos = pos | default(value="side") -%}
+<figure class="visuel visuel--chart visuel--{{ pos }}" role="figure" aria-labelledby="v3-title v3-desc">
   <header class="visuel__band">
     <span class="visuel__band-mark" aria-hidden="true">▍</span>
     <span class="visuel__band-num">Figure V3</span>
     <span class="visuel__band-tag">Code comme dette</span>
   </header>
 
-  <p class="visuel__title">Copy-paste <span class="visuel__title-vs">vs</span> Refactoring · 2020 → 2024</p>
+  <p class="visuel__title">Copy-paste <span class="visuel__title-vs">vs</span> Refactoring <br/> 2020 → 2024</p>
 
   <ul class="visuel__legend" aria-label="Légende des courbes">
     <li class="visuel__legend-item">
@@ -61,52 +66,56 @@
 
     {#- Graduation horizontale (5 niveaux : 0, 7.5, 15, 22.5, 30 %) -#}
     <g class="visuel__grid" aria-hidden="true">
-      <line x1="60"  y1="360" x2="580" y2="360" />
-      <line x1="60"  y1="280" x2="580" y2="280" />
-      <line x1="60"  y1="200" x2="580" y2="200" />
-      <line x1="60"  y1="120" x2="580" y2="120" />
-      <line x1="60"  y1="40"  x2="580" y2="40"  />
+      <line x1="80"  y1="360" x2="580" y2="360" />
+      <line x1="80"  y1="280" x2="580" y2="280" />
+      <line x1="80"  y1="200" x2="580" y2="200" />
+      <line x1="80"  y1="120" x2="580" y2="120" />
+      <line x1="80"  y1="40"  x2="580" y2="40"  />
     </g>
 
-    {#- Axe Y : labels en % -#}
+    {#- Axe Y : labels en % (text-anchor end, à x=72 → max 70vb à gauche) -#}
     <g class="visuel__axis-label visuel__axis-label--y" aria-hidden="true">
-      <text x="52" y="364" text-anchor="end">0&#160;%</text>
-      <text x="52" y="284" text-anchor="end">7,5&#160;%</text>
-      <text x="52" y="204" text-anchor="end">15&#160;%</text>
-      <text x="52" y="124" text-anchor="end">22,5&#160;%</text>
-      <text x="52" y="44"  text-anchor="end">30&#160;%</text>
+      <text x="72" y="364" text-anchor="end">0&#160;%</text>
+      <text x="72" y="284" text-anchor="end">7,5&#160;%</text>
+      <text x="72" y="204" text-anchor="end">15&#160;%</text>
+      <text x="72" y="124" text-anchor="end">22,5&#160;%</text>
+      <text x="72" y="44"  text-anchor="end">30&#160;%</text>
     </g>
 
-    {#- Axe X : années -#}
+    {#- Axe X : années (step 125 : 80, 205, 330, 455, 580) -#}
     <g class="visuel__axis-label visuel__axis-label--x" aria-hidden="true">
-      <text x="60"  y="385" text-anchor="middle">2020</text>
-      <text x="190" y="385" text-anchor="middle">2021</text>
-      <text x="320" y="385" text-anchor="middle">2022</text>
-      <text x="450" y="385" text-anchor="middle">2023</text>
+      <text x="80"  y="385" text-anchor="middle">2020</text>
+      <text x="205" y="385" text-anchor="middle">2021</text>
+      <text x="330" y="385" text-anchor="middle">2022</text>
+      <text x="455" y="385" text-anchor="middle">2023</text>
       <text x="580" y="385" text-anchor="middle">2024</text>
     </g>
 
     {#- Refactoring : descendant (neutre, trait épais en pointillé) -#}
     <polyline
       class="visuel__line visuel__line--refactor"
-      points="60,103 190,158 320,205 450,237 580,259"
+      points="80,103 205,158 330,205 455,237 580,259"
     />
     {#- Copy-paste : ascendant (accent rouge, trait plein) -#}
     <polyline
       class="visuel__line visuel__line--copypaste"
-      points="60,272 190,259 320,248 450,237 580,229"
+      points="80,272 205,259 330,248 455,237 580,229"
     />
 
-    {#- Marqueur de crossover en 2023 -#}
-    <circle class="visuel__cross" cx="450" cy="237" r="5" aria-hidden="true" />
-    <text class="visuel__cross-label" x="450" y="220" text-anchor="middle" aria-hidden="true">
-      crossover 2023
-    </text>
+    {#- Marqueur de crossover en 2023 — pill élargi à 220vb pour caser
+        "crossover 2023" à font-size 22vb (≈11px visuels en --side). -#}
+    <g aria-hidden="true">
+      <line class="visuel__cross-tick" x1="455" y1="237" x2="455" y2="178" />
+      <rect class="visuel__cross-pill" x="345" y="148" width="220" height="36" rx="0" />
+      <text class="visuel__cross-label" x="455" y="170" text-anchor="middle">
+        crossover 2023
+      </text>
+      <circle class="visuel__cross" cx="455" cy="237" r="7" />
+    </g>
 
   </svg>
 
   <figcaption class="visuel__caption">
-    <span class="visuel__caption-num">Fig. V3</span>
     <span class="visuel__caption-text">
       Le code se duplique plus vite qu'il ne se range : la part de copy-paste
       croît, celle de refactoring chute, et les deux se croisent en 2023.
