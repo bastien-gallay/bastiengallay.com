@@ -601,6 +601,61 @@ p.has-dropcap::first-letter {
   stroke-width: 5;
 }
 
+// ──────────────────────────────────────────────────────────────────
+// V1 (METR) — bar chart horizontal depuis axe 0 %
+// ──────────────────────────────────────────────────────────────────
+
+.visuel__axis-zero {
+  stroke: var(--surface-ink);
+  stroke-width: 2;
+}
+.visuel__axis-zero-label {
+  fill: var(--ink-soft);
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+// Catégories (texte à gauche du plot) — mono caps.
+.visuel__bar-cat {
+  fill: var(--surface-ink);
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.visuel__bar-meta {
+  fill: var(--ink-mute);
+  font-size: 17px;
+  font-style: italic;
+  letter-spacing: 0;
+}
+
+// Barres : accent plein (positif), accent atténué (positif soft),
+// accent profond (négatif = punchline).
+.visuel__bar--positive      { fill: var(--accent); }
+.visuel__bar--positive-soft { fill: color-mix(in oklch, var(--accent) 55%, var(--surface) 45%); }
+.visuel__bar--negative      { fill: var(--accent-deep); }
+
+.visuel__bar-value {
+  fill: var(--surface-ink);
+  font-size: 22px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  dominant-baseline: middle;
+}
+.visuel__bar-value--negative { fill: var(--accent-deep); }
+// Variante "valeur dans la barre" : utilisée quand la barre dépasse
+// vers un bord du viewBox et qu'il n'y a pas la place dehors. Le fill
+// passe en surface claire pour rester lisible sur l'accent profond.
+.visuel__bar-value--inside { fill: var(--surface); }
+
+// Annotation d'écart : ticks fins entre les extrêmes des barres + pill.
+.visuel__gap-tick {
+  stroke: var(--ink-mute);
+  stroke-width: 1.5;
+}
+
 // Marqueur de crossover : disque accent + pill éditorial + filet de rappel.
 .visuel__cross {
   fill: var(--accent);

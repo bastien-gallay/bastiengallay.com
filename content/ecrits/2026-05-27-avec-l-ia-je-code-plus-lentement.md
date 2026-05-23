@@ -54,15 +54,9 @@ Ces chiffres sont sincères. Ils ne sont simplement pas la mesure de ce qu'on cr
 
 En 2025, une équipe de chercheurs de METR a conduit une expérience contrôlée randomisée [^3]. Seize développeurs open source expérimentés, chacun avec en moyenne cinq ans de pratique sur les projets qu'ils maintenaient. 246 tâches réelles, pas synthétiques. Outils utilisés : Cursor Pro et Claude 3.5/3.7 Sonnet.
 
-<!-- VISUEL-1 : Perception vs réalité (étude METR)
-  Type      : barres horizontales (3 valeurs)
-  Données   : prédit +24%, perçu +20%, mesuré -19%
-  Légende   : "Un écart de 39 points entre ce que les développeurs croient et ce que la mesure révèle."
-  Source    : METR Becker 2025 [^3]
-  Placement : encart latéral (side frame) à droite du paragraphe
--->
-
 Avant de commencer, les développeurs prédisaient un gain de temps de 24&nbsp;% grâce à l'IA. Après l'étude, ils estimaient ce gain à 20&nbsp;%. La mesure objective, elle, montrait une augmentation du temps de complétion de 19&nbsp;%.
+
+{{ visuel_metr(pos="side") }}
 
 L'écart entre la perception et la réalité dépassait les 39 points. Ces développeurs n'étaient ni naïfs ni hostiles à l'IA. Ils étaient simplement convaincus d'aller plus vite quand ils allaient en réalité plus lentement.
 
