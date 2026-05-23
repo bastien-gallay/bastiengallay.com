@@ -428,19 +428,21 @@ p.has-dropcap::first-letter {
   font-size: var(--text-sm);
 
   .visuel__band {
-    padding: 0.35em var(--space-sm);
-    margin-inline: calc(-1 * var(--space-md));
+    // Plus de fond rouge à étendre edge-to-edge : on supprime le negative
+    // margin-inline (vestige de l'ancien band peint). Le filet bas suit
+    // simplement la largeur du wrapper.
+    padding: 0 0 var(--space-3xs, 0.25rem);
+    margin-inline: 0;
+    margin-bottom: var(--space-sm);
     font-size: 0.62rem;
     gap: var(--space-2xs);
-    // Tag pousse à droite ; on autorise un léger crénage négatif pour
-    // tenir sur une ligne dans la piste de marge (~22rem utiles).
     letter-spacing: 0.06em;
   }
   .visuel__band-tag { font-size: 0.95em; }
 
   .visuel__title {
     font-size: var(--text-base);
-    margin-bottom: var(--space-2xs);
+    margin-bottom: var(--space-3xs, 0.2rem);  // titre proche de la donnée
   }
 
   .visuel__legend {
@@ -452,7 +454,7 @@ p.has-dropcap::first-letter {
   .visuel__svg { font-size: 9px; }
 
   .visuel__caption {
-    margin-top: var(--space-2xs);
+    margin-top: var(--space-sm);    // caption distante de la donnée (respire)
     padding-top: var(--space-2xs);
     font-size: var(--text-xs);
   }
@@ -697,29 +699,18 @@ p.has-dropcap::first-letter {
 .visuel--table .visuel__table,
 .visuel--table .visuel__caption { grid-column: 1 / -1; }
 
-// Band dégonflé pour la table : overline mono caps sur fond transparent,
-// aligné à gauche du titre (cf. grid sur .visuel--table ci-dessus). On
-// masque visuellement la marque ▍ et le numéro "Figure VN" — pour un
-// récap éditorial inline, le tag suffit ("SYNTHÈSE"). Le num reste dans
-// le DOM (utile pour aria-labelledby et pour les références croisées).
+// Band V6 (table inline) : la base globale est déjà sobre depuis
+// l'alignement post-critique 2026-05-23 ; ici on retire juste le filet
+// bas (le tableau a ses propres règles + sa propre frontière) et on
+// remet le tag à gauche au lieu de droite (cf. grid 2-col plus haut).
 .visuel--table .visuel__band {
-  background: transparent;
-  color: var(--ink-mute);
   border-bottom: 0;
   padding: 0;
   margin: 0;
-  font-size: var(--text-xs);
 
-  // Le tag passe à gauche (le margin-left:auto par défaut le poussait
-  // à droite quand il était l'un des trois enfants du band). On force
-  // aussi la couleur en ink-mute parce que le band-tag de base est en
-  // var(--surface) (texte cream pour le fond rouge plein) — invisible
-  // sans fond accent.
   .visuel__band-tag {
     margin-inline-start: 0;
     font-style: normal;
-    color: var(--ink-mute);
-    opacity: 1;
   }
 }
 
@@ -858,41 +849,53 @@ p.has-dropcap::first-letter {
   border: 0;
 }
 
-// Band éditorial en haut : marque, numéro, tag de section. Signature presse.
-// Fond accent appuyé pour signaler la nature "figure" et marquer visuellement
-// la frontière avec la prose — inspiration aside de code et magazine.
+// Band éditorial en haut : marque, numéro, tag de section. Signature presse
+// sobre — overline mono caps sur filet bas (alignée sur la signature V6,
+// qui a fait ses preuves comme "service à la prose, pas panneau d'autoroute").
+// Le rouge ne survit que sur la marque `▍` : un seul point d'accent qui
+// signale "figure" sans crier. Le reste des touches accent est réservé
+// à la donnée (barres, KPI, guillemet, table-num) où ça compte.
 .visuel__band {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: var(--space-xs);
-  padding: 0.4em var(--space-lg);
-  margin: 0 calc(-1 * var(--space-lg)) var(--space-sm);
-  background: var(--accent);
-  color: var(--surface);
-  border-bottom: 2px solid var(--accent-deep);
+  padding: 0 0 var(--space-2xs);
+  margin: 0 0 var(--space-md);
+  background: transparent;
+  color: var(--ink-mute);
+  border-bottom: 1px solid var(--rule-strong);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
   font-weight: 500;
 }
-.visuel__band-mark { color: var(--surface); font-size: 1.1em; line-height: 1; opacity: 0.85; }
-.visuel__band-num  { color: var(--surface); }
+.visuel__band-mark { color: var(--accent); font-size: 1.05em; line-height: 1; opacity: 1; }
+.visuel__band-num  { color: var(--ink-mute); }
 .visuel__band-tag  {
-  color: var(--surface);
+  color: var(--ink-mute);
   margin-left: auto;
-  opacity: 0.78;
+  opacity: 1;
   font-weight: 400;
   font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--font-body);
+  // Le tag est éditorial (humain, pas mono caps) ; on contraste avec
+  // la marque + numéro qui restent code-comme.
 }
 
 // Titre interne (sans recourir à la prose au-dessous).
+// Rythme : titre proche de la donnée (space-2xs, pas space-sm) — il annonce
+// ce qu'on voit juste en dessous, comme un déck d'article colle au lede.
+// L'air est mis avant (band → title : space-md) et après (svg → caption :
+// padding + border-top), pas entre title et donnée.
 .visuel__title {
   font-family: var(--font-display, var(--font-body));
   font-size: var(--text-lg);
   line-height: 1.15;
   color: var(--surface-ink);
-  margin: 0 0 var(--space-sm);
+  margin: 0 0 var(--space-2xs);
   font-weight: 500;
   letter-spacing: -0.01em;
 }
