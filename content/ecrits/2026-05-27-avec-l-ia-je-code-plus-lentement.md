@@ -14,8 +14,6 @@ series_total = 3
 series_part_subtitle = "ce que les chiffres ne mesurent pas"
 +++
 
-*Pourquoi le discours dominant sur la productivité IA mesure ce qui ne compte pas.*
-
 > **Série en 3 articles — *Coder avec l'IA***
 > Article 1/3 — *ce que les chiffres ne mesurent pas*.
 > À suivre : *Ce que l'IA m'apporte vraiment* (art. 2) · *Quelle stratégie d'équipe ?* (art. 3).
@@ -54,7 +52,7 @@ Ces chiffres sont sincères. Ils ne sont simplement pas la mesure de ce qu'on cr
 
 En 2025, une équipe de chercheurs de METR a conduit une expérience contrôlée randomisée [^3]. Seize développeurs open source expérimentés, chacun avec en moyenne cinq ans de pratique sur les projets qu'ils maintenaient. 246 tâches réelles, pas synthétiques. Outils utilisés : Cursor Pro et Claude 3.5/3.7 Sonnet.
 
-Avant de commencer, les développeurs prédisaient un gain de temps de 24&nbsp;% grâce à l'IA. Après l'étude, ils estimaient ce gain à 20&nbsp;%. La mesure objective, elle, montrait une augmentation du temps de complétion de 19&nbsp;%.
+Avant de commencer, les développeurs prédisaient un gain de temps. Après l'étude, ils en percevaient un. La mesure objective, elle, raconte l'inverse — Figure 1.
 
 {{ code_plus_lentement_v1(pos="side") }}
 
@@ -72,18 +70,13 @@ Le rapport explique pourquoi : les métriques de vendeurs traquent l'activité �
 
 {{ code_plus_lentement_v2(pos="side") }}
 
-L'étude Faros sur le même sujet est encore plus précise : les développeurs individuels complètent 21&nbsp;% de tâches en plus, mais le temps de revue augmente de 91&nbsp;%, et les équipes génèrent 98&nbsp;% de pull requests supplémentaires [^4]. Les gains se transforment en files d'attente.
+L'étude Faros sur le même sujet est encore plus précise (Figure 2) : le gain individuel s'évanouit en file d'attente d'équipe [^4]. Les gains se transforment en files d'attente.
 
 ### La dette technique devient invisible
 
 {{ code_plus_lentement_v3(pos="side") }}
 
-L'étude GitClear, qui a analysé 211 millions de lignes de code modifiées entre 2020 et 2024 chez Google, Microsoft, Meta et plusieurs entreprises cotées, mesure une transformation des pratiques [^5] :
-
-- La part de copy-paste dans le code livré est passée de 8,3&nbsp;% à 12,3&nbsp;%.
-- Le refactoring, lui, est passé de 24,1&nbsp;% à 9,5&nbsp;%.
-- Le code "churned" — réécrit dans les deux semaines suivant son commit — a doublé : de 3,1&nbsp;% à 5,7&nbsp;%.
-- En 2024, pour la première fois, les lignes copy-pastées ont dépassé les lignes "déplacées" (refactorisées).
+L'étude GitClear, qui a analysé 211 millions de lignes de code modifiées entre 2020 et 2024 chez Google, Microsoft, Meta et plusieurs entreprises cotées, mesure une transformation des pratiques [^5]. La Figure 3 trace l'inversion : la part de copy-paste monte, celle de refactoring chute, les deux courbes se croisent en 2023. Au-delà de cette inversion, un autre signal : le code "churned" — réécrit dans les deux semaines suivant son commit — a doublé, de 3,1&nbsp;% à 5,7&nbsp;%.
 
 Lorsque j'ouvre les projets en audit de code, je découvre de plus en plus souvent des fonctions de 800 lignes, empilées au fil des commits automatiques, et des tests unitaires identiques dans trois fichiers différents.
 
@@ -119,8 +112,28 @@ Ces chiffres méritent d'être discutés. Les méthodologies varient. Mais le si
 
 Lorsqu'on compare le temps de trajet en avion ou en voiture, on compare de porte à porte plutôt que le temps passé dans le véhicule. C'est la vitesse. Sauter dans le premier bus arrivé et se rendre compte que ce n'est pas la bonne direction, c'est de la précipitation. Automatiser une tâche de développement peut relever de l'un ou de l'autre. L'IA ne fait pas la différence entre les deux. C'est le développeur qui décide où et comment l'utiliser. Personne n'aime s'apercevoir que la mémoire de Claude Code a mélangé le nom d'un client avec un autre le jour de la démo. Cet arbitrage régulier prend du temps. Un temps incompressible mais indispensable qui se prend avant d'écrire. C'est le temps nécessaire à la qualité. Si je devais résumer en deux formules&nbsp;:
 
-- précipitation = accélération - attention
-- vitesse = accélération + réflexion + qualité
+<div class="formules" role="group" aria-label="Deux formules clés">
+  <p class="formules__row">
+    <span class="formules__term">Précipitation</span>
+    <span class="formules__eq" aria-hidden="true">=</span>
+    <span class="formules__rhs">
+      <span class="formules__factor">accélération</span>
+      <span class="formules__op" aria-hidden="true">−</span>
+      <span class="formules__factor">attention</span>
+    </span>
+  </p>
+  <p class="formules__row">
+    <span class="formules__term">Vitesse</span>
+    <span class="formules__eq" aria-hidden="true">=</span>
+    <span class="formules__rhs">
+      <span class="formules__factor">accélération</span>
+      <span class="formules__op" aria-hidden="true">+</span>
+      <span class="formules__factor">réflexion</span>
+      <span class="formules__op" aria-hidden="true">+</span>
+      <span class="formules__factor">qualité</span>
+    </span>
+  </p>
+</div>
 
 Avant l'IA, nous passions 10&nbsp;% de notre temps à écrire du code, et 90&nbsp;% à le relire, le concevoir, le réfléchir, le réorganiser et aller lire de la documentation. Si nous possédons un outil qui peut accélérer ces 10&nbsp;%, le gain est faible à long terme. Il ne peut être pérenne qu'à deux conditions&nbsp;: savoir accélérer une part des 90&nbsp;% et investir plus de temps sur ce qu'on n'accélère pas.
 

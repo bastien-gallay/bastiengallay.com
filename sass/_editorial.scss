@@ -152,10 +152,87 @@
 }
 
 // ──────────────────────────────────────────────────────────────────
+// Formules typographiques — petites équations éditoriales inline.
+// Pas un shortcode (pas de chrome figure) : c'est de la prose qui ressemble
+// à une équation, alignée comme un tableau de définitions. Grid 3-cols
+// (terme | = | RHS), display:contents sur les rows pour aligner verticalement
+// le signe `=` entre les lignes — punch visuel.
+// ──────────────────────────────────────────────────────────────────
+
+.ecrit-page__content .formules {
+  display: grid;
+  grid-template-columns: max-content min-content 1fr;
+  column-gap: var(--space-md);
+  row-gap: var(--space-xs);
+  align-items: baseline;
+  margin: var(--space-md) auto;
+  padding: var(--space-sm) var(--space-md);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  max-width: var(--measure-base);
+  box-sizing: border-box;
+}
+
+// Row = display:contents pour que term/eq/rhs deviennent enfants directs
+// du grid parent (alignement vertical du `=` garanti).
+.formules__row { display: contents; }
+
+.formules__term {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 500;
+}
+
+.formules__eq {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.formules__rhs {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  flex-wrap: wrap;
+}
+
+.formules__factor {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-base);
+  color: var(--ink);
+}
+
+.formules__op {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+// Mobile : grid en 2-col (terme + `=`) sur première ligne, RHS pleine
+// largeur dessous. Sinon l'écran rétrécit avale les facteurs.
+@media (max-width: 30rem) {
+  .ecrit-page__content .formules {
+    grid-template-columns: max-content 1fr;
+  }
+  .formules__eq { grid-column: 2; }
+  .formules__rhs { grid-column: 1 / -1; padding-inline-start: var(--space-md); }
+}
+
+// ──────────────────────────────────────────────────────────────────
 // Dropcap — première lettre du premier paragraphe d'article
 // ──────────────────────────────────────────────────────────────────
 
-.has-dropcap > p:first-of-type::first-letter,
+// Sélecteur cible : le premier <p> APRÈS le premier <h2>. Plus robuste que
+// `:first-of-type` qui ramassait n'importe quel lead avant la première
+// section (lead italique en doublon avec le subtitle du template, blockquote
+// "Série en N", etc.). Ici on aligne le drop-cap sur le démarrage narratif.
+.has-dropcap h2:first-of-type + p::first-letter,
 p.has-dropcap::first-letter {
   font-family: var(--font-display);
   font-size: 4.2em;
@@ -168,7 +245,7 @@ p.has-dropcap::first-letter {
 
 // Mobile : éviter de bouffer la largeur sur petits écrans.
 @media (max-width: 26rem) {
-  .has-dropcap > p:first-of-type::first-letter,
+  .has-dropcap h2:first-of-type + p::first-letter,
   p.has-dropcap::first-letter {
     font-size: 3em;
   }
@@ -303,6 +380,13 @@ p.has-dropcap::first-letter {
   margin-bottom: 0;
   max-width: var(--measure-wide);
   box-sizing: border-box;
+  // Blink shrink la box du h2 vers la largeur du contenu textuel quand
+  // `text-wrap: balance` (hérité de la rule globale h1-h4) est actif sur
+  // un titre court — d'où la bordure haute trop courte et désalignée
+  // à droite par rapport aux .footnote-definition en dessous. On éteint
+  // balance ici et on force width:100% pour aligner avec les définitions.
+  text-wrap: initial;
+  width: 100%;
 
   &::before {
     content: "▍ ";
