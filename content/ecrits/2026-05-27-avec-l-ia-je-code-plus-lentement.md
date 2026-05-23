@@ -89,14 +89,7 @@ Lorsque j'ouvre les projets en audit de code, je découvre de plus en plus souve
 
 Le rapport DORA 2024 de Google, qui suit la performance de livraison logicielle depuis une décennie, confirme la tension : une augmentation de 25&nbsp;% de l'adoption IA accélère les revues de code mais diminue la stabilité de livraison de 7,2&nbsp;% [^6].
 
-<!-- VISUEL-5 : Pull-quote Solar-Lezama
-  Type      : citation isolée en grand caractère, façon "side quote" ou bloc pleine largeur
-  Texte     : « L'IA est comme une carte de crédit toute neuve qui va nous permettre d'accumuler de la dette technique d'une manière qu'on n'avait jamais pu auparavant. »
-  Attribution: Armando Solar-Lezama, MIT
-  Source    : Wall Street Journal, cité dans DevOps.com 2025 [^7]
-  Placement : pull-quote en marge OU bloc citation pleine largeur
-  Note      : peut aussi servir de légende au VISUEL-3 si pull-quote séparée non retenue.
--->
+{{ code_plus_lentement_v5(pos="side") }}
 
 Une citation d'Armando Solar-Lezama, professeur au MIT, résume mieux que je ne saurais le faire : *« L'IA est comme une carte de crédit toute neuve qui va nous permettre d'accumuler de la dette technique d'une manière qu'on n'avait jamais pu auparavant »* [^7].
 

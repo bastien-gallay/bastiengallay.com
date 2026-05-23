@@ -43,7 +43,9 @@
     <span class="visuel__band-tag">{{ tag }}</span>
   </header>
 
+{% if title_html %}
   <p class="visuel__title">{{ title_html | safe }}</p>
+{% endif %}
 {% if legend_html %}
   {{ legend_html | safe }}
 {% endif %}
