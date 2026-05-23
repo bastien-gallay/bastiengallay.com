@@ -1,0 +1,118 @@
+{#-
+  V3 — L'inversion 2020-2024 (GitClear)
+  Deux polylines croisées : part de copy-paste (ascendante, accent)
+  contre part de refactoring (descendante, neutre) dans le code livré.
+  Source : GitClear AI Copilot Code Quality 2025 [^5].
+
+  Données :
+    année · copy-paste · refactoring
+    2020  ·  8,3 %     · 24,1 %
+    2021  ·  9,5 %     · 19,0 %
+    2022  · 10,5 %     · 14,5 %
+    2023  · 11,5 %     · 11,5 %    ← crossover
+    2024  · 12,3 %     ·  9,5 %
+
+  Espace de tracé (viewBox 600x420) :
+    margin left 60 · right 20 · top 40 · bottom 60
+    x : 2020→x=60, 2024→x=580 (step 130)
+    y : 0%→y=360, 30%→y=40 (échelle 10.67 / %)
+
+  Usage :
+    {{ visuel_gitclear() }}
+-#}
+{#- NOTE renumérotation : "V3" est l'identifiant de travail. À la
+    publication, remplacer par "Fig. 3" (ou le numéro final dans la
+    série de visuels de l'article). -#}
+<figure class="visuel visuel--chart" role="figure" aria-labelledby="v3-title v3-desc">
+  <header class="visuel__band">
+    <span class="visuel__band-mark" aria-hidden="true">▍</span>
+    <span class="visuel__band-num">Figure V3</span>
+    <span class="visuel__band-tag">Code comme dette</span>
+  </header>
+
+  <p class="visuel__title">Copy-paste <span class="visuel__title-vs">vs</span> Refactoring · 2020 → 2024</p>
+
+  <ul class="visuel__legend" aria-label="Légende des courbes">
+    <li class="visuel__legend-item">
+      <span class="visuel__swatch visuel__swatch--copypaste" aria-hidden="true"></span>
+      <span class="visuel__legend-label">copy-paste</span>
+      <span class="visuel__legend-delta">+4&nbsp;pts</span>
+    </li>
+    <li class="visuel__legend-item">
+      <span class="visuel__swatch visuel__swatch--refactor" aria-hidden="true"></span>
+      <span class="visuel__legend-label">refactoring</span>
+      <span class="visuel__legend-delta">−14,6&nbsp;pts</span>
+    </li>
+  </ul>
+
+  <svg
+    class="visuel__svg"
+    viewBox="0 0 600 420"
+    role="img"
+    preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <title id="v3-title">Part du copy-paste et part du refactoring dans le code livré, 2020-2024.</title>
+    <desc id="v3-desc">
+      Deux courbes : la part de copy-paste passe de 8,3 % en 2020 à 12,3 % en 2024.
+      La part de refactoring chute de 24,1 % à 9,5 % sur la même période. Les deux
+      courbes se croisent en 2023, autour de 11,5 %.
+    </desc>
+
+    {#- Graduation horizontale (5 niveaux : 0, 7.5, 15, 22.5, 30 %) -#}
+    <g class="visuel__grid" aria-hidden="true">
+      <line x1="60"  y1="360" x2="580" y2="360" />
+      <line x1="60"  y1="280" x2="580" y2="280" />
+      <line x1="60"  y1="200" x2="580" y2="200" />
+      <line x1="60"  y1="120" x2="580" y2="120" />
+      <line x1="60"  y1="40"  x2="580" y2="40"  />
+    </g>
+
+    {#- Axe Y : labels en % -#}
+    <g class="visuel__axis-label visuel__axis-label--y" aria-hidden="true">
+      <text x="52" y="364" text-anchor="end">0&#160;%</text>
+      <text x="52" y="284" text-anchor="end">7,5&#160;%</text>
+      <text x="52" y="204" text-anchor="end">15&#160;%</text>
+      <text x="52" y="124" text-anchor="end">22,5&#160;%</text>
+      <text x="52" y="44"  text-anchor="end">30&#160;%</text>
+    </g>
+
+    {#- Axe X : années -#}
+    <g class="visuel__axis-label visuel__axis-label--x" aria-hidden="true">
+      <text x="60"  y="385" text-anchor="middle">2020</text>
+      <text x="190" y="385" text-anchor="middle">2021</text>
+      <text x="320" y="385" text-anchor="middle">2022</text>
+      <text x="450" y="385" text-anchor="middle">2023</text>
+      <text x="580" y="385" text-anchor="middle">2024</text>
+    </g>
+
+    {#- Refactoring : descendant (neutre, trait épais en pointillé) -#}
+    <polyline
+      class="visuel__line visuel__line--refactor"
+      points="60,103 190,158 320,205 450,237 580,259"
+    />
+    {#- Copy-paste : ascendant (accent rouge, trait plein) -#}
+    <polyline
+      class="visuel__line visuel__line--copypaste"
+      points="60,272 190,259 320,248 450,237 580,229"
+    />
+
+    {#- Marqueur de crossover en 2023 -#}
+    <circle class="visuel__cross" cx="450" cy="237" r="5" aria-hidden="true" />
+    <text class="visuel__cross-label" x="450" y="220" text-anchor="middle" aria-hidden="true">
+      crossover 2023
+    </text>
+
+  </svg>
+
+  <figcaption class="visuel__caption">
+    <span class="visuel__caption-num">Fig. V3</span>
+    <span class="visuel__caption-text">
+      Le code se duplique plus vite qu'il ne se range : la part de copy-paste
+      croît, celle de refactoring chute, et les deux se croisent en 2023.
+    </span>
+    <span class="visuel__caption-source">
+      Source : GitClear, <em>AI Copilot Code Quality 2025</em>, n.&#160;<sup class="footnote-reference"><a href="#5">5</a></sup>.
+    </span>
+  </figcaption>
+</figure>

@@ -88,21 +88,14 @@ L'étude Faros sur le même sujet est encore plus précise : les développeurs i
 
 ### La dette technique devient invisible
 
-<!-- VISUEL-3 : L'inversion 2020-2024 (GitClear)
-  Type      : 2 courbes croisées sur l'axe temps (2020 → 2024)
-  Données   : copy-paste 8,3% → 12,3% (↗) · refactoring 24,1% → 9,5% (↘)
-  Variante  : ajouter le churn (3,1% → 5,7%) en pointillé ou en tooltip
-  Légende   : "Le code se duplique plus vite qu'il ne se range." — possibilité d'utiliser la citation Solar-Lezama (L.96) comme légende.
-  Source    : GitClear AI Copilot Code Quality 2025 [^5]
-  Placement : encart latéral OU figure pleine largeur en bas de la sous-section
--->
-
 L'étude GitClear, qui a analysé 211 millions de lignes de code modifiées entre 2020 et 2024 chez Google, Microsoft, Meta et plusieurs entreprises cotées, mesure une transformation des pratiques [^5] :
 
 - La part de copy-paste dans le code livré est passée de 8,3&nbsp;% à 12,3&nbsp;%.
 - Le refactoring, lui, est passé de 24,1&nbsp;% à 9,5&nbsp;%.
 - Le code "churned" — réécrit dans les deux semaines suivant son commit — a doublé : de 3,1&nbsp;% à 5,7&nbsp;%.
 - En 2024, pour la première fois, les lignes copy-pastées ont dépassé les lignes "déplacées" (refactorisées).
+
+{{ visuel_gitclear() }}
 
 Lorsque j'ouvre les projets en audit de code, je découvre de plus en plus souvent des fonctions de 800 lignes, empilées au fil des commits automatiques, et des tests unitaires identiques dans trois fichiers différents.
 
