@@ -31,26 +31,16 @@
     NOTE renumérotation : "V3" est l'identifiant de travail ; à la
     publication, remplacer par "Fig. 3". -#}
 {%- set pos = pos | default(value="side") -%}
-
-{%- set legend -%}
-  <ul class="visuel__legend" aria-label="Légende des courbes">
-    <li class="visuel__legend-item">
-      <span class="visuel__swatch visuel__swatch--copypaste" aria-hidden="true"></span>
-      <span class="visuel__legend-label">copy-paste</span>
-      <span class="visuel__legend-delta">+4&nbsp;pts</span>
-    </li>
-    <li class="visuel__legend-item">
-      <span class="visuel__swatch visuel__swatch--refactor" aria-hidden="true"></span>
-      <span class="visuel__legend-label">refactoring</span>
-      <span class="visuel__legend-delta">−14,6&nbsp;pts</span>
-    </li>
-  </ul>
-{%- endset -%}
+{#- Légende inline : Zola/Tera dans les shortcodes ne supporte pas le
+    bloc `{% set var %}...{% endset %}` (capture), donc on passe le HTML
+    directement en string. Outer double-quote, inner single-quote pour
+    les attributs HTML (HTML accepte les deux). -#}
+{%- set legend = "<ul class='visuel__legend' aria-label='Légende des courbes'><li class='visuel__legend-item'><span class='visuel__swatch visuel__swatch--copypaste' aria-hidden='true'></span><span class='visuel__legend-label'>copy-paste</span><span class='visuel__legend-delta'>+4&nbsp;pts</span></li><li class='visuel__legend-item'><span class='visuel__swatch visuel__swatch--refactor' aria-hidden='true'></span><span class='visuel__legend-label'>refactoring</span><span class='visuel__legend-delta'>−14,6&nbsp;pts</span></li></ul>" -%}
 
 {{ visuel::frame_start(
     num="V3",
     tag="Code comme dette",
-    title_html='Copy-paste <span class="visuel__title-vs">vs</span> Refactoring <br/> 2020 → 2024',
+    title_html="Copy-paste <span class='visuel__title-vs'>vs</span> Refactoring <br/> 2020 → 2024",
     pos=pos,
     title_id="v3-title",
     desc_id="v3-desc",

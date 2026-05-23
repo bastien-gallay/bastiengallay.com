@@ -466,6 +466,128 @@ p.has-dropcap::first-letter {
   max-width: 32rem;
 }
 
+// ──────────────────────────────────────────────────────────────────
+// Variante --incidents : fiches d'incident empilées (V4).
+// Pas de SVG : cartes texte avec ref mono + nom display + faute italique
+// + KPI "pull-stat" (grand chiffre + libellé court).
+// ──────────────────────────────────────────────────────────────────
+
+.visuel__incidents {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.visuel__incident {
+  // Pas de carte/border bavarde : un filet bas suffit à séparer (sauf le
+  // dernier item, géré par :not(:last-child)). On compte sur la KPI pour
+  // l'ancrage visuel.
+  padding-bottom: var(--space-sm);
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--rule);
+  }
+}
+
+.visuel__incident-ref {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0 0 var(--space-2xs);
+
+  // Le lien vers la CVE reste discret : couleur ink-mute, soulignement
+  // au hover seulement. Cliquable mais ne crie pas.
+  a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--ink-mute);
+  }
+  a:hover,
+  a:focus-visible {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+}
+
+.visuel__incident-target {
+  font-family: var(--font-display, var(--font-body));
+  font-size: var(--text-lg);
+  font-weight: 500;
+  line-height: 1.05;
+  margin: 0 0 var(--space-2xs);
+  color: var(--ink);
+}
+
+.visuel__incident-fault {
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: var(--ink-soft);
+  margin: 0 0 var(--space-xs);
+  line-height: 1.4;
+
+  em {
+    // L'expression technique reste italique mais dans une fonte mono
+    // pour signaler "terme de l'art" plutôt que "emphase".
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-size: 0.95em;
+  }
+}
+
+// KPI "pull-stat" : grand chiffre en accent profond + libellé court mono.
+// Aligné en flex pour respiration. Inspiration encart magazine.
+.visuel__incident-kpi {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+  margin: 0;
+}
+
+.visuel__kpi-num {
+  font-family: var(--font-display, var(--font-body));
+  font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.2rem);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.02em;
+}
+
+.visuel__kpi-unit {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  line-height: 1.2;
+}
+
+// Adaptation side track : KPI un peu plus serré, target plus petit.
+.ecrit-page__content .visuel--incidents.visuel--side {
+  .visuel__incident-target { font-size: var(--text-base); }
+  .visuel__kpi-num { font-size: clamp(1.4rem, 1.1rem + 0.8vw, 1.8rem); }
+}
+
+// Accessibility helper : title/desc non visibles mais lus par AT.
+// (V1/V2/V3 utilisent <title>/<desc> SVG-natifs ; V4 n'a pas de SVG, donc
+// on les rend en sr-only.)
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 // Band éditorial en haut : marque, numéro, tag de section. Signature presse.
 // Fond accent appuyé pour signaler la nature "figure" et marquer visuellement
 // la frontière avec la prose — inspiration aside de code et magazine.

@@ -110,15 +110,7 @@ J'ai commencé par l'autocomplétion intelligente, avec Tabnine en 2018, puis Co
 
 Le dernier biais est statistique : on entend ceux qui réussissent avec l'IA. On entend moins ceux qui ont stabilisé pendant trois semaines un outil construit en trois jours.
 
-<!-- VISUEL-4 : Incidents 2025-2026
-  Type      : 2 cases compactes côte à côte (ou empilées) — façon "fiches incident"
-  Cases     :
-    1) CVE-2025-48757 / Lovable — schémas DB sans row-level security — > 170 apps en prod
-    2) Moltbook — endpoints API sans contrôle d'autorisation — 1,5 M tokens leakés
-  Légende   : "Deux incidents 2025-2026 emblématiques du trade-off."
-  Source    : Vibe Coder Blog 2026 [^8] (à vérifier / consolider)
-  Placement : encart latéral OU bandeau pleine largeur sous le paragraphe
--->
+{{ code_plus_lentement_v4(pos="side") }}
 
 Et pourtant, les incidents s'accumulent. La CVE-2025-48757 a exposé une faille chez Lovable, plateforme de codage IA, qui générait des schémas de base de données sans politiques de sécurité au niveau ligne. Plus de 170 applications en production affectées [^8]. La faille Moltbook a leaké 1,5 million de tokens d'authentification, parce que les endpoints API générés ne vérifiaient pas les autorisations [^8].
 
