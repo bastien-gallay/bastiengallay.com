@@ -48,6 +48,8 @@
     </li>
   </ul>
 
-{{ visuel::frame_end(
-    caption_text_html="Le cas qui ouvre l'article&#160;: la dette technique invisible commence par une abstraction élégante, proposée par l'IA, qu'on accepte en quelques secondes et qu'on rembourse en semaines."
-) }}
+{{ visuel::frame_end() }}
+{#- Pas de caption éditoriale : la figure est portée par la prose §25-§33
+    juste à côté, et son contenu (fault + KPI dual) suffit à elle seule.
+    La macro frame_end skip le <figcaption> wrapper quand aucun argument
+    n'est passé (refacto associé). -#}

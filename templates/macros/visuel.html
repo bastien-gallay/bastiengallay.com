@@ -52,12 +52,19 @@
 {% endmacro frame_start %}
 
 
-{% macro frame_end(caption_text_html, caption_source_html="") %}
+{% macro frame_end(caption_text_html="", caption_source_html="") %}
+  {# Pas de <figcaption> émise si rien à dire : éviter le wrapper vide.
+     Cas usage : figure perso (Fig 1 cas zéro) qui n'a ni texte de lift
+     éditorial ni source externe — la prose porte tout. #}
+  {% if caption_text_html or caption_source_html %}
   <figcaption class="visuel__caption">
+    {% if caption_text_html %}
     <span class="visuel__caption-text">{{ caption_text_html | safe }}</span>
+    {% endif %}
     {% if caption_source_html %}
     <span class="visuel__caption-source">{{ caption_source_html | safe }}</span>
     {% endif %}
   </figcaption>
+  {% endif %}
 </figure>
 {% endmacro frame_end %}
