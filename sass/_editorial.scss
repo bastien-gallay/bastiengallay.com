@@ -1237,6 +1237,43 @@ p.has-dropcap::first-letter {
 }
 
 // ──────────────────────────────────────────────────────────────────
+// Spotlight figure ↔ paragraphe ancré
+// ──────────────────────────────────────────────────────────────────
+// Au hover d'une figure (ou de son pivot prose .mark--soft[data-fig]),
+// la figure ET le span pivot restent à pleine opacité, le reste des
+// autres figures + autres marques s'estompe à 0.3. Effet "spotlight"
+// éditorial : signaler la paire texte↔visuel sans tracer de ligne.
+//
+// Activé uniquement sur desktop avec hover réel (matchMedia côté JS) :
+// sur touch/mobile, pas de hover, pas d'effet — gracieux.
+//
+// JS associé : static/figures-spotlight.js — pose .is-active sur la
+// figure + ses marks au mouseenter, retire au mouseleave, et bascule
+// .is-anchoring sur le wrapper .ecrit-page__content pour déclencher
+// le dim global.
+
+@media (hover: hover) and (pointer: fine) and (min-width: 60rem) {
+  .ecrit-page__content .visuel,
+  .ecrit-page__content .mark--soft {
+    transition: opacity var(--dur-mid) var(--ease-out-quart);
+  }
+
+  // Quand le wrapper est "en mode ancrage", tout dim — sauf actifs.
+  .ecrit-page__content.is-anchoring .visuel:not(.is-active),
+  .ecrit-page__content.is-anchoring .mark--soft:not(.is-active) {
+    opacity: 0.3;
+  }
+
+  // Les actifs gardent la pleine opacité (et un léger soulignement
+  // plus appuyé sur la marque, pour qu'elle ne se contente pas de
+  // "ne pas s'estomper" mais SE déclare).
+  .ecrit-page__content .mark--soft.is-active {
+    text-decoration-thickness: 5px;
+    text-underline-offset: 0.15em;
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────
 // Bloc "DANS CE NUMÉRO" — sommaire des écrits dans le teaser home
 // ──────────────────────────────────────────────────────────────────
 

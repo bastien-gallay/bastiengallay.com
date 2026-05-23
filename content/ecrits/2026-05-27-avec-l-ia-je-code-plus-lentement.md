@@ -56,7 +56,7 @@ Avant de commencer, les développeurs prédisaient un gain de temps. Après l'é
 
 {{ code_plus_lentement_v1(pos="side") }}
 
-L'écart entre la perception et la réalité dépassait les 39 points. Ces développeurs n'étaient ni naïfs ni hostiles à l'IA. Ils étaient simplement convaincus d'aller plus vite quand ils allaient en réalité plus lentement.
+L'écart entre la perception et la réalité dépassait les 39 points. Ces développeurs n'étaient ni naïfs ni hostiles à l'IA. Ils étaient simplement <span class="mark--soft" data-fig="1">convaincus d'aller plus vite quand ils allaient en réalité plus lentement</span>.
 
 J'ai moi-même vécu cet écart. Il y a deux ans, avec des modèles bien moins performants, ce qui m'aurait pris une ou deux heures me prenait souvent une demi-journée. Encore aujourd'hui, il m'arrive par réflexe de demander à Claude Code l'édition d'un fichier qu'il fera en trente secondes, là où j'aurais pu terminer en dix.
 
@@ -70,13 +70,13 @@ Le rapport explique pourquoi : les métriques de vendeurs traquent l'activité �
 
 {{ code_plus_lentement_v2(pos="side") }}
 
-L'étude Faros sur le même sujet est encore plus précise (Figure 2) : le gain individuel s'évanouit en file d'attente d'équipe [^4]. Les gains se transforment en files d'attente.
+L'étude Faros sur le même sujet est encore plus précise (Figure 2) : <span class="mark--soft" data-fig="2">le gain individuel s'évanouit en file d'attente d'équipe</span> [^4]. Les gains se transforment en files d'attente.
 
 ### La dette technique devient invisible
 
 {{ code_plus_lentement_v3(pos="side") }}
 
-L'étude GitClear, qui a analysé 211 millions de lignes de code modifiées entre 2020 et 2024 chez Google, Microsoft, Meta et plusieurs entreprises cotées, mesure une transformation des pratiques [^5]. La Figure 3 trace l'inversion : la part de copy-paste monte, celle de refactoring chute, les deux courbes se croisent en 2023. Au-delà de cette inversion, un autre signal : le code "churned" — réécrit dans les deux semaines suivant son commit — a doublé, de 3,1&nbsp;% à 5,7&nbsp;%.
+L'étude GitClear, qui a analysé 211 millions de lignes de code modifiées entre 2020 et 2024 chez Google, Microsoft, Meta et plusieurs entreprises cotées, mesure une transformation des pratiques [^5]. La Figure 3 trace l'inversion : <span class="mark--soft" data-fig="3">la part de copy-paste monte, celle de refactoring chute, les deux courbes se croisent en 2023</span>. Au-delà de cette inversion, un autre signal : le code "churned" — réécrit dans les deux semaines suivant son commit — a doublé, de 3,1&nbsp;% à 5,7&nbsp;%.
 
 Lorsque j'ouvre les projets en audit de code, je découvre de plus en plus souvent des fonctions de 800 lignes, empilées au fil des commits automatiques, et des tests unitaires identiques dans trois fichiers différents.
 
@@ -94,7 +94,7 @@ J'ai commencé par l'autocomplétion intelligente, avec Tabnine en 2018, puis Co
 
 ### La success story est visible, l'incident l'est moins
 
-Le dernier biais est statistique : on entend ceux qui réussissent avec l'IA. On entend moins ceux qui ont stabilisé pendant trois semaines un outil construit en trois jours.
+Le dernier biais est statistique : on entend ceux qui réussissent avec l'IA. On entend moins <span class="mark--soft" data-fig="5">ceux qui ont stabilisé pendant trois semaines un outil construit en trois jours</span>.
 
 {{ code_plus_lentement_v4(pos="side") }}
 

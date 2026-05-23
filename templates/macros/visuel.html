@@ -36,7 +36,7 @@
 {# `variant` (défaut "chart") permet d'utiliser le chrome avec d'autres
    types de figure (V4 incidents, V6 table, …). Génère `.visuel--{variant}`. #}
 {% macro frame_start(num, tag, title_html, pos="side", title_id, desc_id, legend_html="", variant="chart") %}
-<figure class="visuel visuel--{{ variant }} visuel--{{ pos }}" role="figure" aria-labelledby="{{ title_id }} {{ desc_id }}">
+<figure class="visuel visuel--{{ variant }} visuel--{{ pos }}" data-anchor="fig-{{ num }}" role="figure" aria-labelledby="{{ title_id }} {{ desc_id }}">
   <header class="visuel__band">
     <span class="visuel__band-mark" aria-hidden="true">▍</span>
     <span class="visuel__band-num">Figure {{ num }}</span>
