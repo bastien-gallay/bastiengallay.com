@@ -25,6 +25,10 @@
       </div>
     </div>
 
+    {# Sommaire = uniquement les sections qui défilent dans cette page (brainstorm #}
+    {# 2026-05-23). Écrits et Now sont des pages : ils vivent dans la zone #}
+    {# « Explorer » du rail, pas ici — un sommaire scroll n'est cohérent que si #}
+    {# tout y défile. Numérotation alignée sur le rail (§01 = ce hero). #}
     <nav class="hero__sommaire" aria-label="Sommaire du numéro">
       <p class="ed-badge"><span>SOMMAIRE DU NUMÉRO</span></p>
     <ol class="hero__sommaire-list">
@@ -45,24 +49,8 @@
         </a>
       </li>
       <li>
-        <a class="hero__sommaire-link" href="#ecrits" style="--link-color: var(--c-success); --link-shadow: var(--c-info);">
-          <span class="hero__sommaire-num">§04</span>
-          <span class="hero__sommaire-rule" aria-hidden="true"></span>
-          <span class="hero__sommaire-title">Écrits récents</span>
-          <span class="hero__sommaire-arrow" aria-hidden="true">↓</span>
-        </a>
-      </li>
-      <li>
-        <a class="hero__sommaire-link hero__sommaire-link--route" href="{{ config.base_url | safe }}/now/" style="--link-color: var(--c-chrome); --link-shadow: var(--c-problem);">
-          <span class="hero__sommaire-num">§05</span>
-          <span class="hero__sommaire-rule" aria-hidden="true"></span>
-          <span class="hero__sommaire-title">Maintenant</span>
-          <span class="hero__sommaire-arrow" aria-hidden="true">↗</span>
-        </a>
-      </li>
-      <li>
         <a class="hero__sommaire-link" href="#contact" style="--link-color: var(--accent); --link-shadow: var(--c-info);">
-          <span class="hero__sommaire-num">§06</span>
+          <span class="hero__sommaire-num">§04</span>
           <span class="hero__sommaire-rule" aria-hidden="true"></span>
           <span class="hero__sommaire-title">Me joindre</span>
           <span class="hero__sommaire-arrow" aria-hidden="true">↓</span>
@@ -206,7 +194,7 @@
     <span class="ed-badge__num">§04</span>
     <span>ÉCRITS</span>
   </p>
-  <h2 class="ecrits-teaser__title" id="ecrits-teaser-title">Notes &amp; articles.</h2>
+  <h2 class="ecrits-teaser__title" id="ecrits-teaser-title">Derniers écrits.</h2>
   <p class="ecrits-teaser__body">
     Quelques notes longues sur l'écriture, la lecture, et ce que je fabrique.
   </p>

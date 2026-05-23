@@ -44,34 +44,40 @@
         </span>
       </a>
 
-      {# Rail-marquepage : §NN + libellé. Les liens --route (§04/§05) portent #}
-      {# un « → » indiquant qu'ils mènent à une page dédiée, là où les autres #}
-      {# défilent dans la page. Le « ↗ » du colophon reste réservé à l'externe. #}
+      {# Deux zones distinctes pour rendre le clic prévisible (brainstorm #}
+      {# 2026-05-23) : « Cette page » = ancres §NN qui défilent dans la home ; #}
+      {# « Explorer » = liens-pages, marqués « → », qui changent de page. La #}
+      {# séparation visuelle porte la prédictibilité, pas le seul marqueur. Le #}
+      {# « ↗ » du colophon reste réservé à l'externe. /lab volontairement absent. #}
       <nav class="rail__nav" aria-label="Sections">
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#intro" title="Intro" style="--link-color: var(--c-problem); --link-shadow: var(--c-info);">
-          <span class="rail__link-num">§01</span>
-          <span class="rail__link-label">Intro</span>
-        </a>
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#focus" title="Focus : lucid-lint" style="--link-color: var(--c-info); --link-shadow: var(--c-problem);">
-          <span class="rail__link-num">§02</span>
-          <span class="rail__link-label">Focus</span>
-        </a>
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#familles" title="Les deux familles" style="--link-color: var(--c-warning); --link-shadow: var(--c-problem);">
-          <span class="rail__link-num">§03</span>
-          <span class="rail__link-label">Familles</span>
-        </a>
-        <a class="rail__link numeric rail__link--route" href="{{ config.base_url | safe }}/ecrits/" title="Écrits récents — page dédiée"{% if current_path and current_path is starting_with("/ecrits") %} aria-current="page"{% endif %} style="--link-color: var(--c-success); --link-shadow: var(--c-info);">
-          <span class="rail__link-num">§04</span>
-          <span class="rail__link-label">Écrits</span>
-        </a>
-        <a class="rail__link numeric rail__link--route" href="{{ config.base_url | safe }}/now/" title="Maintenant — page dédiée"{% if current_path and current_path is starting_with("/now") %} aria-current="page"{% endif %} style="--link-color: var(--c-chrome); --link-shadow: var(--c-problem);">
-          <span class="rail__link-num">§05</span>
-          <span class="rail__link-label">Now</span>
-        </a>
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/#contact" title="Me joindre" style="--link-color: var(--accent); --link-shadow: var(--c-info);">
-          <span class="rail__link-num">§06</span>
-          <span class="rail__link-label">Contact</span>
-        </a>
+        <div class="rail__group rail__group--anchors" role="group" aria-label="Cette page">
+          <a class="rail__link numeric" href="{{ config.base_url | safe }}/#intro" title="Intro" style="--link-color: var(--c-problem); --link-shadow: var(--c-info);">
+            <span class="rail__link-num">§01</span>
+            <span class="rail__link-label">Intro</span>
+          </a>
+          <a class="rail__link numeric" href="{{ config.base_url | safe }}/#focus" title="Focus : lucid-lint" style="--link-color: var(--c-info); --link-shadow: var(--c-problem);">
+            <span class="rail__link-num">§02</span>
+            <span class="rail__link-label">Focus</span>
+          </a>
+          <a class="rail__link numeric" href="{{ config.base_url | safe }}/#familles" title="Les deux familles" style="--link-color: var(--c-warning); --link-shadow: var(--c-problem);">
+            <span class="rail__link-num">§03</span>
+            <span class="rail__link-label">Familles</span>
+          </a>
+          <a class="rail__link numeric" href="{{ config.base_url | safe }}/#contact" title="Me joindre" style="--link-color: var(--accent); --link-shadow: var(--c-info);">
+            <span class="rail__link-num">§04</span>
+            <span class="rail__link-label">Contact</span>
+          </a>
+        </div>
+
+        <div class="rail__group rail__group--routes" role="group" aria-label="Explorer">
+          <span class="rail__group-label" aria-hidden="true">Explorer</span>
+          <a class="rail__link rail__link--route" href="{{ config.base_url | safe }}/ecrits/" title="Écrits récents — page dédiée"{% if current_path and current_path is starting_with("/ecrits") %} aria-current="page"{% endif %} style="--link-color: var(--c-success); --link-shadow: var(--c-info);">
+            <span class="rail__link-label">Écrits</span>
+          </a>
+          <a class="rail__link rail__link--route" href="{{ config.base_url | safe }}/now/" title="Maintenant — page dédiée"{% if current_path and current_path is starting_with("/now") %} aria-current="page"{% endif %} style="--link-color: var(--c-chrome); --link-shadow: var(--c-problem);">
+            <span class="rail__link-label">Now</span>
+          </a>
+        </div>
       </nav>
 
       <div class="rail__foot">

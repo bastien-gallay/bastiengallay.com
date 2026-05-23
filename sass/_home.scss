@@ -166,10 +166,6 @@
   transform: translateY(0.15em);
 }
 
-.hero__sommaire-link--route:hover .hero__sommaire-arrow {
-  transform: translate(0.1em, -0.15em);
-}
-
 // Sur les écrans étroits et moyens, le §01 géant passe au-dessus du titre —
 // sinon il vole la largeur dont "Bastien Gallay" a besoin pour tenir sur une ligne.
 @media (max-width: 48rem) {

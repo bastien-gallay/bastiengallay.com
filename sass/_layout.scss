@@ -95,13 +95,40 @@
   color: var(--ink-mute);
 }
 
-// Nav horizontale au centre — sommaire §NN compact.
+// Nav horizontale au centre — deux zones : ancres §NN puis pages « Explorer ».
 .rail__nav {
   display: flex;
+  align-items: baseline;
   justify-content: center;
   flex-wrap: wrap;
   gap: clamp(var(--space-xs), 2vw, var(--space-md));
   min-width: 0;
+}
+
+// Chaque zone groupe ses liens ; le contraste entre les deux (filet +
+// label) porte la prédictibilité — l'utilisateur sait avant le clic si ça
+// défile (ancres) ou si ça change de page (Explorer).
+.rail__group {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: clamp(var(--space-xs), 2vw, var(--space-md));
+  min-width: 0;
+}
+
+// Zone pages : filet de séparation + libellé mono discret en tête.
+.rail__group--routes {
+  padding-inline-start: clamp(var(--space-sm), 2.5vw, var(--space-md));
+  border-inline-start: 1px solid var(--rule);
+}
+
+.rail__group-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  opacity: 0.65;
 }
 
 .rail__link {
@@ -304,12 +331,19 @@
     scrollbar-width: none;
     flex-wrap: nowrap;
     justify-content: flex-start;
-    // Marge de fuite : §06 ne colle pas au bord, et le scroll s'arrête net
-    // sur un item plutôt qu'à mi-mot.
+    // Marge de fuite : le dernier item ne colle pas au bord, et le scroll
+    // s'arrête net sur un item plutôt qu'à mi-mot.
     padding-inline-end: var(--space-sm);
     scroll-snap-type: x proximity;
   }
   .rail__nav::-webkit-scrollbar { display: none; }
+
+  // Les groupes restent en ligne dans la bande scrollable ; le filet de la
+  // zone Explorer marque la frontière même en défilement horizontal.
+  .rail__group {
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+  }
 
   .rail__link {
     flex: 0 0 auto;
