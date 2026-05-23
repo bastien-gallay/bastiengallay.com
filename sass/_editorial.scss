@@ -428,10 +428,15 @@ p.has-dropcap::first-letter {
   font-size: var(--text-sm);
 
   .visuel__band {
-    padding-inline: var(--space-md);
+    padding: 0.35em var(--space-sm);
     margin-inline: calc(-1 * var(--space-md));
-    font-size: 0.7rem;
+    font-size: 0.62rem;
+    gap: var(--space-2xs);
+    // Tag pousse à droite ; on autorise un léger crénage négatif pour
+    // tenir sur une ligne dans la piste de marge (~22rem utiles).
+    letter-spacing: 0.06em;
   }
+  .visuel__band-tag { font-size: 0.95em; }
 
   .visuel__title {
     font-size: var(--text-base);
@@ -630,6 +635,12 @@ p.has-dropcap::first-letter {
   font-style: italic;
   letter-spacing: 0;
 }
+
+// Variante annotation d'écart : libellé plus long que les catégories
+// (ex. "file d'attente" vs "revue"). On passe d'un cran plus petit
+// pour rester dans la gouttière gauche du plot sans déborder.
+.visuel__bar-cat--annot  { font-size: 18px; }
+.visuel__bar-meta--annot { font-size: 14px; }
 
 // Barres : accent plein (positif), accent atténué (positif soft),
 // accent profond (négatif = punchline).

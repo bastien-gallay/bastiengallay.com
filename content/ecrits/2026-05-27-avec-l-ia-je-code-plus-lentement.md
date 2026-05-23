@@ -70,13 +70,7 @@ Une étude conduite sur la télémétrie de 22 000 développeurs et deux ans d'h
 
 Le rapport explique pourquoi : les métriques de vendeurs traquent l'activité — commits, pull requests, lignes de code — qui gonflent mécaniquement avec l'usage IA. La vélocité de livraison, elle, dépend d'une chaîne complète : revue, tests, intégration, déploiement, opérations. Cette chaîne n'a pas accéléré au même rythme.
 
-<!-- VISUEL-2 : Le gain individuel s'évanouit en file d'attente (Faros)
-  Type      : 3 flèches ou barres horizontales (échelle commune)
-  Données   : individus +21% tâches · revue +91% temps · équipes +98% PR
-  Légende   : "Plus on accélère en amont, plus la file s'allonge en aval."
-  Source    : Faros AI 2025 [^4]
-  Placement : encart latéral (side frame)
--->
+{{ visuel_faros(pos="side") }}
 
 L'étude Faros sur le même sujet est encore plus précise : les développeurs individuels complètent 21&nbsp;% de tâches en plus, mais le temps de revue augmente de 91&nbsp;%, et les équipes génèrent 98&nbsp;% de pull requests supplémentaires [^4]. Les gains se transforment en files d'attente.
 
@@ -181,7 +175,7 @@ Une recherche honnête doit reconnaître ce qui pourrait l'invalider. Quatre obj
 
 ## Notes et références
 
-[^1]: Second Talent, [*AI Coding Assistant Statistics & Trends \[2026\]*](https://www.secondtalent.com/insights/ai-coding-assistant-statistics/), secondtalent.com, 2026.
+[^1]: Second Talent, [*AI Coding Assistant Statistics & Trends \[2025\]*](https://www.secondtalent.com/resources/ai-coding-assistant-statistics/), secondtalent.com, 2025.
 
 [^2]: Stack Overflow, [*Developer Survey 2025*](https://survey.stackoverflow.co/2025/), stackoverflow.co.
 
