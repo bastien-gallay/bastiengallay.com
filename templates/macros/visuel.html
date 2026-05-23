@@ -52,10 +52,12 @@
 {% endmacro frame_start %}
 
 
-{% macro frame_end(caption_text_html, caption_source_html) %}
+{% macro frame_end(caption_text_html, caption_source_html="") %}
   <figcaption class="visuel__caption">
     <span class="visuel__caption-text">{{ caption_text_html | safe }}</span>
+    {% if caption_source_html %}
     <span class="visuel__caption-source">{{ caption_source_html | safe }}</span>
+    {% endif %}
   </figcaption>
 </figure>
 {% endmacro frame_end %}

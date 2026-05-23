@@ -111,17 +111,7 @@ Plus structurellement : selon Veracode, 45&nbsp;% du code généré par IA conti
 
 Ces chiffres méritent d'être discutés. Les méthodologies varient. Mais le signal converge : il y a un trade-off entre vitesse de production et qualité de livraison, qui n'apparaît pas dans les métriques d'adoption.
 
-<!-- VISUEL-6 : Tableau récap des 4 biais (synthèse de section)
-  Type      : tableau 4 lignes × 3 colonnes
-  Colonnes  : Ce que les métriques ratent | Chiffre-clé | Source
-  Lignes    :
-    1) Perception ≠ réalité            | -19% (vs +24% attendu)        | METR [^3]
-    2) Rédaction ≠ livraison           | revue +91%, PR +98%           | Faros [^4]
-    3) Dette technique invisible       | copy-paste 8,3% → 12,3%       | GitClear [^5] + DORA [^6]
-    4) Success ≠ incident              | 45% du code IA = ≥ 1 CVE OWASP| Veracode [^9]
-  Légende   : "Quatre angles morts du discours dominant."
-  Placement : pleine largeur, en clôture de la section "Ce que les chiffres ne mesurent pas", juste avant la transition vers "La vitesse n'est pas la précipitation".
--->
+{{ code_plus_lentement_v6(pos="inline") }}
 
 ---
 

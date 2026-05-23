@@ -1,0 +1,80 @@
+{%- import "macros/visuel.html" as visuel -%}
+{#-
+  V6 — Tableau récap des 4 biais · article "Avec l'IA, je code plus lentement".
+  Synthèse en clôture de la section "Ce que les chiffres ne mesurent pas".
+  Premier shortcode `pos="inline"` (les 5 autres sont en marge) — la
+  pleine largeur sied à un tableau 3 colonnes qui mérite de respirer.
+
+  Lignes (4 thèses) :
+    1) Perception ≠ réalité     · −19 % (vs +24 % attendu)        · METR
+    2) Rédaction ≠ livraison    · revue +91 %, PR +98 %           · Faros
+    3) Dette technique invisible · copy-paste 8,3 % → 12,3 %      · GitClear + DORA
+    4) Success ≠ incident       · 45 % du code IA = ≥ 1 CVE OWASP · Veracode
+
+  Caption source omis : chaque ligne porte son propre [^N].
+
+  Chrome via macros/visuel.html, variant="table".
+
+  Usage :
+    {{ code_plus_lentement_v6() }}
+-#}
+{%- set pos = pos | default(value="inline") -%}
+
+{{ visuel::frame_start(
+    num="V6",
+    tag="Synthèse",
+    title_html="Quatre angles morts <br/>du discours dominant",
+    pos=pos,
+    title_id="v6-title",
+    desc_id="v6-desc",
+    variant="table"
+) }}
+
+  <table class="visuel__table" aria-labelledby="v6-title" aria-describedby="v6-desc">
+    <caption id="v6-desc" class="sr-only">Tableau de synthèse de la section : quatre angles morts du discours dominant sur la productivité IA, chacun avec son chiffre-clé et sa source.</caption>
+    <thead>
+      <tr>
+        <th scope="col">Ce que les métriques ratent</th>
+        <th scope="col">Chiffre-clé</th>
+        <th scope="col">Source</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Perception ≠ réalité</th>
+        <td>
+          <span class="visuel__table-num">−19&#160;%</span>
+          <span class="visuel__table-meta">vs +24&#160;% attendu</span>
+        </td>
+        <td><span class="visuel__table-source">METR <sup class="footnote-reference"><a href="#3">3</a></sup></span></td>
+      </tr>
+      <tr>
+        <th scope="row">Rédaction ≠ livraison</th>
+        <td>
+          <span class="visuel__table-num">+91&#160;% / +98&#160;%</span>
+          <span class="visuel__table-meta">revue · PR créées</span>
+        </td>
+        <td><span class="visuel__table-source">Faros <sup class="footnote-reference"><a href="#4">4</a></sup></span></td>
+      </tr>
+      <tr>
+        <th scope="row">Dette technique invisible</th>
+        <td>
+          <span class="visuel__table-num">8,3&#160;%&#160;→&#160;12,3&#160;%</span>
+          <span class="visuel__table-meta">part de copy-paste, 2020 → 2024</span>
+        </td>
+        <td><span class="visuel__table-source">GitClear <sup class="footnote-reference"><a href="#5">5</a></sup>&#160;+ DORA <sup class="footnote-reference"><a href="#6">6</a></sup></span></td>
+      </tr>
+      <tr>
+        <th scope="row">Success ≠ incident</th>
+        <td>
+          <span class="visuel__table-num">45&#160;%</span>
+          <span class="visuel__table-meta">du code IA = ≥ 1 CVE OWASP</span>
+        </td>
+        <td><span class="visuel__table-source">Veracode <sup class="footnote-reference"><a href="#9">9</a></sup></span></td>
+      </tr>
+    </tbody>
+  </table>
+
+{{ visuel::frame_end(
+    caption_text_html="Quatre angles morts du discours dominant sur la productivité IA, en clôture de la section."
+) }}
