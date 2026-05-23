@@ -668,12 +668,81 @@ p.has-dropcap::first-letter {
 // Variante --table : tableau récap (V6). Inline pleine largeur, 3 cols.
 // Pas de fond alterné (anti-cliché corporate) ; juste des filets fins +
 // hiérarchie typo (thèse display, chiffre mono tabular, source mono CAPS).
+//
+// Signature visuelle ≠ encarts en marge : la table inline fait partie
+// du flux éditorial (synthèse de section), pas un appel hors-prose.
+// Donc on neutralise le wash accent-soft, on enlève le cadre, on garde
+// juste des filets top/bottom, et on dégonfle le band (plus de bandeau
+// rouge plein — un simple overline mono caps suffit).
 // ──────────────────────────────────────────────────────────────────
 
-// Élargir l'inline pour les tables : --measure-base est trop étroit
-// pour 3 colonnes confortables.
-.ecrit-page__content .visuel--table.visuel--inline {
+.ecrit-page__content .visuel--table {
   max-width: var(--measure-wide);
+  background: transparent;
+  border: 0;
+  border-block: 1px solid var(--rule-strong);
+  padding: var(--space-md) 0;
+
+  // Grid 2 colonnes pour la 1re rangée : overline gauche, titre droite,
+  // alignés sur la baseline. La table et le caption s'étalent sur les
+  // deux colonnes.
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--space-md);
+  row-gap: var(--space-sm);
+}
+
+.visuel--table .visuel__band   { grid-column: 1; align-self: baseline; }
+.visuel--table .visuel__title  { grid-column: 2; align-self: baseline; margin: 0; }
+.visuel--table .visuel__table,
+.visuel--table .visuel__caption { grid-column: 1 / -1; }
+
+// Band dégonflé pour la table : overline mono caps sur fond transparent,
+// aligné à gauche du titre (cf. grid sur .visuel--table ci-dessus). On
+// masque visuellement la marque ▍ et le numéro "Figure VN" — pour un
+// récap éditorial inline, le tag suffit ("SYNTHÈSE"). Le num reste dans
+// le DOM (utile pour aria-labelledby et pour les références croisées).
+.visuel--table .visuel__band {
+  background: transparent;
+  color: var(--ink-mute);
+  border-bottom: 0;
+  padding: 0;
+  margin: 0;
+  font-size: var(--text-xs);
+
+  // Le tag passe à gauche (le margin-left:auto par défaut le poussait
+  // à droite quand il était l'un des trois enfants du band). On force
+  // aussi la couleur en ink-mute parce que le band-tag de base est en
+  // var(--surface) (texte cream pour le fond rouge plein) — invisible
+  // sans fond accent.
+  .visuel__band-tag {
+    margin-inline-start: 0;
+    font-style: normal;
+    color: var(--ink-mute);
+    opacity: 1;
+  }
+}
+
+// Masque visuel (mais pas a11y) du préfixe "▍ Figure VN" sur les récaps.
+.visuel--table .visuel__band-mark,
+.visuel--table .visuel__band-num {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+// Symbole spécial (≠, →, etc.) — Redaction italic n'a pas les glyphes ;
+// on bascule en mono droite pour les retrouver lisibles.
+.visuel__sym {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-weight: 500;
+  color: var(--ink-mute);
 }
 
 .visuel__table {
