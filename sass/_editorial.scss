@@ -366,6 +366,21 @@ p.has-dropcap::first-letter {
 // Bordure continue autour de la section : top + gauche + droite sur le H2,
 // gauche + droite sur chaque définition, bottom sur la dernière. L'effet
 // visuel : un cadre OURS recomposé à partir d'éléments siblings.
+// Largeur partagée H2 + définitions. Pinnée en rem parce que :
+//   - H2 est en var(--font-mono) à var(--text-xs) (~13px) ;
+//   - .footnote-definition est en var(--font-body) à var(--text-sm) (~15px) ;
+//   - max-width: 78ch (var(--measure-wide)) se calcule dans CHAQUE police,
+//     donnant deux valeurs différentes (H2 ~586 vs def ~761 mesuré in vivo).
+//   - rem partage le même contexte → les deux box ont la même largeur,
+//     les borders s'alignent. On bypass aussi le max-width parent
+//     .ecrit-page__content (68ch ≈ 578px) que les définitions débordaient
+//     déjà — on aligne sur leur largeur observée (~47.5rem = 760px à 16px).
+.ecrit-page__content :is(h2#notes-et-references, .footnote-definition) {
+  width: 47.5rem;
+  max-width: 100%;     // safety mobile : descend sous le viewport
+  box-sizing: border-box;
+}
+
 .ecrit-page__content h2#notes-et-references {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
@@ -378,15 +393,9 @@ p.has-dropcap::first-letter {
   padding: var(--space-md) var(--space-lg) var(--space-xs);
   margin-top: var(--space-xl);
   margin-bottom: 0;
-  max-width: var(--measure-wide);
-  box-sizing: border-box;
-  // Blink shrink la box du h2 vers la largeur du contenu textuel quand
-  // `text-wrap: balance` (hérité de la rule globale h1-h4) est actif sur
-  // un titre court — d'où la bordure haute trop courte et désalignée
-  // à droite par rapport aux .footnote-definition en dessous. On éteint
-  // balance ici et on force width:100% pour aligner avec les définitions.
+  // text-wrap: initial — empêche balance (hérité de h1-h4) de shrink
+  // la box sur un titre court.
   text-wrap: initial;
-  width: 100%;
 
   &::before {
     content: "▍ ";
