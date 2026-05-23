@@ -155,3 +155,71 @@ design future doit pouvoir s'y rattacher.
 - Pas de cookie banner (site statique, pas de tracking).
 - Stack : Zola + Tera templates, Sass activé, pas de JS framework.
   Toute interaction passe par du JS vanilla ou aucune.
+
+---
+
+## Pattern aside — figures & code en marge
+
+Spec validée le 2026-05-23. Régit les trois familles de « boîtes
+éditoriales » des articles : listings (`{% listing %}`), visuels
+(`{% visuel_* %}`) et fenced code markdown (` ``` `). Objectif :
+**un seul modèle de marge, un jeu de contrôles commun, une a11y
+homogène.**
+
+### Position — une seule piste, à droite
+
+- Toute boîte « aside » porte le modificateur `--side` et migre dans la
+  piste `--side-track` (22 rem, **hors mesure**, déjà posée dans
+  `_routes.scss`) via `float: right` + marge négative — pattern ai-2027.
+  La prose conserve sa pleine largeur ; la figure se loge dans la marge.
+- **Pas de variante gauche.** `listing--left` est obsolète (la fusion
+  rail→header sticky a libéré les deux marges, mais on ne garde qu'un
+  axe éditorial à droite). Migrer le `side="left"` restant de
+  `content/ecrits/2026-05-22-pourquoi-ce-site` vers `side="right"`.
+- **Pas de float-dans-mesure.** L'ancien `listing--right` (width 40 %
+  dans la colonne de texte, qui étrangle la prose) est remplacé par le
+  même `--side` que les visuels. Un seul mécanisme.
+- **Fenced code brut ne va jamais en marge** : Zola ne pose pas de
+  classe sur les ` ``` `, donc la « version aside » d'un bloc de code
+  s'écrit explicitement en `{% listing(side="right") %}`. Les fenced
+  bruts restent pleine `--measure-base`.
+- **Breakpoint < 60 rem** : dé-flottement → pleine largeur, taille body
+  restaurée, barre de contrôles repliée sous le header.
+- Pas de sticky (CSS-only ; l'ancre = position dans le markdown). Le
+  suivi-scroll JS reste un follow-up.
+
+### Contrôles — barre `.box__tools`, 3 boutons icônes
+
+Ancrée en haut-droite du body (près du tag `data-lang`). JS vanilla.
+
+- **Copier** (presse-papier) — `navigator.clipboard.writeText` puis
+  label « Copié ✓ » pendant 2 s.
+- **Taille** (lisibilité in-place) — cycle S → M → L sur
+  `--listing-body-size`.
+- **Zoom complet** (sortir de la marge) — promeut le bloc en `<dialog>`
+  plein écran, taille L.
+
+Rationale taille/zoom : en piste 22 rem le mono tombe à ~0.78 rem.
+« Taille » donne un cran de confort sans casser la mise en page ;
+« Zoom complet » est l'échappatoire quand le bloc déborde la marge.
+
+### États
+
+- **Boutons** : repos (opacity 0.55) → hover (opacity 1, fond
+  `--surface-sub` translucide) → focus-visible (outline accent 2 px,
+  offset) → active (translateY 1 px).
+- **Copié** : swap glyphe + texte, annonce `aria-live="polite"`, retour
+  auto au repos.
+- **Zoom** : `<dialog>` natif (`role="dialog"`, `aria-modal`), focus
+  piégé, **Esc** ferme, focus rendu au déclencheur, `::backdrop`
+  assombri.
+- **Scroll horizontal** : le `<pre>` reçoit `tabindex="0"` +
+  `aria-label` (atteignable/scrollable au clavier — WCAG 2.1.1).
+
+### Labels a11y
+
+- Boutons : `aria-label` français explicites — « Copier le code »,
+  « Changer la taille du texte », « Afficher en plein écran ». Icône
+  `aria-hidden`, texte en `.visually-hidden`.
+- `prefers-reduced-motion` : coupe les transitions copié/zoom.
+- `<dialog>` zoom : `aria-label` reprend le caption/tag du bloc.
