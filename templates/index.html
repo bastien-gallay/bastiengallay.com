@@ -8,7 +8,7 @@
       <span>ATELIER OUVERT</span>
     </span>
     <span class="issue-bar__mid">{{ now() | date(format='%d/%m/%Y') }}</span>
-    <span class="issue-bar__right">6 SECTIONS</span>
+    <span class="issue-bar__right">4 SECTIONS</span>
   </p>
 
   <div class="hero__cadre">
@@ -26,9 +26,10 @@
     </div>
 
     {# Sommaire = uniquement les sections qui défilent dans cette page (brainstorm #}
-    {# 2026-05-23). Écrits et Now sont des pages : ils vivent dans la zone #}
-    {# « Explorer » du rail, pas ici — un sommaire scroll n'est cohérent que si #}
-    {# tout y défile. Numérotation alignée sur le rail (§01 = ce hero). #}
+    {# 2026-05-23). Écrits et Now sont des pages, pas des sections : ils sortent #}
+    {# de la numérotation §NN du scroll et remontent en « À LA UNE » juste après #}
+    {# (dernier écrit mis en avant + Now en réclame). Numérotation alignée partout #}
+    {# (§01 hero · §02 focus · §03 familles · §04 contact). #}
     <nav class="hero__sommaire" aria-label="Sommaire du numéro">
       <p class="ed-badge"><span>SOMMAIRE DU NUMÉRO</span></p>
     <ol class="hero__sommaire-list">
@@ -58,6 +59,42 @@
       </li>
     </ol>
   </nav>
+
+  {# « À LA UNE » : les pages Écrits et Now, remontées en encarts éditoriaux
+     light. Le dernier écrit publié (hors drafts/futur) prend la vedette ; Now
+     passe en « réclame » à l'ancienne. Aucun §NN — ce ne sont pas des sections
+     du scroll, juste des renvois vers les pages dédiées. #}
+  {%- set ecrits = get_section(path="ecrits/_index.md") -%}
+  {%- set nowsec = get_section(path="now/_index.md") -%}
+  {%- set today_int = now() | date(format="%Y%m%d") | int -%}
+  {%- set_global latest = false -%}
+  {%- for p in ecrits.pages | filter(attribute="draft", value=false) -%}
+    {%- set page_int = p.date | date(format="%Y%m%d") | int -%}
+    {%- if page_int <= today_int and not latest -%}{%- set_global latest = p -%}{%- endif -%}
+  {%- endfor -%}
+  <div class="hero__une">
+    <p class="ed-badge"><span>À LA UNE</span></p>
+    <ul class="une-list">
+      {% if latest %}
+      <li>
+        <a class="une-card" href="{{ latest.permalink | safe }}" style="--link-color: var(--c-success); --link-shadow: var(--c-info);">
+          <span class="une-card__kicker">Dernier écrit</span>
+          <span class="une-card__title">{{ latest.title }}</span>
+          <span class="une-card__meta">{{ latest.date | date(format="%d/%m/%Y") }} · {{ latest.reading_time }} MIN</span>
+          <span class="une-card__arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+      {% endif %}
+      <li>
+        <a class="une-card une-card--reclame" href="{{ config.base_url | safe }}/now/" style="--link-color: var(--c-chrome); --link-shadow: var(--c-problem);">
+          <span class="une-card__kicker">Réclame</span>
+          <span class="une-card__title">Now — ce que je fais en ce moment</span>
+          <span class="une-card__meta">Journal de bord · maj {{ nowsec.extra.last_update | default(value="récemment") }}</span>
+          <span class="une-card__arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+    </ul>
+  </div>
   </div>
 </section>
 
@@ -189,51 +226,9 @@
   </aside>
 </section>
 
-<section class="ecrits-teaser section--mint" id="ecrits" aria-labelledby="ecrits-teaser-title">
-  <p class="ed-badge">
-    <span class="ed-badge__num">§04</span>
-    <span>ÉCRITS</span>
-  </p>
-  <h2 class="ecrits-teaser__title" id="ecrits-teaser-title">Derniers écrits.</h2>
-  <p class="ecrits-teaser__body">
-    Quelques notes longues sur l'écriture, la lecture, et ce que je fabrique.
-  </p>
-
-  {#- Teaser dynamique : Zola exclut déjà les drafts de section.pages quand on
-      build sans --drafts. On filtre en plus les pages futures pour éviter de
-      teaser une amorce datée demain. Bloc masqué si rien à montrer. -#}
-  {%- set ecrits = get_section(path="ecrits/_index.md") -%}
-  {%- set today_int = now() | date(format="%Y%m%d") | int -%}
-  {%- set visible = ecrits.pages | filter(attribute="draft", value=false) -%}
-  {% if visible | length > 0 %}
-  <p class="ed-badge"><span>DANS CE NUMÉRO</span></p>
-  <ol class="toc-list">
-    {% for p in visible %}
-      {%- set page_int = p.date | date(format="%Y%m%d") | int -%}
-      {% if page_int <= today_int %}
-    <li class="toc-list__item">
-      <span class="toc-list__num">§04.{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
-      <span>
-        <a class="toc-list__title" href="{{ p.permalink | safe }}">{{ p.title }}.</a>
-        <span class="toc-list__meta">{{ p.date | date(format="%d/%m/%Y") }} · {{ p.reading_time }} MIN{% if p.description %} · {{ p.description }}{% endif %}</span>
-      </span>
-    </li>
-      {% endif %}
-    {% endfor %}
-  </ol>
-  {% endif %}
-
-  <p class="ecrits-teaser__cta">
-    <a class="ecrits-teaser__cta-link" href="{{ config.base_url | safe }}/ecrits/">
-      <span>Voir tous les écrits</span>
-      <span class="ecrits-teaser__cta-arrow" aria-hidden="true">→</span>
-    </a>
-  </p>
-</section>
-
 <section class="contact section--rouge" id="contact" aria-labelledby="contact-title">
   <p class="ed-badge">
-    <span class="ed-badge__num">§06</span>
+    <span class="ed-badge__num">§04</span>
     <span>ME JOINDRE</span>
   </p>
   <h2 class="contact__title" id="contact-title">Me joindre.</h2>
