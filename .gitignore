@@ -7,6 +7,9 @@
 .claude/worktrees/
 .personal/
 
+# Notes de travail (non destinées au public)
+brainstorm/
+
 # Zola
 public/
 static/processed_images/
