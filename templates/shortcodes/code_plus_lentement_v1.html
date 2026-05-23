@@ -1,9 +1,6 @@
+{%- import "macros/visuel.html" as visuel -%}
 {#-
-  ⚠ REFACTO À VENIR — voir note dans visuel_gitclear.html. Ce fichier suit
-  pour l'instant la même structure dupliquée. Extraction de la macro chrome
-  prévue après V2.
-
-  V1 — Perception vs Réalité (étude METR 2025)
+  V1 — Perception vs Réalité (étude METR 2025) · article "Avec l'IA, je code plus lentement".
   Trois barres horizontales depuis un axe 0 %. Les deux premières (prédit,
   perçu) vont à droite ; la troisième (mesuré) part à gauche — l'écart
   visuel entre prévision et réalité est le punchline.
@@ -16,22 +13,26 @@
     mesuré (réellement)       ·  −19 %    ← bar inverse
 
   Espace de tracé (viewBox 600x420) :
-    plot left 140 · right 20 · top 60 · bottom 60
     axe 0 % à x=335 (échelle 9 px par point de %, range −25 à +30)
-    catégories à gauche, valeurs en bout de barre.
+    catégories à gauche (anchor=start à x=20), valeurs en bout de barre.
+
+  Chrome (figure / band / title / caption) externalisé dans la macro
+  `macros/visuel.html#frame_start` + `#frame_end`. Ne reste ici que
+  le SVG (données endémiques) et les textes de title/caption.
 
   Usage :
-    {{ visuel_metr() }}
+    {{ code_plus_lentement_v1() }}
 -#}
 {%- set pos = pos | default(value="side") -%}
-<figure class="visuel visuel--chart visuel--{{ pos }}" role="figure" aria-labelledby="v1-title v1-desc">
-  <header class="visuel__band">
-    <span class="visuel__band-mark" aria-hidden="true">▍</span>
-    <span class="visuel__band-num">Figure V1</span>
-    <span class="visuel__band-tag">Perception ≠ réalité</span>
-  </header>
 
-  <p class="visuel__title">Gain de temps perçu <br/><span class="visuel__title-vs">vs</span> mesuré · METR 2025</p>
+{{ visuel::frame_start(
+    num="V1",
+    tag="Perception ≠ réalité",
+    title_html='Gain de temps perçu <br/><span class="visuel__title-vs">vs</span> mesuré · METR 2025',
+    pos=pos,
+    title_id="v1-title",
+    desc_id="v1-desc"
+) }}
 
   <svg
     class="visuel__svg"
@@ -69,23 +70,20 @@
       <text class="visuel__bar-value" x="521" y="185" text-anchor="start">+20&#160;%</text>
     </g>
 
-    {#- Bar 3 : mesuré -19 % (accent-deep, vers la gauche depuis 0) -#}
+    {#- Bar 3 : mesuré -19 % (accent-deep, vers la gauche depuis 0).
+        Valeur à l'intérieur (règle : valeurs dehors par défaut, dedans
+        uniquement quand pas de place dehors). -#}
     <g aria-hidden="true">
       <text class="visuel__bar-cat" x="20" y="258" text-anchor="start">mesuré</text>
       <text class="visuel__bar-meta" x="20" y="280" text-anchor="start">(en réalité)</text>
       <rect class="visuel__bar visuel__bar--negative" x="164" y="238" width="171" height="42" />
-      {#- Valeur à l'intérieur de la barre (cas spécial : la barre négative
-          dépasse vers la gauche jusqu'à x=164, à 24vb du bord du viewBox.
-          Mettre le label à l'extérieur le ferait overflow. Règle : valeurs
-          dehors par défaut, dedans uniquement si pas de place dehors). -#}
       <text class="visuel__bar-value visuel__bar-value--inside" x="329" y="265" text-anchor="end">−19&#160;%</text>
     </g>
 
-    {#- Annotation de l'écart perçu↔mesuré (= 39 points, cohérent article).
-        Tick line ENTRE la gauche de la barre négative (x=164) et la droite
-        de la barre perçue (x=515). Le pill couvre EXACTEMENT le même span
-        (x=164 → x=515, width=351) pour que la "barre d'écart" soit visuellement
-        alignée avec les extrêmes des barres mesurées. -#}
+    {#- Annotation d'écart perçu↔mesuré (= 39 points, cohérent article).
+        Tick ENTRE gauche barre négative (x=164) et droite barre perçue
+        (x=515). Pill couvre EXACTEMENT le même span pour aligner la
+        "barre d'écart" avec les extrêmes des barres mesurées. -#}
     <g aria-hidden="true">
       <line class="visuel__gap-tick" x1="164" y1="320" x2="515" y2="320" />
       <line class="visuel__gap-tick" x1="164" y1="313" x2="164" y2="327" />
@@ -97,14 +95,7 @@
     </g>
   </svg>
 
-  <figcaption class="visuel__caption">
-    <span class="visuel__caption-text">
-      Avant l'étude, les développeurs prédisaient un gain. Après, ils
-      en percevaient un. La mesure révèle un coût. L'écart perception-réalité
-      dépasse les 39 points.
-    </span>
-    <span class="visuel__caption-source">
-      Source : Becker et&#160;al., METR&#160;2025, arXiv:2507.09089, n.&#160;<sup class="footnote-reference"><a href="#3">3</a></sup>.
-    </span>
-  </figcaption>
-</figure>
+{{ visuel::frame_end(
+    caption_text_html="Avant l'étude, les développeurs prédisaient un gain. Après, ils en percevaient un. La mesure révèle un coût. L'écart perception-réalité dépasse les 39 points.",
+    caption_source_html='Source : Becker et&#160;al., METR&#160;2025, arXiv:2507.09089, n.&#160;<sup class="footnote-reference"><a href="#3">3</a></sup>.'
+) }}

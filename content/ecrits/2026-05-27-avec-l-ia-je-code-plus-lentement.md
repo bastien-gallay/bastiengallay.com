@@ -56,7 +56,7 @@ En 2025, une équipe de chercheurs de METR a conduit une expérience contrôlée
 
 Avant de commencer, les développeurs prédisaient un gain de temps de 24&nbsp;% grâce à l'IA. Après l'étude, ils estimaient ce gain à 20&nbsp;%. La mesure objective, elle, montrait une augmentation du temps de complétion de 19&nbsp;%.
 
-{{ visuel_metr(pos="side") }}
+{{ code_plus_lentement_v1(pos="side") }}
 
 L'écart entre la perception et la réalité dépassait les 39 points. Ces développeurs n'étaient ni naïfs ni hostiles à l'IA. Ils étaient simplement convaincus d'aller plus vite quand ils allaient en réalité plus lentement.
 
@@ -70,13 +70,13 @@ Une étude conduite sur la télémétrie de 22 000 développeurs et deux ans d'h
 
 Le rapport explique pourquoi : les métriques de vendeurs traquent l'activité — commits, pull requests, lignes de code — qui gonflent mécaniquement avec l'usage IA. La vélocité de livraison, elle, dépend d'une chaîne complète : revue, tests, intégration, déploiement, opérations. Cette chaîne n'a pas accéléré au même rythme.
 
-{{ visuel_faros(pos="side") }}
+{{ code_plus_lentement_v2(pos="side") }}
 
 L'étude Faros sur le même sujet est encore plus précise : les développeurs individuels complètent 21&nbsp;% de tâches en plus, mais le temps de revue augmente de 91&nbsp;%, et les équipes génèrent 98&nbsp;% de pull requests supplémentaires [^4]. Les gains se transforment en files d'attente.
 
 ### La dette technique devient invisible
 
-{{ visuel_gitclear(pos="side") }}
+{{ code_plus_lentement_v3(pos="side") }}
 
 L'étude GitClear, qui a analysé 211 millions de lignes de code modifiées entre 2020 et 2024 chez Google, Microsoft, Meta et plusieurs entreprises cotées, mesure une transformation des pratiques [^5] :
 

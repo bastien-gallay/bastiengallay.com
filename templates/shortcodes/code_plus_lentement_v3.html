@@ -1,13 +1,6 @@
+{%- import "macros/visuel.html" as visuel -%}
 {#-
-  ⚠ REFACTO À VENIR — ce shortcode mélange du générique (chrome : band,
-  title, legend, caption, position --side) et de l'endémique (données
-  GitClear 2020-2024, courbes copy-paste vs refactoring). À l'issue de V1
-  + V2 (3 cas posés), extraire la partie chrome dans une macro Tera
-  `templates/macros/visuel.html#frame(...)` et renommer ce fichier
-  `code_plus_lentement_v3.html` (slug article + numéro de figure).
-  Tracker dans .personal/runbooks/ ou via /do-add quand l'extraction est mûre.
-
-  V3 — L'inversion 2020-2024 (GitClear)
+  V3 — L'inversion 2020-2024 (GitClear) · article "Avec l'IA, je code plus lentement".
   Deux polylines croisées : part de copy-paste (ascendante, accent)
   contre part de refactoring (descendante, neutre) dans le code livré.
   Source : GitClear AI Copilot Code Quality 2025 [^5].
@@ -24,27 +17,22 @@
     margin left 80 · right 20 · top 40 · bottom 60
     x : 2020→x=80, 2024→x=580 (step 125)
     y : 0%→y=360, 30%→y=40 (échelle 10.67 / %)
-    Le margin gauche 80 (vs 60) laisse la place aux labels Y mono à 20px
-    viewBox sans clipping sur "22,5 %".
+    Margin gauche 80 (vs 60) laisse la place aux labels Y "22,5 %".
+
+  Chrome externalisé dans macros/visuel.html. La légende des courbes est
+  injectée via le paramètre `legend_html` de frame_start (V3 est le seul
+  cas avec légende dans la règle de 3 — gardé optionnel dans la macro).
 
   Usage :
-    {{ visuel_gitclear() }}
+    {{ code_plus_lentement_v3() }}
 -#}
 {#- Variante de placement : "side" (défaut, marge sticky ai-2027),
-    "inline" (centré pleine prose, à utiliser pour figures peu réductibles),
-    "float-right" / "float-left" (anciens flottements internes prose).
-    NOTE renumérotation : "V3" est l'identifiant de travail. À la
+    "inline" (centré pleine prose, à utiliser pour figures peu réductibles).
+    NOTE renumérotation : "V3" est l'identifiant de travail ; à la
     publication, remplacer par "Fig. 3". -#}
 {%- set pos = pos | default(value="side") -%}
-<figure class="visuel visuel--chart visuel--{{ pos }}" role="figure" aria-labelledby="v3-title v3-desc">
-  <header class="visuel__band">
-    <span class="visuel__band-mark" aria-hidden="true">▍</span>
-    <span class="visuel__band-num">Figure V3</span>
-    <span class="visuel__band-tag">Code comme dette</span>
-  </header>
 
-  <p class="visuel__title">Copy-paste <span class="visuel__title-vs">vs</span> Refactoring <br/> 2020 → 2024</p>
-
+{%- set legend -%}
   <ul class="visuel__legend" aria-label="Légende des courbes">
     <li class="visuel__legend-item">
       <span class="visuel__swatch visuel__swatch--copypaste" aria-hidden="true"></span>
@@ -57,6 +45,17 @@
       <span class="visuel__legend-delta">−14,6&nbsp;pts</span>
     </li>
   </ul>
+{%- endset -%}
+
+{{ visuel::frame_start(
+    num="V3",
+    tag="Code comme dette",
+    title_html='Copy-paste <span class="visuel__title-vs">vs</span> Refactoring <br/> 2020 → 2024',
+    pos=pos,
+    title_id="v3-title",
+    desc_id="v3-desc",
+    legend_html=legend
+) }}
 
   <svg
     class="visuel__svg"
@@ -123,13 +122,7 @@
 
   </svg>
 
-  <figcaption class="visuel__caption">
-    <span class="visuel__caption-text">
-      Le code se duplique plus vite qu'il ne se range : la part de copy-paste
-      croît, celle de refactoring chute, et les deux se croisent en 2023.
-    </span>
-    <span class="visuel__caption-source">
-      Source : GitClear, <em>AI Copilot Code Quality 2025</em>, n.&#160;<sup class="footnote-reference"><a href="#5">5</a></sup>.
-    </span>
-  </figcaption>
-</figure>
+{{ visuel::frame_end(
+    caption_text_html="Le code se duplique plus vite qu'il ne se range : la part de copy-paste croît, celle de refactoring chute, et les deux se croisent en 2023.",
+    caption_source_html='Source : GitClear, <em>AI Copilot Code Quality 2025</em>, n.&#160;<sup class="footnote-reference"><a href="#5">5</a></sup>.'
+) }}
