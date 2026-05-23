@@ -452,6 +452,17 @@
   }
 }
 
+// Étendre (bouton « expand ») : l'aside flotté reprend toute la largeur de
+// la colonne, dé-flotté. On ne touche QUE la largeur — la taille du texte
+// reste celle de l'aside (le zoom navigateur gère l'agrandissement). Placé
+// après les règles de float/marge pour les battre à spécificité égale.
+.ecrit-page__content .listing--expanded {
+  float: none;
+  width: 100%;
+  max-width: 100%;
+  margin: var(--space-md) 0 var(--space-lg);
+}
+
 .ecrit-page__content .ours--cols .ours__col p {
   margin: 0.2em 0;
   font-size: var(--text-sm);

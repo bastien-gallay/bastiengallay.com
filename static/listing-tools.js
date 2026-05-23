@@ -1,28 +1,38 @@
-// Barre d'outils des listings ({% listing %}) : copier, taille, zoom.
-// Injectée en JS (découplée du markup Tera), placée dans le header coloré
-// du listing — hors du <pre>, donc immobile au scroll horizontal et sans
-// recouvrir le code. Repli en overlay si le listing n'a pas de header.
-// Vanilla, aucune dépendance. Voir PRODUCT.md § Pattern aside.
+// Barre d'outils des listings ({% listing %}) : copier + étendre.
+// Injectée en JS (découplée du markup Tera). « Étendre » déplie le bloc à la
+// pleine largeur de la colonne (toggle in-place), sans changer la taille du
+// texte. Pas de contrôle de taille de police : on laisse le zoom navigateur.
+// Icônes seules ; le hint vient du title (sighted) + aria-label (lecteurs
+// d'écran).
 //
-// NB : les fenced markdown bruts (```) ne sont pas ciblés ici — ils ne
-// servent qu'en home pour l'instant ; leur version « aside » s'écrit en
-// {% listing %} et reçoit donc cette barre.
+// Placement pilotable par data-tools sur la figure :
+//   footer-hover      — bande sous le corps ; séparateur + icônes en fondu
+//                       (DÉFAUT prod, retenu après comparaison en /lab/)
+//   header            — boutons dans le header coloré, en ligne
+//   footer-tag        — bande sous le corps ; chip coloré (ton du tag) sous
+//                       les icônes, aligné sur la largeur du tag
+//   header-row        — boutons sur une 2e ligne du header (toujours visible)
+//   header-row-hover  — idem, séparateur permanent, icônes en fondu au survol
+// Vanilla, aucune dépendance. Voir PRODUCT.md § Pattern aside.
 
 (function () {
   "use strict";
 
   const SVG_NS = "http://www.w3.org/2000/svg";
-  // Icônes monochromes (stroke = currentColor), partagées par les boutons.
   const ICONS = {
     copy: "M9 9h9a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1Z M6 15H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v1",
     check: "M5 12.5l4 4 10-10",
-    zoom: "M9 4H4v5 M15 4h5v5 M20 15v5h-5 M4 15v5h5",
-    close: "M6 6l12 12 M18 6L6 18",
+    expand: "M3 12h18 M8 7l-5 5 5 5 M16 7l5 5-5 5",
+    collapse: "M3 12h18 M4 7l5 5-5 5 M20 7l-5 5 5 5",
   };
 
   function makeIcon(name) {
     const svg = document.createElementNS(SVG_NS, "svg");
     svg.setAttribute("viewBox", "0 0 24 24");
+    // Dimensions intrinsèques explicites : sans elles, Firefox ne donne pas de
+    // taille au SVG en contexte flex (rendu à 0). Le CSS ajuste l'affichage.
+    svg.setAttribute("width", "24");
+    svg.setAttribute("height", "24");
     svg.setAttribute("fill", "none");
     svg.setAttribute("stroke", "currentColor");
     svg.setAttribute("stroke-width", "1.6");
@@ -36,74 +46,28 @@
     return svg;
   }
 
-  function makeBtn(modifier, label) {
+  function makeBtn(modifier, label, iconName) {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "box__btn box__btn--" + modifier;
     btn.setAttribute("aria-label", label);
+    btn.title = label;
+    btn.appendChild(makeIcon(iconName));
     return btn;
   }
 
-  // Région live escamotée, partagée par tous les boutons d'un listing :
-  // annonce les changements (copie, taille) aux lecteurs d'écran.
+  function setState(btn, iconName, label) {
+    btn.replaceChild(makeIcon(iconName), btn.firstChild);
+    btn.setAttribute("aria-label", label);
+    btn.title = label;
+  }
+
   function makeLive() {
     const live = document.createElement("span");
     live.className = "sr-only";
     live.setAttribute("aria-live", "polite");
     return live;
   }
-
-  // ── Dialog de zoom : un seul pour toute la page, réutilisé. ──────────
-  let zoomDialog = null;
-  function getZoomDialog() {
-    if (zoomDialog) return zoomDialog;
-    zoomDialog = document.createElement("dialog");
-    zoomDialog.className = "box__zoom";
-
-    const close = document.createElement("button");
-    close.type = "button";
-    close.className = "box__zoom-close";
-    close.setAttribute("aria-label", "Fermer le plein écran");
-    close.append(makeIcon("close"), document.createTextNode("Fermer"));
-    close.addEventListener("click", () => zoomDialog.close());
-
-    const body = document.createElement("div");
-    body.className = "box__zoom-body";
-
-    zoomDialog.append(close, body);
-    // Clic sur le backdrop (hors contenu) ferme aussi.
-    zoomDialog.addEventListener("click", (e) => {
-      if (e.target === zoomDialog) zoomDialog.close();
-    });
-    document.body.appendChild(zoomDialog);
-    return zoomDialog;
-  }
-
-  function openZoom(listing) {
-    const dialog = getZoomDialog();
-    const clone = listing.cloneNode(true);
-    // Nettoie les outils du clone et force la pleine taille.
-    clone.querySelectorAll(".box__btn, .box__tools").forEach((n) => n.remove());
-    clone.classList.remove("listing--side", "listing--right", "listing--left");
-    clone.removeAttribute("tabindex");
-    clone.querySelectorAll("[tabindex]").forEach((n) =>
-      n.removeAttribute("tabindex")
-    );
-    const caption = listing.querySelector(".listing__caption");
-    dialog.setAttribute(
-      "aria-label",
-      caption ? caption.textContent.trim() : "Bloc de code en plein écran"
-    );
-    dialog.querySelector(".box__zoom-body").replaceChildren(clone);
-    dialog.showModal(); // l'UA piège le focus et restaure au close.
-  }
-
-  // ── Injection par listing ────────────────────────────────────────────
-  const SIZES = [
-    { step: 1, name: "normale" },
-    { step: 1.2, name: "agrandie" },
-    { step: 1.45, name: "maximale" },
-  ];
 
   document.querySelectorAll(".listing").forEach((listing) => {
     const body = listing.querySelector(".listing__body");
@@ -114,8 +78,7 @@
     // — Copier —
     let copyBtn = null;
     if (navigator.clipboard) {
-      copyBtn = makeBtn("copy", "Copier le code");
-      copyBtn.appendChild(makeIcon("copy"));
+      copyBtn = makeBtn("copy", "Copier le code", "copy");
       let resetTimer = null;
       copyBtn.addEventListener("click", async () => {
         let ok = true;
@@ -124,60 +87,85 @@
         } catch (_) {
           ok = false;
         }
-        copyBtn.replaceChild(makeIcon(ok ? "check" : "copy"), copyBtn.firstChild);
         copyBtn.classList.toggle("box__btn--done", ok);
-        copyBtn.setAttribute("aria-label", ok ? "Code copié" : "Copier le code");
+        setState(copyBtn, ok ? "check" : "copy", ok ? "Code copié" : "Copier le code");
         live.textContent = ok ? "Copié" : "Échec de la copie";
         window.clearTimeout(resetTimer);
         resetTimer = window.setTimeout(() => {
-          copyBtn.replaceChild(makeIcon("copy"), copyBtn.firstChild);
           copyBtn.classList.remove("box__btn--done");
-          copyBtn.setAttribute("aria-label", "Copier le code");
+          setState(copyBtn, "copy", "Copier le code");
           live.textContent = "";
         }, 2000);
       });
     }
 
-    // — Taille (cycle S → M → L) —
-    const sizeBtn = makeBtn("size", "Changer la taille du texte");
-    const lg = document.createElement("span");
-    lg.className = "box__size-lg";
-    lg.textContent = "A";
-    const sm = document.createElement("span");
-    sm.className = "box__size-sm";
-    sm.textContent = "A";
-    sm.setAttribute("aria-hidden", "true");
-    lg.setAttribute("aria-hidden", "true");
-    sizeBtn.append(lg, sm);
-    let sizeIdx = 0;
-    sizeBtn.addEventListener("click", () => {
-      sizeIdx = (sizeIdx + 1) % SIZES.length;
-      const { step, name } = SIZES[sizeIdx];
-      body.style.setProperty("--box-size-step", String(step));
-      live.textContent = "Taille " + name;
+    // — Étendre / réduire : toggle pleine largeur (sans changer la police) —
+    const expandBtn = makeBtn("expand", "Étendre à pleine largeur", "expand");
+    expandBtn.setAttribute("aria-pressed", "false");
+    expandBtn.addEventListener("click", () => {
+      const on = listing.classList.toggle("listing--expanded");
+      expandBtn.setAttribute("aria-pressed", String(on));
+      setState(
+        expandBtn,
+        on ? "collapse" : "expand",
+        on ? "Réduire le bloc" : "Étendre à pleine largeur"
+      );
+      live.textContent = on ? "Bloc étendu" : "Bloc réduit";
     });
 
-    // — Zoom plein écran —
-    let zoomBtn = null;
-    if (typeof HTMLDialogElement !== "undefined") {
-      zoomBtn = makeBtn("zoom", "Afficher en plein écran");
-      zoomBtn.appendChild(makeIcon("zoom"));
-      zoomBtn.addEventListener("click", () => openZoom(listing));
+    // — Montage selon data-tools —
+    const buttons = [copyBtn, expandBtn].filter(Boolean);
+    const mode = listing.dataset.tools || "footer-hover";
+    const header = listing.querySelector(".listing__header");
+
+    function bar(extraClass) {
+      const el = document.createElement("div");
+      el.className = "box__toolbar" + (extraClass ? " " + extraClass : "");
+      buttons.forEach((b) => el.appendChild(b));
+      el.appendChild(live);
+      return el;
     }
 
-    // — Montage de la barre —
-    const buttons = [copyBtn, sizeBtn, zoomBtn].filter(Boolean);
-    const header = listing.querySelector(".listing__header");
-    if (header) {
+    if (mode === "footer-hover") {
+      // footer-reveal : bandeau permanent ; séparateur + icônes en fondu.
+      listing.appendChild(bar("box__toolbar--footer box__toolbar--footer-reveal"));
+    } else if (mode === "footer-tag") {
+      // Chip coloré (ton réel du tag de CE listing) sous les icônes, largeur
+      // alignée sur celle du tag du header.
+      const el = document.createElement("div");
+      el.className = "box__toolbar box__toolbar--footer box__toolbar--footer-tag";
+      const chip = document.createElement("div");
+      chip.className = "box__chip";
+      buttons.forEach((b) => chip.appendChild(b));
+      const tag = listing.querySelector(".listing__tag");
+      if (tag) {
+        const cs = getComputedStyle(tag);
+        chip.style.background = cs.backgroundColor;
+        chip.style.color = cs.color;
+        chip.style.width = Math.round(tag.getBoundingClientRect().width) + "px";
+      }
+      el.append(chip, live);
+      listing.appendChild(el);
+    } else if (mode === "header-row" || mode === "header-row-hover") {
+      if (header) {
+        header.classList.add("listing__header--stacked");
+        // header-row-hover : la 2e ligne (et son séparateur) reste, seules les
+        // icônes apparaissent au survol.
+        const reveal = mode === "header-row-hover" ? " box__toolbar--btn-reveal" : "";
+        header.appendChild(bar("box__toolbar--header-row" + reveal));
+      }
+    } else if (mode === "margin" || mode === "margin-hover") {
+      // Piste PARQUÉE (icônes invisibles sous Firefox en marge) — conservée
+      // dans le lab pour mémoire, non retenue pour la prod.
+      listing.classList.add("box--has-margin-tools");
+      const reveal = mode === "margin-hover" ? " box__toolbar--btn-reveal" : "";
+      listing.appendChild(bar("box__toolbar--margin" + reveal));
+    } else if (header) {
       buttons.forEach((b) => header.appendChild(b));
       header.appendChild(live);
     } else {
-      const tools = document.createElement("div");
-      tools.className = "box__tools";
-      buttons.forEach((b) => tools.appendChild(b));
-      tools.appendChild(live);
       listing.classList.add("box--has-tools");
-      listing.appendChild(tools);
+      listing.appendChild(bar("box__tools"));
     }
 
     // Overflow horizontal atteignable au clavier (WCAG 2.1.1).

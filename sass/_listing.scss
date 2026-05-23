@@ -172,9 +172,8 @@
 }
 
 // ──────────────────────────────────────────────────────────────────
-// Barre d'outils partagée — injectée par copy-code.js sur les blocs de
-// code (listings + fenced). Forward-compat : taille / zoom rejoindront
-// cette même barre. Voir PRODUCT.md § Pattern aside.
+// Barre d'outils des listings — injectée par listing-tools.js (copier /
+// taille / étendre). Voir PRODUCT.md § Pattern aside.
 // ──────────────────────────────────────────────────────────────────
 
 // Bouton icône carré, foreground clair (header de code toujours sombre).
@@ -196,6 +195,7 @@
 .box__btn svg {
   width: 1rem;
   height: 1rem;
+  flex: none; // ne pas rétrécir l'icône en conteneur étroit (marge en colonne)
   display: block;
 }
 
@@ -236,77 +236,152 @@
   z-index: 1;
 }
 
-// Bouton « taille » : glyphe typographique A/a plutôt qu'une icône SVG —
-// dit « texte » sans ambiguïté. Monochrome, hérite de currentColor.
-.box__btn--size {
-  font-family: var(--font-mono);
-  line-height: 1;
-  gap: 0.05em;
+// ──────────────────────────────────────────────────────────────────
+// Variantes de placement de la barre (phase de test, pilotées par
+// data-tools). À l'issue du choix : ne garder que la gagnante.
+// ──────────────────────────────────────────────────────────────────
+
+.box__toolbar {
+  display: flex;
+  align-items: center;
 }
 
-.box__btn--size .box__size-lg { font-size: 1.05rem; }
-.box__btn--size .box__size-sm { font-size: 0.72rem; }
+// — footer : bande d'actions sous le corps, icônes seules. Le bandeau prolonge
+// le bloc (mêmes couleurs) → il est toujours là, sans pop au survol.
+.box__toolbar--footer {
+  justify-content: flex-end;
+  padding: var(--space-2xs);
+  background: var(--listing-bg);
+  color: var(--listing-fg);
+  border: 1px solid var(--rule-strong);
+  border-top: 1px solid color-mix(in oklch, var(--listing-fg) 18%, transparent);
+}
 
-// ──────────────────────────────────────────────────────────────────
-// Zoom plein écran — <dialog> natif (focus piégé + Esc fournis par l'UA).
-// Le contenu est un clone du listing forcé en pleine taille.
-// ──────────────────────────────────────────────────────────────────
+.box__toolbar--footer .box__btn { opacity: 0.8; }
 
-.box__zoom {
-  margin: auto; // centrage du dialog modal
-  width: min(92vw, 64rem);
-  max-height: 90vh;
+// — footer-reveal : bandeau permanent, mais séparateur + icônes en fondu au
+// survol/focus du bloc. Évite l'apparition brutale du bandeau entier.
+.box__toolbar--footer-reveal {
+  border-top-color: transparent;
+  transition: border-color var(--dur-mid) var(--ease-out-quart);
+}
+
+.box__toolbar--footer-reveal .box__btn {
+  opacity: 0;
+  transition: opacity var(--dur-mid) var(--ease-out-quart);
+}
+
+.listing:hover .box__toolbar--footer-reveal,
+.listing:focus-within .box__toolbar--footer-reveal {
+  border-top-color: color-mix(in oklch, var(--listing-fg) 18%, transparent);
+}
+
+.listing:hover .box__toolbar--footer-reveal .box__btn,
+.listing:focus-within .box__toolbar--footer-reveal .box__btn {
+  opacity: 0.8;
+}
+
+// Tactile (pas de survol) : tout est montré d'emblée.
+@media (hover: none) {
+  .box__toolbar--footer-reveal { border-top-color: color-mix(in oklch, var(--listing-fg) 18%, transparent); }
+  .box__toolbar--footer-reveal .box__btn { opacity: 0.8; }
+}
+
+// footer-tag : la bande prolonge le bloc (listing-bg, sans séparateur) ; seul
+// un chip coloré sous les icônes porte le ton du tag (bg + couleur posés en JS),
+// sa largeur calée sur celle du tag du header → colonnes alignées tag/chip.
+.box__toolbar--footer-tag {
   padding: 0;
-  border: 0;
-  background: transparent;
+  border-top: 0;
+}
+
+.box__chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  padding: var(--space-2xs) 0;
+}
+
+.box__chip .box__btn {
+  color: inherit;
+  opacity: 1;
+}
+
+// — header-row : 2e ligne du header (le header passe en wrap). Le séparateur
+// est permanent ; en variante -hover, seules les icônes apparaissent.
+.listing__header--stacked { flex-wrap: wrap; }
+
+.box__toolbar--header-row {
+  flex-basis: 100%;
+  justify-content: flex-end;
+  gap: var(--space-2xs);
+  border-top: 1px solid color-mix(in oklch, var(--listing-fg) 18%, transparent);
+}
+
+// — margin (PARQUÉE) : hors du bloc, dans la marge de page du côté du flottant.
+// Conservée dans le lab pour mémoire mais non retenue : les icônes restent
+// invisibles sous Firefox (SVG en colonne flex). Ne pas reporter en prod.
+.listing.box--has-margin-tools {
+  position: relative;
   overflow: visible;
 }
 
-.box__zoom::backdrop {
-  background: oklch(0 0 0 / 0.62);
-}
-
-.box__zoom-body {
-  max-height: 90vh;
-  overflow: auto;
-}
-
-// Le listing cloné occupe toute la largeur du dialog, taille L, sans
-// contrainte de marge (on retire les modificateurs --side/--right en JS).
-.box__zoom .listing {
-  margin: 0;
-  width: 100%;
-  max-width: 100%;
-  --box-size-step: 1.3;
-}
-
-.box__zoom-close {
+.box__toolbar--margin {
   position: absolute;
   top: 0;
-  right: 0;
-  transform: translateY(-100%);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4em;
-  padding: var(--space-2xs) var(--space-sm);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  color: oklch(0.93 0.008 65);
-  background: transparent;
-  border: 0;
-  cursor: pointer;
+  flex-direction: column;
+  gap: var(--space-2xs);
 }
 
-.box__zoom-close:hover { color: var(--accent); }
-.box__zoom-close:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+.box__toolbar--margin .box__btn {
+  color: var(--surface-ink); // theme-aware sur fond de page
+  padding: 3px;
+  opacity: 1;
 }
-.box__zoom-close svg { width: 1rem; height: 1rem; }
+
+.box__toolbar--margin .box__btn svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.listing--right .box__toolbar--margin { left: 100%; margin-left: 2px; }
+.listing--left  .box__toolbar--margin { right: 100%; margin-right: 2px; }
+
+@media (max-width: 60rem) {
+  .box__toolbar--margin {
+    position: static;
+    flex-direction: row;
+    justify-content: flex-end;
+    color: var(--listing-fg);
+    background: var(--listing-bg);
+    border: 1px solid var(--rule-strong);
+    border-top: 0;
+    padding: 0 var(--space-2xs);
+  }
+}
+
+// — btn-reveal : la barre et son séparateur restent en place ; seules les
+// icônes apparaissent en fondu au survol/focus du bloc. Toujours visibles en
+// tactile (sinon inatteignables).
+.box__toolbar--btn-reveal .box__btn {
+  opacity: 0;
+  transition: opacity var(--dur-mid) var(--ease-out-quart);
+}
+
+.listing:hover .box__toolbar--btn-reveal .box__btn,
+.listing:focus-within .box__toolbar--btn-reveal .box__btn {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .box__toolbar--btn-reveal .box__btn { opacity: 1; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .box__btn { transition: none; }
   .box__btn:active { transform: none; }
+  .box__toolbar--footer-reveal,
+  .box__toolbar--footer-reveal .box__btn,
+  .box__toolbar--btn-reveal .box__btn { transition: none; }
 }

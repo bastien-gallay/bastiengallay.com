@@ -1,6 +1,6 @@
 {%- set side_class = side | default(value="") -%}
 {%- set has_header = caption or tag -%}
-<figure class="listing{% if side_class %} listing--{{ side_class }}{% endif %}">
+<figure class="listing{% if side_class %} listing--{{ side_class }}{% endif %}"{% if tools %} data-tools="{{ tools }}"{% endif %}>
 {%- if has_header %}
   <figcaption class="listing__header">
     {%- if caption %}<span class="listing__caption">{{ caption | safe }}</span>{%- endif %}
