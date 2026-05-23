@@ -1260,12 +1260,16 @@ p.has-dropcap::first-letter {
   }
 
   // Quand le wrapper est "en mode ancrage", tout dim — sauf actifs.
-  // Trois familles : figures (0.3), marques (0.3), paragraphes (0.55).
-  // Les paragraphes ont une atténuation plus douce parce qu'ils restent
-  // partiellement lisibles : on ne veut pas casser le flow de lecture
-  // si le hover dérape, juste signaler "ce paragraphe-ci ressort".
-  .ecrit-page__content.is-anchoring .visuel:not(.is-active),
-  .ecrit-page__content.is-anchoring .mark--soft:not(.is-active) {
+  // Deux familles d'atténuation : figures (0.3, signal fort), paragraphes
+  // (0.55, plus doux pour ne pas casser le flow si le hover dérape).
+  //
+  // PIÈGE OPACITÉ : on n'applique PAS d'opacité propre aux .mark--soft
+  // non-actives. Elles héritent visuellement de leur parent (paragraphe
+  // à 0.55, ou figure à 0.3 pour le span interne de V5). Cumuler une
+  // opacité sur la marque la ferait rendre à 0.55 * 0.3 ≈ 0.165 — la
+  // marque deviendrait PLUS atténuée que son texte autour, l'inverse
+  // de l'effet voulu.
+  .ecrit-page__content.is-anchoring .visuel:not(.is-active) {
     opacity: 0.3;
   }
   .ecrit-page__content.is-anchoring p {
