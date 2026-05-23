@@ -375,9 +375,15 @@ p.has-dropcap::first-letter {
 //     les borders s'alignent. On bypass aussi le max-width parent
 //     .ecrit-page__content (68ch ≈ 578px) que les définitions débordaient
 //     déjà — on aligne sur leur largeur observée (~47.5rem = 760px à 16px).
+//
+// Pattern : `width: 100% + max-width: 47.5rem` plutôt que `width: 47.5rem`
+// seul. Sur mobile, width: 47.5rem est honoré comme dimension intrinsèque
+// par le grid parent (.ecrit-page sans grid-template-columns explicite),
+// ce qui pousse la track à 760px > viewport → overflow horizontal global.
+// width:100% + max-width laisse le shrink mobile naturel.
 .ecrit-page__content :is(h2#notes-et-references, .footnote-definition) {
-  width: 47.5rem;
-  max-width: 100%;     // safety mobile : descend sous le viewport
+  width: 100%;
+  max-width: 47.5rem;
   box-sizing: border-box;
 }
 
@@ -1208,6 +1214,73 @@ p.has-dropcap::first-letter {
 
   &:hover {
     color: var(--accent) !important;
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Print — feuille minimale pour A4
+// ──────────────────────────────────────────────────────────────────
+// Cible : un lecteur qui imprime l'article pour le lire au calme ou
+// l'annoter à la main. Pas d'optimisation cartouche jusqu'au-boutiste
+// (l'accent rouge reste, c'est la signature) ; on enlève juste le chrome
+// d'écran inutile et on évite les ruptures de page hideuses dans les
+// figures.
+@media print {
+  // Chrome d'interface : pas d'intérêt sur papier.
+  .skip-link,
+  .rail,
+  .colophon,
+  [data-theme-toggle],
+  .theme-toggle,
+  .ecrit-page__back {
+    display: none !important;
+  }
+
+  // Force la palette claire même si l'utilisateur a `data-theme="dark"`
+  // dans son localStorage — un imprimante chargera du noir sur fond
+  // sombre sinon, illisible.
+  :root[data-theme="dark"] {
+    --surface:      oklch(0.992 0.003 60);
+    --surface-sub:  oklch(0.945 0.005 50);
+    --surface-ink:  oklch(0.18  0.014 30);
+    --ink:          oklch(0.18  0.014 30);
+    --ink-soft:     oklch(0.34  0.020 30);
+    --ink-mute:     oklch(0.55  0.018 35);
+    --rule:         oklch(0.78  0.015 40);
+    --rule-strong:  oklch(0.62  0.020 35);
+    --accent:       oklch(0.52  0.205 25);
+    --accent-deep:  oklch(0.44  0.215 25);
+    --accent-soft:  oklch(0.92  0.045 30);
+  }
+
+  body { background: white; }
+
+  // Évite qu'une figure ou une définition se coupe entre deux pages.
+  .visuel,
+  .formules,
+  .footnote-definition,
+  .ecrit-page__content blockquote {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  // Neutralise tout effet de spotlight résiduel (au cas où l'utilisateur
+  // imprime alors qu'un hover est actif).
+  .ecrit-page__content.is-anchoring :is(.visuel, .mark--soft, p) {
+    opacity: 1 !important;
+  }
+
+  // .mark--soft : le jaune passe mal sur imprimante CMJN (saturation
+  // approchée à un beige sale). On garde l'idée d'emphase mais on
+  // bascule en filet sous ligne noir épais — plus sobre print.
+  .mark {
+    background: none !important;
+    border-bottom: 3px solid currentColor;
+    padding: 0;
+  }
+  .mark--soft {
+    text-decoration-color: currentColor !important;
+    text-decoration-thickness: 2px !important;
   }
 }
 
