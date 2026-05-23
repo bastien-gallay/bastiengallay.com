@@ -57,11 +57,43 @@ Voir [`brainstorm/20260513-homepage-oss.md`](brainstorm/20260513-homepage-oss.md
 
 ## Dev local
 
+Les opérations zola courantes passent par un [`justfile`](justfile) :
+
 ```bash
-zola serve
+just serve    # zola serve --drafts --interface 127.0.0.1 sur un port stable, live-reload
+just ping     # vérifie que le serveur répond
+just build    # build de production (sans drafts)
+just check    # vérifie liens internes + contenu (drafts inclus)
+just kill     # arrête le serveur de ce checkout
+just          # liste toutes les recettes
 ```
 
-Sert le site sur `http://127.0.0.1:1111` avec live-reload.
+`just serve` est en `--drafts` par défaut (mode de test local) et choisit un
+**port stable par checkout** : copie principale → `1111`, chaque worktree →
+`1112-1189` dérivé de son chemin (voir [`scripts/zola-port.sh`](scripts/zola-port.sh)).
+Plusieurs checkouts peuvent donc servir en parallèle sans collision de port.
+
+### Config Claude Code (local, non versionné)
+
+Pour que Claude lance ces commandes sans prompt et que `just serve` puisse
+binder son port **dans le sandbox**, ajouter à `.claude/settings.local.json`
+(fichier perso, gitignoré — à recréer sur chaque machine) :
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(just:*)",
+      "Bash(bash scripts/zola-port.sh)",
+      "Bash(lsof -tiTCP:*)",
+      "Bash(pkill -f zola serve)"
+    ]
+  },
+  "sandbox": { "network": { "allowLocalBinding": true } }
+}
+```
+
+`allowLocalBinding` est lu au démarrage — relancer Claude Code après l'avoir ajouté.
 
 ## Prochaines décisions à prendre
 
