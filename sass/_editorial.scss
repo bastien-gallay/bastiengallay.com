@@ -282,6 +282,122 @@ p.has-dropcap::first-letter {
 .ours strong { color: var(--surface-ink); font-weight: 500; }
 
 // ──────────────────────────────────────────────────────────────────
+// Notes et références — footnotes pulldown-cmark stylées éditorial
+// (remplace l'ancien <aside class="ours"> tenu à la main)
+// ──────────────────────────────────────────────────────────────────
+
+// Bordure continue autour de la section : top + gauche + droite sur le H2,
+// gauche + droite sur chaque définition, bottom sur la dernière. L'effet
+// visuel : un cadre OURS recomposé à partir d'éléments siblings.
+.ecrit-page__content h2#notes-et-references {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--ink-mute);
+  border: 1px solid var(--rule-strong);
+  border-bottom: none;
+  padding: var(--space-md) var(--space-lg) var(--space-xs);
+  margin-top: var(--space-xl);
+  margin-bottom: 0;
+  max-width: var(--measure-wide);
+  box-sizing: border-box;
+
+  &::before {
+    content: "▍ ";
+    color: var(--section-color, var(--accent));
+  }
+}
+
+// Bloc d'une définition : grille 2 colonnes — numéro mono + texte.
+.ecrit-page__content .footnote-definition {
+  display: grid;
+  grid-template-columns: 2.2ch 1fr;
+  column-gap: var(--space-xs);
+  align-items: baseline;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--ink-soft);
+  margin: 0;
+  padding: 0.45em var(--space-lg);
+  border-left: 1px solid var(--rule-strong);
+  border-right: 1px solid var(--rule-strong);
+  max-width: var(--measure-wide);
+  box-sizing: border-box;
+  // Réserve l'espace lorsqu'on saute via #N — évite l'effet "ancre coincée
+  // tout en haut du viewport" en mobile et le décrochage perçu sur desktop.
+  scroll-margin-top: var(--space-xl);
+
+  &:last-child {
+    border-bottom: 1px solid var(--rule-strong);
+    padding-bottom: var(--space-md);
+  }
+}
+
+.ecrit-page__content .footnote-definition p {
+  margin: 0;
+  max-width: none;
+  grid-column: 2;
+}
+
+.ecrit-page__content .footnote-definition-label {
+  position: static;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--ink-mute);
+  grid-column: 1;
+  line-height: inherit;
+  top: 0;
+  vertical-align: baseline;
+}
+
+// Appel de note dans le corps : petit chiffre accent, sans soulignement.
+.ecrit-page__content .footnote-reference {
+  font-family: var(--font-mono);
+  font-size: 0.75em;
+  vertical-align: super;
+  line-height: 0;
+  margin-left: 0.15em;
+
+  a {
+    color: var(--accent) !important;
+    text-decoration: none !important;
+
+    &:hover {
+      color: var(--accent-deep) !important;
+      text-decoration: underline !important;
+      text-decoration-thickness: 1px !important;
+      text-underline-offset: 0.18em;
+    }
+  }
+}
+
+// Cible scrollée : flash accent discret quand on saute via #N.
+.ecrit-page__content .footnote-definition:target {
+  background: color-mix(in oklch, var(--accent) 8%, transparent);
+  outline: 1px solid var(--accent);
+  outline-offset: 0.3em;
+  transition: background var(--dur-slow) var(--ease-out-quart),
+              outline-color var(--dur-slow) var(--ease-out-quart);
+}
+
+// Back-link injecté par footnotes.js — petite flèche accent.
+.footnote-backref {
+  display: inline-block;
+  margin-left: 0.5em;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-mute);
+  text-decoration: none !important;
+
+  &:hover {
+    color: var(--accent) !important;
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────
 // Mark — emphase yellow style poster, deux variants
 // .mark : fond yellow plein, signature forte, pour titres et passages-clés
 // .mark--soft : underline yellow 3px, discrète, pour prose courante
