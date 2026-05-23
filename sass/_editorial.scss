@@ -1255,13 +1255,55 @@ p.has-dropcap::first-letter {
 
   body { background: white; }
 
-  // Évite qu'une figure ou une définition se coupe entre deux pages.
+  // Évite qu'une figure ou un encart se coupe entre deux pages.
+  // Belt-and-braces : on pose le `break-inside: avoid` sur chaque encart
+  // ET sur ses enfants directs, parce que certains moteurs ignorent la
+  // règle quand l'élément est lui-même grand ; protéger les sous-blocs
+  // (band, table, incidents, caption) augmente les chances que le moteur
+  // garde l'ensemble cohérent.
+  // Modern (`break-inside`) + legacy (`page-break-inside`) : Firefox et
+  // Safari ancien font encore meilleur ménage avec le legacy.
   .visuel,
+  .visuel__band,
+  .visuel__title,
+  .visuel__legend,
+  .visuel__svg,
+  .visuel__incidents,
+  .visuel__incident,
+  .visuel__quote,
+  .visuel__table,
+  .visuel__caption,
   .formules,
+  .formules__row,
   .footnote-definition,
   .ecrit-page__content blockquote {
     break-inside: avoid;
     page-break-inside: avoid;
+  }
+
+  // Titres : ne pas laisser un h2/h3 orphelin en bas de page (la section
+  // démarrerait sur la page suivante en laissant juste son titre).
+  // `break-after: avoid` colle le titre à la prose qui suit.
+  .ecrit-page__content :is(h2, h3, h4) {
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+  }
+
+  // OURS : h2#notes-et-references doit rester collé à la 1re définition
+  // (sinon la bordure haute orpheline pendouille en bas de page sans
+  // contenu). Idem .footnote-definition isolée → on évite la coupure.
+  .ecrit-page__content h2#notes-et-references {
+    break-after: avoid-page;
+    page-break-after: avoid;
+  }
+
+  // Veuves et orphelines : pas moins de 3 lignes en bas ni en haut de page.
+  // Évite "Avant…" tout seul en bas, ou "…la dette technique." tout seul
+  // en haut de la page suivante.
+  p, li, blockquote {
+    orphans: 3;
+    widows: 3;
   }
 
   // Neutralise tout effet de spotlight résiduel (au cas où l'utilisateur
