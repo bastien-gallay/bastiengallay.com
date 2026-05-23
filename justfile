@@ -2,7 +2,8 @@
 #
 # Convention figée d'après les sessions réelles :
 #   - serve TOUJOURS en --drafts (mode de test local par défaut)
-#   - --interface 127.0.0.1 systématique
+#   - --interface 127.0.0.1 par défaut (`serve`) ; exposition LAN seulement
+#     via `serve-lan`, opt-in explicite
 #   - port stable par worktree (voir scripts/zola-port.sh)
 #
 # `just` (sans argument) liste les recettes.
@@ -16,6 +17,9 @@ set shell := ["bash", "-uc"]
 # Port stable de CE checkout (copie principale = 1111, worktree = 1112..1189)
 port := `bash scripts/zola-port.sh`
 
+# IP LAN de cette machine (interface Wi-Fi en0), pour `serve-lan`
+lan_ip := `ipconfig getifaddr en0 2>/dev/null || echo 127.0.0.1`
+
 # Liste les recettes disponibles
 default:
     @just --list --unsorted
@@ -27,6 +31,14 @@ port:
 # Sert le site en local avec drafts (tue d'abord un éventuel serveur sur ce port)
 serve *ARGS: kill
     zola serve --drafts --interface 127.0.0.1 --port {{port}} {{ARGS}}
+
+# Attention : écoute sur 0.0.0.0 et expose les DRAFTS à tout le LAN.
+# --base-url = IP LAN, sinon le live-reload pointe vers 127.0.0.1 et casse.
+
+# Sert sur le RÉSEAU LOCAL (téléphone, autre poste) — opt-in explicite
+serve-lan *ARGS: kill
+    @echo "→ http://{{lan_ip}}:{{port}} (drafts exposés sur le réseau local)"
+    zola serve --drafts --interface 0.0.0.0 --port {{port}} --base-url {{lan_ip}} {{ARGS}}
 
 # Vérifie que le serveur de CE port répond (à lancer après `just serve` en arrière-plan)
 ping:
