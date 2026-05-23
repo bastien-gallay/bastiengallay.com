@@ -168,3 +168,73 @@
     margin-inline: 0;
   }
 }
+
+// ──────────────────────────────────────────────────────────────────
+// Barre d'outils partagée — injectée par copy-code.js sur les blocs de
+// code (listings + fenced). Forward-compat : taille / zoom rejoindront
+// cette même barre. Voir PRODUCT.md § Pattern aside.
+// ──────────────────────────────────────────────────────────────────
+
+// Bouton icône carré, foreground clair (header de code toujours sombre).
+.box__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--space-sm);
+  color: var(--listing-fg, currentColor);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity var(--dur-fast) var(--ease-out-quart),
+              background var(--dur-fast) var(--ease-out-quart),
+              color var(--dur-fast) var(--ease-out-quart);
+}
+
+.box__btn svg {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+
+.box__btn:hover {
+  opacity: 1;
+  background: color-mix(in oklch, currentColor 14%, transparent);
+}
+
+.box__btn:focus-visible {
+  opacity: 1;
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.box__btn:active { transform: translateY(1px); }
+
+// Feedback de copie réussie : coche en vert sémantique.
+.box__btn--done {
+  opacity: 1;
+  color: var(--c-success);
+}
+
+// Dans le header coloré : le bouton est un item flex en bout de rangée,
+// étiré sur la hauteur du header pour s'aligner caption / tag.
+.listing__header .box__btn {
+  align-self: stretch;
+}
+
+// Repli sans header : overlay en haut-droite de la figure (ne défile pas,
+// la figure n'est pas le conteneur de scroll — c'est le <pre> qui l'est).
+.box--has-tools { position: relative; }
+
+.box__tools {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .box__btn { transition: none; }
+  .box__btn:active { transform: none; }
+}
