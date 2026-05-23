@@ -1254,14 +1254,28 @@ p.has-dropcap::first-letter {
 
 @media (hover: hover) and (pointer: fine) and (min-width: 60rem) {
   .ecrit-page__content .visuel,
-  .ecrit-page__content .mark--soft {
+  .ecrit-page__content .mark--soft,
+  .ecrit-page__content p {
     transition: opacity var(--dur-mid) var(--ease-out-quart);
   }
 
   // Quand le wrapper est "en mode ancrage", tout dim — sauf actifs.
+  // Trois familles : figures (0.3), marques (0.3), paragraphes (0.55).
+  // Les paragraphes ont une atténuation plus douce parce qu'ils restent
+  // partiellement lisibles : on ne veut pas casser le flow de lecture
+  // si le hover dérape, juste signaler "ce paragraphe-ci ressort".
   .ecrit-page__content.is-anchoring .visuel:not(.is-active),
   .ecrit-page__content.is-anchoring .mark--soft:not(.is-active) {
     opacity: 0.3;
+  }
+  .ecrit-page__content.is-anchoring p {
+    opacity: 0.55;
+  }
+  // Le paragraphe contenant la marque active reste à pleine opacité —
+  // c'est le "spotlight" demandé : la phrase ET son enveloppe textuelle
+  // restent nettes pendant que le reste s'estompe.
+  .ecrit-page__content.is-anchoring p:has(.mark--soft.is-active) {
+    opacity: 1;
   }
 
   // Les actifs gardent la pleine opacité (et un léger soulignement

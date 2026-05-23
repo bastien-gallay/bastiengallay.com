@@ -147,6 +147,16 @@
   .ecrit-page__content > h2,
   .ecrit-page__content > h3,
   .ecrit-page__content > hr { clear: right; }
+
+  // Deux figures en marge dans la même section : si la prose entre les
+  // deux est plus courte que la hauteur de la première figure, la
+  // seconde flotte par-dessus (collision Fig 3 GitClear ↔ Fig 4 quote
+  // dans la section "La dette technique" — peu de prose intercalée).
+  // `~` couvre tout cas de figure-sœur sous le même parent ; idempotent
+  // quand un h2/h3/hr a déjà cleared entre les deux.
+  .ecrit-page__content > .visuel--side ~ .visuel--side {
+    clear: right;
+  }
 }
 
 // Sous 60rem : la figure redevient un bloc inline pleine mesure.
