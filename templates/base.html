@@ -32,7 +32,7 @@
   <meta name="theme-color" content="#1a1411" media="(prefers-color-scheme: dark)">
 </head>
 <body>
-  <a href="#main" class="sr-only">Aller au contenu</a>
+  <a href="#main" class="skip-link">Aller au contenu</a>
 
   <div class="shell">
     <header class="rail" aria-label="Navigation principale" data-rail>
@@ -44,8 +44,9 @@
         </span>
       </a>
 
-      {# Rail-marquepage : numéros §NN seuls, libellé révélé en flyout au hover. #}
-      {# Le sommaire complet vit dans le hero ; le rail sert de position dans la pochette. #}
+      {# Rail-marquepage : §NN + libellé. Les liens --route (§04/§05) portent #}
+      {# un « → » indiquant qu'ils mènent à une page dédiée, là où les autres #}
+      {# défilent dans la page. Le « ↗ » du colophon reste réservé à l'externe. #}
       <nav class="rail__nav" aria-label="Sections">
         <a class="rail__link numeric" href="{{ config.base_url | safe }}/#intro" title="Intro" style="--link-color: var(--c-problem); --link-shadow: var(--c-info);">
           <span class="rail__link-num">§01</span>
@@ -59,11 +60,11 @@
           <span class="rail__link-num">§03</span>
           <span class="rail__link-label">Familles</span>
         </a>
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/ecrits/" title="Écrits récents" style="--link-color: var(--c-success); --link-shadow: var(--c-info);">
+        <a class="rail__link numeric rail__link--route" href="{{ config.base_url | safe }}/ecrits/" title="Écrits récents — page dédiée"{% if current_path and current_path is starting_with("/ecrits") %} aria-current="page"{% endif %} style="--link-color: var(--c-success); --link-shadow: var(--c-info);">
           <span class="rail__link-num">§04</span>
           <span class="rail__link-label">Écrits</span>
         </a>
-        <a class="rail__link numeric" href="{{ config.base_url | safe }}/now/" title="Maintenant" style="--link-color: var(--c-chrome); --link-shadow: var(--c-problem);">
+        <a class="rail__link numeric rail__link--route" href="{{ config.base_url | safe }}/now/" title="Maintenant — page dédiée"{% if current_path and current_path is starting_with("/now") %} aria-current="page"{% endif %} style="--link-color: var(--c-chrome); --link-shadow: var(--c-problem);">
           <span class="rail__link-num">§05</span>
           <span class="rail__link-label">Now</span>
         </a>
