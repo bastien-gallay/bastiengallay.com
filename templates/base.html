@@ -123,5 +123,11 @@
 
   <script src="{{ get_url(path='theme.js') | safe }}" defer></script>
   <script src="{{ get_url(path='listing-tools.js') | safe }}" defer></script>
+
+  {%- if config.base_url is starting_with("https://bastiengallay.com") %}
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "3d846fd112cb4c71b090b57a2bd3aadf"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+  {%- endif %}
 </body>
 </html>
