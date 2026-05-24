@@ -22,15 +22,37 @@
   <ol class="ecrits__list" aria-label="Liste des écrits">
     {% for page in section.pages %}
     <li class="ecrit">
-      <p class="ecrit__date">
-        <time datetime="{{ page.date }}">{{ page.date | date(format='%-d %B %Y', locale='fr_FR') }}</time>
-      </p>
-      <h2 class="ecrit__title">
-        <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
-      </h2>
-      {% if page.description %}
-      <p class="ecrit__desc">{{ page.description }}</p>
-      {% endif %}
+      {#- Miniature à gauche du bloc texte (style chronique presse).
+          Si `extra.cover` (chemin image) est défini dans le frontmatter
+          de l'article, on génère un WebP 360x240 via resize_image (servi
+          à 180x120 logiques = 2x retina). Sinon, placeholder typographique
+          qui préserve les dimensions et l'alignement de la liste.
+          Le placeholder affiche le numéro d'article (§XX.YY) — défaut
+          "01.10" en draft ; obligatoire en publication (cf. scripts/
+          check-numeros.py + pre-commit + CI). -#}
+      {%- if page.extra.cover -%}
+        {%- set cover = resize_image(path=page.extra.cover, width=360, height=240, op="fill", format="webp") -%}
+        <img class="ecrit__cover"
+             src="{{ cover.url | safe }}"
+             alt="{{ page.extra.cover_alt | default(value='') }}"
+             width="180" height="120"
+             loading="lazy" decoding="async">
+      {%- else -%}
+        <p class="ecrit__cover ecrit__cover--placeholder" aria-hidden="true">
+          <span class="ecrit__cover-num">{{ page.extra.numero | default(value="01.10") }}</span>
+        </p>
+      {%- endif %}
+      <div class="ecrit__body">
+        <p class="ecrit__date">
+          <time datetime="{{ page.date }}">{{ page.date | date(format='%-d %B %Y', locale='fr_FR') }}</time>
+        </p>
+        <h2 class="ecrit__title">
+          <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+        </h2>
+        {% if page.description %}
+        <p class="ecrit__desc">{{ page.description }}</p>
+        {% endif %}
+      </div>
     </li>
     {% endfor %}
   </ol>

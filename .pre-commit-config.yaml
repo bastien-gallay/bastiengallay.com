@@ -1,0 +1,21 @@
+# Pre-commit hooks pour bastiengallay.com.
+#
+# Installation locale (à faire UNE fois par clone) :
+#   uvx pre-commit install
+#
+# Lancement manuel sur le repo entier :
+#   uvx pre-commit run --all-files
+#
+# Les hooks sont aussi rejoués en CI (.github/workflows/deploy.yml) comme
+# filet de sécurité — pre-commit local n'est jamais garanti d'avoir tourné.
+
+repos:
+  # Validateur §XX.YY sur les articles publiés (cf. brainstorm 2026-05-24).
+  - repo: local
+    hooks:
+      - id: check-numeros
+        name: check article §XX.YY numbering (published only)
+        entry: uv run scripts/check-numeros.py
+        language: system
+        files: ^content/ecrits/.*\.md$
+        pass_filenames: true

@@ -5,6 +5,7 @@ description = "Pourquoi le discours dominant sur la productivité IA mesure ce q
 draft = true
 
 [extra]
+numero = "01.20"
 heading_html = "Avec l'IA, je code plus <mark class=\"mark\">lentement</mark>"
 signature_bio = "fabrique des outils OSS pour penser, écrire et coder comme une seule discipline."
 series = "coder-avec-l-ia"
