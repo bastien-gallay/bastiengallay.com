@@ -350,19 +350,24 @@
     font-family: var(--font-mono);
     font-size: var(--text-2xl);
     font-weight: 500;
-    letter-spacing: 0.06em;
+    // letter-spacing 0 : le mono est déjà avance-fixe, ajouter du tracking
+    // ferait lire le numero comme une chaîne de glyphes isolés au lieu d'un
+    // nombre. Cf. critique /critique du 2026-05-24.
+    letter-spacing: 0;
     color: var(--ink-soft);
     font-variant-numeric: tabular-nums lining-nums;
     line-height: 1;
 
-    // Préfixe § en accent pour rimer avec l'issue-bar de l'article.
-    // Le numero (XX.YY) est imprimé tel quel par le template — le §
-    // n'est qu'une marque typographique, pas un préfixe d'ID.
+    // § = marque typographique d'imprimeur, pas un préfixe d'ID. Posée
+    // en super (près du cap-height) plutôt qu'en baseline — sinon elle
+    // flotte bas-gauche du 0, accroupie. 0.55em pour qu'elle reste une
+    // marque (et non un caractère qui rivalise avec le num en surface).
     &::before {
       content: "§";
       color: var(--accent);
-      font-size: 0.7em;
-      margin-inline-end: 0.05em;
+      font-size: 0.55em;
+      margin-inline-end: 0.2em;
+      vertical-align: super;
     }
   }
 
