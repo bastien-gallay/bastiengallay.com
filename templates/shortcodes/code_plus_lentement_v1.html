@@ -1,0 +1,101 @@
+{%- import "macros/visuel.html" as visuel -%}
+{#-
+  V1 — Perception vs Réalité (étude METR 2025) · article "Avec l'IA, je code plus lentement".
+  Trois barres horizontales depuis un axe 0 %. Les deux premières (prédit,
+  perçu) vont à droite ; la troisième (mesuré) part à gauche — l'écart
+  visuel entre prévision et réalité est le punchline.
+  Source : METR Becker 2025 [^3].
+
+  Données :
+    catégorie                 ·  valeur
+    prédit (avant l'étude)    ·  +24 %
+    perçu (après l'étude)     ·  +20 %
+    mesuré (réellement)       ·  −19 %    ← bar inverse
+
+  Espace de tracé (viewBox 600x420) :
+    axe 0 % à x=335 (échelle 9 px par point de %, range −25 à +30)
+    catégories à gauche (anchor=start à x=20), valeurs en bout de barre.
+
+  Chrome (figure / band / title / caption) externalisé dans la macro
+  `macros/visuel.html#frame_start` + `#frame_end`. Ne reste ici que
+  le SVG (données endémiques) et les textes de title/caption.
+
+  Usage :
+    {{ code_plus_lentement_v1() }}
+-#}
+{%- set pos = pos | default(value="side") -%}
+
+{{ visuel::frame_start(
+    num="2",
+    tag="Perception ≠ réalité",
+    title_html='Perçu <span class="visuel__title-vs">vs</span> mesuré',
+    pos=pos,
+    title_id="v1-title",
+    desc_id="v1-desc"
+) }}
+
+  <svg
+    class="visuel__svg"
+    viewBox="0 0 600 420"
+    role="img"
+    preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <title id="v1-title">Écart entre gain de temps prédit, perçu et mesuré par l'étude METR.</title>
+    <desc id="v1-desc">
+      Les développeurs prédisaient +24 % de gain de temps avant l'étude,
+      le percevaient à +20 % après. La mesure objective révèle un coût
+      de −19 %. Écart total : 39 points entre perception et réalité.
+    </desc>
+
+    {#- Ligne d'axe 0 % (verticale, accent) -#}
+    <line class="visuel__axis-zero" x1="335" y1="50" x2="335" y2="305" />
+    {#- Label "0 %" déplacé au-dessus de l'axe pour laisser la place au
+        pill d'écart (qui couvre x=164→515, y=336→370). -#}
+    <text class="visuel__axis-zero-label" x="335" y="42" text-anchor="middle">0&#160;%</text>
+
+    {#- Bar 1 : prédit +24 % (accent plein) -#}
+    <g aria-hidden="true">
+      <text class="visuel__bar-cat" x="20" y="98" text-anchor="start">prédit</text>
+      <text class="visuel__bar-meta" x="20" y="120" text-anchor="start">(avant l'étude)</text>
+      <rect class="visuel__bar visuel__bar--positive" x="335" y="78" width="216" height="42" />
+      <text class="visuel__bar-value" x="557" y="105" text-anchor="start">+24&#160;%</text>
+    </g>
+
+    {#- Bar 2 : perçu +20 % (accent translucide) -#}
+    <g aria-hidden="true">
+      <text class="visuel__bar-cat" x="20" y="178" text-anchor="start">perçu</text>
+      <text class="visuel__bar-meta" x="20" y="200" text-anchor="start">(après l'étude)</text>
+      <rect class="visuel__bar visuel__bar--positive-soft" x="335" y="158" width="180" height="42" />
+      <text class="visuel__bar-value" x="521" y="185" text-anchor="start">+20&#160;%</text>
+    </g>
+
+    {#- Bar 3 : mesuré -19 % (accent-deep, vers la gauche depuis 0).
+        Valeur à l'intérieur (règle : valeurs dehors par défaut, dedans
+        uniquement quand pas de place dehors). -#}
+    <g aria-hidden="true">
+      <text class="visuel__bar-cat" x="20" y="258" text-anchor="start">mesuré</text>
+      <text class="visuel__bar-meta" x="20" y="280" text-anchor="start">(en réalité)</text>
+      <rect class="visuel__bar visuel__bar--negative" x="164" y="238" width="171" height="42" />
+      <text class="visuel__bar-value visuel__bar-value--inside" x="329" y="265" text-anchor="end">−19&#160;%</text>
+    </g>
+
+    {#- Annotation d'écart perçu↔mesuré (= 39 points, cohérent article).
+        Tick ENTRE gauche barre négative (x=164) et droite barre perçue
+        (x=515). Pill couvre EXACTEMENT le même span pour aligner la
+        "barre d'écart" avec les extrêmes des barres mesurées. -#}
+    <g aria-hidden="true">
+      <line class="visuel__gap-tick" x1="164" y1="320" x2="515" y2="320" />
+      <line class="visuel__gap-tick" x1="164" y1="313" x2="164" y2="327" />
+      <line class="visuel__gap-tick" x1="515" y1="313" x2="515" y2="327" />
+      <rect class="visuel__cross-pill" x="164" y="336" width="351" height="34" rx="0" />
+      <text class="visuel__cross-label" x="339.5" y="358" text-anchor="middle">
+        écart&#160;: 39&#160;pts
+      </text>
+    </g>
+  </svg>
+
+{{ visuel::frame_end(
+    caption_text_html="Avant l'étude, les développeurs prédisaient un gain. Après, ils en percevaient un. La mesure révèle un coût. L'écart perception-réalité dépasse les 39 points.",
+    caption_source_html='Source : Becker et&#160;al., METR&#160;2025, arXiv:2507.09089, n.&#160;<sup class="footnote-reference"><a href="#3">3</a></sup>.'
+) }}

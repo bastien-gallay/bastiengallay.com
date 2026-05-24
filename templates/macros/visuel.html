@@ -1,0 +1,70 @@
+{#-
+  Macros chrome pour les figures éditoriales (.visuel--chart).
+
+  Extrait après la "règle de 3" : V1 METR, V2 Faros, V3 GitClear avaient
+  toutes la même enveloppe (figure / band / title / [legend] / SVG /
+  caption). On garde uniquement le SVG et les données spécifiques dans
+  chaque shortcode `code_<slug>_v<n>.html` ; la signature visuelle vit ici.
+
+  Pourquoi deux macros (frame_start / frame_end) plutôt qu'une avec body :
+  Tera 1.x n'a pas de bloc "caller" comme Jinja2. Le pattern start/end
+  laisse le SVG en clair dans le shortcode (lisible, modifiable sans
+  passer par un argument multi-ligne échappé).
+
+  Usage :
+    {% import "macros/visuel.html" as visuel %}
+
+    {{ visuel::frame_start(
+         num="V1",
+         tag="Perception ≠ réalité",
+         title_html="Gain de temps perçu <br/>...",
+         pos="side",
+         title_id="v1-title",
+         desc_id="v1-desc"
+    ) }}
+
+      <svg ...>...</svg>
+
+    {{ visuel::frame_end(
+         caption_text_html="...",
+         caption_source_html="..."
+    ) }}
+
+  Legend (V3 only pour l'instant) : passer `legend_html` à frame_start.
+-#}
+
+{# `variant` (défaut "chart") permet d'utiliser le chrome avec d'autres
+   types de figure (V4 incidents, V6 table, …). Génère `.visuel--{variant}`. #}
+{% macro frame_start(num, tag, title_html, pos="side", title_id, desc_id, legend_html="", variant="chart") %}
+<figure class="visuel visuel--{{ variant }} visuel--{{ pos }}" data-anchor="fig-{{ num }}" role="figure" aria-labelledby="{{ title_id }} {{ desc_id }}">
+  <header class="visuel__band">
+    <span class="visuel__band-mark" aria-hidden="true">▍</span>
+    <span class="visuel__band-num">Figure {{ num }}</span>
+    <span class="visuel__band-tag">{{ tag }}</span>
+  </header>
+
+{% if title_html %}
+  <p class="visuel__title">{{ title_html | safe }}</p>
+{% endif %}
+{% if legend_html %}
+  {{ legend_html | safe }}
+{% endif %}
+{% endmacro frame_start %}
+
+
+{% macro frame_end(caption_text_html="", caption_source_html="") %}
+  {# Pas de <figcaption> émise si rien à dire : éviter le wrapper vide.
+     Cas usage : figure perso (Fig 1 cas zéro) qui n'a ni texte de lift
+     éditorial ni source externe — la prose porte tout. #}
+  {% if caption_text_html or caption_source_html %}
+  <figcaption class="visuel__caption">
+    {% if caption_text_html %}
+    <span class="visuel__caption-text">{{ caption_text_html | safe }}</span>
+    {% endif %}
+    {% if caption_source_html %}
+    <span class="visuel__caption-source">{{ caption_source_html | safe }}</span>
+    {% endif %}
+  </figcaption>
+  {% endif %}
+</figure>
+{% endmacro frame_end %}

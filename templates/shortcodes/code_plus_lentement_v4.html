@@ -1,0 +1,65 @@
+{%- import "macros/visuel.html" as visuel -%}
+{#-
+  V4 — Fiches incident 2025-2026 · article "Avec l'IA, je code plus lentement".
+  Deux cartes empilées dans la marge (pas un chart) : chaque carte = une
+  faille emblématique du trade-off vitesse↔sécurité de l'IA générative.
+
+  Cartes :
+    1. CVE-2025-48757 / Lovable — schémas DB sans row-level security
+       Impact : +170 apps exposées
+    2. Moltbook (faille 2026) — endpoints API sans contrôle d'autorisation
+       Impact : 1,5 M tokens leakés
+
+  Source : Vibe Coder Blog 2026 [^8] (+ NVD pour CVE).
+
+  Pattern KPI "pull-stat" : grand chiffre display + libellé court mono.
+  Cohérent avec la typo de l'article (Redaction display + Geist body).
+
+  Chrome (frame_start / frame_end) via macros/visuel.html, avec
+  variant="incidents" pour la classe modifier .visuel--incidents.
+
+  Usage :
+    {{ code_plus_lentement_v4() }}
+-#}
+{%- set pos = pos | default(value="side") -%}
+
+{{ visuel::frame_start(
+    num="6",
+    tag="Failles emblématiques",
+    title_html="Deux fuites <br/>en 2025-2026",
+    pos=pos,
+    title_id="v4-title",
+    desc_id="v4-desc",
+    variant="incidents"
+) }}
+
+  <p id="v4-title" class="sr-only">Deux incidents 2025-2026 emblématiques du trade-off vitesse↔sécurité de l'IA générative.</p>
+  <p id="v4-desc" class="sr-only">Lovable, faille CVE-2025-48757 : schémas de base de données générés sans politique de sécurité au niveau ligne, plus de 170 applications en production exposées. Moltbook, faille 2026 : endpoints API générés sans contrôle d'autorisation, 1,5 million de tokens d'authentification leakés.</p>
+
+  <ul class="visuel__incidents" role="list">
+    <li class="visuel__incident">
+      <p class="visuel__incident-ref">
+        <a href="https://nvd.nist.gov/vuln/detail/CVE-2025-48757">CVE-2025-48757</a>
+      </p>
+      <h3 class="visuel__incident-target">Lovable</h3>
+      <p class="visuel__incident-fault">schémas DB générés sans <em>row-level security</em></p>
+      <p class="visuel__incident-kpi">
+        <span class="visuel__kpi-num">+170</span>
+        <span class="visuel__kpi-unit">apps exposées en prod</span>
+      </p>
+    </li>
+    <li class="visuel__incident">
+      <p class="visuel__incident-ref">incident · 2026</p>
+      <h3 class="visuel__incident-target">Moltbook</h3>
+      <p class="visuel__incident-fault">endpoints API générés sans contrôle d'autorisation</p>
+      <p class="visuel__incident-kpi">
+        <span class="visuel__kpi-num">1,5&#160;M</span>
+        <span class="visuel__kpi-unit">tokens d'auth leakés</span>
+      </p>
+    </li>
+  </ul>
+
+{{ visuel::frame_end(
+    caption_text_html="Deux fuites de 2025-2026 emblématiques du trade-off de l'IA générative&#160;: ce qui se génère vite se relit mal, et la vérification de sécurité passe en file d'attente.",
+    caption_source_html='Source&#160;: Vibe Coder Blog, <em>Security Researchers Sound the Alarm on AI Code Vulnerabilities</em>, n.&#160;<sup class="footnote-reference"><a href="#8">8</a></sup>.'
+) }}

@@ -1,0 +1,118 @@
+{%- import "macros/visuel.html" as visuel -%}
+{#-
+  V3 — L'inversion 2020-2024 (GitClear) · article "Avec l'IA, je code plus lentement".
+  Deux polylines croisées : part de copy-paste (ascendante, accent)
+  contre part de refactoring (descendante, neutre) dans le code livré.
+  Source : GitClear AI Copilot Code Quality 2025 [^5].
+
+  Données :
+    année · copy-paste · refactoring
+    2020  ·  8,3 %     · 24,1 %
+    2021  ·  9,5 %     · 19,0 %
+    2022  · 10,5 %     · 14,5 %
+    2023  · 11,5 %     · 11,5 %    ← crossover
+    2024  · 12,3 %     ·  9,5 %
+
+  Espace de tracé (viewBox 600x420) :
+    margin left 80 · right 20 · top 40 · bottom 60
+    x : 2020→x=80, 2024→x=580 (step 125)
+    y : 0%→y=360, 30%→y=40 (échelle 10.67 / %)
+    Margin gauche 80 (vs 60) laisse la place aux labels Y "22,5 %".
+
+  Chrome externalisé dans macros/visuel.html. La légende des courbes est
+  injectée via le paramètre `legend_html` de frame_start (V3 est le seul
+  cas avec légende dans la règle de 3 — gardé optionnel dans la macro).
+
+  Usage :
+    {{ code_plus_lentement_v3() }}
+-#}
+{#- Variante de placement : "side" (défaut, marge sticky ai-2027),
+    "inline" (centré pleine prose, à utiliser pour figures peu réductibles).
+    NOTE renumérotation : "V3" est l'identifiant de travail ; à la
+    publication, remplacer par "Fig. 3". -#}
+{%- set pos = pos | default(value="side") -%}
+{#- Légende inline : Zola/Tera dans les shortcodes ne supporte pas le
+    bloc `{% set var %}...{% endset %}` (capture), donc on passe le HTML
+    directement en string. Outer double-quote, inner single-quote pour
+    les attributs HTML (HTML accepte les deux). -#}
+{%- set legend = "<ul class='visuel__legend' aria-label='Légende des courbes'><li class='visuel__legend-item'><span class='visuel__swatch visuel__swatch--copypaste' aria-hidden='true'></span><span class='visuel__legend-label'>copy-paste</span><span class='visuel__legend-delta'>+4&nbsp;pts</span></li><li class='visuel__legend-item'><span class='visuel__swatch visuel__swatch--refactor' aria-hidden='true'></span><span class='visuel__legend-label'>refactoring</span><span class='visuel__legend-delta'>−14,6&nbsp;pts</span></li></ul>" -%}
+
+{{ visuel::frame_start(
+    num="4",
+    tag="Code comme dette",
+    title_html="Copy-paste <span class='visuel__title-vs'>vs</span> Refactoring <br/> 2020 → 2024",
+    pos=pos,
+    title_id="v3-title",
+    desc_id="v3-desc",
+    legend_html=legend
+) }}
+
+  <svg
+    class="visuel__svg"
+    viewBox="0 0 600 420"
+    role="img"
+    preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <title id="v3-title">Part du copy-paste et part du refactoring dans le code livré, 2020-2024.</title>
+    <desc id="v3-desc">
+      Deux courbes : la part de copy-paste passe de 8,3 % en 2020 à 12,3 % en 2024.
+      La part de refactoring chute de 24,1 % à 9,5 % sur la même période. Les deux
+      courbes se croisent en 2023, autour de 11,5 %.
+    </desc>
+
+    {#- Graduation horizontale (5 niveaux : 0, 7.5, 15, 22.5, 30 %) -#}
+    <g class="visuel__grid" aria-hidden="true">
+      <line x1="80"  y1="360" x2="580" y2="360" />
+      <line x1="80"  y1="280" x2="580" y2="280" />
+      <line x1="80"  y1="200" x2="580" y2="200" />
+      <line x1="80"  y1="120" x2="580" y2="120" />
+      <line x1="80"  y1="40"  x2="580" y2="40"  />
+    </g>
+
+    {#- Axe Y : labels en % (text-anchor end, à x=72 → max 70vb à gauche) -#}
+    <g class="visuel__axis-label visuel__axis-label--y" aria-hidden="true">
+      <text x="72" y="364" text-anchor="end">0&#160;%</text>
+      <text x="72" y="284" text-anchor="end">7,5&#160;%</text>
+      <text x="72" y="204" text-anchor="end">15&#160;%</text>
+      <text x="72" y="124" text-anchor="end">22,5&#160;%</text>
+      <text x="72" y="44"  text-anchor="end">30&#160;%</text>
+    </g>
+
+    {#- Axe X : années (step 125 : 80, 205, 330, 455, 580) -#}
+    <g class="visuel__axis-label visuel__axis-label--x" aria-hidden="true">
+      <text x="80"  y="385" text-anchor="middle">2020</text>
+      <text x="205" y="385" text-anchor="middle">2021</text>
+      <text x="330" y="385" text-anchor="middle">2022</text>
+      <text x="455" y="385" text-anchor="middle">2023</text>
+      <text x="580" y="385" text-anchor="middle">2024</text>
+    </g>
+
+    {#- Refactoring : descendant (neutre, trait épais en pointillé) -#}
+    <polyline
+      class="visuel__line visuel__line--refactor"
+      points="80,103 205,158 330,205 455,237 580,259"
+    />
+    {#- Copy-paste : ascendant (accent rouge, trait plein) -#}
+    <polyline
+      class="visuel__line visuel__line--copypaste"
+      points="80,272 205,259 330,248 455,237 580,229"
+    />
+
+    {#- Marqueur de crossover en 2023 — pill élargi à 220vb pour caser
+        "crossover 2023" à font-size 22vb (≈11px visuels en --side). -#}
+    <g aria-hidden="true">
+      <line class="visuel__cross-tick" x1="455" y1="237" x2="455" y2="178" />
+      <rect class="visuel__cross-pill" x="345" y="148" width="220" height="36" rx="0" />
+      <text class="visuel__cross-label" x="455" y="170" text-anchor="middle">
+        crossover 2023
+      </text>
+      <circle class="visuel__cross" cx="455" cy="237" r="7" />
+    </g>
+
+  </svg>
+
+{{ visuel::frame_end(
+    caption_text_html="Le code se duplique plus vite qu'il ne se range : la part de copy-paste croît, celle de refactoring chute, et les deux se croisent en 2023.",
+    caption_source_html='Source : GitClear, <em>AI Copilot Code Quality 2025</em>, n.&#160;<sup class="footnote-reference"><a href="#5">5</a></sup>.'
+) }}

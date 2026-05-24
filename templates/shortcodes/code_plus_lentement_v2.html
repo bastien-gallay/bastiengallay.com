@@ -1,0 +1,100 @@
+{%- import "macros/visuel.html" as visuel -%}
+{#-
+  V2 — File d'attente Faros (étude Faros AI 2025) · article "Avec l'IA, je code plus lentement".
+  Trois barres horizontales depuis l'axe gauche x=200 (= 0 %). Toutes
+  positives, échelle commune 0→100 %. Progression visuelle = punchline :
+  individus (+21 %) << revue (+91 %) ≈ équipes (+98 %).
+  Source : Faros AI 2025 [^4].
+
+  Données :
+    catégorie                · valeur
+    individus (tâches)       · +21 %
+    revue (temps)            · +91 %
+    équipes (PR créées)      · +98 %
+
+  Espace de tracé (viewBox 600x420) :
+    axe 0 % à x=200 (vertical), échelle 3.2 px par point de %
+    +21 % → x=267 · +91 % → x=491 · +98 % → x=514
+    (marge gauche 200 (vs 140) pour laisser la place aux labels CAPS
+     "INDIVIDUS" + meta italique "(tâches livrées)" sans overflow)
+
+  Annotation d'écart : 4ᵉ ligne en miroir des barres — libellé gauche
+  "file d'attente / (d'amont en aval)" + tick (x=267→x=514) + valeur
+  droite "+77 pts". Cohérent V1 (pill remplacé par tick + bar-value).
+
+  Chrome externalisé dans macros/visuel.html.
+
+  Usage :
+    {{ code_plus_lentement_v2() }}
+-#}
+{%- set pos = pos | default(value="side") -%}
+
+{{ visuel::frame_start(
+    num="3",
+    tag="File d'attente s'allonge",
+    title_html="Gain individuel <span class='visuel__title-vs'>vs</span> file d'attente",
+    pos=pos,
+    title_id="v2-title",
+    desc_id="v2-desc"
+) }}
+
+  <svg
+    class="visuel__svg"
+    viewBox="0 0 600 420"
+    role="img"
+    preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <title id="v2-title">Trois mesures Faros : +21 % tâches individuelles, +91 % temps de revue, +98 % PR créées par équipe.</title>
+    <desc id="v2-desc">
+      Le gain individuel (+21 % de tâches) se transforme en file
+      d'attente en aval : +91 % de temps de revue, +98 % de pull
+      requests créées par équipe. Soit 77 points d'écart entre le
+      gain en amont et la file d'attente en aval.
+    </desc>
+
+    {#- Axe 0 % à gauche (vertical, accent) -#}
+    <line class="visuel__axis-zero" x1="200" y1="50" x2="200" y2="305" />
+    <text class="visuel__axis-zero-label" x="200" y="42" text-anchor="middle">0&#160;%</text>
+
+    {#- Bar 1 : individus +21 % (accent atténué, le "petit" qui fait moins peur) -#}
+    <g aria-hidden="true">
+      <text class="visuel__bar-cat" x="20" y="98" text-anchor="start">individus</text>
+      <text class="visuel__bar-meta" x="20" y="120" text-anchor="start">(tâches livrées)</text>
+      <rect class="visuel__bar visuel__bar--positive-soft" x="200" y="78" width="67" height="42" />
+      <text class="visuel__bar-value" x="273" y="105" text-anchor="start">+21&#160;%</text>
+    </g>
+
+    {#- Bar 2 : revue +91 % (accent plein) -#}
+    <g aria-hidden="true">
+      <text class="visuel__bar-cat" x="20" y="178" text-anchor="start">revue</text>
+      <text class="visuel__bar-meta" x="20" y="200" text-anchor="start">(temps en aval)</text>
+      <rect class="visuel__bar visuel__bar--positive" x="200" y="158" width="291" height="42" />
+      <text class="visuel__bar-value" x="497" y="185" text-anchor="start">+91&#160;%</text>
+    </g>
+
+    {#- Bar 3 : équipes +98 % (accent-deep, punchline file d'attente) -#}
+    <g aria-hidden="true">
+      <text class="visuel__bar-cat" x="20" y="258" text-anchor="start">équipes</text>
+      <text class="visuel__bar-meta" x="20" y="280" text-anchor="start">(PR créées)</text>
+      <rect class="visuel__bar visuel__bar--negative" x="200" y="238" width="314" height="42" />
+      <text class="visuel__bar-value" x="520" y="265" text-anchor="start">+98&#160;%</text>
+    </g>
+
+    {#- Annotation : écart amont→aval = 77 pts. 4ᵉ ligne en miroir
+        des barres : libellé gauche + tick + valeur droite. Le tick
+        remplace la barre pleine pour signaler "écart" vs "valeur". -#}
+    <g aria-hidden="true">
+      <text class="visuel__bar-cat visuel__bar-cat--annot" x="20" y="325" text-anchor="start">file d'attente</text>
+      <text class="visuel__bar-meta visuel__bar-meta--annot" x="20" y="345" text-anchor="start">(d'amont en aval)</text>
+      <line class="visuel__gap-tick" x1="267" y1="325" x2="514" y2="325" />
+      <line class="visuel__gap-tick" x1="267" y1="318" x2="267" y2="332" />
+      <line class="visuel__gap-tick" x1="514" y1="318" x2="514" y2="332" />
+      <text class="visuel__bar-value" x="520" y="332" text-anchor="start">+77&#160;pts</text>
+    </g>
+  </svg>
+
+{{ visuel::frame_end(
+    caption_text_html="Le gain en amont (+21&#160;% de tâches) se transforme en file d'attente en aval : presque cinq fois plus de pull requests à traiter par équipe.",
+    caption_source_html='Source : Faros AI, <em>Engineering Productivity 2025</em>, n.&#160;<sup class="footnote-reference"><a href="#4">4</a></sup>.'
+) }}

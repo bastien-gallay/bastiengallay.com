@@ -14,8 +14,6 @@ series_total = 3
 series_part_subtitle = "ce que les chiffres ne mesurent pas"
 +++
 
-*Pourquoi le discours dominant sur la productivité IA mesure ce qui ne compte pas.*
-
 > **Série en 3 articles — *Coder avec l'IA***
 > Article 1/3 — *ce que les chiffres ne mesurent pas*.
 > À suivre : *Ce que l'IA m'apporte vraiment* (art. 2) · *Quelle stratégie d'équipe ?* (art. 3).
@@ -28,9 +26,11 @@ Le 4 avril 2026, j'ai vibe-codé un outil en quelques heures pour gérer mes tâ
 
 Le 25 avril, j'ai créé un vrai repo, ajouté trois fonctionnalités, et un peu de qualité — tests, structure, le minimum syndical. L'IA m'a proposé une abstraction élégante : séparer les items en *blocks* nommés alphabétiquement. *Block A*, *Block B*. Au premier coup d'œil, c'était propre.
 
+{{ code_plus_lentement_v0(pos="side") }}
+
 Depuis quatre semaines, je corrige les bugs de cette élégance. Fusion accidentelle de blocks entre deux jours à cause du nommage alphabétique. Report de blocks dont tous les items étaient terminés, parce que l'état "fini" n'était pas explicite au niveau du bloc. Formatage concurrent entre deux projets qui partageaient les mêmes fichiers de configuration.
 
-Bilan : quelques heures pour produire l'outil. Quatre semaines pour le rendre utilisable.
+<span class="mark--soft" data-fig="1">Bilan : quelques heures pour produire l'outil. Quatre semaines pour le rendre utilisable.</span>
 
 Pourtant, je suis depuis longtemps convaincu de deux choses : tout est logiciel — de la simple feuille Excel au script qui génère des PDF — et il faut très vite décider de le supprimer ou de le pérenniser avant qu'il ne se complexifie. Tout logiciel pérenne doit, au plus tôt, bénéficier d'un filet de sécurité pour ne pas baisser en qualité.
 
@@ -42,7 +42,7 @@ C'est cette expérience, répétée sous plusieurs formes au cours des derniers 
 
 ## Le paradoxe
 
-Le discours dominant en 2026 est sans ambiguïté. Selon GitHub, les utilisateurs de Copilot complètent 126&nbsp;% plus de projets par semaine que les codeurs manuels [1]. Les enquêtes Stack Overflow confirment 84&nbsp;% d'adoption chez les développeurs, dont plus de la moitié quotidienne [2]. Et 78&nbsp;% des développeurs déclarent que l'IA améliore leur productivité [1].
+Le discours dominant en 2026 est sans ambiguïté. Selon GitHub, les utilisateurs de Copilot complètent 126&nbsp;% plus de projets par semaine que les codeurs manuels [^1]. Les enquêtes Stack Overflow confirment 84&nbsp;% d'adoption chez les développeurs, dont plus de la moitié quotidienne [^2]. Et 78&nbsp;% des développeurs déclarent que l'IA améliore leur productivité [^1].
 
 Ces chiffres sont sincères. Ils ne sont simplement pas la mesure de ce qu'on croit mesurer.
 
@@ -52,72 +52,41 @@ Ces chiffres sont sincères. Ils ne sont simplement pas la mesure de ce qu'on cr
 
 ### La mesure perçue n'est pas la mesure réelle
 
-En 2025, une équipe de chercheurs de METR a conduit une expérience contrôlée randomisée [3]. Seize développeurs open source expérimentés, chacun avec en moyenne cinq ans de pratique sur les projets qu'ils maintenaient. 246 tâches réelles, pas synthétiques. Outils utilisés : Cursor Pro et Claude 3.5/3.7 Sonnet.
+En 2025, une équipe de chercheurs de METR a conduit une expérience contrôlée randomisée [^3]. Seize développeurs open source expérimentés, chacun avec en moyenne cinq ans de pratique sur les projets qu'ils maintenaient. 246 tâches réelles, pas synthétiques. Outils utilisés : Cursor Pro et Claude 3.5/3.7 Sonnet.
 
-<!-- VISUEL-1 : Perception vs réalité (étude METR)
-  Type      : barres horizontales (3 valeurs)
-  Données   : prédit +24%, perçu +20%, mesuré -19%
-  Légende   : "Un écart de 39 points entre ce que les développeurs croient et ce que la mesure révèle."
-  Source    : METR Becker 2025 [3]
-  Placement : encart latéral (side frame) à droite du paragraphe
--->
+Avant de commencer, les développeurs prédisaient un gain de temps. Après l'étude, ils en percevaient un. La mesure objective, elle, raconte l'inverse — Figure 2.
 
-Avant de commencer, les développeurs prédisaient un gain de temps de 24&nbsp;% grâce à l'IA. Après l'étude, ils estimaient ce gain à 20&nbsp;%. La mesure objective, elle, montrait une augmentation du temps de complétion de 19&nbsp;%.
+{{ code_plus_lentement_v1(pos="side") }}
 
-L'écart entre la perception et la réalité dépassait les 39 points. Ces développeurs n'étaient ni naïfs ni hostiles à l'IA. Ils étaient simplement convaincus d'aller plus vite quand ils allaient en réalité plus lentement.
+L'écart entre la perception et la réalité dépassait les 39 points. Ces développeurs n'étaient ni naïfs ni hostiles à l'IA. Ils étaient simplement <span class="mark--soft" data-fig="2">convaincus d'aller plus vite quand ils allaient en réalité plus lentement</span>.
 
 J'ai moi-même vécu cet écart. Il y a deux ans, avec des modèles bien moins performants, ce qui m'aurait pris une ou deux heures me prenait souvent une demi-journée. Encore aujourd'hui, il m'arrive par réflexe de demander à Claude Code l'édition d'un fichier qu'il fera en trente secondes, là où j'aurais pu terminer en dix.
 
-Les études antérieures, qui annonçaient 56&nbsp;% ou 21&nbsp;% d'accélération [3], reposaient sur des tâches synthétiques. Or les conditions synthétiques masquent ce qui rend les vrais projets coûteux : la cohérence avec l'existant, la dette technique, les conventions tacites, les contraintes invisibles.
+Les études antérieures, qui annonçaient 56&nbsp;% ou 21&nbsp;% d'accélération [^3], reposaient sur des tâches synthétiques. Or les conditions synthétiques masquent ce qui rend les vrais projets coûteux : la cohérence avec l'existant, la dette technique, les conventions tacites, les contraintes invisibles.
 
 ### On mesure la rédaction, pas la livraison
 
-Une étude conduite sur la télémétrie de 22 000 développeurs et deux ans d'historique a documenté une déconnexion entre productivité individuelle ressentie et performance de l'entreprise [4]. Les développeurs disent travailler plus vite. Les entreprises ne voient pas d'amélioration mesurable de la vélocité de livraison ni des résultats business.
+Une étude conduite sur la télémétrie de 22 000 développeurs et deux ans d'historique a documenté une déconnexion entre productivité individuelle ressentie et performance de l'entreprise [^4]. Les développeurs disent travailler plus vite. Les entreprises ne voient pas d'amélioration mesurable de la vélocité de livraison ni des résultats business.
 
 Le rapport explique pourquoi : les métriques de vendeurs traquent l'activité — commits, pull requests, lignes de code — qui gonflent mécaniquement avec l'usage IA. La vélocité de livraison, elle, dépend d'une chaîne complète : revue, tests, intégration, déploiement, opérations. Cette chaîne n'a pas accéléré au même rythme.
 
-<!-- VISUEL-2 : Le gain individuel s'évanouit en file d'attente (Faros)
-  Type      : 3 flèches ou barres horizontales (échelle commune)
-  Données   : individus +21% tâches · revue +91% temps · équipes +98% PR
-  Légende   : "Plus on accélère en amont, plus la file s'allonge en aval."
-  Source    : Faros AI 2025 [4]
-  Placement : encart latéral (side frame)
--->
+{{ code_plus_lentement_v2(pos="side") }}
 
-L'étude Faros sur le même sujet est encore plus précise : les développeurs individuels complètent 21&nbsp;% de tâches en plus, mais le temps de revue augmente de 91&nbsp;%, et les équipes génèrent 98&nbsp;% de pull requests supplémentaires [4]. Les gains se transforment en files d'attente.
+L'étude Faros sur le même sujet est encore plus précise (Figure 3) : <span class="mark--soft" data-fig="3">le gain individuel s'évanouit en file d'attente d'équipe</span> [^4]. Les gains se transforment en files d'attente.
 
 ### La dette technique devient invisible
 
-<!-- VISUEL-3 : L'inversion 2020-2024 (GitClear)
-  Type      : 2 courbes croisées sur l'axe temps (2020 → 2024)
-  Données   : copy-paste 8,3% → 12,3% (↗) · refactoring 24,1% → 9,5% (↘)
-  Variante  : ajouter le churn (3,1% → 5,7%) en pointillé ou en tooltip
-  Légende   : "Le code se duplique plus vite qu'il ne se range." — possibilité d'utiliser la citation Solar-Lezama (L.96) comme légende.
-  Source    : GitClear AI Copilot Code Quality 2025 [5]
-  Placement : encart latéral OU figure pleine largeur en bas de la sous-section
--->
+{{ code_plus_lentement_v3(pos="side") }}
 
-L'étude GitClear, qui a analysé 211 millions de lignes de code modifiées entre 2020 et 2024 chez Google, Microsoft, Meta et plusieurs entreprises cotées, mesure une transformation des pratiques [5] :
-
-- La part de copy-paste dans le code livré est passée de 8,3&nbsp;% à 12,3&nbsp;%.
-- Le refactoring, lui, est passé de 24,1&nbsp;% à 9,5&nbsp;%.
-- Le code "churned" — réécrit dans les deux semaines suivant son commit — a doublé : de 3,1&nbsp;% à 5,7&nbsp;%.
-- En 2024, pour la première fois, les lignes copy-pastées ont dépassé les lignes "déplacées" (refactorisées).
+L'étude GitClear, qui a analysé 211 millions de lignes de code modifiées entre 2020 et 2024 chez Google, Microsoft, Meta et plusieurs entreprises cotées, mesure une transformation des pratiques [^5]. La Figure 4 trace l'inversion : <span class="mark--soft" data-fig="4">la part de copy-paste monte, celle de refactoring chute, les deux courbes se croisent en 2023</span>. Au-delà de cette inversion, un autre signal : le code "churned" — réécrit dans les deux semaines suivant son commit — a doublé, de 3,1&nbsp;% à 5,7&nbsp;%.
 
 Lorsque j'ouvre les projets en audit de code, je découvre de plus en plus souvent des fonctions de 800 lignes, empilées au fil des commits automatiques, et des tests unitaires identiques dans trois fichiers différents.
 
-Le rapport DORA 2024 de Google, qui suit la performance de livraison logicielle depuis une décennie, confirme la tension : une augmentation de 25&nbsp;% de l'adoption IA accélère les revues de code mais diminue la stabilité de livraison de 7,2&nbsp;% [6].
+Le rapport DORA 2024 de Google, qui suit la performance de livraison logicielle depuis une décennie, confirme la tension : une augmentation de 25&nbsp;% de l'adoption IA accélère les revues de code mais diminue la stabilité de livraison de 7,2&nbsp;% [^6].
 
-<!-- VISUEL-5 : Pull-quote Solar-Lezama
-  Type      : citation isolée en grand caractère, façon "side quote" ou bloc pleine largeur
-  Texte     : « L'IA est comme une carte de crédit toute neuve qui va nous permettre d'accumuler de la dette technique d'une manière qu'on n'avait jamais pu auparavant. »
-  Attribution: Armando Solar-Lezama, MIT
-  Source    : Wall Street Journal, cité dans DevOps.com 2025 [7]
-  Placement : pull-quote en marge OU bloc citation pleine largeur
-  Note      : peut aussi servir de légende au VISUEL-3 si pull-quote séparée non retenue.
--->
+{{ code_plus_lentement_v5(pos="side") }}
 
-Une citation d'Armando Solar-Lezama, professeur au MIT, résume mieux que je ne saurais le faire : *« L'IA est comme une carte de crédit toute neuve qui va nous permettre d'accumuler de la dette technique d'une manière qu'on n'avait jamais pu auparavant »* [7].
+Une citation d'Armando Solar-Lezama, professeur au MIT, résume mieux que je ne saurais le faire : *« L'IA est comme une carte de crédit toute neuve qui va nous permettre d'accumuler de la dette technique d'une manière qu'on n'avait jamais pu auparavant »* [^7].
 
 ### Le terrain change avant qu'on ait fini d'apprendre
 
@@ -127,35 +96,17 @@ J'ai commencé par l'autocomplétion intelligente, avec Tabnine en 2018, puis Co
 
 ### La success story est visible, l'incident l'est moins
 
-Le dernier biais est statistique : on entend ceux qui réussissent avec l'IA. On entend moins ceux qui ont stabilisé pendant trois semaines un outil construit en trois jours.
+Le dernier biais est statistique : on entend ceux qui réussissent avec l'IA. On entend moins <span class="mark--soft" data-fig="6">ceux qui ont stabilisé pendant trois semaines un outil construit en trois jours</span>.
 
-<!-- VISUEL-4 : Incidents 2025-2026
-  Type      : 2 cases compactes côte à côte (ou empilées) — façon "fiches incident"
-  Cases     :
-    1) CVE-2025-48757 / Lovable — schémas DB sans row-level security — > 170 apps en prod
-    2) Moltbook — endpoints API sans contrôle d'autorisation — 1,5 M tokens leakés
-  Légende   : "Deux incidents 2025-2026 emblématiques du trade-off."
-  Source    : Vibe Coder Blog 2026 [8] (à vérifier / consolider)
-  Placement : encart latéral OU bandeau pleine largeur sous le paragraphe
--->
+{{ code_plus_lentement_v4(pos="side") }}
 
-Et pourtant, les incidents s'accumulent. La CVE-2025-48757 a exposé une faille chez Lovable, plateforme de codage IA, qui générait des schémas de base de données sans politiques de sécurité au niveau ligne. Plus de 170 applications en production affectées [8]. La faille Moltbook a leaké 1,5 million de tokens d'authentification, parce que les endpoints API générés ne vérifiaient pas les autorisations [8].
+Et pourtant, les incidents s'accumulent. La CVE-2025-48757 a exposé une faille chez Lovable, plateforme de codage IA, qui générait des schémas de base de données sans politiques de sécurité au niveau ligne. Plus de 170 applications en production affectées [^8]. La faille Moltbook a leaké 1,5 million de tokens d'authentification, parce que les endpoints API générés ne vérifiaient pas les autorisations [^8].
 
-Plus structurellement : selon Veracode, 45&nbsp;% du code généré par IA contient au moins une vulnérabilité OWASP [9]. Une autre étude mesure que ce code contient 2,74 fois plus de vulnérabilités que le code écrit par des humains [10].
+Plus structurellement : selon Veracode, 45&nbsp;% du code généré par IA contient au moins une vulnérabilité OWASP [^9]. Une autre étude mesure que ce code contient 2,74 fois plus de vulnérabilités que le code écrit par des humains [^10].
 
 Ces chiffres méritent d'être discutés. Les méthodologies varient. Mais le signal converge : il y a un trade-off entre vitesse de production et qualité de livraison, qui n'apparaît pas dans les métriques d'adoption.
 
-<!-- VISUEL-6 : Tableau récap des 4 biais (synthèse de section)
-  Type      : tableau 4 lignes × 3 colonnes
-  Colonnes  : Ce que les métriques ratent | Chiffre-clé | Source
-  Lignes    :
-    1) Perception ≠ réalité            | -19% (vs +24% attendu)        | METR [3]
-    2) Rédaction ≠ livraison           | revue +91%, PR +98%           | Faros [4]
-    3) Dette technique invisible       | copy-paste 8,3% → 12,3%       | GitClear [5] + DORA [6]
-    4) Success ≠ incident              | 45% du code IA = ≥ 1 CVE OWASP| Veracode [9]
-  Légende   : "Quatre angles morts du discours dominant."
-  Placement : pleine largeur, en clôture de la section "Ce que les chiffres ne mesurent pas", juste avant la transition vers "La vitesse n'est pas la précipitation".
--->
+{{ code_plus_lentement_v6(pos="inline") }}
 
 ---
 
@@ -163,8 +114,28 @@ Ces chiffres méritent d'être discutés. Les méthodologies varient. Mais le si
 
 Lorsqu'on compare le temps de trajet en avion ou en voiture, on compare de porte à porte plutôt que le temps passé dans le véhicule. C'est la vitesse. Sauter dans le premier bus arrivé et se rendre compte que ce n'est pas la bonne direction, c'est de la précipitation. Automatiser une tâche de développement peut relever de l'un ou de l'autre. L'IA ne fait pas la différence entre les deux. C'est le développeur qui décide où et comment l'utiliser. Personne n'aime s'apercevoir que la mémoire de Claude Code a mélangé le nom d'un client avec un autre le jour de la démo. Cet arbitrage régulier prend du temps. Un temps incompressible mais indispensable qui se prend avant d'écrire. C'est le temps nécessaire à la qualité. Si je devais résumer en deux formules&nbsp;:
 
-- précipitation = accélération - attention
-- vitesse = accélération + réflexion + qualité
+<div class="formules" role="group" aria-label="Deux formules clés">
+  <p class="formules__row">
+    <span class="formules__term">Précipitation</span>
+    <span class="formules__eq" aria-hidden="true">=</span>
+    <span class="formules__rhs">
+      <span class="formules__factor">accélération</span>
+      <span class="formules__op" aria-hidden="true">−</span>
+      <span class="formules__factor">attention</span>
+    </span>
+  </p>
+  <p class="formules__row">
+    <span class="formules__term">Vitesse</span>
+    <span class="formules__eq" aria-hidden="true">=</span>
+    <span class="formules__rhs">
+      <span class="formules__factor">accélération</span>
+      <span class="formules__op" aria-hidden="true">+</span>
+      <span class="formules__factor">réflexion</span>
+      <span class="formules__op" aria-hidden="true">+</span>
+      <span class="formules__factor">qualité</span>
+    </span>
+  </p>
+</div>
 
 Avant l'IA, nous passions 10&nbsp;% de notre temps à écrire du code, et 90&nbsp;% à le relire, le concevoir, le réfléchir, le réorganiser et aller lire de la documentation. Si nous possédons un outil qui peut accélérer ces 10&nbsp;%, le gain est faible à long terme. Il ne peut être pérenne qu'à deux conditions&nbsp;: savoir accélérer une part des 90&nbsp;% et investir plus de temps sur ce qu'on n'accélère pas.
 
@@ -184,7 +155,7 @@ Une recherche honnête doit reconnaître ce qui pourrait l'invalider. Quatre obj
 
 **Le biais d'early-adopter.** Mon vécu, comme celui des seize développeurs de l'étude METR, est celui de praticiens expérimentés. Un développeur en début de carrière connaît peut-être un autre rapport à l'IA, plus directement accélérateur, parce qu'il n'a pas encore l'intuition de la dette à venir. Cela n'invalide pas la thèse : ça précise son public.
 
-**Le biais temporel.** Les études citées portent sur la période 2024-début 2025. Les outils évoluent. Il est possible que les agents 2026 changent la donne. Mais le sens du changement n'est pas évident : les outils plus autonomes accentuent aussi la dimension *« il faut quelqu'un pour rattraper »*, comme le suggèrent les chiffres récents sur les incidents Claude Code et Copilot [11].
+**Le biais temporel.** Les études citées portent sur la période 2024-début 2025. Les outils évoluent. Il est possible que les agents 2026 changent la donne. Mais le sens du changement n'est pas évident : les outils plus autonomes accentuent aussi la dimension *« il faut quelqu'un pour rattraper »*, comme le suggèrent les chiffres récents sur les incidents Claude Code et Copilot [^11].
 
 **Le biais de sélection des incidents.** Je ne traite pas ici les incidents où l'IA n'est qu'un démultiplicateur d'une faute humaine évidente — supprimer la base de prod sans backup, exposer des credentials sans audit. Ces cas existent, et ils abondent, mais ils racontent moins l'IA que la pratique qui l'entoure.
 
@@ -192,17 +163,26 @@ Une recherche honnête doit reconnaître ce qui pourrait l'invalider. Quatre obj
 
 ---
 
-<aside class="ours" aria-label="Notes et références">
-  <p class="ours__label">Notes et références</p>
-  <p>[1] Second Talent, <em>AI Coding Assistant Statistics &amp; Trends [2026]</em>, secondtalent.com, 2026.</p>
-  <p>[2] Stack Overflow, <em>Developer Survey 2025</em>, stackoverflow.blog.</p>
-  <p>[3] Becker, J. et al., <em>Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity</em>, METR, arXiv:2507.09089, juillet 2025.</p>
-  <p>[4] Faros AI, <em>The AI Productivity Paradox Research Report</em>, faros.ai, 2025.</p>
-  <p>[5] GitClear, <em>AI Copilot Code Quality 2025 Research Report</em>, gitclear.com, février 2025.</p>
-  <p>[6] Google, <em>DORA Report 2024</em>, dora.dev.</p>
-  <p>[7] Solar-Lezama, A., interview au <em>Wall Street Journal</em>, citée dans DevOps.com, <em>AI in Software Development: Productivity at the Cost of Code Quality?</em>, 2025.</p>
-  <p>[8] Vibe Coder Blog, <em>Security Researchers Sound the Alarm on AI Code Vulnerabilities</em>, blog.vibecoder.me, avril 2026.</p>
-  <p>[9] Veracode, <em>2025 GenAI Code Security Report</em>, veracode.com.</p>
-  <p>[10] SoftwareSeni, analyse de Veracode 2025 et Apiiro, softwareseni.com, février 2026.</p>
-  <p>[11] Futurity, <em>AI-generated code is vulnerable</em>, futurity.org, 2026.</p>
-</aside>
+## Notes et références
+
+[^1]: Second Talent, [*AI Coding Assistant Statistics & Trends \[2025\]*](https://www.secondtalent.com/resources/ai-coding-assistant-statistics/), secondtalent.com, 2025.
+
+[^2]: Stack Overflow, [*Developer Survey 2025*](https://survey.stackoverflow.co/2025/), stackoverflow.co.
+
+[^3]: Becker, J. et al., [*Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity*](https://arxiv.org/abs/2507.09089), METR, arXiv:2507.09089, juillet 2025 ([résumé METR](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/)).
+
+[^4]: Faros AI, [*The AI Productivity Paradox Research Report*](https://www.faros.ai/), faros.ai, 2025.
+
+[^5]: GitClear, [*AI Copilot Code Quality 2025 Research Report*](https://www.gitclear.com/ai_assistant_code_quality_2025_research), gitclear.com, février 2025.
+
+[^6]: Google, [*Accelerate State of DevOps Report 2024*](https://dora.dev/research/2024/dora-report/), dora.dev.
+
+[^7]: Solar-Lezama, A., interview au [*Wall Street Journal*](https://www.wsj.com/), citée dans [DevOps.com](https://devops.com/), *AI in Software Development: Productivity at the Cost of Code Quality?*, 2025.
+
+[^8]: Vibe Coder Blog, [*Security Researchers Sound the Alarm on AI Code Vulnerabilities*](https://blog.vibecoder.me/), blog.vibecoder.me, avril 2026 ; voir aussi [CVE-2025-48757](https://nvd.nist.gov/vuln/detail/CVE-2025-48757).
+
+[^9]: Veracode, [*2025 GenAI Code Security Report*](https://www.veracode.com/resources/genai-code-security-report-2025/), veracode.com.
+
+[^10]: SoftwareSeni, [analyse de Veracode 2025 et Apiiro](https://www.softwareseni.com/), softwareseni.com, février 2026.
+
+[^11]: Futurity, [*AI-generated code is vulnerable*](https://www.futurity.org/), futurity.org, 2026.
