@@ -5,6 +5,7 @@ description = "D'un billard mal recopié sur Thomson TO9 à une discipline : pou
 draft = false
 
 [extra]
+numero = "01.10"
 heading_html = "Pourquoi ce site, et pourquoi <mark class=\"mark\">maintenant</mark>"
 signature_bio = "fabrique des outils OSS pour penser, écrire et coder comme une seule discipline."
 +++

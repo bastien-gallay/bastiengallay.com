@@ -4,6 +4,7 @@ date = 2026-06-02
 draft = true
 
 [extra]
+numero = "01.21"
 series = "coder-avec-l-ia"
 series_title = "Coder avec l'IA"
 series_index = 2

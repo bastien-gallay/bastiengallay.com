@@ -56,7 +56,14 @@
 .hero__title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: var(--text-hero);
+  // Cap explicite à 6.5rem (104px) : le clamp `--text-hero` monte
+  // jusqu'à 7.5rem (120px), mais à font-size 120px le titre
+  // « Bastien Gallay. » insécable mesure ~725px alors que la 1fr column
+  // du grid `.hero__head` plafonne à ~657px (cadre 1024 - padding -
+  // bignum - gap). Résultat : le point rouge crossait le bord du cadre
+  // à viewports >1500, et était trop serré dès 1440. Le min(...) garde
+  // la progressivité du token sur viewports <1054 et plafonne au-dessus.
+  font-size: min(var(--text-hero), 6.5rem);
   line-height: 0.92;
   letter-spacing: -0.03em;
   color: var(--surface-ink);

@@ -369,11 +369,86 @@
   gap: var(--space-lg);
 }
 
+// Grid 2-col : miniature à gauche (largeur fixe pour alignement vertical
+// de la liste) + bloc texte (date / titre / desc). Style chronique de
+// presse imprimée — pas card uniforme.
+// Mobile <36rem : miniature shrink à 100px ; en-deçà on pourrait la
+// passer en row au-dessus, mais 100×67 reste lisible et préserve l'effet.
 .ecrit {
   display: grid;
-  gap: var(--space-3xs);
+  grid-template-columns: 180px 1fr;
+  gap: var(--space-md);
   padding-top: var(--space-md);
   border-top: 1px solid var(--rule);
+  align-items: start;
+
+  @media (max-width: 36rem) {
+    grid-template-columns: 100px 1fr;
+    gap: var(--space-sm);
+  }
+}
+
+// Miniature image : ratio 3:2 hardcodé (180×120 desktop, 100×67 mobile),
+// fond accent-soft pendant le chargement pour éviter le flash blanc.
+.ecrit__cover {
+  width: 180px;
+  height: 120px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  margin: 0;
+  background: color-mix(in oklch, var(--accent-soft) 50%, var(--surface) 50%);
+
+  @media (max-width: 36rem) {
+    width: 100px;
+    height: 67px;
+  }
+}
+
+// Placeholder typo quand l'article n'a pas de cover : numéro magazine
+// en mono CAPS, ancré comme une tranche d'épine de revue. Garde les
+// mêmes dimensions que la miniature image → la liste reste alignée.
+.ecrit__cover--placeholder {
+  display: grid;
+  place-items: center;
+  background: color-mix(in oklch, var(--accent-soft) 65%, var(--surface) 35%);
+  border: 1px solid var(--rule);
+
+  .ecrit__cover-num {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    // letter-spacing 0 : le mono est déjà avance-fixe, ajouter du tracking
+    // ferait lire le numero comme une chaîne de glyphes isolés au lieu d'un
+    // nombre. Cf. critique /critique du 2026-05-24.
+    letter-spacing: 0;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums lining-nums;
+    line-height: 1;
+
+    // § = marque typographique d'imprimeur, pas un préfixe d'ID. Posée
+    // en super (près du cap-height) plutôt qu'en baseline — sinon elle
+    // flotte bas-gauche du 0, accroupie. 0.55em pour qu'elle reste une
+    // marque (et non un caractère qui rivalise avec le num en surface).
+    &::before {
+      content: "§";
+      color: var(--accent);
+      font-size: 0.55em;
+      margin-inline-end: 0.2em;
+      vertical-align: super;
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .ecrit__cover-num { font-size: var(--text-lg); }
+  }
+}
+
+// Bloc texte à droite : date → titre → description, empilés.
+.ecrit__body {
+  display: grid;
+  gap: var(--space-3xs);
+  min-width: 0;  // évite que des titres longs poussent la grid
 }
 
 .ecrit__date {
