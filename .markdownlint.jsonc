@@ -1,0 +1,18 @@
+{
+  // Conventions éditoriales délibérées de ce site (style « vieux magazine »).
+  // On désactive trois règles qui les contredisent, on garde tout le reste
+  // actif pour que les vrais problèmes remontent.
+  "default": true,
+
+  // Prose écrite une ligne par paragraphe (soft-wrap éditeur) + invocations
+  // de shortcodes sur une ligne : la longueur de ligne n'est pas un défaut ici.
+  "MD013": false,
+
+  // HTML inline = cœur du dispositif éditorial (spans .mark--soft, .formules,
+  // figures générées par shortcode). Assumé partout.
+  "MD033": false,
+
+  // Faux positif : markdownlint prend les définitions de notes `[^N]:` pour
+  // des références de lien inutilisées (il ne gère pas la syntaxe footnote).
+  "MD053": false
+}

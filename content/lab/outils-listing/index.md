@@ -5,6 +5,11 @@ description = "Comparaison des placements de la barre copier / étendre sur un l
 template = "lab-page.html"
 +++
 
+<!-- markdownlint-disable-file MD031 -->
+<!-- L'ASCII-art des listings (lignes `~~~~~ …`) dans le shortcode {% listing %}
+     est lu à tort par markdownlint comme une clôture de bloc de code tilde.
+     Faux positif local : MD031 désactivé pour ce seul fichier. -->
+
 Page de comparaison interne. Chaque bloc est le **même listing** flotté à
 droite, avec un placement de barre différent (`data-tools`). Deux actions :
 **copier** et **étendre** (icône ↔, déplie le bloc sur toute la largeur de la
