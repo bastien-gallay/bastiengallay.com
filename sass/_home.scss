@@ -533,6 +533,29 @@
   transform: translateX(0.2em);
 }
 
+// Variante avec objet vectoriel à gauche (sablier pour l'article 1/3,
+// d'autres métaphores possibles pour 2/3 / 3/3). Grid étendu à 3 colonnes
+// (objet 80px + texte 1fr + flèche auto). Le bordure de la carte vient
+// englober tout, y compris l'objet — pas de séparateur interne.
+.une-card--has-objet {
+  grid-template-columns: 80px 1fr auto;
+  grid-template-areas:
+    "objet kicker arrow"
+    "objet title  arrow"
+    "objet meta   arrow";
+  align-items: center;
+  gap: var(--space-3xs) var(--space-md);
+}
+
+.une-card__objet {
+  grid-area: objet;
+  width: 80px;
+  height: 80px;
+  display: block;
+  // Pas de border : l'objet inclut déjà son propre cadre noir (cf.
+  // macro une_card_objet.html — rect 2px à l'intérieur du SVG).
+}
+
 // Réclame « à l'ancienne » : double filet, clin d'œil presse imprimée.
 .une-card--reclame {
   border-style: double;

@@ -1,0 +1,27 @@
+{#-
+  Macros pour les objets vectoriels 80×80 affichés dans la une-card
+  « À la une » du home. Un objet par article — slot variable de la
+  carte (à la différence du fond cover, qui suit un template constant).
+
+  Frontmatter article (optionnel) :
+    [extra]
+    une_objet = "sablier"
+
+  Usage (depuis index.html) :
+    {% import "macros/une_card_objet.html" as objet %}
+    {% if latest.extra.une_objet == "sablier" %}
+      {{ objet::sablier() }}
+    {% endif %}
+
+  Variantes prévues : `sablier` (article 1/3). Si une autre métaphore
+  émerge pour 2/3 ou 3/3, ajouter un macro séparé ici. On évite les
+  paramètres ; chaque objet est sa propre macro pour rester lisible.
+
+  Pattern z-order : fill (crème) → sable (rouge) → stroke (noir). Le
+  sable est encadré par le contour sans le mordre. Cf. lab/image-
+  article-1-3 pour la geometrie des trapèzes du sablier.
+-#}
+
+{%- macro sablier() -%}
+<svg class="une-card__objet" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sablier — métaphore du temps lent"><rect x="0" y="0" width="80" height="80" fill="#ffd900"/><g fill="#f5efe6"><path d="M 28 22 L 52 22 L 45 40 L 35 40 Z"/><path d="M 35 42 L 45 42 L 52 60 L 28 60 Z"/></g><path d="M 31 30 L 49 30 L 45 40 L 35 40 Z" fill="#b8252e"/><path d="M 30 55 L 50 55 L 52 60 L 28 60 Z" fill="#b8252e"/><g stroke="#111" stroke-width="3" stroke-linejoin="round" fill="none"><path d="M 28 22 L 52 22 L 45 40 L 35 40 Z"/><path d="M 35 42 L 45 42 L 52 60 L 28 60 Z"/></g><line x1="25" y1="22" x2="55" y2="22" stroke="#111" stroke-width="3" stroke-linecap="round"/><line x1="25" y1="60" x2="55" y2="60" stroke="#111" stroke-width="3" stroke-linecap="round"/><rect x="0" y="0" width="80" height="80" fill="none" stroke="#111" stroke-width="2"/></svg>
+{%- endmacro sablier -%}

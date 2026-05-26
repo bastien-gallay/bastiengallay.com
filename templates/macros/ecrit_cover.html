@@ -1,0 +1,38 @@
+{#-
+  Macros pour la miniature de liste /ecrits (180×120 logique, viewBox
+  360×240 servi 2x retina). Pattern reproductible : structure constante
+  (cercle jaune central + bandeau bleu bas + cadre noir), trois slots
+  variables remplis par article via le frontmatter.
+
+  Frontmatter article :
+    [extra]
+    cover_chiffre = "−19"
+    cover_unite = "%"
+    cover_source = "METR · 2025"
+    cover_titre_court = "CODER LENTEMENT"
+    # numero (déjà dans extra.numero) est réutilisé pour le §XX.XX
+
+  Usage (depuis ecrits.html) :
+    {% import "macros/ecrit_cover.html" as cover %}
+    {{ cover::m4(
+         chiffre=page.extra.cover_chiffre,
+         unite=page.extra.cover_unite,
+         source=page.extra.cover_source,
+         numero=page.extra.numero,
+         titre_court=page.extra.cover_titre_court
+    ) }}
+-#}
+
+{%- macro m4(chiffre, unite, source, numero, titre_court) -%}
+<svg class="ecrit__cover ecrit__cover--m4" viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{{ source }} : {{ chiffre }} {{ unite }} — §{{ numero }}" width="180" height="120">
+  <rect x="0" y="0" width="360" height="240" fill="#f5efe6"/>
+  <text x="22" y="115" font-family="Redaction, Georgia, serif" font-weight="700" fill="#1f3d8c" letter-spacing="-0.02em"><tspan baseline-shift="super" font-size="28">§</tspan><tspan font-size="54" dx="-2">{{ numero }}</tspan></text>
+  <circle cx="263" cy="95" r="72" fill="#ffd900"/>
+  <text x="263" y="115" text-anchor="middle" fill="#b8252e" font-family="Redaction, Georgia, serif"><tspan font-size="56" font-weight="700">{{ chiffre }}</tspan><tspan font-size="20" font-weight="500" dx="2">{{ unite }}</tspan></text>
+  <rect x="0" y="200" width="360" height="40" fill="#1f3d8c"/>
+  <line x1="0" y1="200" x2="360" y2="200" stroke="#111" stroke-width="3"/>
+  <text x="18" y="225" font-family="ui-monospace, monospace" font-size="11" letter-spacing="2" fill="#f5efe6" font-weight="700">{{ source }}</text>
+  <text x="342" y="225" text-anchor="end" font-family="ui-monospace, monospace" font-size="11" letter-spacing="2" fill="#f5efe6">{{ titre_court }}</text>
+  <rect x="0" y="0" width="360" height="240" fill="none" stroke="#111" stroke-width="3"/>
+</svg>
+{%- endmacro m4 -%}
