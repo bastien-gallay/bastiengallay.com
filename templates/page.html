@@ -1,10 +1,11 @@
 {% extends "base.html" %}
+{% import "macros/ecrit_hero.html" as hero %}
 
 {% block title %}{{ page.title }} — Bastien Gallay{% endblock %}
 {% block description %}{{ page.description | default(value="Notes et articles de Bastien Gallay.") }}{% endblock %}
 
 {% block content %}
-<article class="ecrit-page" aria-labelledby="ecrit-page-title">
+<article class="ecrit-page{% if page.extra.hero | default(value='') %} ecrit-page--has-hero{% endif %}" aria-labelledby="ecrit-page-title">
   <p class="issue-bar">
     <span class="issue-bar__left">
       <span class="issue-bar__pill">NUMÉRO §{{ page.extra.numero | default(value="01.10") }}</span>
@@ -13,6 +14,21 @@
     <span class="issue-bar__mid">{{ page.date | date(format='%d/%m/%Y') }}</span>
     <span class="issue-bar__right">{{ page.reading_time }} MIN · {{ page.word_count }} MOTS</span>
   </p>
+
+  {#- Hero graphique optionnel — porte visuellement le titre.
+      Quand présent : <h1> passe en sr-only (la classe `--has-hero` sur
+      l'article scope la règle CSS), le SVG est aria-hidden pour ne pas
+      doublonner l'annonce du titre côté lecteur d'écran. -#}
+  {%- if page.extra.hero | default(value="") == "b_v3a" -%}
+    {{ hero::b_v3a(
+         kicker=page.extra.hero_kicker | default(value=""),
+         soustitre=page.extra.hero_soustitre | default(value=""),
+         numero=page.extra.numero | default(value=""),
+         l1=page.extra.hero_l1 | default(value=""),
+         l2=page.extra.hero_l2 | default(value=""),
+         l3=page.extra.hero_l3 | default(value="")
+    ) }}
+  {%- endif %}
 
   <header class="ecrit-page__header">
     <h1 class="ecrit-page__title" id="ecrit-page-title">

@@ -1,0 +1,62 @@
+{#-
+  Macros chrome pour les heros d'article (intro graphique en haut de page).
+
+  Pattern : le hero porte le titre de l'article visuellement. Le <h1> HTML
+  reste obligatoire pour SEO / lecteur d'écran / fil d'Ariane, mais doit
+  passer en `sr-only` quand un hero est posé pour éviter le doublon visuel.
+  Le SVG porte `aria-hidden="true"` : l'assistive tech le saute (sinon
+  elle lirait les <text> glyph par glyph). Seul le <h1> sr-only annonce.
+
+  Frontmatter Zola (par article) :
+    [extra]
+    hero = "b_v3a"
+    hero_kicker = "ARTICLE 1/3"
+    hero_soustitre = "ce que les chiffres ne mesurent pas"
+    hero_l1 = "AVEC L'IA,"
+    hero_l2 = "JE CODE PLUS"
+    hero_l3 = "LENTEMENT"
+    # numero est déjà dans extra.numero, on le réutilise
+
+  Usage (depuis page.html) :
+    {% import "macros/ecrit_hero.html" as hero %}
+    {% if page.extra.hero == "b_v3a" %}
+      {{ hero::b_v3a(
+           kicker=page.extra.hero_kicker | default(value=""),
+           soustitre=page.extra.hero_soustitre | default(value=""),
+           numero=page.extra.numero | default(value=""),
+           l1=page.extra.hero_l1 | default(value=""),
+           l2=page.extra.hero_l2 | default(value=""),
+           l3=page.extra.hero_l3 | default(value="")
+      ) }}
+    {% endif %}
+
+  Variantes prévues : `b_v3a` (validée, Mondrian + titre + kicker §).
+  Si une autre variante est nécessaire plus tard, ajouter un macro
+  séparé ici (b_v3b, c_v2, etc.). On évite les ifs paramétrés à
+  l'intérieur d'un macro géant — un macro par variante, choix au niveau
+  du frontmatter `extra.hero = "<variante>"`.
+-#}
+
+{%- macro b_v3a(kicker, soustitre, numero, l1, l2, l3) -%}
+<figure class="ecrit-page__hero ecrit-page__hero--b-v3a" aria-hidden="true">
+  <svg viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" role="presentation" preserveAspectRatio="xMidYMid meet">
+    <rect x="0" y="0" width="1200" height="630" fill="#f5efe6"/>
+    <rect x="580" y="310" width="620" height="320" fill="#b8252e"/>
+    <rect x="900" y="0" width="300" height="190" fill="#ffd900"/>
+    <rect x="0" y="490" width="240" height="140" fill="#1f3d8c"/>
+    <line x1="580" y1="0" x2="580" y2="630" stroke="#111" stroke-width="14"/>
+    <line x1="900" y1="0" x2="900" y2="310" stroke="#111" stroke-width="14"/>
+    <line x1="580" y1="310" x2="1200" y2="310" stroke="#111" stroke-width="14"/>
+    <line x1="900" y1="190" x2="1200" y2="190" stroke="#111" stroke-width="14"/>
+    <line x1="0" y1="490" x2="580" y2="490" stroke="#111" stroke-width="14"/>
+    <line x1="240" y1="490" x2="240" y2="630" stroke="#111" stroke-width="14"/>
+    <rect x="0" y="0" width="1200" height="630" fill="none" stroke="#111" stroke-width="14"/>
+    <text x="40" y="80" font-family="ui-monospace, monospace" font-size="22" letter-spacing="4" fill="#111" opacity="0.55">{{ kicker }}</text>
+    <text x="40" y="108" font-family="ui-monospace, monospace" font-size="14" letter-spacing="2" fill="#111" opacity="0.45">{{ soustitre }}</text>
+    <text x="40" y="210" font-family="Redaction, Georgia, serif" font-weight="700" fill="#1f3d8c"><tspan baseline-shift="super" font-size="60">§</tspan><tspan dx="-5" font-size="80">{{ numero }}</tspan></text>
+    <text x="40" y="340" font-family="Redaction, Georgia, serif" font-size="76" font-weight="700" fill="#111">{{ l1 }}</text>
+    <text x="40" y="440" font-family="Redaction, Georgia, serif" font-size="68" font-weight="700" fill="#111">{{ l2 }}</text>
+    <text x="890" y="440" text-anchor="middle" font-family="Redaction, Georgia, serif" font-weight="700" fill="#f5efe6" font-size="86">{{ l3 }}</text>
+  </svg>
+</figure>
+{%- endmacro b_v3a -%}

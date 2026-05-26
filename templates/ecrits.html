@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "macros/ecrit_cover.html" as cover %}
 
 {% block title %}Écrits — Bastien Gallay{% endblock %}
 {% block description %}Notes et articles de Bastien Gallay.{% endblock %}
@@ -31,13 +32,27 @@
           "01.10" en draft ; obligatoire en publication (cf. scripts/
           check-numeros.py + pre-commit + CI). -#}
       {%- if page.extra.cover -%}
-        {%- set cover = resize_image(path=page.extra.cover, width=360, height=240, op="fill", format="webp") -%}
+        {#- 1. Image bitmap déclarée : resize_image vers WebP retina -#}
+        {%- set cover_img = resize_image(path=page.extra.cover, width=360, height=240, op="fill", format="webp") -%}
         <img class="ecrit__cover"
-             src="{{ cover.url | safe }}"
+             src="{{ cover_img.url | safe }}"
              alt="{{ page.extra.cover_alt | default(value='') }}"
              width="180" height="120"
              loading="lazy" decoding="async">
+      {%- elif page.extra.cover_chiffre -%}
+        {#- 2. Template SVG M4 paramétré : cercle jaune + bandeau bleu
+            + slots variables (chiffre, source, titre court). Cf. macro
+            macros/ecrit_cover.html. Reproductible par article via
+            frontmatter — pas de fichier image à maintenir. -#}
+        {{ cover::m4(
+             chiffre=page.extra.cover_chiffre,
+             unite=page.extra.cover_unite | default(value=""),
+             source=page.extra.cover_source | default(value=""),
+             numero=page.extra.numero | default(value="01.10"),
+             titre_court=page.extra.cover_titre_court | default(value="")
+        ) }}
       {%- else -%}
+        {#- 3. Fallback typo : numéro magazine §XX.YY (defaut 01.10 en draft) -#}
         <p class="ecrit__cover ecrit__cover--placeholder" aria-hidden="true">
           <span class="ecrit__cover-num">{{ page.extra.numero | default(value="01.10") }}</span>
         </p>

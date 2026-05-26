@@ -87,6 +87,46 @@
   text-wrap: balance;
 }
 
+// Hero graphique optionnel — porte visuellement le titre. Quand
+// présent (frontmatter `extra.hero = "<variante>"`), le <h1> textuel
+// passe en sr-only via le sélecteur composé ci-dessous, le SVG est
+// aria-hidden pour ne pas doublonner l'annonce côté lecteur d'écran.
+.ecrit-page__hero {
+  margin: var(--space-md) 0 var(--space-xl);
+  padding: 0;
+  max-width: 100%;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+    background: #f5efe6;
+  }
+}
+
+// Quand l'article a un hero, le titre textuel devient sr-only.
+// On garde un margin-top sur le header pour ne pas coller le subtitle
+// au hero (l'absence visuelle du h1 réduirait la respiration).
+.ecrit-page--has-hero {
+  .ecrit-page__title {
+    // pattern sr-only standard (cf. _base.scss / _editorial.scss)
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .ecrit-page__header {
+    margin-top: var(--space-md);
+  }
+}
+
 .ecrit-page__signature {
   margin-top: var(--space-2xl);
   padding-top: var(--space-md);

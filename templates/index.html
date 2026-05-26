@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "macros/une_card_objet.html" as objet %}
 
 {% block content %}
 <section class="hero section--pink" id="intro" aria-labelledby="hero-title">
@@ -67,17 +68,28 @@
   {%- set ecrits = get_section(path="ecrits/_index.md") -%}
   {%- set nowsec = get_section(path="now/_index.md") -%}
   {%- set today_int = now() | date(format="%Y%m%d") | int -%}
+  {#- Détection dev (zola serve) vs prod : en dev `base_url` est en
+      http://127.0.0.1, en prod en https://. En dev, on lève SEULEMENT
+      le filtre date (≤ today) pour prévisualiser les articles à venir.
+      Le filtre `draft = false` reste actif des deux côtés : les drafts
+      ne sont JAMAIS éligibles à « À LA UNE ». Pour preview, passer
+      draft = false dans le frontmatter de l'article concerné. -#}
+  {%- set is_dev = config.base_url is starting_with("http://") -%}
   {%- set_global latest = false -%}
   {%- for p in ecrits.pages | filter(attribute="draft", value=false) -%}
     {%- set page_int = p.date | date(format="%Y%m%d") | int -%}
-    {%- if page_int <= today_int and not latest -%}{%- set_global latest = p -%}{%- endif -%}
+    {%- if (is_dev or page_int <= today_int) and not latest -%}{%- set_global latest = p -%}{%- endif -%}
   {%- endfor -%}
   <div class="hero__une">
     <p class="ed-badge"><span>À LA UNE</span></p>
     <ul class="une-list">
       {% if latest %}
+      {%- set une_objet = latest.extra.une_objet | default(value="") -%}
       <li>
-        <a class="une-card" href="{{ latest.permalink | safe }}" style="--link-color: var(--c-success); --link-shadow: var(--c-info);">
+        <a class="une-card{% if une_objet %} une-card--has-objet{% endif %}" href="{{ latest.permalink | safe }}" style="--link-color: var(--c-success); --link-shadow: var(--c-info);">
+          {%- if une_objet == "sablier" -%}
+            {{ objet::sablier() }}
+          {%- endif %}
           <span class="une-card__kicker">Dernier écrit</span>
           <span class="une-card__title">{{ latest.title }}</span>
           <span class="une-card__meta">{{ latest.date | date(format="%d/%m/%Y") }} · {{ latest.reading_time }} MIN</span>
