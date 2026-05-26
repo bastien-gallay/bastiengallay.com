@@ -7,7 +7,7 @@ draft = false
 [extra]
 numero = "01.20"
 heading_html = "Avec l'IA, je code plus <mark class=\"mark\">lentement</mark>"
-signature_bio = "fabrique des outils OSS pour penser, écrire et coder comme une seule discipline."
+signature_bio = "Je ralentis pour mieux coder. Je déploie des contre-mesures. J'ai vibe-codé quelques heures et l'ai regretté quatre semaines."
 series = "coder-avec-l-ia"
 series_title = "Coder avec l'IA"
 series_index = 1
