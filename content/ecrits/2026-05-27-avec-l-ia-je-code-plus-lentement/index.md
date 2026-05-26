@@ -2,7 +2,7 @@
 title = "Avec l'IA, je code plus lentement"
 date = 2026-05-27
 description = "Pourquoi le discours dominant sur la productivité IA mesure ce qui ne compte pas."
-draft = true
+draft = false
 
 [extra]
 numero = "01.20"
@@ -13,6 +13,25 @@ series_title = "Coder avec l'IA"
 series_index = 1
 series_total = 3
 series_part_subtitle = "ce que les chiffres ne mesurent pas"
+
+# Hero in-article (cf. lab/image-article-1-3 — variante B v3a validée).
+# Le <h1> textuel passe en sr-only quand `hero` est défini.
+hero = "b_v3a"
+hero_kicker = "ARTICLE 1/3"
+hero_soustitre = "ce que les chiffres ne mesurent pas"
+hero_l1 = "AVEC L'IA,"
+hero_l2 = "JE CODE PLUS"
+hero_l3 = "LENTEMENT"
+
+# Miniature liste /ecrits (template M4 — cercle jaune + bandeau bleu).
+# `numero` ci-dessus est réutilisé pour le §XX.XX du bandeau.
+cover_chiffre = "−19"
+cover_unite = "%"
+cover_source = "METR · 2025"
+cover_titre_court = "CODER LENTEMENT"
+
+# Objet narratif dans la carte « À la une » d'accueil. Spécifique à 1/3.
+une_objet = "sablier"
 +++
 
 > **Série en 3 articles — *Coder avec l'IA***
