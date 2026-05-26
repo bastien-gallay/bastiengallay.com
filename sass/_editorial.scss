@@ -1718,7 +1718,7 @@ p.has-dropcap::first-letter {
 // transform-box fill-box ancre l'origine sur la bbox du rect. Barres
 // positives (ink-mute / ink / pivot) vers la droite (origine bord gauche
 // = axe) ; barre négative vers la gauche (origine bord droit).
-:root.js .visuel--chart {
+:root.js :is(.visuel--chart, .visuel--chart-borne) {
   .visuel__bar {
     transform-box: fill-box;
     transition: transform var(--dur-slow) var(--ease-out-expo);
@@ -1738,7 +1738,7 @@ p.has-dropcap::first-letter {
     transition: opacity var(--dur-mid) var(--ease-out-quart);
   }
 }
-:root.js .visuel--chart:not(.is-revealed) {
+:root.js :is(.visuel--chart, .visuel--chart-borne):not(.is-revealed) {
   .visuel__bar { transform: scaleX(0); }
   .visuel__bar-value,
   .visuel__axis-zero-label,
@@ -1750,7 +1750,7 @@ p.has-dropcap::first-letter {
 }
 // Cascade : 1re barre (ink-mute) → 2e (ink) → 3e (negative|pivot, le
 // punchline), puis valeurs, puis annotation d'écart / marqueur.
-:root.js .visuel--chart.is-revealed {
+:root.js :is(.visuel--chart, .visuel--chart-borne).is-revealed {
   .visuel__bar--ink-mute { transition-delay: 0ms; }
   .visuel__bar--ink      { transition-delay: 120ms; }
   .visuel__bar--negative,
@@ -1853,7 +1853,7 @@ p.has-dropcap::first-letter {
     transform: none;
     transition: none;
   }
-  :root.js .visuel--chart:not(.is-revealed) {
+  :root.js :is(.visuel--chart, .visuel--chart-borne):not(.is-revealed) {
     .visuel__bar { transform: none; }
     .visuel__bar-value,
     .visuel__axis-zero-label,
