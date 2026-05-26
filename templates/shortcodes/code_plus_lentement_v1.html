@@ -27,11 +27,12 @@
 
 {{ visuel::frame_start(
     num="2",
-    tag="Perception ≠ réalité",
-    title_html='Perçu <span class="visuel__title-vs">vs</span> mesuré',
+    tag="Étude METR · 2025",
+    title_html='Perçu +20&#160;%, mesuré <span class="visuel__title-vs">−19&#160;%</span>',
     pos=pos,
     title_id="v1-title",
-    desc_id="v1-desc"
+    desc_id="v1-desc",
+    variant="chart-borne"
 ) }}
 
   <svg
@@ -54,20 +55,20 @@
         pill d'écart (qui couvre x=164→515, y=336→370). -#}
     <text class="visuel__axis-zero-label" x="335" y="42" text-anchor="middle">0&#160;%</text>
 
-    {#- Bar 1 : prédit +24 % (accent plein) -#}
+    {#- Bar 1 : prédit +24 % (encre muette — donnée non-pivot, anticipation) -#}
     <g aria-hidden="true">
       <text class="visuel__bar-cat" x="20" y="98" text-anchor="start">prédit</text>
       <text class="visuel__bar-meta" x="20" y="120" text-anchor="start">(avant l'étude)</text>
-      <rect class="visuel__bar visuel__bar--positive" x="335" y="78" width="216" height="42" />
-      <text class="visuel__bar-value" x="557" y="105" text-anchor="start">+24&#160;%</text>
+      <rect class="visuel__bar visuel__bar--ink-mute" x="335" y="78" width="216" height="42" />
+      <text class="visuel__bar-value visuel__bar-value--ink-mute" x="557" y="105" text-anchor="start">+24&#160;%</text>
     </g>
 
-    {#- Bar 2 : perçu +20 % (accent translucide) -#}
+    {#- Bar 2 : perçu +20 % (encre soft — donnée non-pivot, illusion) -#}
     <g aria-hidden="true">
       <text class="visuel__bar-cat" x="20" y="178" text-anchor="start">perçu</text>
       <text class="visuel__bar-meta" x="20" y="200" text-anchor="start">(après l'étude)</text>
-      <rect class="visuel__bar visuel__bar--positive-soft" x="335" y="158" width="180" height="42" />
-      <text class="visuel__bar-value" x="521" y="185" text-anchor="start">+20&#160;%</text>
+      <rect class="visuel__bar visuel__bar--ink" x="335" y="158" width="180" height="42" />
+      <text class="visuel__bar-value visuel__bar-value--ink" x="521" y="185" text-anchor="start">+20&#160;%</text>
     </g>
 
     {#- Bar 3 : mesuré -19 % (accent-deep, vers la gauche depuis 0).
@@ -96,6 +97,6 @@
   </svg>
 
 {{ visuel::frame_end(
-    caption_text_html="Avant l'étude, les développeurs prédisaient un gain. Après, ils en percevaient un. La mesure révèle un coût. L'écart perception-réalité dépasse les 39 points.",
+    caption_text_html="16 développeurs OSS expérimentés, 246 tâches réelles, Cursor Pro + Claude 3.5/3.7 Sonnet. Expérience contrôlée randomisée.",
     caption_source_html='Source : Becker et&#160;al., METR&#160;2025, arXiv:2507.09089, n.&#160;<sup class="footnote-reference"><a href="#3">3</a></sup>.'
 ) }}

@@ -21,28 +21,28 @@
 
 {{ visuel::frame_start(
     num="1",
-    tag="Cas zéro",
-    title_html="L'élégance qui coûte",
+    tag="Cas zéro · 2026-04",
+    title_html="4&#160;h pour produire, 4&#160;sem. pour stabiliser",
     pos=pos,
     title_id="v0-title",
     desc_id="v0-desc",
     variant="incidents"
 ) }}
 
-  <p id="v0-title" class="sr-only">Cas zéro de l'article : l'outil daily-ops, vibe-codé en quelques heures début avril 2026, a demandé quatre semaines de stabilisation à cause d'une abstraction « blocks alphabétiques » proposée par l'IA.</p>
-  <p id="v0-desc" class="sr-only">Production en quatre heures, stabilisation en quatre semaines. Origine de la dette : abstraction proposée par l'IA, élégante au premier coup d'œil, régressive ensuite (fusion accidentelle de blocks, report de blocks terminés, formatage concurrent).</p>
+  <p id="v0-title" class="sr-only">Cas zéro : daily-ops, produit en quatre heures début avril 2026, a demandé quatre semaines de stabilisation.</p>
+  <p id="v0-desc" class="sr-only">Origine de la dette : abstraction « blocks alphabétiques » proposée par l'IA, élégante au premier coup d'œil, régressive ensuite (fusion accidentelle de blocks, report de blocks terminés, formatage concurrent).</p>
 
   <ul class="visuel__incidents" role="list">
     <li class="visuel__incident">
       <p class="visuel__incident-ref">cas perso · 2026-04</p>
       <h3 class="visuel__incident-target">daily-ops</h3>
-      <p class="visuel__incident-fault">abstraction <em>« blocks alphabétiques »</em> proposée par l'IA — élégante au premier coup d'œil, régressive ensuite</p>
+      <p class="visuel__incident-fault">abstraction <em>« blocks alphabétiques »</em> proposée par l'IA, élégante au premier coup d'œil, régressive ensuite</p>
       <p class="visuel__incident-kpi">
-        <span class="visuel__kpi-num">4&#160;h</span>
+        <span class="visuel__kpi-num visuel__kpi-num--ink">4&#160;h</span>
         <span class="visuel__kpi-unit">pour produire</span>
       </p>
       <p class="visuel__incident-kpi">
-        <span class="visuel__kpi-num">4&#160;sem.</span>
+        <span class="visuel__kpi-num visuel__kpi-num--pivot">4&#160;sem.</span>
         <span class="visuel__kpi-unit">pour rendre utilisable</span>
       </p>
     </li>
@@ -51,5 +51,4 @@
 {{ visuel::frame_end() }}
 {#- Pas de caption éditoriale : la figure est portée par la prose §25-§33
     juste à côté, et son contenu (fault + KPI dual) suffit à elle seule.
-    La macro frame_end skip le <figcaption> wrapper quand aucun argument
-    n'est passé (refacto associé). -#}
+    Choix confirmé en revue P1 (sous-tâche 2 — asymétrie assumée). -#}

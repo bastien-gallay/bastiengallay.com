@@ -2,6 +2,44 @@
 // Issue-bar, badges, OURS, dropcap, ornement, marques typographiques.
 
 // ──────────────────────────────────────────────────────────────────
+// Override de palette en contexte article (lecture longue)
+// ──────────────────────────────────────────────────────────────────
+// Diagnostic 2026-05-26 (cf .personal/research/2026-05-26-fatigue-visuelle-rouge.md) :
+// le rouge identitaire (chroma 0.205) calibré pour un accent rare (homepage,
+// section pages) génère de la fatigue visuelle quand il revient à intervalle
+// régulier dans le scroll long d'un article (5 figures `pos="side"` empilées
+// dans la marge droite = colonne rouge à hauteur d'œil constante).
+//
+// Décisions :
+// - On désature le rouge **uniquement en contexte article**. Les pages
+//   courtes gardent la palette saturée. Le rouge frappe ~40 % moins fort.
+// - Token --pivot-mark : couleur du « pointeur de lecture » dans les
+//   figures, distinct de --c-warning (qui rendait marron-rouge sur cream
+//   par calibration L=0.55). Inversion thématique : poster jaune canari
+//   en mode clair (highlight imprimé), marron-rouge chaud en mode sombre
+//   (papier ancien). Cf bilan post-P4 du 2026-05-26.
+.ecrit-page__content {
+  --accent:      oklch(0.48 0.12 25);
+  --accent-deep: oklch(0.40 0.13 25);
+  --pivot-mark:  #ffd900;
+  // --pivot-ink : couleur du texte qui REPOSE sur le pivot (label dans
+  // une pill, texte au-dessus d'un soulignement). Inverse logique du
+  // pivot-mark : jaune clair → texte sombre, marron-rouge → texte clair.
+  // Garantit le contraste AA quel que soit le thème.
+  --pivot-ink:   var(--surface-ink);
+}
+// Dark mode : surcharger les overrides ci-dessus, sinon :root[data-theme="dark"]
+// (spec 0,0,2,0) écrase notre .ecrit-page__content (spec 0,0,1,0).
+:root[data-theme="dark"] .ecrit-page__content,
+:root:not([data-theme="light"]) .ecrit-page__content {
+  --accent:      oklch(0.66 0.12 25);
+  --accent-deep: oklch(0.58 0.13 25);
+  --pivot-mark:  oklch(0.62 0.13 35);
+  // surface-ink en dark = cream — convient comme texte sur marron-rouge.
+  --pivot-ink:   var(--surface-ink);
+}
+
+// ──────────────────────────────────────────────────────────────────
 // Issue-bar — bandeau haut de page (POCHETTE §NN · DATE · MIN)
 // ──────────────────────────────────────────────────────────────────
 
@@ -225,6 +263,85 @@
 }
 
 // ──────────────────────────────────────────────────────────────────
+// Paradoxe — strapline éditorial : trois chiffres d'ouverture
+// Variant typographique de `.formules`, conçu pour l'amorce de section :
+// grille 3-cols (num | claim | src), filets top+bottom, max-width 68ch.
+// Le num porte la display (chiffre poster), le claim la prose body, le
+// src la label caps mono. Pas de hero-metric (anti-pattern DESIGN.md) :
+// les 3 chiffres sont posés comme un sommaire de revue, pas comme un
+// dashboard. L'accent rouge n'apparaît PAS ici (mono-accent réservé aux
+// figures de démolition qui suivent — la règle Un Accent tient).
+// ──────────────────────────────────────────────────────────────────
+
+.ecrit-page__content .paradoxe {
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  column-gap: var(--space-md);
+  row-gap: var(--space-xs);
+  align-items: baseline;
+  margin: var(--space-md) auto;
+  padding: var(--space-sm) var(--space-md);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  max-width: var(--measure-base);
+  box-sizing: border-box;
+}
+
+.paradoxe__row { display: contents; }
+
+.paradoxe__num {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--surface-ink);
+  letter-spacing: var(--tracking-tight);
+  font-feature-settings: "tnum" 1;
+}
+
+.paradoxe__claim {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+.paradoxe__src {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 500;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.paradoxe__src a {
+  color: inherit;
+  text-decoration: none;
+}
+
+// Mobile : grid 2-col (num | src à droite), claim pleine largeur dessous.
+// Préserve l'alignement num / src en bandeau supérieur, claim devient le
+// commentaire prose en pleine largeur.
+@media (max-width: 36rem) {
+  .ecrit-page__content .paradoxe {
+    grid-template-columns: max-content 1fr;
+    row-gap: var(--space-2xs);
+  }
+  .paradoxe__src {
+    grid-column: 2;
+    justify-self: end;
+    align-self: baseline;
+  }
+  .paradoxe__claim {
+    grid-column: 1 / -1;
+    padding-inline-start: 0;
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────
 // Dropcap — première lettre du premier paragraphe d'article
 // ──────────────────────────────────────────────────────────────────
 
@@ -387,6 +504,53 @@ p.has-dropcap::first-letter {
   box-sizing: border-box;
 }
 
+// P6/P7 — Note méthodique : h2 distinct du flux principal. Annonce que
+// ce qui suit n'est PAS la suite éditoriale de l'article mais une
+// précision méthodologique (annexe, pas conclusion). Le corps du bloc
+// (le paragraphe d'amorce + la liste numérotée des biais) est atténué
+// pour confirmer le changement de registre.
+//
+// Marqueurs graphiques :
+//   - ▍ ANNEXE       en c-chrome (registre méta-éditorial, cohérent
+//                     avec les figures `--quote`) en lead avant le titre
+//   - filet pointillé au-dessus pour marquer la rupture
+//   - corps en `--ink-soft` un cran plus petit que la prose principale
+.ecrit-page__content h2#note-methodique-quatre-biais {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--ink-mute);
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px dashed var(--rule-strong);
+  text-wrap: initial;
+
+  &::before {
+    content: "▍ annexe · ";
+    color: var(--c-chrome);
+    font-style: normal;
+  }
+}
+
+// Atténuation du corps : tous les <p> et la <ol> qui suivent
+// directement le h2 méthodique, jusqu'au prochain h2 (notes-et-references
+// — qui n'a pas de p ni ol siblings, donc le `~` ne déborde pas).
+.ecrit-page__content h2#note-methodique-quatre-biais ~ p,
+.ecrit-page__content h2#note-methodique-quatre-biais ~ ol {
+  font-size: 0.94em;
+  color: var(--ink-soft);
+}
+// Limite le ~ : on coupe au prochain h2 via :has — les éléments APRÈS
+// h2#notes-et-references retrouvent leur taille/couleur d'origine.
+.ecrit-page__content h2#notes-et-references ~ p,
+.ecrit-page__content h2#notes-et-references ~ ol {
+  font-size: 1em;
+  color: inherit;
+}
+
 .ecrit-page__content h2#notes-et-references {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
@@ -493,8 +657,11 @@ p.has-dropcap::first-letter {
   max-width: 32rem;             // ~ 512 px : figure de magazine, pas pleine page
   border: 1px solid var(--rule-strong);
   padding: 0 var(--space-lg) var(--space-md);
-  // Léger wash accent en fond — différencie la figure de la prose sans alourdir.
-  background: color-mix(in oklch, var(--accent-soft) 28%, var(--surface) 72%);
+  // P5b — fond neutre cream (surface-sub) plutôt que wash rose `accent-soft`.
+  // L'ancien mix faisait flotter une teinte rose sur toutes les figures, qui
+  // contribuait à la sensation de « rouge ambiant ». Surface-sub joue le rôle
+  // de relief (légèrement plus chaud que surface) sans hue rouge.
+  background: var(--surface-sub);
 }
 
 // Dark mode : la grille pointillée disparaissait sur fond sombre (rule trop
@@ -502,7 +669,7 @@ p.has-dropcap::first-letter {
 // remonte les valeurs spécifiquement pour le contraste AA.
 :root[data-theme="dark"] .visuel,
 :root:not([data-theme="light"]) .visuel {
-  background: color-mix(in oklch, var(--accent-soft) 18%, var(--surface-sub) 82%);
+  background: var(--surface-sub);
 
   .visuel__grid line {
     stroke: var(--rule-strong);
@@ -659,6 +826,20 @@ p.has-dropcap::first-letter {
   letter-spacing: -0.02em;
 }
 
+// Variante encre — pour le KPI non-pivot d'une fiche incidents (règle Un
+// Accent : seule la donnée qui porte le punch garde le rouge).
+.visuel__kpi-num--ink { color: var(--ink-soft); }
+
+// Variante --pivot : KPI en encre profonde + soulignement jaune
+// underline 4px (warning lucid-lint). Remplace le rouge sur les figures
+// non-bornes (P4).
+.visuel__kpi-num--pivot {
+  color: var(--surface-ink);
+  background-image: linear-gradient(transparent 60%, var(--pivot-mark) 60%, var(--pivot-mark) 88%, transparent 88%);
+  background-repeat: no-repeat;
+  padding: 0 0.08em;
+}
+
 .visuel__kpi-unit {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
@@ -706,7 +887,10 @@ p.has-dropcap::first-letter {
   font-family: var(--font-display, var(--font-body));
   font-size: clamp(3rem, 2rem + 4vw, 5rem);
   line-height: 0.7;
-  color: var(--accent);
+  // P4 — fatigue visuelle : le guillemet bascule en encre muette
+  // (marque d'imprimeur sobre) en contexte article. Le rouge est
+  // réservé au hero, aux marques `▍` et à la figure-borne.
+  color: var(--ink-mute);
   display: block;
   margin: 0 0 calc(-1 * var(--space-xs));
   margin-inline-start: calc(-0.6 * var(--space-md));
@@ -893,6 +1077,23 @@ p.has-dropcap::first-letter {
   letter-spacing: -0.01em;
 }
 
+// Variante encre — pour les chiffres non-pivots du tableau récap.
+.visuel__table-num--ink { color: var(--surface-ink); }
+
+// Variante --pivot : chiffre en encre + soulignement pivot-mark.
+// Remplace le rouge pivot du tableau récap (P4).
+// P6 — display: inline-block + width: fit-content pour que le gradient
+// ne s'étende pas sur la pleine largeur de la cellule (la base est
+// display: block, qui faisait courir le wash jusqu'au bord du td).
+.visuel__table-num--pivot {
+  display: inline-block;
+  width: fit-content;
+  color: var(--pivot-ink);
+  background-image: linear-gradient(transparent 60%, var(--pivot-mark) 60%, var(--pivot-mark) 88%, transparent 88%);
+  background-repeat: no-repeat;
+  padding: 0 0.08em;
+}
+
 .visuel__table-meta {
   display: block;
   font-size: var(--text-xs);
@@ -971,6 +1172,45 @@ p.has-dropcap::first-letter {
 }
 .visuel__band-mark { color: var(--accent); font-size: 1.05em; line-height: 1; opacity: 1; }
 .visuel__band-num  { color: var(--ink-mute); }
+
+// ──────────────────────────────────────────────────────────────────
+// P5c — Bariolage par rubrique (magazine de presse imprimée).
+// Chaque type d'objet éditorial reçoit sa couleur sémantique sur la
+// marque ▍ ET sur le tag (couleur atténuée pour le tag, vibrante pour
+// le glyphe). Cohérent avec la Polychromie sémantique 1:1 (lucid-lint :
+// info, problem, chrome, success, warning).
+//
+// Rubriques :
+//   .visuel--chart-borne : figure-borne de l'article (porte la thèse)
+//                          → garde l'accent rouge (signature identitaire)
+//   .visuel--chart       : étude / recherche (charts par défaut)
+//                          → c-info bleu profond
+//   .visuel--incidents   : cas zéro perso + incidents tiers
+//                          → c-problem rose (ouverture / faille)
+//   .visuel--quote       : citation experte / mot du chercheur
+//                          → c-chrome cyan (méta-éditorial)
+//   .visuel--table       : synthèse / récap
+//                          → c-success vert (consolidation)
+// ──────────────────────────────────────────────────────────────────
+
+.ecrit-page__content {
+  .visuel--chart .visuel__band-mark      { color: var(--c-info); }
+  .visuel--chart .visuel__band-tag       { color: color-mix(in oklch, var(--c-info) 55%, var(--ink-mute) 45%); }
+
+  .visuel--incidents .visuel__band-mark  { color: var(--c-problem); }
+  .visuel--incidents .visuel__band-tag   { color: color-mix(in oklch, var(--c-problem) 55%, var(--ink-mute) 45%); }
+
+  .visuel--quote .visuel__band-mark      { color: var(--c-chrome); }
+  .visuel--quote .visuel__band-tag       { color: color-mix(in oklch, var(--c-chrome) 55%, var(--ink-mute) 45%); }
+
+  .visuel--table .visuel__band-mark      { color: var(--c-success); }
+  .visuel--table .visuel__band-tag       { color: color-mix(in oklch, var(--c-success) 55%, var(--ink-mute) 45%); }
+
+  // Borne — override final : la figure-pivot de l'article garde l'accent
+  // rouge sur sa marque (signature) ; le tag accompagne en teinte atténuée.
+  .visuel--chart-borne .visuel__band-mark { color: var(--accent); }
+  .visuel--chart-borne .visuel__band-tag  { color: color-mix(in oklch, var(--accent) 55%, var(--ink-mute) 45%); }
+}
 .visuel__band-tag  {
   color: var(--ink-mute);
   margin-left: auto;
@@ -1099,6 +1339,12 @@ p.has-dropcap::first-letter {
   stroke: var(--accent);
   stroke-width: 5;
 }
+// Variante --pivot : courbe jaune pour signaler la donnée pivot d'une
+// figure non-borne (P4 — remplace le rouge par le warning lucid-lint).
+.visuel__line--pivot {
+  stroke: var(--pivot-mark);
+  stroke-width: 6;
+}
 
 // ──────────────────────────────────────────────────────────────────
 // V1 (METR) — bar chart horizontal depuis axe 0 %
@@ -1137,10 +1383,17 @@ p.has-dropcap::first-letter {
 .visuel__bar-meta--annot { font-size: 14px; }
 
 // Barres : accent plein (positif), accent atténué (positif soft),
-// accent profond (négatif = punchline).
+// accent profond (négatif = punchline). Les variantes `--ink` / `--ink-mute`
+// portent les données non-pivots. La variante `--pivot` porte le rôle
+// « regarde ici » via le jaune --c-warning (héritage lucid-lint warning),
+// utilisée en remplacement du rouge sur les données pivot des figures
+// non-bornes (P4 : refonte fatigue visuelle).
 .visuel__bar--positive      { fill: var(--accent); }
 .visuel__bar--positive-soft { fill: color-mix(in oklch, var(--accent) 55%, var(--surface) 45%); }
 .visuel__bar--negative      { fill: var(--accent-deep); }
+.visuel__bar--ink           { fill: var(--ink-soft); }
+.visuel__bar--ink-mute      { fill: var(--ink-mute); }
+.visuel__bar--pivot         { fill: var(--pivot-mark); }
 
 .visuel__bar-value {
   fill: var(--surface-ink);
@@ -1150,6 +1403,9 @@ p.has-dropcap::first-letter {
   dominant-baseline: middle;
 }
 .visuel__bar-value--negative { fill: var(--accent-deep); }
+.visuel__bar-value--ink      { fill: var(--ink-soft); }
+.visuel__bar-value--ink-mute { fill: var(--ink-mute); }
+.visuel__bar-value--pivot    { fill: var(--surface-ink); font-weight: 700; }
 // Variante "valeur dans la barre" : utilisée quand la barre dépasse
 // vers un bord du viewBox et qu'il n'y a pas la place dehors. Le fill
 // passe en surface claire pour rester lisible sur l'accent profond.
@@ -1184,6 +1440,16 @@ p.has-dropcap::first-letter {
   font-weight: 600;
   dominant-baseline: middle;
 }
+// Variante --pivot : annotation pivot (jaune en clair, marron-rouge en
+// sombre) sur la donnée pivot d'une figure non-borne. P6 — label texte
+// bascule en --pivot-ink pour contraster correctement avec le pivot-mark
+// quel que soit le thème (jaune → texte sombre ; marron-rouge → cream).
+// Déclaré APRÈS la règle de base pour vaincre en cascade (spécificités
+// égales, source order wins).
+.visuel__cross-pill--pivot   { fill: var(--pivot-mark); }
+.visuel__cross-tick--pivot   { stroke: var(--pivot-mark); }
+.visuel__cross--pivot        { fill: var(--pivot-mark); }
+.visuel__cross-label--pivot  { fill: var(--pivot-ink); font-weight: 700; }
 
 // Caption — pile simple : texte explicatif + source. Le numéro est déjà
 // porté par le band éditorial en haut, plus de doublon ici.
@@ -1394,6 +1660,19 @@ p.has-dropcap::first-letter {
   // c'est le "spotlight" demandé : la phrase ET son enveloppe textuelle
   // restent nettes pendant que le reste s'estompe.
   .ecrit-page__content.is-anchoring p:has(.mark--soft.is-active) {
+    opacity: 1;
+  }
+  // P7 — bugfix : les <p> internes aux figures (visuel__incident-fault,
+  // visuel__incident-kpi, sr-only desc, etc.) étaient catchés par la
+  // règle globale `is-anchoring p` à 0.55, qui les rendait visuellement
+  // estompés alors même que la figure parente est active à opacity 1.
+  // Conséquence : sur une figure active, ses propres textes paraissaient
+  // « gris » comme la prose dimée. Solution : on reset explicitement.
+  // - figure active : compound = 1.0 (parent) × 1.0 (p) = 1.0 ✓
+  // - figure inactive : compound = 0.3 (parent) × 1.0 (p) = 0.3 (le dim
+  //   est porté par le container, pas par les enfants — aligné avec le
+  //   piège opacité documenté plus haut pour .mark--soft).
+  .ecrit-page__content.is-anchoring .visuel p {
     opacity: 1;
   }
 

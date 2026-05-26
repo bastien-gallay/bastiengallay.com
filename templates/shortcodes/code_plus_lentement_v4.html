@@ -25,8 +25,8 @@
 
 {{ visuel::frame_start(
     num="6",
-    tag="Failles emblématiques",
-    title_html="Deux fuites <br/>en 2025-2026",
+    tag="Incidents · 2025-2026",
+    title_html="Deux fuites emblématiques",
     pos=pos,
     title_id="v4-title",
     desc_id="v4-desc",
@@ -44,7 +44,7 @@
       <h3 class="visuel__incident-target">Lovable</h3>
       <p class="visuel__incident-fault">schémas DB générés sans <em>row-level security</em></p>
       <p class="visuel__incident-kpi">
-        <span class="visuel__kpi-num">+170</span>
+        <span class="visuel__kpi-num visuel__kpi-num--ink">+170</span>
         <span class="visuel__kpi-unit">apps exposées en prod</span>
       </p>
     </li>
@@ -53,13 +53,13 @@
       <h3 class="visuel__incident-target">Moltbook</h3>
       <p class="visuel__incident-fault">endpoints API générés sans contrôle d'autorisation</p>
       <p class="visuel__incident-kpi">
-        <span class="visuel__kpi-num">1,5&#160;M</span>
+        <span class="visuel__kpi-num visuel__kpi-num--pivot">1,5&#160;M</span>
         <span class="visuel__kpi-unit">tokens d'auth leakés</span>
       </p>
     </li>
   </ul>
 
 {{ visuel::frame_end(
-    caption_text_html="Deux fuites de 2025-2026 emblématiques du trade-off de l'IA générative&#160;: ce qui se génère vite se relit mal, et la vérification de sécurité passe en file d'attente.",
+    caption_text_html="CVE référencée + leak documenté. Dans les deux cas, code généré par IA déployé sans contrôle de sécurité (row-level security, autorisations endpoints).",
     caption_source_html='Source&#160;: Vibe Coder Blog, <em>Security Researchers Sound the Alarm on AI Code Vulnerabilities</em>, n.&#160;<sup class="footnote-reference"><a href="#8">8</a></sup>.'
 ) }}

@@ -39,8 +39,8 @@
 
 {{ visuel::frame_start(
     num="4",
-    tag="Code comme dette",
-    title_html="Copy-paste <span class='visuel__title-vs'>vs</span> Refactoring <br/> 2020 → 2024",
+    tag="GitClear · 2020 → 2024",
+    title_html="Crossover 2023 : copy-paste passe devant refactoring",
     pos=pos,
     title_id="v3-title",
     desc_id="v3-desc",
@@ -100,19 +100,21 @@
     />
 
     {#- Marqueur de crossover en 2023 — pill élargi à 220vb pour caser
-        "crossover 2023" à font-size 22vb (≈11px visuels en --side). -#}
+        "crossover 2023" à font-size 22vb (≈11px visuels en --side).
+        Annotation en jaune pivot (P4) : le rôle « regarde ici » bascule
+        du rouge identitaire vers --c-warning sur les figures non-bornes. -#}
     <g aria-hidden="true">
-      <line class="visuel__cross-tick" x1="455" y1="237" x2="455" y2="178" />
-      <rect class="visuel__cross-pill" x="345" y="148" width="220" height="36" rx="0" />
-      <text class="visuel__cross-label" x="455" y="170" text-anchor="middle">
+      <line class="visuel__cross-tick visuel__cross-tick--pivot" x1="455" y1="237" x2="455" y2="178" />
+      <rect class="visuel__cross-pill visuel__cross-pill--pivot" x="345" y="148" width="220" height="36" rx="0" />
+      <text class="visuel__cross-label visuel__cross-label--pivot" x="455" y="170" text-anchor="middle">
         crossover 2023
       </text>
-      <circle class="visuel__cross" cx="455" cy="237" r="7" />
+      <circle class="visuel__cross visuel__cross--pivot" cx="455" cy="237" r="7" />
     </g>
 
   </svg>
 
 {{ visuel::frame_end(
-    caption_text_html="Le code se duplique plus vite qu'il ne se range : la part de copy-paste croît, celle de refactoring chute, et les deux se croisent en 2023.",
+    caption_text_html="211&#160;millions de lignes de code modifiées, analysées chez Google, Microsoft, Meta et plusieurs entreprises cotées.",
     caption_source_html='Source : GitClear, <em>AI Copilot Code Quality 2025</em>, n.&#160;<sup class="footnote-reference"><a href="#5">5</a></sup>.'
 ) }}
