@@ -1,0 +1,53 @@
+{%- import "macros/visuel.html" as visuel -%}
+{#-
+  Shortcode générique de figure éditoriale. Remplace les anciens
+  `code_<slug>_v<n>.html` (un par visuel) : le chrome vit dans
+  macros/visuel.html, le CORPS du visuel (SVG, table, blockquote…) vit
+  colocalisé dans le page bundle de l'article, sous `figures/<body>`, et
+  est inliné ici via `load_data`.
+
+  Pourquoi : un shortcode par visuel ne tient pas à l'échelle (namespace
+  global plat de Zola). Ici un seul shortcode sert tous les articles ;
+  chaque article apporte ses propres corps de figures dans son dossier.
+
+  Le texte éditorial (tag, titre, caption, source) reste dans le markdown
+  de l'article, au fil de la prose — c'est du contenu, pas de la géométrie.
+
+  Paramètres :
+    num       · numéro affiché (Figure N) + clé data-anchor="fig-N"
+    tag       · sur-titre du band (ex. "Étude METR · 2025")
+    title     · titre HTML du visuel ("" pour les quotes, sans titre)
+    title_id  · id de l'élément titre (aria-labelledby)
+    desc_id   · id de l'élément description (aria-labelledby)
+    body      · nom du fichier corps dans `figures/` (ex. "fig2-metr.html")
+    variant   · "chart" (défaut) | "chart-borne" | "incidents" | "quote" | "table"
+    pos       · "side" (défaut) | "inline"
+    caption   · texte éditorial de légende (optionnel)
+    source    · ligne de source (optionnel)
+
+  Une éventuelle légende (cas GitClear) vit en tête du fichier corps : la
+  macro l'émettait juste après le titre, avant le SVG — même position.
+
+  Usage (dans le markdown du page bundle) :
+    {{ figure(num="2", variant="chart-borne", tag="Étude METR · 2025",
+       title="…", title_id="v1-title", desc_id="v1-desc",
+       body="fig2-metr.html", caption="…", source="…") }}
+-#}
+{%- set pos = pos | default(value="side") -%}
+
+{{ visuel::frame_start(
+    num=num,
+    tag=tag,
+    title_html=title | default(value=""),
+    pos=pos,
+    title_id=title_id,
+    desc_id=desc_id,
+    variant=variant | default(value="chart")
+) }}
+
+{{ load_data(path="content/" ~ page.colocated_path ~ "figures/" ~ body, format="plain") | safe }}
+
+{{ visuel::frame_end(
+    caption_text_html=caption | default(value=""),
+    caption_source_html=source | default(value="")
+) }}

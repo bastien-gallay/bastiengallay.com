@@ -1,43 +1,3 @@
-{%- import "macros/visuel.html" as visuel -%}
-{#-
-  V2 — File d'attente Faros (étude Faros AI 2025) · article "Avec l'IA, je code plus lentement".
-  Trois barres horizontales depuis l'axe gauche x=200 (= 0 %). Toutes
-  positives, échelle commune 0→100 %. Progression visuelle = punchline :
-  individus (+21 %) << revue (+91 %) ≈ équipes (+98 %).
-  Source : Faros AI 2025 [^4].
-
-  Données :
-    catégorie                · valeur
-    individus (tâches)       · +21 %
-    revue (temps)            · +91 %
-    équipes (PR créées)      · +98 %
-
-  Espace de tracé (viewBox 600x420) :
-    axe 0 % à x=200 (vertical), échelle 3.2 px par point de %
-    +21 % → x=267 · +91 % → x=491 · +98 % → x=514
-    (marge gauche 200 (vs 140) pour laisser la place aux labels CAPS
-     "INDIVIDUS" + meta italique "(tâches livrées)" sans overflow)
-
-  Annotation d'écart : 4ᵉ ligne en miroir des barres — libellé gauche
-  "file d'attente / (d'amont en aval)" + tick (x=267→x=514) + valeur
-  droite "+77 pts". Cohérent V1 (pill remplacé par tick + bar-value).
-
-  Chrome externalisé dans macros/visuel.html.
-
-  Usage :
-    {{ code_plus_lentement_v2() }}
--#}
-{%- set pos = pos | default(value="side") -%}
-
-{{ visuel::frame_start(
-    num="3",
-    tag="Étude Faros · 2025",
-    title_html="Le gain individuel disparaît en file d'attente",
-    pos=pos,
-    title_id="v2-title",
-    desc_id="v2-desc"
-) }}
-
   <svg
     class="visuel__svg"
     viewBox="0 0 600 420"
@@ -94,8 +54,3 @@
       <text class="visuel__bar-value" x="520" y="332" text-anchor="start">+77&#160;pts</text>
     </g>
   </svg>
-
-{{ visuel::frame_end(
-    caption_text_html="22&#160;000 développeurs, 2 ans de télémétrie. Mesures par équipe sur la chaîne complète (revue, intégration, déploiement).",
-    caption_source_html='Source : Faros AI, <em>Engineering Productivity 2025</em>, n.&#160;<sup class="footnote-reference"><a href="#4">4</a></sup>.'
-) }}

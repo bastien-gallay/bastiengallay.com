@@ -1,0 +1,25 @@
+  <p id="v4-title" class="sr-only">Deux incidents 2025-2026 emblématiques du trade-off vitesse↔sécurité de l'IA générative.</p>
+  <p id="v4-desc" class="sr-only">Lovable, faille CVE-2025-48757 : schémas de base de données générés sans politique de sécurité au niveau ligne, plus de 170 applications en production exposées. Moltbook, faille 2026 : endpoints API générés sans contrôle d'autorisation, 1,5 million de tokens d'authentification leakés.</p>
+
+  <ul class="visuel__incidents" role="list">
+    <li class="visuel__incident">
+      <p class="visuel__incident-ref">
+        <a href="https://nvd.nist.gov/vuln/detail/CVE-2025-48757">CVE-2025-48757</a>
+      </p>
+      <h3 class="visuel__incident-target">Lovable</h3>
+      <p class="visuel__incident-fault">schémas DB générés sans <em>row-level security</em></p>
+      <p class="visuel__incident-kpi">
+        <span class="visuel__kpi-num visuel__kpi-num--ink">+170</span>
+        <span class="visuel__kpi-unit">apps exposées en prod</span>
+      </p>
+    </li>
+    <li class="visuel__incident">
+      <p class="visuel__incident-ref">incident · 2026</p>
+      <h3 class="visuel__incident-target">Moltbook</h3>
+      <p class="visuel__incident-fault">endpoints API générés sans contrôle d'autorisation</p>
+      <p class="visuel__incident-kpi">
+        <span class="visuel__kpi-num visuel__kpi-num--pivot">1,5&#160;M</span>
+        <span class="visuel__kpi-unit">tokens d'auth leakés</span>
+      </p>
+    </li>
+  </ul>

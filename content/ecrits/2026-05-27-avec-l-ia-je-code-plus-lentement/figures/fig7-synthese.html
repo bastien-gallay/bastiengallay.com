@@ -1,35 +1,3 @@
-{%- import "macros/visuel.html" as visuel -%}
-{#-
-  V6 — Tableau récap des 4 biais · article "Avec l'IA, je code plus lentement".
-  Synthèse en clôture de la section "Ce que les chiffres ne mesurent pas".
-  Premier shortcode `pos="inline"` (les 5 autres sont en marge) — la
-  pleine largeur sied à un tableau 3 colonnes qui mérite de respirer.
-
-  Lignes (4 thèses) :
-    1) Perception &nbsp;<span class="visuel__sym">≠</span>&nbsp; réalité     · −19 % (vs +24 % attendu)        · METR
-    2) Rédaction &nbsp;<span class="visuel__sym">≠</span>&nbsp; livraison    · revue +91 %, PR +98 %           · Faros
-    3) Dette technique invisible · copy-paste 8,3 % → 12,3 %      · GitClear + DORA
-    4) Success &nbsp;<span class="visuel__sym">≠</span>&nbsp; incident       · 45 % du code IA = ≥ 1 CVE OWASP · Veracode
-
-  Caption source omis : chaque ligne porte son propre [^N].
-
-  Chrome via macros/visuel.html, variant="table".
-
-  Usage :
-    {{ code_plus_lentement_v6() }}
--#}
-{%- set pos = pos | default(value="inline") -%}
-
-{{ visuel::frame_start(
-    num="7",
-    tag="Synthèse",
-    title_html="Quatre angles morts du discours dominant",
-    pos=pos,
-    title_id="v6-title",
-    desc_id="v6-desc",
-    variant="table"
-) }}
-
   <table class="visuel__table" aria-labelledby="v6-title" aria-describedby="v6-desc">
     <caption id="v6-desc" class="sr-only">Tableau de synthèse de la section : quatre angles morts du discours dominant sur la productivité IA, chacun avec son chiffre-clé et sa source.</caption>
     <thead>
@@ -74,7 +42,3 @@
       </tr>
     </tbody>
   </table>
-
-{{ visuel::frame_end(
-    caption_text_html="Quatre lignes, quatre études indépendantes : METR (expérience contrôlée), Faros (télémétrie 22&#160;000 devs), GitClear + DORA (211&#160;M lignes + benchmark décennal), Veracode (audit GenAI 2025)."
-) }}

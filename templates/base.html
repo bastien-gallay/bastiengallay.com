@@ -6,9 +6,13 @@
   <title>{% block title %}Bastien Gallay{% endblock %}</title>
   <meta name="description" content="{% block description %}Bastien Gallay — outils open source pour mieux écrire et mieux penser.{% endblock %}">
 
-  {# Évite le flash de thème : lit la préférence avant la première peinture. #}
+  {# Évite le flash de thème : lit la préférence avant la première peinture.
+     Pose aussi `.js` sur <html> (avant peinture) : les états initiaux cachés
+     du reveal au scroll sont gardés par `:root.js`, donc sans JS aucune
+     figure n'est masquée et il n'y a pas de flash visible→caché. #}
   <script>
     (function () {
+      document.documentElement.classList.add("js");
       try {
         var saved = localStorage.getItem("theme");
         if (saved === "light" || saved === "dark") {
@@ -130,6 +134,7 @@
   <script src="{{ get_url(path='theme.js') | safe }}" defer></script>
   <script src="{{ get_url(path='footnotes.js') | safe }}" defer></script>
   <script src="{{ get_url(path='figures-spotlight.js') | safe }}" defer></script>
+  <script src="{{ get_url(path='figures-reveal.js') | safe }}" defer></script>
   <script src="{{ get_url(path='listing-tools.js') | safe }}" defer></script>
 
   {%- if config.base_url is starting_with("https://bastiengallay.com") %}
