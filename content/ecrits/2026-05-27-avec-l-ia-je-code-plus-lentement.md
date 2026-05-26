@@ -17,7 +17,9 @@ series_part_subtitle = "ce que les chiffres ne mesurent pas"
 
 > **Série en 3 articles — *Coder avec l'IA***
 > Article 1/3 — *ce que les chiffres ne mesurent pas*.
-> À suivre : *Ce que l'IA m'apporte vraiment* (art. 2) · *Quelle stratégie d'équipe ?* (art. 3).
+> À suivre&nbsp;: *Ce que l'IA m'apporte vraiment* (art. 2) · *Quelle stratégie d'équipe&nbsp;?* (art. 3).
+<!-- Liens internes désactivés tant que 2/3 et 3/3 sont draft. À réactiver
+     quand 2/3 est publié — cf. Bloc «&nbsp;article 2/3&nbsp;». -->
 
 ---
 
@@ -25,15 +27,15 @@ series_part_subtitle = "ce que les chiffres ne mesurent pas"
 
 Le 4 avril 2026, j'ai vibe-codé un outil en quelques heures pour gérer mes tâches quotidiennes. Il s'appelait `daily-ops`. Une glu en Python autour de mes `TODO.md`, capable de me faire passer d'un projet à l'autre sans friction. Ça marchait. J'étais content.
 
-Le 25 avril, j'ai créé un vrai repo, ajouté trois fonctionnalités, et un peu de qualité — tests, structure, le minimum syndical. L'IA m'a proposé une abstraction élégante : séparer les items en *blocks* nommés alphabétiquement. *Block A*, *Block B*. Au premier coup d'œil, c'était propre.
+Le 25 avril, j'ai créé un vrai repo, ajouté trois fonctionnalités, et un peu de qualité — tests, structure, le minimum syndical. L'IA m'a proposé une abstraction élégante&nbsp;: séparer les items en *blocks* nommés alphabétiquement. *Block A*, *Block B*. Au premier coup d'œil, c'était propre.
 
 {{ code_plus_lentement_v0(pos="side") }}
 
-Depuis quatre semaines, je corrige les bugs de cette élégance. Fusion accidentelle de blocks entre deux jours à cause du nommage alphabétique. Report de blocks dont tous les items étaient terminés, parce que l'état "fini" n'était pas explicite au niveau du bloc. Formatage concurrent entre deux projets qui partageaient les mêmes fichiers de configuration.
+Depuis quatre semaines, je corrige les bugs de cette élégance. Fusion accidentelle de blocks entre deux jours à cause du nommage alphabétique. Report de blocks dont tous les items étaient terminés, parce que l'état «&nbsp;fini&nbsp;» n'était pas explicite au niveau du bloc. Formatage concurrent entre deux projets qui partageaient les mêmes fichiers de configuration.
 
-<span class="mark--soft" data-fig="1">Bilan : quelques heures pour produire l'outil. Quatre semaines pour le rendre utilisable.</span>
+<span class="mark--soft" data-fig="1">Bilan&nbsp;: quelques heures pour produire l'outil. Quatre semaines pour le rendre utilisable.</span>
 
-Pourtant, je suis depuis longtemps convaincu de deux choses : tout est logiciel — de la simple feuille Excel au script qui génère des PDF — et il faut très vite décider de le supprimer ou de le pérenniser avant qu'il ne se complexifie. Tout logiciel pérenne doit, au plus tôt, bénéficier d'un filet de sécurité pour ne pas baisser en qualité.
+Pourtant, je suis depuis longtemps convaincu de deux choses&nbsp;: tout est logiciel — de la simple feuille Excel au script qui génère des PDF — et il faut très vite décider de le supprimer ou de le pérenniser avant qu'il ne se complexifie. Tout logiciel pérenne doit, au plus tôt, bénéficier d'un filet de sécurité pour ne pas baisser en qualité.
 
 Avec l'IA, la complexité s'installe en silence. Plus vite, aussi, que le bon vieux Excel qui commençait à crouler sous ses six formules à références croisées.
 
@@ -71,7 +73,7 @@ Ces chiffres sont sincères. Ils semblent mesurer la vitesse. <span class="mark"
 
 ### La mesure perçue n'est pas la mesure réelle
 
-En 2025, une équipe de chercheurs de METR a conduit une expérience contrôlée randomisée [^3]. Seize développeurs open source expérimentés, chacun avec en moyenne cinq ans de pratique sur les projets qu'ils maintenaient. 246 tâches réelles, pas synthétiques. Outils utilisés : Cursor Pro et Claude 3.5/3.7 Sonnet.
+En 2025, une équipe de chercheurs de METR a conduit une expérience contrôlée randomisée [^3]. Seize développeurs open source expérimentés, chacun avec en moyenne cinq ans de pratique sur les projets qu'ils maintenaient. 246 tâches réelles, pas synthétiques. Outils utilisés&nbsp;: Cursor Pro et Claude 3.5/3.7 Sonnet.
 
 Avant de commencer, les développeurs prédisaient un gain de temps. Après l'étude, ils en percevaient un. La mesure objective, elle, raconte l'inverse — Figure 2.
 
@@ -81,49 +83,49 @@ L'écart entre la perception et la réalité dépassait les 39 points. Ces déve
 
 J'ai moi-même vécu cet écart. Il y a deux ans, avec des modèles bien moins performants, ce qui m'aurait pris une ou deux heures me prenait souvent une demi-journée. Encore aujourd'hui, il m'arrive par réflexe de demander à Claude Code l'édition d'un fichier qu'il fera en trente secondes, là où j'aurais pu terminer en dix.
 
-Les études antérieures, qui annonçaient 56&nbsp;% ou 21&nbsp;% d'accélération [^3], reposaient sur des tâches synthétiques. Or les conditions synthétiques masquent ce qui rend les vrais projets coûteux : la cohérence avec l'existant, la dette technique, les conventions tacites, les contraintes invisibles.
+Les études antérieures, qui annonçaient 56&nbsp;% ou 21&nbsp;% d'accélération [^3], reposaient sur des tâches synthétiques. Or les conditions synthétiques masquent ce qui rend les vrais projets coûteux&nbsp;: la cohérence avec l'existant, la dette technique, les conventions tacites, les contraintes invisibles.
 
 ### On mesure la rédaction, pas la livraison
 
-Une étude conduite sur la télémétrie de 22 000 développeurs et deux ans d'historique a documenté une déconnexion entre productivité individuelle ressentie et performance de l'entreprise [^4]. Les développeurs disent travailler plus vite. Les entreprises ne voient pas d'amélioration mesurable de la vélocité de livraison ni des résultats business.
+Une étude conduite sur la télémétrie de 22&nbsp;000 développeurs et deux ans d'historique a documenté une déconnexion entre productivité individuelle ressentie et performance de l'entreprise [^4]. Les développeurs disent travailler plus vite. Les entreprises ne voient pas d'amélioration mesurable de la vélocité de livraison ni des résultats business.
 
-Le rapport explique pourquoi : les métriques de vendeurs traquent l'activité — commits, pull requests, lignes de code — qui gonflent mécaniquement avec l'usage IA. La vélocité de livraison, elle, dépend d'une chaîne complète : revue, tests, intégration, déploiement, opérations. Cette chaîne n'a pas accéléré au même rythme.
+Le rapport explique pourquoi&nbsp;: les métriques de vendeurs traquent l'activité — commits, pull requests, lignes de code — qui gonflent mécaniquement avec l'usage IA. La vélocité de livraison, elle, dépend d'une chaîne complète&nbsp;: revue, tests, intégration, déploiement, opérations. Cette chaîne n'a pas accéléré au même rythme.
 
 {{ code_plus_lentement_v2(pos="side") }}
 
-L'étude Faros sur le même sujet est encore plus précise (Figure 3) : <span class="mark--soft" data-fig="3">le gain individuel s'évanouit en file d'attente d'équipe</span> [^4]. Les gains se transforment en files d'attente.
+L'étude Faros sur le même sujet est encore plus précise (Figure 3)&nbsp;: <span class="mark--soft" data-fig="3">le gain individuel s'évanouit en file d'attente d'équipe</span> [^4]. Les gains se transforment en files d'attente.
 
 ### La dette technique devient invisible
 
 {{ code_plus_lentement_v3(pos="side") }}
 
-L'étude GitClear, qui a analysé 211 millions de lignes de code modifiées entre 2020 et 2024 chez Google, Microsoft, Meta et plusieurs entreprises cotées, mesure une transformation des pratiques [^5]. La Figure 4 trace l'inversion : <span class="mark--soft" data-fig="4">la part de copy-paste monte, celle de refactoring chute, les deux courbes se croisent en 2023</span>. Au-delà de cette inversion, un autre signal : le code "churned" — réécrit dans les deux semaines suivant son commit — a doublé, de 3,1&nbsp;% à 5,7&nbsp;%.
+L'étude GitClear, qui a analysé 211 millions de lignes de code modifiées entre 2020 et 2024 chez Google, Microsoft, Meta et plusieurs entreprises cotées, mesure une transformation des pratiques [^5]. La Figure 4 trace l'inversion&nbsp;: <span class="mark--soft" data-fig="4">la part de copy-paste monte, celle de refactoring chute, les deux courbes se croisent en 2023</span>. Au-delà de cette inversion, un autre signal&nbsp;: le code «&nbsp;churned&nbsp;» — réécrit dans les deux semaines suivant son commit — a doublé, de 3,1&nbsp;% à 5,7&nbsp;%.
 
 Lorsque j'ouvre les projets en audit de code, je découvre de plus en plus souvent des fonctions de 800 lignes, empilées au fil des commits automatiques, et des tests unitaires identiques dans trois fichiers différents.
 
-Le rapport DORA 2024 de Google, qui suit la performance de livraison logicielle depuis une décennie, confirme la tension : une augmentation de 25&nbsp;% de l'adoption IA accélère les revues de code mais diminue la stabilité de livraison de 7,2&nbsp;% [^6].
+Le rapport DORA 2024 de Google, qui suit la performance de livraison logicielle depuis une décennie, confirme la tension&nbsp;: une augmentation de 25&nbsp;% de l'adoption IA accélère les revues de code mais diminue la stabilité de livraison de 7,2&nbsp;% [^6].
 
 {{ code_plus_lentement_v5(pos="side") }}
 
-Une citation d'Armando Solar-Lezama, professeur au MIT, résume mieux que je ne saurais le faire : *« L'IA est comme une carte de crédit toute neuve qui va nous permettre d'accumuler de la dette technique d'une manière qu'on n'avait jamais pu auparavant »* [^7].
+Une citation d'Armando Solar-Lezama, professeur au MIT, résume mieux que je ne saurais le faire&nbsp;: *«&nbsp;L'IA est comme une carte de crédit toute neuve qui va nous permettre d'accumuler de la dette technique d'une manière qu'on n'avait jamais pu auparavant&nbsp;»* [^7].
 
 ### Le terrain change avant qu'on ait fini d'apprendre
 
-Une dimension manque presque toujours dans les études : à quel stade d'apprentissage sont les développeurs mesurés ? Les outils évoluent à un rythme qui rend la stabilisation d'une pratique difficile. Entre Cursor début 2025, Cursor mi-2025, Claude Code à l'automne 2025, et les agents autonomes qu'on déploie en 2026, ce ne sont plus les mêmes objets.
+Une dimension manque presque toujours dans les études&nbsp;: à quel stade d'apprentissage sont les développeurs mesurés&nbsp;? Les outils évoluent à un rythme qui rend la stabilisation d'une pratique difficile. Entre Cursor début 2025, Cursor mi-2025, Claude Code à l'automne 2025, et les agents autonomes qu'on déploie en 2026, ce ne sont plus les mêmes objets.
 
 J'ai commencé par l'autocomplétion intelligente, avec Tabnine en 2018, puis Copilot. Codium — devenu Qodo — a été mon premier reviewer IA. Au printemps 2024, je faisais mes premiers Code Katas en ping-pong avec une IA. L'été suivant, un collègue m'a dit qu'il avait codé un projet entier sans écrire la moindre ligne lui-même. J'ai voulu essayer et j'ai constaté très vite que c'était plus efficace que de mixer ma production et celle de l'IA. À chaque transition, j'ai dû réapprendre à faire du vélo.
 
 ### La success story est visible, l'incident l'est moins
 
-Le dernier biais est statistique : on entend ceux qui réussissent avec l'IA. On entend moins <span class="mark--soft" data-fig="6">ceux qui ont stabilisé pendant trois semaines un outil construit en trois jours</span>.
+Le dernier biais est statistique&nbsp;: on entend ceux qui réussissent avec l'IA. On entend moins <span class="mark--soft" data-fig="6">ceux qui ont stabilisé pendant trois semaines un outil construit en trois jours</span>.
 
 {{ code_plus_lentement_v4(pos="side") }}
 
 Et pourtant, les incidents s'accumulent. La CVE-2025-48757 a exposé une faille chez Lovable, plateforme de codage IA, qui générait des schémas de base de données sans politiques de sécurité au niveau ligne. Plus de 170 applications en production affectées [^8]. La faille Moltbook a leaké 1,5 million de tokens d'authentification, parce que les endpoints API générés ne vérifiaient pas les autorisations [^8].
 
-Plus structurellement : selon Veracode, 45&nbsp;% du code généré par IA contient au moins une vulnérabilité OWASP [^9]. Une autre étude mesure que ce code contient 2,74 fois plus de vulnérabilités que le code écrit par des humains [^10].
+Plus structurellement&nbsp;: selon Veracode, 45&nbsp;% du code généré par IA contient au moins une vulnérabilité OWASP [^9]. Une autre étude mesure que ce code contient 2,74 fois plus de vulnérabilités que le code écrit par des humains [^10].
 
-Les méthodologies varient, les chiffres se discutent. Le signal, lui, converge : produire vite avec l'IA coûte en qualité de livraison, et les métriques d'adoption ne le voient pas.
+Les méthodologies varient, les chiffres se discutent. Le signal, lui, converge&nbsp;: produire vite avec l'IA coûte en qualité de livraison, et les métriques d'adoption ne le voient pas.
 
 {{ code_plus_lentement_v6(pos="inline") }}
 
@@ -156,7 +158,7 @@ Lorsqu'on compare le temps de trajet en avion ou en voiture, on compare de porte
   </p>
 </div>
 
-Avant l'IA, nous passions 10&nbsp;% de notre temps à écrire du code, et 90&nbsp;% à le relire, le concevoir, le réfléchir, le réorganiser et aller lire de la documentation. Si nous possédons un outil qui peut accélérer ces 10&nbsp;%, le gain est faible à long terme. Il ne peut être pérenne qu'à deux conditions&nbsp;: savoir accélérer une part des 90&nbsp;% et investir plus de temps sur ce qu'on n'accélère pas.
+Avant l'IA, nous passions 10&nbsp;% de notre temps à écrire du code, et 90&nbsp;% à le relire, le concevoir, y réfléchir, le réorganiser et aller lire de la documentation. Si nous possédons un outil qui peut accélérer ces 10&nbsp;%, le gain est faible à long terme. Il ne peut être pérenne qu'à deux conditions&nbsp;: savoir accélérer une part des 90&nbsp;% et investir plus de temps sur ce qu'on n'accélère pas.
 
 ---
 
@@ -164,18 +166,18 @@ Avant l'IA, nous passions 10&nbsp;% de notre temps à écrire du code, et 90&nbs
 
 Avec daily-ops, j'avais identifié le logiciel accidentel et ajouté la structure dès le 25 avril. Ce matin encore, quatre semaines plus tard, je corrigeais un bug né des premiers jours. La discipline ne suffit pas à effacer la précipitation initiale.
 
-Si la vitesse mesurée n'est pas la productivité réelle, et si la discipline n'efface pas la précipitation, alors la question devient : qu'est-ce que l'IA m'apporte *vraiment* ? Ce sera l'objet du second article.
+Si la vitesse mesurée n'est pas la productivité réelle, et si la discipline n'efface pas la précipitation, alors la question devient&nbsp;: qu'est-ce que l'IA m'apporte *vraiment*&nbsp;? Ce sera l'objet du second article.
 
 ---
 
 ## Note méthodique — quatre biais
 
-Article basé sur mes recherches personnelles, dont je partage les sources. J'attire l'attention sur quatre biais qui peuvent creuser un écart entre nos points de vue :
+Article basé sur mes recherches personnelles, dont je partage les sources. J'attire l'attention sur quatre biais qui peuvent creuser un écart entre nos points de vue&nbsp;:
 
-1. **Early-adopter** : la nature et le nombre d'années de mon expérience ont une influence. Nos domaines, niveau de responsabilité et organisation varient. J'essaie de me renseigner et de prendre en compte le panel le plus large possible, et suis conscient que ma vision a des angles morts.
-2. **Temporalité** : certaines études citées ont plus d'un an en mai 2026. Le domaine de l'IA change assez vite pour que les données aient déjà perdu du sens. J'ai sélectionné les sources qui sont, à ma connaissance, toujours valables.
-3. **Sélection des incidents** : je ne traite pas ici les incidents où l'IA n'est qu'un démultiplicateur d'une faute humaine évidente — supprimer la base de prod sans backup, exposer des credentials sans audit. Ces cas existent en abondance, mais ils racontent moins l'IA que la pratique qui l'entoure.
-4. **Mes croyances et connaissances** : j'écris en faveur d'une pratique que j'ai adoptée. Y adhérer ou pas peut donner une compréhension différente de mes propos. Sur ce biais en particulier, à vous de faire la part des choses.
+1. **Early-adopter**&nbsp;: la nature et le nombre d'années de mon expérience ont une influence. Nos domaines, niveau de responsabilité et organisation varient. J'essaie de me renseigner et de prendre en compte le panel le plus large possible, et suis conscient que ma vision a des angles morts.
+2. **Temporalité**&nbsp;: certaines études citées ont plus d'un an en mai 2026. Le domaine de l'IA change assez vite pour que les données aient déjà perdu du sens. J'ai sélectionné les sources qui sont, à ma connaissance, toujours valables.
+3. **Sélection des incidents**&nbsp;: je ne traite pas ici les incidents où l'IA n'est qu'un démultiplicateur d'une faute humaine évidente — supprimer la base de prod sans backup, exposer des credentials sans audit. Ces cas existent en abondance, mais ils racontent moins l'IA que la pratique qui l'entoure.
+4. **Mes croyances et connaissances**&nbsp;: j'écris en faveur d'une pratique que j'ai adoptée. Y adhérer ou pas peut donner une compréhension différente de mes propos. Sur ce biais en particulier, à vous de faire la part des choses.
 
 ---
 
@@ -195,7 +197,7 @@ Article basé sur mes recherches personnelles, dont je partage les sources. J'at
 
 [^7]: Solar-Lezama, A., interview au [*Wall Street Journal*](https://www.wsj.com/), citée dans [DevOps.com](https://devops.com/), *AI in Software Development: Productivity at the Cost of Code Quality?*, 2025.
 
-[^8]: Vibe Coder Blog, [*Security Researchers Sound the Alarm on AI Code Vulnerabilities*](https://blog.vibecoder.me/), blog.vibecoder.me, avril 2026 ; voir aussi [CVE-2025-48757](https://nvd.nist.gov/vuln/detail/CVE-2025-48757).
+[^8]: Vibe Coder Blog, [*Security Researchers Sound the Alarm on AI Code Vulnerabilities*](https://blog.vibecoder.me/), blog.vibecoder.me, avril 2026&nbsp;; voir aussi [CVE-2025-48757](https://nvd.nist.gov/vuln/detail/CVE-2025-48757).
 
 [^9]: Veracode, [*2025 GenAI Code Security Report*](https://www.veracode.com/resources/genai-code-security-report-2025/), veracode.com.
 
