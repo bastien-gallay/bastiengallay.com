@@ -35,7 +35,7 @@ Depuis quatre semaines, je corrige les bugs de cette élégance. Fusion accident
 
 Pourtant, je suis depuis longtemps convaincu de deux choses : tout est logiciel — de la simple feuille Excel au script qui génère des PDF — et il faut très vite décider de le supprimer ou de le pérenniser avant qu'il ne se complexifie. Tout logiciel pérenne doit, au plus tôt, bénéficier d'un filet de sécurité pour ne pas baisser en qualité.
 
-Avec l'IA, la complexité arrive plus vite. Et plus discrètement que le bon vieux Excel qui commençait à crouler sous ses six formules à références croisées.
+Avec l'IA, la complexité s'installe en silence. Plus vite, aussi, que le bon vieux Excel qui commençait à crouler sous ses six formules à références croisées.
 
 C'est cette expérience, répétée sous plusieurs formes au cours des derniers mois, qui m'a fait basculer. **Depuis, je code plus lentement. Et je produis plus.**
 
@@ -43,9 +43,27 @@ C'est cette expérience, répétée sous plusieurs formes au cours des derniers 
 
 ## Le paradoxe
 
-Le discours dominant en 2026 est sans ambiguïté. Selon GitHub, les utilisateurs de Copilot complètent 126&nbsp;% plus de projets par semaine que les codeurs manuels [^1]. Les enquêtes Stack Overflow confirment 84&nbsp;% d'adoption chez les développeurs, dont plus de la moitié quotidienne [^2]. Et 78&nbsp;% des développeurs déclarent que l'IA améliore leur productivité [^1].
+Le discours dominant en 2026 est sans ambiguïté.
 
-Ces chiffres sont sincères. Ils ne sont simplement pas la mesure de ce qu'on croit mesurer.
+<div class="paradoxe" role="group" aria-label="Trois chiffres clés du discours dominant sur la productivité IA en 2026">
+  <p class="paradoxe__row">
+    <span class="paradoxe__num">126&nbsp;%</span>
+    <span class="paradoxe__claim">de projets complétés par semaine avec Copilot</span>
+    <span class="paradoxe__src">GitHub<sup class="footnote-reference"><a href="#1">1</a></sup></span>
+  </p>
+  <p class="paradoxe__row">
+    <span class="paradoxe__num">84&nbsp;%</span>
+    <span class="paradoxe__claim">d'adoption chez les développeurs, plus de la moitié quotidienne</span>
+    <span class="paradoxe__src">Stack Overflow<sup class="footnote-reference"><a href="#2">2</a></sup></span>
+  </p>
+  <p class="paradoxe__row">
+    <span class="paradoxe__num">78&nbsp;%</span>
+    <span class="paradoxe__claim">déclarent que l'IA améliore leur productivité</span>
+    <span class="paradoxe__src">GitHub<sup class="footnote-reference"><a href="#1">1</a></sup></span>
+  </p>
+</div>
+
+Ces chiffres sont sincères. Ils semblent mesurer la vitesse. <span class="mark">En réalité ils n'en mesurent qu'une composante.</span>
 
 ---
 
@@ -105,7 +123,7 @@ Et pourtant, les incidents s'accumulent. La CVE-2025-48757 a exposé une faille 
 
 Plus structurellement : selon Veracode, 45&nbsp;% du code généré par IA contient au moins une vulnérabilité OWASP [^9]. Une autre étude mesure que ce code contient 2,74 fois plus de vulnérabilités que le code écrit par des humains [^10].
 
-Ces chiffres méritent d'être discutés. Les méthodologies varient. Mais le signal converge : il y a un trade-off entre vitesse de production et qualité de livraison, qui n'apparaît pas dans les métriques d'adoption.
+Les méthodologies varient, les chiffres se discutent. Le signal, lui, converge : produire vite avec l'IA coûte en qualité de livraison, et les métriques d'adoption ne le voient pas.
 
 {{ code_plus_lentement_v6(pos="inline") }}
 
@@ -150,17 +168,14 @@ Si la vitesse mesurée n'est pas la productivité réelle, et si la discipline n
 
 ---
 
-## Note méthodique — quatre objections
+## Note méthodique — quatre biais
 
-Une recherche honnête doit reconnaître ce qui pourrait l'invalider. Quatre objections que je trouve sérieuses :
+Article basé sur mes recherches personnelles, dont je partage les sources. J'attire l'attention sur quatre biais qui peuvent creuser un écart entre nos points de vue :
 
-**Le biais d'early-adopter.** Mon vécu, comme celui des seize développeurs de l'étude METR, est celui de praticiens expérimentés. Un développeur en début de carrière connaît peut-être un autre rapport à l'IA, plus directement accélérateur, parce qu'il n'a pas encore l'intuition de la dette à venir. Cela n'invalide pas la thèse : ça précise son public.
-
-**Le biais temporel.** Les études citées portent sur la période 2024-début 2025. Les outils évoluent. Il est possible que les agents 2026 changent la donne. Mais le sens du changement n'est pas évident : les outils plus autonomes accentuent aussi la dimension *« il faut quelqu'un pour rattraper »*, comme le suggèrent les chiffres récents sur les incidents Claude Code et Copilot [^11].
-
-**Le biais de sélection des incidents.** Je ne traite pas ici les incidents où l'IA n'est qu'un démultiplicateur d'une faute humaine évidente — supprimer la base de prod sans backup, exposer des credentials sans audit. Ces cas existent, et ils abondent, mais ils racontent moins l'IA que la pratique qui l'entoure.
-
-**Mon propre biais.** J'écris en faveur d'une pratique que j'ai adoptée. Je suis donc à la fois témoin et avocat. Je fais confiance à mes lecteurs pour prendre le recul nécessaire.
+1. **Early-adopter** : la nature et le nombre d'années de mon expérience ont une influence. Nos domaines, niveau de responsabilité et organisation varient. J'essaie de me renseigner et de prendre en compte le panel le plus large possible, et suis conscient que ma vision a des angles morts.
+2. **Temporalité** : certaines études citées ont plus d'un an en mai 2026. Le domaine de l'IA change assez vite pour que les données aient déjà perdu du sens. J'ai sélectionné les sources qui sont, à ma connaissance, toujours valables.
+3. **Sélection des incidents** : je ne traite pas ici les incidents où l'IA n'est qu'un démultiplicateur d'une faute humaine évidente — supprimer la base de prod sans backup, exposer des credentials sans audit. Ces cas existent en abondance, mais ils racontent moins l'IA que la pratique qui l'entoure.
+4. **Mes croyances et connaissances** : j'écris en faveur d'une pratique que j'ai adoptée. Y adhérer ou pas peut donner une compréhension différente de mes propos. Sur ce biais en particulier, à vous de faire la part des choses.
 
 ---
 
