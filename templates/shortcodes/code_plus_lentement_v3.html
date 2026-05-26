@@ -88,16 +88,28 @@
       <text x="580" y="385" text-anchor="middle">2024</text>
     </g>
 
-    {#- Refactoring : descendant (neutre, trait épais en pointillé) -#}
-    <polyline
-      class="visuel__line visuel__line--refactor"
-      points="80,103 205,158 330,205 455,237 580,259"
-    />
-    {#- Copy-paste : ascendant (accent rouge, trait plein) -#}
-    <polyline
-      class="visuel__line visuel__line--copypaste"
-      points="80,272 205,259 330,248 455,237 580,229"
-    />
+    {#- Wipe gauche→droite pour le reveal au scroll : le rect du clipPath
+        est mis à l'échelle (scaleX 0→1) par le CSS, révélant les deux
+        courbes dans le sens du temps (2020→2024). Le clip préserve les
+        styles de trait (le pointillé du refactoring reste pointillé).
+        Sans `.is-revealed`/sans JS, le rect est à pleine échelle (cf.
+        :root.js dans _editorial.scss) : courbes entières par défaut. -#}
+    <clipPath id="v3-wipe">
+      <rect class="visuel__wipe" x="80" y="30" width="500" height="345" />
+    </clipPath>
+
+    <g clip-path="url(#v3-wipe)">
+      {#- Refactoring : descendant (neutre, trait épais en pointillé) -#}
+      <polyline
+        class="visuel__line visuel__line--refactor"
+        points="80,103 205,158 330,205 455,237 580,259"
+      />
+      {#- Copy-paste : ascendant (accent rouge, trait plein) -#}
+      <polyline
+        class="visuel__line visuel__line--copypaste"
+        points="80,272 205,259 330,248 455,237 580,229"
+      />
+    </g>
 
     {#- Marqueur de crossover en 2023 — pill élargi à 220vb pour caser
         "crossover 2023" à font-size 22vb (≈11px visuels en --side).

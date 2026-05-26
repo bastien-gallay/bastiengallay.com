@@ -1708,53 +1708,143 @@ p.has-dropcap::first-letter {
   transform: translateY(1rem);
 }
 
-// Signature Figure 2 (METR) : les barres poussent depuis l'axe 0 %.
-// `transform-box: fill-box` ancre transform-origin sur la bbox du rect ;
-// les barres positives poussent vers la droite (origine bord gauche = axe),
-// la barre « mesuré » pousse vers la gauche (origine bord droit = axe) — la
-// bascule visuelle est le punchline. Valeurs + annotation d'écart en fondu
-// après que les barres se soient posées.
-:root.js .visuel[data-anchor="fig-2"] {
+// ── Chorégraphies internes par type de figure (sous .is-revealed) ──
+// Chaque figure a déjà l'entrée commune (fondu + rise) ci-dessus. On
+// ajoute ici un reveal interne adapté au type. Tout est gardé par
+// :root.js + .is-revealed → sans JS rien n'est masqué (bloc reduced-motion
+// plus bas remet l'état final partout).
+
+// — Bar charts (Fig 2 METR, Fig 3 Faros) : barres depuis l'axe 0 % —
+// transform-box fill-box ancre l'origine sur la bbox du rect. Barres
+// positives (ink-mute / ink / pivot) vers la droite (origine bord gauche
+// = axe) ; barre négative vers la gauche (origine bord droit).
+:root.js .visuel--chart {
   .visuel__bar {
     transform-box: fill-box;
     transition: transform var(--dur-slow) var(--ease-out-expo);
   }
-  // prédit (--ink-mute) et perçu (--ink) poussent vers la droite depuis
-  // l'axe 0 % (origine bord gauche) ; mesuré (--negative) pousse vers la
-  // gauche (origine bord droit) — la bascule = punchline.
   .visuel__bar--ink-mute,
-  .visuel__bar--ink      { transform-origin: left center; }
+  .visuel__bar--ink,
+  .visuel__bar--pivot    { transform-origin: left center; }
   .visuel__bar--negative { transform-origin: right center; }
 
   .visuel__bar-value,
   .visuel__axis-zero-label,
   .visuel__gap-tick,
   .visuel__cross-pill,
-  .visuel__cross-label {
+  .visuel__cross-label,
+  .visuel__cross,
+  .visuel__cross-tick {
     transition: opacity var(--dur-mid) var(--ease-out-quart);
   }
 }
-:root.js .visuel[data-anchor="fig-2"]:not(.is-revealed) {
+:root.js .visuel--chart:not(.is-revealed) {
   .visuel__bar { transform: scaleX(0); }
   .visuel__bar-value,
   .visuel__axis-zero-label,
   .visuel__gap-tick,
   .visuel__cross-pill,
-  .visuel__cross-label { opacity: 0; }
+  .visuel__cross-label,
+  .visuel__cross,
+  .visuel__cross-tick { opacity: 0; }
 }
-// Cascade : prédit → perçu → mesuré, puis les valeurs, puis l'écart.
-:root.js .visuel[data-anchor="fig-2"].is-revealed {
-  .visuel__bar--ink-mute { transition-delay: 0ms; }   // prédit
-  .visuel__bar--ink      { transition-delay: 120ms; }  // perçu
-  .visuel__bar--negative { transition-delay: 240ms; }  // mesuré
+// Cascade : 1re barre (ink-mute) → 2e (ink) → 3e (negative|pivot, le
+// punchline), puis valeurs, puis annotation d'écart / marqueur.
+:root.js .visuel--chart.is-revealed {
+  .visuel__bar--ink-mute { transition-delay: 0ms; }
+  .visuel__bar--ink      { transition-delay: 120ms; }
+  .visuel__bar--negative,
+  .visuel__bar--pivot    { transition-delay: 240ms; }
   .visuel__bar-value,
-  .visuel__axis-zero-label    { transition-delay: 540ms; }
+  .visuel__axis-zero-label { transition-delay: 540ms; }
   .visuel__gap-tick,
   .visuel__cross-pill,
-  .visuel__cross-label        { transition-delay: 660ms; }
+  .visuel__cross-label,
+  .visuel__cross,
+  .visuel__cross-tick    { transition-delay: 660ms; }
 }
 
-// Accessibilité : pas de mouvement. Tout est rendu à l'état final, même si
+// — Line chart (Fig 4 GitClear) : wipe temporel gauche→droite —
+// Le rect du clipPath #v3-wipe est mis à l'échelle (scaleX 0→1) ; la grille
+// et les axes apparaissent d'abord, les courbes se tracent dans le sens du
+// temps (2020→2024), le marqueur de crossover arrive après que le wipe a
+// passé 2023. Le clip préserve le pointillé du refactoring.
+:root.js .visuel[data-anchor="fig-4"] {
+  .visuel__wipe {
+    transform-box: fill-box;
+    transform-origin: left center;
+    transition: transform var(--dur-slow) var(--ease-out-quart);
+  }
+  .visuel__grid,
+  .visuel__axis-label {
+    transition: opacity var(--dur-fast) var(--ease-out-quart);
+  }
+}
+:root.js .visuel[data-anchor="fig-4"]:not(.is-revealed) {
+  .visuel__wipe { transform: scaleX(0); }
+  .visuel__grid,
+  .visuel__axis-label { opacity: 0; }
+}
+:root.js .visuel[data-anchor="fig-4"].is-revealed {
+  .visuel__grid,
+  .visuel__axis-label { transition-delay: 0ms; }
+  .visuel__wipe       { transition-delay: 150ms; }
+  // Override la cascade chart : marqueur après la fin du wipe.
+  .visuel__cross-pill,
+  .visuel__cross-label,
+  .visuel__cross,
+  .visuel__cross-tick { transition-delay: 720ms; }
+}
+
+// — Incidents (Fig 1 daily-ops, Fig 6 fuites) : cartes en cascade —
+:root.js .visuel--incidents .visuel__incident {
+  transition:
+    opacity var(--dur-mid) var(--ease-out-quart),
+    transform var(--dur-mid) var(--ease-out-quart);
+}
+:root.js .visuel--incidents:not(.is-revealed) .visuel__incident {
+  opacity: 0;
+  transform: translateY(0.5rem);
+}
+:root.js .visuel--incidents.is-revealed {
+  .visuel__incident:nth-child(1) { transition-delay: 80ms; }
+  .visuel__incident:nth-child(2) { transition-delay: 220ms; }
+}
+
+// — Quote (Fig 5 MIT) : le grand guillemet entre comme une ponctuation —
+:root.js .visuel--quote .visuel__quote-mark {
+  display: inline-block;
+  transform-origin: left top;
+  transition:
+    opacity var(--dur-mid) var(--ease-out-quart),
+    transform var(--dur-slow) var(--ease-out-expo);
+}
+:root.js .visuel--quote:not(.is-revealed) .visuel__quote-mark {
+  opacity: 0;
+  transform: scale(0.7);
+}
+:root.js .visuel--quote.is-revealed .visuel__quote-mark {
+  transition-delay: 150ms;
+}
+
+// — Table (Fig 7 synthèse) : les rangées se remplissent en cascade —
+:root.js .visuel--table tbody tr {
+  transition:
+    opacity var(--dur-mid) var(--ease-out-quart),
+    transform var(--dur-mid) var(--ease-out-quart);
+}
+:root.js .visuel--table:not(.is-revealed) tbody tr {
+  opacity: 0;
+  transform: translateY(0.4rem);
+}
+:root.js .visuel--table.is-revealed {
+  tbody tr:nth-child(1) { transition-delay: 60ms; }
+  tbody tr:nth-child(2) { transition-delay: 140ms; }
+  tbody tr:nth-child(3) { transition-delay: 220ms; }
+  tbody tr:nth-child(4) { transition-delay: 300ms; }
+}
+
+// Accessibilité : pas de mouvement. État final partout, même si
 // `.is-revealed` n'est jamais posée (JS absent + reduced-motion).
 @media (prefers-reduced-motion: reduce) {
   :root.js .ecrit-page__content .visuel[data-anchor],
@@ -1763,13 +1853,29 @@ p.has-dropcap::first-letter {
     transform: none;
     transition: none;
   }
-  :root.js .visuel[data-anchor="fig-2"]:not(.is-revealed) {
+  :root.js .visuel--chart:not(.is-revealed) {
     .visuel__bar { transform: none; }
     .visuel__bar-value,
     .visuel__axis-zero-label,
     .visuel__gap-tick,
     .visuel__cross-pill,
-    .visuel__cross-label { opacity: 1; }
+    .visuel__cross-label,
+    .visuel__cross,
+    .visuel__cross-tick { opacity: 1; }
+  }
+  :root.js .visuel[data-anchor="fig-4"]:not(.is-revealed) {
+    .visuel__wipe { transform: none; }
+    .visuel__grid,
+    .visuel__axis-label { opacity: 1; }
+  }
+  :root.js .visuel--incidents:not(.is-revealed) .visuel__incident,
+  :root.js .visuel--table:not(.is-revealed) tbody tr {
+    opacity: 1;
+    transform: none;
+  }
+  :root.js .visuel--quote:not(.is-revealed) .visuel__quote-mark {
+    opacity: 1;
+    transform: none;
   }
 }
 
