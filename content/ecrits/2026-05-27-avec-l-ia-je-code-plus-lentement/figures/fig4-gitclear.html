@@ -1,51 +1,18 @@
-{%- import "macros/visuel.html" as visuel -%}
-{#-
-  V3 — L'inversion 2020-2024 (GitClear) · article "Avec l'IA, je code plus lentement".
-  Deux polylines croisées : part de copy-paste (ascendante, accent)
-  contre part de refactoring (descendante, neutre) dans le code livré.
-  Source : GitClear AI Copilot Code Quality 2025 [^5].
-
-  Données :
-    année · copy-paste · refactoring
-    2020  ·  8,3 %     · 24,1 %
-    2021  ·  9,5 %     · 19,0 %
-    2022  · 10,5 %     · 14,5 %
-    2023  · 11,5 %     · 11,5 %    ← crossover
-    2024  · 12,3 %     ·  9,5 %
-
-  Espace de tracé (viewBox 600x420) :
-    margin left 80 · right 20 · top 40 · bottom 60
-    x : 2020→x=80, 2024→x=580 (step 125)
-    y : 0%→y=360, 30%→y=40 (échelle 10.67 / %)
-    Margin gauche 80 (vs 60) laisse la place aux labels Y "22,5 %".
-
-  Chrome externalisé dans macros/visuel.html. La légende des courbes est
-  injectée via le paramètre `legend_html` de frame_start (V3 est le seul
-  cas avec légende dans la règle de 3 — gardé optionnel dans la macro).
-
-  Usage :
-    {{ code_plus_lentement_v3() }}
--#}
-{#- Variante de placement : "side" (défaut, marge sticky ai-2027),
-    "inline" (centré pleine prose, à utiliser pour figures peu réductibles).
-    NOTE renumérotation : "V3" est l'identifiant de travail ; à la
-    publication, remplacer par "Fig. 3". -#}
-{%- set pos = pos | default(value="side") -%}
-{#- Légende inline : Zola/Tera dans les shortcodes ne supporte pas le
-    bloc `{% set var %}...{% endset %}` (capture), donc on passe le HTML
-    directement en string. Outer double-quote, inner single-quote pour
-    les attributs HTML (HTML accepte les deux). -#}
-{%- set legend = "<ul class='visuel__legend' aria-label='Légende des courbes'><li class='visuel__legend-item'><span class='visuel__swatch visuel__swatch--copypaste' aria-hidden='true'></span><span class='visuel__legend-label'>copy-paste</span><span class='visuel__legend-delta'>+4&nbsp;pts</span></li><li class='visuel__legend-item'><span class='visuel__swatch visuel__swatch--refactor' aria-hidden='true'></span><span class='visuel__legend-label'>refactoring</span><span class='visuel__legend-delta'>−14,6&nbsp;pts</span></li></ul>" -%}
-
-{{ visuel::frame_start(
-    num="4",
-    tag="GitClear · 2020 → 2024",
-    title_html="Crossover 2023 : copy-paste passe devant refactoring",
-    pos=pos,
-    title_id="v3-title",
-    desc_id="v3-desc",
-    legend_html=legend
-) }}
+  {#- Légende des courbes : autrefois passée via le paramètre `legend_html`
+      du shortcode ; vit désormais en tête du corps colocalisé (la macro
+      l'émettait juste après le titre, avant le SVG — même position). -#}
+  <ul class="visuel__legend" aria-label="Légende des courbes">
+    <li class="visuel__legend-item">
+      <span class="visuel__swatch visuel__swatch--copypaste" aria-hidden="true"></span>
+      <span class="visuel__legend-label">copy-paste</span>
+      <span class="visuel__legend-delta">+4&nbsp;pts</span>
+    </li>
+    <li class="visuel__legend-item">
+      <span class="visuel__swatch visuel__swatch--refactor" aria-hidden="true"></span>
+      <span class="visuel__legend-label">refactoring</span>
+      <span class="visuel__legend-delta">−14,6&nbsp;pts</span>
+    </li>
+  </ul>
 
   <svg
     class="visuel__svg"
@@ -125,8 +92,3 @@
     </g>
 
   </svg>
-
-{{ visuel::frame_end(
-    caption_text_html="211&#160;millions de lignes de code modifiées, analysées chez Google, Microsoft, Meta et plusieurs entreprises cotées.",
-    caption_source_html='Source : GitClear, <em>AI Copilot Code Quality 2025</em>, n.&#160;<sup class="footnote-reference"><a href="#5">5</a></sup>.'
-) }}

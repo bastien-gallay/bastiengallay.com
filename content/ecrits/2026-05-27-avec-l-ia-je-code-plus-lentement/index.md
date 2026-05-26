@@ -29,7 +29,7 @@ Le 4 avril 2026, j'ai vibe-codé un outil en quelques heures pour gérer mes tâ
 
 Le 25 avril, j'ai créé un vrai repo, ajouté trois fonctionnalités, et un peu de qualité — tests, structure, le minimum syndical. L'IA m'a proposé une abstraction élégante&nbsp;: séparer les items en *blocks* nommés alphabétiquement. *Block A*, *Block B*. Au premier coup d'œil, c'était propre.
 
-{{ code_plus_lentement_v0(pos="side") }}
+{{ figure(num="1", variant="incidents", tag="Cas zéro · 2026-04", title="4&#160;h pour produire, 4&#160;sem. pour stabiliser", title_id="v0-title", desc_id="v0-desc", body="fig1-daily-ops.html", pos="side") }}
 
 Depuis quatre semaines, je corrige les bugs de cette élégance. Fusion accidentelle de blocks entre deux jours à cause du nommage alphabétique. Report de blocks dont tous les items étaient terminés, parce que l'état «&nbsp;fini&nbsp;» n'était pas explicite au niveau du bloc. Formatage concurrent entre deux projets qui partageaient les mêmes fichiers de configuration.
 
@@ -77,7 +77,7 @@ En 2025, une équipe de chercheurs de METR a conduit une expérience contrôlée
 
 Avant de commencer, les développeurs prédisaient un gain de temps. Après l'étude, ils en percevaient un. La mesure objective, elle, raconte l'inverse — Figure 2.
 
-{{ code_plus_lentement_v1(pos="side") }}
+{{ figure(num="2", variant="chart-borne", tag="Étude METR · 2025", title='Perçu +20&#160;%, mesuré <span class="visuel__title-vs">−19&#160;%</span>', title_id="v1-title", desc_id="v1-desc", body="fig2-metr.html", pos="side", caption="16 développeurs OSS expérimentés, 246 tâches réelles, Cursor Pro + Claude 3.5/3.7 Sonnet. Expérience contrôlée randomisée.", source='Source : Becker et&#160;al., METR&#160;2025, arXiv:2507.09089, n.&#160;<sup class="footnote-reference"><a href="#3">3</a></sup>.') }}
 
 L'écart entre la perception et la réalité dépassait les 39 points. Ces développeurs n'étaient ni naïfs ni hostiles à l'IA. Ils étaient simplement <span class="mark--soft" data-fig="2">convaincus d'aller plus vite quand ils allaient en réalité plus lentement</span>.
 
@@ -91,13 +91,13 @@ Une étude conduite sur la télémétrie de 22&nbsp;000 développeurs et deux an
 
 Le rapport explique pourquoi&nbsp;: les métriques de vendeurs traquent l'activité — commits, pull requests, lignes de code — qui gonflent mécaniquement avec l'usage IA. La vélocité de livraison, elle, dépend d'une chaîne complète&nbsp;: revue, tests, intégration, déploiement, opérations. Cette chaîne n'a pas accéléré au même rythme.
 
-{{ code_plus_lentement_v2(pos="side") }}
+{{ figure(num="3", tag="Étude Faros · 2025", title="Le gain individuel disparaît en file d'attente", title_id="v2-title", desc_id="v2-desc", body="fig3-faros.html", pos="side", caption="22&#160;000 développeurs, 2 ans de télémétrie. Mesures par équipe sur la chaîne complète (revue, intégration, déploiement).", source='Source : Faros AI, <em>Engineering Productivity 2025</em>, n.&#160;<sup class="footnote-reference"><a href="#4">4</a></sup>.') }}
 
 L'étude Faros sur le même sujet est encore plus précise (Figure 3)&nbsp;: <span class="mark--soft" data-fig="3">le gain individuel s'évanouit en file d'attente d'équipe</span> [^4]. Les gains se transforment en files d'attente.
 
 ### La dette technique devient invisible
 
-{{ code_plus_lentement_v3(pos="side") }}
+{{ figure(num="4", tag="GitClear · 2020 → 2024", title="Crossover 2023 : copy-paste passe devant refactoring", title_id="v3-title", desc_id="v3-desc", body="fig4-gitclear.html", pos="side", caption="211&#160;millions de lignes de code modifiées, analysées chez Google, Microsoft, Meta et plusieurs entreprises cotées.", source='Source : GitClear, <em>AI Copilot Code Quality 2025</em>, n.&#160;<sup class="footnote-reference"><a href="#5">5</a></sup>.') }}
 
 L'étude GitClear, qui a analysé 211 millions de lignes de code modifiées entre 2020 et 2024 chez Google, Microsoft, Meta et plusieurs entreprises cotées, mesure une transformation des pratiques [^5]. La Figure 4 trace l'inversion&nbsp;: <span class="mark--soft" data-fig="4">la part de copy-paste monte, celle de refactoring chute, les deux courbes se croisent en 2023</span>. Au-delà de cette inversion, un autre signal&nbsp;: le code «&nbsp;churned&nbsp;» — réécrit dans les deux semaines suivant son commit — a doublé, de 3,1&nbsp;% à 5,7&nbsp;%.
 
@@ -105,7 +105,7 @@ Lorsque j'ouvre les projets en audit de code, je découvre de plus en plus souve
 
 Le rapport DORA 2024 de Google, qui suit la performance de livraison logicielle depuis une décennie, confirme la tension&nbsp;: une augmentation de 25&nbsp;% de l'adoption IA accélère les revues de code mais diminue la stabilité de livraison de 7,2&nbsp;% [^6].
 
-{{ code_plus_lentement_v5(pos="side") }}
+{{ figure(num="5", variant="quote", tag="MIT · WSJ 2025", title="", title_id="v5-title", desc_id="v5-desc", body="fig5-mit.html", pos="side", caption="Une dette qui se contracte plus vite qu'elle ne se rembourse&#160;: la métaphore éclaire les chiffres GitClear et DORA réunis.", source='Source&#160;: Wall Street Journal, cité dans DevOps.com, 2025, n.&#160;<sup class="footnote-reference"><a href="#7">7</a></sup>.') }}
 
 Une citation d'Armando Solar-Lezama, professeur au MIT, résume mieux que je ne saurais le faire&nbsp;: *«&nbsp;L'IA est comme une carte de crédit toute neuve qui va nous permettre d'accumuler de la dette technique d'une manière qu'on n'avait jamais pu auparavant&nbsp;»* [^7].
 
@@ -119,7 +119,7 @@ J'ai commencé par l'autocomplétion intelligente, avec Tabnine en 2018, puis Co
 
 Le dernier biais est statistique&nbsp;: on entend ceux qui réussissent avec l'IA. On entend moins <span class="mark--soft" data-fig="6">ceux qui ont stabilisé pendant trois semaines un outil construit en trois jours</span>.
 
-{{ code_plus_lentement_v4(pos="side") }}
+{{ figure(num="6", variant="incidents", tag="Incidents · 2025-2026", title="Deux fuites emblématiques", title_id="v4-title", desc_id="v4-desc", body="fig6-fuites.html", pos="side", caption="CVE référencée + leak documenté. Dans les deux cas, code généré par IA déployé sans contrôle de sécurité (row-level security, autorisations endpoints).", source='Source&#160;: Vibe Coder Blog, <em>Security Researchers Sound the Alarm on AI Code Vulnerabilities</em>, n.&#160;<sup class="footnote-reference"><a href="#8">8</a></sup>.') }}
 
 Et pourtant, les incidents s'accumulent. La CVE-2025-48757 a exposé une faille chez Lovable, plateforme de codage IA, qui générait des schémas de base de données sans politiques de sécurité au niveau ligne. Plus de 170 applications en production affectées [^8]. La faille Moltbook a leaké 1,5 million de tokens d'authentification, parce que les endpoints API générés ne vérifiaient pas les autorisations [^8].
 
@@ -127,7 +127,7 @@ Plus structurellement&nbsp;: selon Veracode, 45&nbsp;% du code généré par IA 
 
 Les méthodologies varient, les chiffres se discutent. Le signal, lui, converge&nbsp;: produire vite avec l'IA coûte en qualité de livraison, et les métriques d'adoption ne le voient pas.
 
-{{ code_plus_lentement_v6(pos="inline") }}
+{{ figure(num="7", variant="table", tag="Synthèse", title="Quatre angles morts du discours dominant", title_id="v6-title", desc_id="v6-desc", body="fig7-synthese.html", pos="inline", caption="Quatre lignes, quatre études indépendantes : METR (expérience contrôlée), Faros (télémétrie 22&#160;000 devs), GitClear + DORA (211&#160;M lignes + benchmark décennal), Veracode (audit GenAI 2025).") }}
 
 ---
 
