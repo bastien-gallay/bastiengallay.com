@@ -1686,6 +1686,94 @@ p.has-dropcap::first-letter {
 }
 
 // ──────────────────────────────────────────────────────────────────
+// Reveal au scroll — entrée des figures + signature Figure 2
+// ──────────────────────────────────────────────────────────────────
+// JS associé : static/figures-reveal.js — pose `.is-revealed` une fois
+// quand la figure entre dans le viewport. L'état initial caché est gardé
+// par `:root.js` (classe posée en <head> avant peinture) : sans JS, rien
+// n'est masqué. On NE remet PAS `opacity: 1` en `.is-revealed` : on laisse
+// la valeur retomber à son défaut pour ne pas écraser le dim du spotlight
+// (cf. section précédente, qui passe les figures inactives à 0.3).
+//
+// La transition vit sur la figure (spécificité (0,5,0) → bat la règle
+// d'opacité du spotlight (0,2,0), donc le transform s'anime aussi).
+
+:root.js .ecrit-page__content .visuel[data-anchor] {
+  transition:
+    opacity var(--dur-slow) var(--ease-out-quart),
+    transform var(--dur-slow) var(--ease-out-quart);
+}
+:root.js .ecrit-page__content .visuel[data-anchor]:not(.is-revealed) {
+  opacity: 0;
+  transform: translateY(1rem);
+}
+
+// Signature Figure 2 (METR) : les barres poussent depuis l'axe 0 %.
+// `transform-box: fill-box` ancre transform-origin sur la bbox du rect ;
+// les barres positives poussent vers la droite (origine bord gauche = axe),
+// la barre « mesuré » pousse vers la gauche (origine bord droit = axe) — la
+// bascule visuelle est le punchline. Valeurs + annotation d'écart en fondu
+// après que les barres se soient posées.
+:root.js .visuel[data-anchor="fig-2"] {
+  .visuel__bar {
+    transform-box: fill-box;
+    transition: transform var(--dur-slow) var(--ease-out-expo);
+  }
+  // prédit (--ink-mute) et perçu (--ink) poussent vers la droite depuis
+  // l'axe 0 % (origine bord gauche) ; mesuré (--negative) pousse vers la
+  // gauche (origine bord droit) — la bascule = punchline.
+  .visuel__bar--ink-mute,
+  .visuel__bar--ink      { transform-origin: left center; }
+  .visuel__bar--negative { transform-origin: right center; }
+
+  .visuel__bar-value,
+  .visuel__axis-zero-label,
+  .visuel__gap-tick,
+  .visuel__cross-pill,
+  .visuel__cross-label {
+    transition: opacity var(--dur-mid) var(--ease-out-quart);
+  }
+}
+:root.js .visuel[data-anchor="fig-2"]:not(.is-revealed) {
+  .visuel__bar { transform: scaleX(0); }
+  .visuel__bar-value,
+  .visuel__axis-zero-label,
+  .visuel__gap-tick,
+  .visuel__cross-pill,
+  .visuel__cross-label { opacity: 0; }
+}
+// Cascade : prédit → perçu → mesuré, puis les valeurs, puis l'écart.
+:root.js .visuel[data-anchor="fig-2"].is-revealed {
+  .visuel__bar--ink-mute { transition-delay: 0ms; }   // prédit
+  .visuel__bar--ink      { transition-delay: 120ms; }  // perçu
+  .visuel__bar--negative { transition-delay: 240ms; }  // mesuré
+  .visuel__bar-value,
+  .visuel__axis-zero-label    { transition-delay: 540ms; }
+  .visuel__gap-tick,
+  .visuel__cross-pill,
+  .visuel__cross-label        { transition-delay: 660ms; }
+}
+
+// Accessibilité : pas de mouvement. Tout est rendu à l'état final, même si
+// `.is-revealed` n'est jamais posée (JS absent + reduced-motion).
+@media (prefers-reduced-motion: reduce) {
+  :root.js .ecrit-page__content .visuel[data-anchor],
+  :root.js .ecrit-page__content .visuel[data-anchor]:not(.is-revealed) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  :root.js .visuel[data-anchor="fig-2"]:not(.is-revealed) {
+    .visuel__bar { transform: none; }
+    .visuel__bar-value,
+    .visuel__axis-zero-label,
+    .visuel__gap-tick,
+    .visuel__cross-pill,
+    .visuel__cross-label { opacity: 1; }
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────
 // Bloc "DANS CE NUMÉRO" — sommaire des écrits dans le teaser home
 // ──────────────────────────────────────────────────────────────────
 
