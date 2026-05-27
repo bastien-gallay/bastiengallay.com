@@ -1,6 +1,6 @@
 +++
 title = "Avec l'IA, je code plus lentement"
-date = 2026-05-27
+date = 2026-05-28
 description = "Pourquoi le discours dominant sur la productivité IA mesure ce qui ne compte pas."
 draft = false
 
