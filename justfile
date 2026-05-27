@@ -69,3 +69,23 @@ kill:
 # Tue TOUS les serveurs zola de la machine (dépannage)
 kill-all:
     @pkill -f 'zola serve' 2>/dev/null && echo "tous les zola serve arrêtés" || echo "aucun zola serve"
+
+# Seul moteur fiable qui honore les @font-face embarqués (base64) :
+# rsvg / inkscape / imagemagick / qlmanage retombent sur une police système ou
+# rognent l'image. Taille lue depuis width/height du SVG (défaut 1200×630).
+# Sortie : <svg sans ext>.png. Override du binaire via $CHROME.
+# Usage : just svg-png content/.../social-cover.svg [scale]   (scale=2 → 2×)
+# Rend un SVG en PNG fidèle via Chrome headless (polices embarquées honorées)
+[group('assets')]
+svg-png svg scale="1":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    chrome="${CHROME:-/Applications/Google Chrome.app/Contents/MacOS/Google Chrome}"
+    [ -x "$chrome" ] || { echo "✗ Chrome introuvable : $chrome (override via \$CHROME)"; exit 1; }
+    svg="{{svg}}"; png="${svg%.svg}.png"
+    dims=$(grep -oE 'width="[0-9]+" height="[0-9]+"' "$svg" | head -1 | grep -oE '[0-9]+' || true)
+    w=$(printf '%s\n' "$dims" | sed -n 1p); h=$(printf '%s\n' "$dims" | sed -n 2p)
+    "$chrome" --headless=new --disable-gpu --hide-scrollbars \
+      --default-background-color=00000000 --force-device-scale-factor={{scale}} \
+      --window-size="${w:-1200},${h:-630}" --screenshot="$png" "$svg"
+    echo "→ $png (${w:-1200}×${h:-630} @ {{scale}}×)"

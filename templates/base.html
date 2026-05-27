@@ -34,6 +34,30 @@
 
   <meta name="theme-color" content="#fcfaf6" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1411" media="(prefers-color-scheme: dark)">
+
+  {# Carte sociale (Open Graph + Twitter). Image : convention `social-cover.png`
+     colocalisée au bundle de l'article. NB : `page.assets` ne sert qu'à DÉTECTER
+     la présence du fichier — ses chemins gardent le préfixe-date du dossier
+     source alors que l'asset est servi sous le slug ; l'URL absolue se construit
+     donc depuis `current_url` (slug, déjà préfixé du base_url). #}
+  {%- set og_title = page.title | default(value = section.title | default(value="Bastien Gallay")) -%}
+  {%- set og_desc = page.description | default(value = section.description | default(value="Bastien Gallay — outils open source pour mieux écrire et mieux penser.")) -%}
+  {%- set_global og_image = "" -%}
+  {%- for a in page.assets | default(value=[]) -%}
+    {%- if a is ending_with("/social-cover.png") -%}{%- set_global og_image = current_url ~ "social-cover.png" -%}{%- endif -%}
+  {%- endfor -%}
+  <meta property="og:type" content="{% if page is defined %}article{% else %}website{% endif %}">
+  <meta property="og:site_name" content="Bastien Gallay">
+  <meta property="og:title" content="{{ og_title }}">
+  <meta property="og:description" content="{{ og_desc }}">
+  <meta property="og:url" content="{{ current_url | default(value=config.base_url) | safe }}">
+  {%- if og_image %}
+  <meta property="og:image" content="{{ og_image | safe }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="{{ og_image | safe }}">
+  {%- else %}
+  <meta name="twitter:card" content="summary">
+  {%- endif %}
 </head>
 <body>
   <a href="#main" class="skip-link">Aller au contenu</a>
