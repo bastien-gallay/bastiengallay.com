@@ -1,6 +1,6 @@
-  {#- Légende des courbes : autrefois passée via le paramètre `legend_html`
+  <!-- Légende des courbes : autrefois passée via le paramètre `legend_html`
       du shortcode ; vit désormais en tête du corps colocalisé (la macro
-      l'émettait juste après le titre, avant le SVG — même position). -#}
+      l'émettait juste après le titre, avant le SVG — même position). -->
   <ul class="visuel__legend" aria-label="Légende des courbes">
     <li class="visuel__legend-item">
       <span class="visuel__swatch visuel__swatch--copypaste" aria-hidden="true"></span>
@@ -28,7 +28,7 @@
       courbes se croisent en 2023, autour de 11,5 %.
     </desc>
 
-    {#- Graduation horizontale (5 niveaux : 0, 7.5, 15, 22.5, 30 %) -#}
+    <!-- Graduation horizontale (5 niveaux : 0, 7.5, 15, 22.5, 30 %) -->
     <g class="visuel__grid" aria-hidden="true">
       <line x1="80"  y1="360" x2="580" y2="360" />
       <line x1="80"  y1="280" x2="580" y2="280" />
@@ -37,7 +37,7 @@
       <line x1="80"  y1="40"  x2="580" y2="40"  />
     </g>
 
-    {#- Axe Y : labels en % (text-anchor end, à x=72 → max 70vb à gauche) -#}
+    <!-- Axe Y : labels en % (text-anchor end, à x=72 → max 70vb à gauche) -->
     <g class="visuel__axis-label visuel__axis-label--y" aria-hidden="true">
       <text x="72" y="364" text-anchor="end">0&#160;%</text>
       <text x="72" y="284" text-anchor="end">7,5&#160;%</text>
@@ -46,7 +46,7 @@
       <text x="72" y="44"  text-anchor="end">30&#160;%</text>
     </g>
 
-    {#- Axe X : années (step 125 : 80, 205, 330, 455, 580) -#}
+    <!-- Axe X : années (step 125 : 80, 205, 330, 455, 580) -->
     <g class="visuel__axis-label visuel__axis-label--x" aria-hidden="true">
       <text x="80"  y="385" text-anchor="middle">2020</text>
       <text x="205" y="385" text-anchor="middle">2021</text>
@@ -55,33 +55,33 @@
       <text x="580" y="385" text-anchor="middle">2024</text>
     </g>
 
-    {#- Wipe gauche→droite pour le reveal au scroll : le rect du clipPath
+    <!-- Wipe gauche→droite pour le reveal au scroll : le rect du clipPath
         est mis à l'échelle (scaleX 0→1) par le CSS, révélant les deux
         courbes dans le sens du temps (2020→2024). Le clip préserve les
         styles de trait (le pointillé du refactoring reste pointillé).
         Sans `.is-revealed`/sans JS, le rect est à pleine échelle (cf.
-        :root.js dans _editorial.scss) : courbes entières par défaut. -#}
+        :root.js dans _editorial.scss) : courbes entières par défaut. -->
     <clipPath id="v3-wipe">
       <rect class="visuel__wipe" x="80" y="30" width="500" height="345" />
     </clipPath>
 
     <g clip-path="url(#v3-wipe)">
-      {#- Refactoring : descendant (neutre, trait épais en pointillé) -#}
+      <!-- Refactoring : descendant (neutre, trait épais en pointillé) -->
       <polyline
         class="visuel__line visuel__line--refactor"
         points="80,103 205,158 330,205 455,237 580,259"
       />
-      {#- Copy-paste : ascendant (accent rouge, trait plein) -#}
+      <!-- Copy-paste : ascendant (accent rouge, trait plein) -->
       <polyline
         class="visuel__line visuel__line--copypaste"
         points="80,272 205,259 330,248 455,237 580,229"
       />
     </g>
 
-    {#- Marqueur de crossover en 2023 — pill élargi à 220vb pour caser
+    <!-- Marqueur de crossover en 2023 — pill élargi à 220vb pour caser
         "crossover 2023" à font-size 22vb (≈11px visuels en --side).
         Annotation en jaune pivot (P4) : le rôle « regarde ici » bascule
-        du rouge identitaire vers --c-warning sur les figures non-bornes. -#}
+        du rouge identitaire vers --c-warning sur les figures non-bornes. -->
     <g aria-hidden="true">
       <line class="visuel__cross-tick visuel__cross-tick--pivot" x1="455" y1="237" x2="455" y2="178" />
       <rect class="visuel__cross-pill visuel__cross-pill--pivot" x="345" y="148" width="220" height="36" rx="0" />

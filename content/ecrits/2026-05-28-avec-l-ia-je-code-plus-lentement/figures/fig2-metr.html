@@ -12,13 +12,13 @@
       de −19 %. Écart total : 39 points entre perception et réalité.
     </desc>
 
-    {#- Ligne d'axe 0 % (verticale, accent) -#}
+    <!-- Ligne d'axe 0 % (verticale, accent) -->
     <line class="visuel__axis-zero" x1="335" y1="50" x2="335" y2="305" />
-    {#- Label "0 %" déplacé au-dessus de l'axe pour laisser la place au
-        pill d'écart (qui couvre x=164→515, y=336→370). -#}
+    <!-- Label "0 %" déplacé au-dessus de l'axe pour laisser la place au
+        pill d'écart (qui couvre x=164→515, y=336→370). -->
     <text class="visuel__axis-zero-label" x="335" y="42" text-anchor="middle">0&#160;%</text>
 
-    {#- Bar 1 : prédit +24 % (encre muette — donnée non-pivot, anticipation) -#}
+    <!-- Bar 1 : prédit +24 % (encre muette — donnée non-pivot, anticipation) -->
     <g aria-hidden="true">
       <text class="visuel__bar-cat" x="20" y="98" text-anchor="start">prédit</text>
       <text class="visuel__bar-meta" x="20" y="120" text-anchor="start">(avant l'étude)</text>
@@ -26,7 +26,7 @@
       <text class="visuel__bar-value visuel__bar-value--ink-mute" x="557" y="105" text-anchor="start">+24&#160;%</text>
     </g>
 
-    {#- Bar 2 : perçu +20 % (encre soft — donnée non-pivot, illusion) -#}
+    <!-- Bar 2 : perçu +20 % (encre soft — donnée non-pivot, illusion) -->
     <g aria-hidden="true">
       <text class="visuel__bar-cat" x="20" y="178" text-anchor="start">perçu</text>
       <text class="visuel__bar-meta" x="20" y="200" text-anchor="start">(après l'étude)</text>
@@ -34,9 +34,9 @@
       <text class="visuel__bar-value visuel__bar-value--ink" x="521" y="185" text-anchor="start">+20&#160;%</text>
     </g>
 
-    {#- Bar 3 : mesuré -19 % (accent-deep, vers la gauche depuis 0).
+    <!-- Bar 3 : mesuré -19 % (accent-deep, vers la gauche depuis 0).
         Valeur à l'intérieur (règle : valeurs dehors par défaut, dedans
-        uniquement quand pas de place dehors). -#}
+        uniquement quand pas de place dehors). -->
     <g aria-hidden="true">
       <text class="visuel__bar-cat" x="20" y="258" text-anchor="start">mesuré</text>
       <text class="visuel__bar-meta" x="20" y="280" text-anchor="start">(en réalité)</text>
@@ -44,10 +44,10 @@
       <text class="visuel__bar-value visuel__bar-value--inside" x="329" y="265" text-anchor="end">−19&#160;%</text>
     </g>
 
-    {#- Annotation d'écart perçu↔mesuré (= 39 points, cohérent article).
+    <!-- Annotation d'écart perçu↔mesuré (= 39 points, cohérent article).
         Tick ENTRE gauche barre négative (x=164) et droite barre perçue
         (x=515). Pill couvre EXACTEMENT le même span pour aligner la
-        "barre d'écart" avec les extrêmes des barres mesurées. -#}
+        "barre d'écart" avec les extrêmes des barres mesurées. -->
     <g aria-hidden="true">
       <line class="visuel__gap-tick" x1="164" y1="320" x2="515" y2="320" />
       <line class="visuel__gap-tick" x1="164" y1="313" x2="164" y2="327" />

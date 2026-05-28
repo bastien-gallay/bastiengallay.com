@@ -30,13 +30,24 @@
 }
 // Dark mode : surcharger les overrides ci-dessus, sinon :root[data-theme="dark"]
 // (spec 0,0,2,0) écrase notre .ecrit-page__content (spec 0,0,1,0).
-:root[data-theme="dark"] .ecrit-page__content,
-:root:not([data-theme="light"]) .ecrit-page__content {
+// Même pattern que _tokens.scss : explicit dark + fallback OS gated par
+// @media. Sans le @media, `:not([data-theme="light"])` matche aussi l'état
+// initial (attribut absent) → dark-mode appliqué en clair pour les primo-
+// visiteurs (theme.js ne pose l'attribut que si localStorage est non vide).
+:root[data-theme="dark"] .ecrit-page__content {
   --accent:      oklch(0.66 0.12 25);
   --accent-deep: oklch(0.58 0.13 25);
   --pivot-mark:  oklch(0.62 0.13 35);
   // surface-ink en dark = cream — convient comme texte sur marron-rouge.
   --pivot-ink:   var(--surface-ink);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) .ecrit-page__content {
+    --accent:      oklch(0.66 0.12 25);
+    --accent-deep: oklch(0.58 0.13 25);
+    --pivot-mark:  oklch(0.62 0.13 35);
+    --pivot-ink:   var(--surface-ink);
+  }
 }
 
 // ──────────────────────────────────────────────────────────────────
@@ -666,9 +677,9 @@ p.has-dropcap::first-letter {
 
 // Dark mode : la grille pointillée disparaissait sur fond sombre (rule trop
 // proche de la surface), le refactoring en ink-soft restait borderline. On
-// remonte les valeurs spécifiquement pour le contraste AA.
-:root[data-theme="dark"] .visuel,
-:root:not([data-theme="light"]) .visuel {
+// remonte les valeurs spécifiquement pour le contraste AA. Pattern identique
+// à _tokens.scss : explicit dark + fallback OS sous @media.
+@mixin -visuel-dark-overrides {
   background: var(--surface-sub);
 
   .visuel__grid line {
@@ -683,6 +694,15 @@ p.has-dropcap::first-letter {
 
   .visuel__cross-pill { fill: var(--accent-deep); }
   .visuel__cross { stroke: var(--surface-sub); }
+}
+
+:root[data-theme="dark"] .visuel {
+  @include -visuel-dark-overrides;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) .visuel {
+    @include -visuel-dark-overrides;
+  }
 }
 
 // Variante --side : la figure migre dans la piste de marge sticky.
