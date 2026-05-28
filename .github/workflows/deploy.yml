@@ -42,6 +42,18 @@ jobs:
             | sudo tar -xz -C /usr/local/bin
           zola --version
 
+      # Filet de sécurité : les corps de figures sont inlinés par le
+      # shortcode `figure.html` via `load_data(path=…, format="plain")`,
+      # qui ne parse PAS — les `{# … #}` y restent texte brut et sortent
+      # visibles dans la page. Toute syntaxe Tera dans ces fichiers est
+      # donc un piège, jamais utile. Cas réel : commit 809b643 (fig4).
+      - name: Check no Tera tokens in figure bodies
+        run: |
+          if grep -rEn '\{[#%]|\{\{' content/ecrits/*/figures/ 2>/dev/null; then
+            echo "::error::Tera tokens found in figures/ — these files are loaded with format=plain and won't be parsed. Use HTML comments (<!-- -->) instead."
+            exit 1
+          fi
+
       - name: Build
         run: zola build
 

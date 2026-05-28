@@ -2,6 +2,32 @@
 // Source: .impeccable.md (palette De Stijl mono-accent rouge, light default).
 // Toutes les couleurs en OKLCH ; les neutres sont tintés vers le hue accent (~25).
 
+// ──────────────────────────────────────────────────────────────────
+// theme-dark — mixin unique pour appliquer un override en dark mode.
+// Émet deux règles : (1) `:root[data-theme="dark"]` quand l'utilisateur
+// a explicitement choisi le thème sombre ; (2) `@media (prefers-color-
+// scheme: dark)` avec double `:not` quand aucun choix n'est sauvegardé
+// (theme.js ne pose `data-theme` que si localStorage est non vide).
+//
+// Sans la branche @media, `:not([data-theme="light"])` matche aussi
+// l'état initial sans attribut → l'override dark s'applique en clair
+// pour tout primo-visiteur (cf. régression couleur fig 4, 2026-05-28).
+//
+// Usage :
+//   @include theme-dark { --token: value; }            // root
+//   @include theme-dark('.scope') { --token: value; }  // scope
+//
+// Cette mixin EST la source de vérité. Plus jamais inliner le couple
+// `:root[data-theme="dark"] / :root:not([data-theme="light"])` à la main.
+// ──────────────────────────────────────────────────────────────────
+@mixin theme-dark($selector: null) {
+  $sep: if($selector, " ", "");
+  :root[data-theme="dark"]#{$sep}#{$selector} { @content; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]):not([data-theme="dark"])#{$sep}#{$selector} { @content; }
+  }
+}
+
 :root {
   // ──────────────────────────────────────────────────────────────
   // Couleurs — light theme (par défaut)
@@ -101,10 +127,12 @@
 }
 
 // ─────────────────────────────────────────────────────────────────
-// Dark theme — activé via [data-theme="dark"] sur <html>
+// Dark theme — activé via [data-theme="dark"] sur <html>, ou par
+// @media (prefers-color-scheme: dark) si rien n'est sauvegardé.
+// Détail du double-gating dans la mixin theme-dark ci-dessus.
 // ─────────────────────────────────────────────────────────────────
 
-:root[data-theme="dark"] {
+@include theme-dark {
   --surface:      oklch(0.155 0.010 28);   // noir tinté rouge, jamais #000
   --surface-sub:  oklch(0.205 0.012 28);
   --surface-ink:  oklch(0.93  0.008 65);   // blanc cassé chaud
@@ -128,27 +156,4 @@
 
   --selection-bg: oklch(0.45  0.130 28);
   --selection-fg: oklch(0.98  0.005 70);
-}
-
-// Respect la pref système si l'utilisateur n'a pas choisi explicitement.
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([data-theme="dark"]) {
-    --surface:      oklch(0.155 0.010 28);
-    --surface-sub:  oklch(0.205 0.012 28);
-    --surface-ink:  oklch(0.93  0.008 65);
-    --ink-soft:     oklch(0.75  0.014 50);
-    --ink-mute:     oklch(0.60  0.012 45);
-    --rule:         oklch(0.30  0.012 30);
-    --rule-strong:  oklch(0.42  0.016 30);
-    --accent:       oklch(0.66  0.190 26);
-    --accent-deep:  oklch(0.58  0.205 25);
-    --accent-soft:  oklch(0.32  0.085 28);
-    --c-warning:    oklch(0.88  0.17  95);
-    --c-info:       oklch(0.68  0.16  250);
-    --c-problem:    oklch(0.68  0.23  5);
-    --c-success:    oklch(0.78  0.16  155);
-    --c-chrome:     oklch(0.78  0.10  220);
-    --selection-bg: oklch(0.45  0.130 28);
-    --selection-fg: oklch(0.98  0.005 70);
-  }
 }

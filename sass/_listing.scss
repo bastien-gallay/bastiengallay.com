@@ -21,14 +21,8 @@
 
 // Dark mode : un cran plus clair que la surface pour ressortir sans
 // pure inversion identique au light.
-:root[data-theme="dark"] .listing {
+@include theme-dark('.listing') {
   --listing-bg: oklch(0.22 0.012 28);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .listing {
-    --listing-bg: oklch(0.22 0.012 28);
-  }
 }
 
 // ──────────────────────────────────────────────────────────────────

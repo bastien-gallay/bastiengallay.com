@@ -310,14 +310,8 @@
   scrollbar-width: thin;
 }
 
-:root[data-theme="dark"] .ecrit-page__content pre:not(.listing__body) {
+@include theme-dark('.ecrit-page__content pre:not(.listing__body)') {
   --listing-bg: oklch(0.22 0.012 28);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .ecrit-page__content pre:not(.listing__body) {
-    --listing-bg: oklch(0.22 0.012 28);
-  }
 }
 
 // Type-tag automatique pour les fenced blocks Zola qui ont un data-lang.

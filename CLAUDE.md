@@ -15,8 +15,8 @@ Layout posé :
 - `.impeccable.md` — design context (palette De Stijl mono-accent rouge,
   fontes Redaction display + Geist body, 5 design principles).
 - `sass/_tokens.scss` — tokens OKLCH, type scale fluide, spacing 4pt.
-- `templates/base.html` — shell grid avec rail latéral gauche style nin.com
-  + toggle light/dark (script pré-bootstrap pour éviter le FOUC).
+- `templates/base.html` — shell grid avec rail latéral gauche style nin.com,
+  toggle light/dark (script pré-bootstrap pour éviter le FOUC).
 - `templates/index.html` — hero + 4 sections placeholder.
 - `static/theme.js` — toggle thème persisté + scrollspy IntersectionObserver.
 
@@ -59,3 +59,9 @@ The README, brainstorm docs, and likely future content are in **French**. Keep p
 Raison : isole les expérimentations du tronc, permet de jeter un essai raté sans `git reset`, et rend les diffs explicites avant intégration.
 
 Application : au démarrage d'une tâche d'implémentation, créer le worktree d'abord ; travailler dedans ; à la validation, faire revue + merge/rebase vers la branche principale. Les tâches de pure exploration / lecture (grep, brainstorm, runbooks dans `.personal/`) peuvent rester sur la copie principale.
+
+## QA visuel avant de déclarer une modif CSS finie
+
+Toute modification CSS qui peut affecter le rendu doit être vérifiée **en navigation privée ou sur une origin neuve** (`127.0.0.1` plutôt que le domaine de prod), pour reproduire l'état primo-visiteur : pas de `data-theme` ni d'autre clé dans `localStorage`, OS en clair par défaut.
+
+Raison : `theme.js` ne pose `data-theme` sur `<html>` que si une valeur est sauvegardée. Tout sélecteur qui suppose un attribut posé (`:not([data-theme="light"])` & similaires) doit aussi avoir un fallback `@media (prefers-color-scheme: …)` — sinon il s'applique aussi à l'état initial sans attribut. Cf. régression couleur figure 4 (commit `809b643`, 2026-05-28). Pour le dark mode, passer **systématiquement** par la mixin `@include theme-dark` (`sass/_tokens.scss`), pas par un sélecteur écrit à la main.
