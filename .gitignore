@@ -7,6 +7,9 @@
 .claude/worktrees/
 .personal/
 
+# Workspace editor (perso, non portable — recréer manuellement si besoin)
+.vscode/
+
 # Notes de travail (non destinées au public)
 brainstorm/
 
