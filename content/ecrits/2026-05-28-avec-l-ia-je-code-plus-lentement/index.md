@@ -92,7 +92,7 @@ Ces chiffres sont sincères. Ils semblent mesurer la vitesse. <span class="mark"
 
 ### La mesure perçue n'est pas la mesure réelle
 
-En 2025, une équipe de chercheurs de METR a conduit une expérience contrôlée randomisée [^3]. Seize développeurs open source expérimentés, chacun avec en moyenne cinq ans de pratique sur les projets qu'ils maintenaient. 246 tâches réelles, pas synthétiques. Outils utilisés&nbsp;: Cursor Pro et Claude 3.5/3.7 Sonnet.
+En 2025, une équipe de chercheurs de METR a conduit une expérience contrôlée randomisée<sup class="footnote-reference"><a href="#3">3</a></sup>. Seize développeurs open source expérimentés, chacun avec en moyenne cinq ans de pratique sur les projets qu'ils maintenaient. 246 tâches réelles, pas synthétiques. Outils utilisés&nbsp;: Cursor Pro et Claude 3.5/3.7 Sonnet.
 
 Avant de commencer, les développeurs prédisaient un gain de temps. Après l'étude, ils en percevaient un. La mesure objective, elle, raconte l'inverse — Figure 2.
 
@@ -102,31 +102,31 @@ L'écart entre la perception et la réalité dépassait les 39 points. Ces déve
 
 J'ai moi-même vécu cet écart. Il y a deux ans, avec des modèles bien moins performants, ce qui m'aurait pris une ou deux heures me prenait souvent une demi-journée. Encore aujourd'hui, il m'arrive par réflexe de demander à Claude Code l'édition d'un fichier qu'il fera en trente secondes, là où j'aurais pu terminer en dix.
 
-Les études antérieures, qui annonçaient 56&nbsp;% ou 21&nbsp;% d'accélération [^3], reposaient sur des tâches synthétiques. Or les conditions synthétiques masquent ce qui rend les vrais projets coûteux&nbsp;: la cohérence avec l'existant, la dette technique, les conventions tacites, les contraintes invisibles.
+Les études antérieures, qui annonçaient 56&nbsp;% ou 21&nbsp;% d'accélération<sup class="footnote-reference"><a href="#3">3</a></sup>, reposaient sur des tâches synthétiques. Or les conditions synthétiques masquent ce qui rend les vrais projets coûteux&nbsp;: la cohérence avec l'existant, la dette technique, les conventions tacites, les contraintes invisibles.
 
 ### On mesure la rédaction, pas la livraison
 
-Une étude conduite sur la télémétrie de 22&nbsp;000 développeurs et deux ans d'historique a documenté une déconnexion entre productivité individuelle ressentie et performance de l'entreprise [^4]. Les développeurs disent travailler plus vite. Les entreprises ne voient pas d'amélioration mesurable de la vélocité de livraison ni des résultats business.
+Une étude conduite sur la télémétrie de 22&nbsp;000 développeurs et deux ans d'historique a documenté une déconnexion entre productivité individuelle ressentie et performance de l'entreprise<sup class="footnote-reference"><a href="#4">4</a></sup>. Les développeurs disent travailler plus vite. Les entreprises ne voient pas d'amélioration mesurable de la vélocité de livraison ni des résultats business.
 
 Le rapport explique pourquoi&nbsp;: les métriques de vendeurs traquent l'activité — commits, pull requests, lignes de code — qui gonflent mécaniquement avec l'usage IA. La vélocité de livraison, elle, dépend d'une chaîne complète&nbsp;: revue, tests, intégration, déploiement, opérations. Cette chaîne n'a pas accéléré au même rythme.
 
 {{ figure(num="3", tag="Étude Faros · 2025", title="Le gain individuel disparaît en file d'attente", title_id="v2-title", desc_id="v2-desc", body="fig3-faros.html", pos="side", caption="22&#160;000 développeurs, 2 ans de télémétrie. Mesures par équipe sur la chaîne complète (revue, intégration, déploiement).", source='Source : Faros AI, <em>Engineering Productivity 2025</em>, n.&#160;<sup class="footnote-reference"><a href="#4">4</a></sup>.') }}
 
-L'étude Faros sur le même sujet est encore plus précise (Figure 3)&nbsp;: <span class="mark--soft" data-fig="3">le gain individuel s'évanouit en file d'attente d'équipe</span> [^4]. Les gains se transforment en files d'attente.
+L'étude Faros sur le même sujet est encore plus précise (Figure 3)&nbsp;: <span class="mark--soft" data-fig="3">le gain individuel s'évanouit en file d'attente d'équipe</span><sup class="footnote-reference"><a href="#4">4</a></sup>. Les gains se transforment en files d'attente.
 
 ### La dette technique devient invisible
 
 {{ figure(num="4", tag="GitClear · 2020 → 2024", title="Crossover 2023 : copy-paste passe devant refactoring", title_id="v3-title", desc_id="v3-desc", body="fig4-gitclear.html", pos="side", caption="211&#160;millions de lignes de code modifiées, analysées chez Google, Microsoft, Meta et plusieurs entreprises cotées.", source='Source : GitClear, <em>AI Copilot Code Quality 2025</em>, n.&#160;<sup class="footnote-reference"><a href="#5">5</a></sup>.') }}
 
-L'étude GitClear, qui a analysé 211 millions de lignes de code modifiées entre 2020 et 2024 chez Google, Microsoft, Meta et plusieurs entreprises cotées, mesure une transformation des pratiques [^5]. La Figure 4 trace l'inversion&nbsp;: <span class="mark--soft" data-fig="4">la part de copy-paste monte, celle de refactoring chute, les deux courbes se croisent en 2023</span>. Au-delà de cette inversion, un autre signal&nbsp;: le code «&nbsp;churned&nbsp;» — réécrit dans les deux semaines suivant son commit — a doublé, de 3,1&nbsp;% à 5,7&nbsp;%.
+L'étude GitClear, qui a analysé 211 millions de lignes de code modifiées entre 2020 et 2024 chez Google, Microsoft, Meta et plusieurs entreprises cotées, mesure une transformation des pratiques<sup class="footnote-reference"><a href="#5">5</a></sup>. La Figure 4 trace l'inversion&nbsp;: <span class="mark--soft" data-fig="4">la part de copy-paste monte, celle de refactoring chute, les deux courbes se croisent en 2023</span>. Au-delà de cette inversion, un autre signal&nbsp;: le code «&nbsp;churned&nbsp;» — réécrit dans les deux semaines suivant son commit — a doublé, de 3,1&nbsp;% à 5,7&nbsp;%.
 
 Lorsque j'ouvre les projets en audit de code, je découvre de plus en plus souvent des fonctions de 800 lignes, empilées au fil des commits automatiques, et des tests unitaires identiques dans trois fichiers différents.
 
-Le rapport DORA 2024 de Google, qui suit la performance de livraison logicielle depuis une décennie, confirme la tension&nbsp;: une augmentation de 25&nbsp;% de l'adoption IA accélère les revues de code mais diminue la stabilité de livraison de 7,2&nbsp;% [^6].
+Le rapport DORA 2024 de Google, qui suit la performance de livraison logicielle depuis une décennie, confirme la tension&nbsp;: une augmentation de 25&nbsp;% de l'adoption IA accélère les revues de code mais diminue la stabilité de livraison de 7,2&nbsp;%<sup class="footnote-reference"><a href="#6">6</a></sup>.
 
 {{ figure(num="5", variant="quote", tag="MIT · WSJ 2025", title="", title_id="v5-title", desc_id="v5-desc", body="fig5-mit.html", pos="side", caption="Une dette qui se contracte plus vite qu'elle ne se rembourse&#160;: la métaphore éclaire les chiffres GitClear et DORA réunis.", source='Source&#160;: Wall Street Journal, cité dans DevOps.com, 2025, n.&#160;<sup class="footnote-reference"><a href="#7">7</a></sup>.') }}
 
-Une citation d'Armando Solar-Lezama, professeur au MIT, résume mieux que je ne saurais le faire&nbsp;: *«&nbsp;L'IA est comme une carte de crédit toute neuve qui va nous permettre d'accumuler de la dette technique d'une manière qu'on n'avait jamais pu auparavant&nbsp;»* [^7].
+Une citation d'Armando Solar-Lezama, professeur au MIT, résume mieux que je ne saurais le faire&nbsp;: *«&nbsp;L'IA est comme une carte de crédit toute neuve qui va nous permettre d'accumuler de la dette technique d'une manière qu'on n'avait jamais pu auparavant&nbsp;»*<sup class="footnote-reference"><a href="#7">7</a></sup>.
 
 ### Le terrain change avant qu'on ait fini d'apprendre
 
@@ -140,9 +140,9 @@ Le dernier biais est statistique&nbsp;: on entend ceux qui réussissent avec l'I
 
 {{ figure(num="6", variant="incidents", tag="Incidents · 2025-2026", title="Deux fuites emblématiques", title_id="v4-title", desc_id="v4-desc", body="fig6-fuites.html", pos="side", caption="CVE référencée + leak documenté. Dans les deux cas, code généré par IA déployé sans contrôle de sécurité (row-level security, autorisations endpoints).", source='Source&#160;: Vibe Coder Blog, <em>Security Researchers Sound the Alarm on AI Code Vulnerabilities</em>, n.&#160;<sup class="footnote-reference"><a href="#8">8</a></sup>.') }}
 
-Et pourtant, les incidents s'accumulent. La CVE-2025-48757 a exposé une faille chez Lovable, plateforme de codage IA, qui générait des schémas de base de données sans politiques de sécurité au niveau ligne. Plus de 170 applications en production affectées [^8]. La faille Moltbook a leaké 1,5 million de tokens d'authentification, parce que les endpoints API générés ne vérifiaient pas les autorisations [^8].
+Et pourtant, les incidents s'accumulent. La CVE-2025-48757 a exposé une faille chez Lovable, plateforme de codage IA, qui générait des schémas de base de données sans politiques de sécurité au niveau ligne. Plus de 170 applications en production affectées<sup class="footnote-reference"><a href="#8">8</a></sup>. La faille Moltbook a leaké 1,5 million de tokens d'authentification, parce que les endpoints API générés ne vérifiaient pas les autorisations<sup class="footnote-reference"><a href="#8">8</a></sup>.
 
-Plus structurellement&nbsp;: selon Veracode, 45&nbsp;% du code généré par IA contient au moins une vulnérabilité OWASP [^9]. Une autre étude mesure que ce code contient 2,74 fois plus de vulnérabilités que le code écrit par des humains [^10].
+Plus structurellement&nbsp;: selon Veracode, 45&nbsp;% du code généré par IA contient au moins une vulnérabilité OWASP<sup class="footnote-reference"><a href="#9">9</a></sup>. Une autre étude mesure que ce code contient 2,74 fois plus de vulnérabilités que le code écrit par des humains<sup class="footnote-reference"><a href="#10">10</a></sup><sup class="footnote-reference"><a href="#11">11</a></sup>.
 
 Les méthodologies varient, les chiffres se discutent. Le signal, lui, converge&nbsp;: produire vite avec l'IA coûte en qualité de livraison, et les métriques d'adoption ne le voient pas.
 
@@ -202,24 +202,51 @@ Article basé sur mes recherches personnelles, dont je partage les sources. J'at
 
 ## Notes et références
 
-[^1]: Second Talent, [*AI Coding Assistant Statistics & Trends \[2025\]*](https://www.secondtalent.com/resources/ai-coding-assistant-statistics/), secondtalent.com, 2025.
+<!-- Notes en HTML manuel (id == label == ancre). NE PAS repasser en
+     footnotes markdown `[^N]` : Zola renumérote alors selon l'ordre des
+     seuls appels markdown, or les notes 1/2 ne sont appelées que par des
+     ancres HTML (encart paradoxe) et les figures portent des `#N` codés en
+     dur — le compteur auto désynchronise tout. Cf. commit de cette correction. -->
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>Second Talent, <a rel="external" href="https://www.secondtalent.com/resources/ai-coding-assistant-statistics/"><em>AI Coding Assistant Statistics &amp; Trends [2025]</em></a>, secondtalent.com, 2025.</p>
+</div>
 
-[^2]: Stack Overflow, [*Developer Survey 2025*](https://survey.stackoverflow.co/2025/), stackoverflow.co.
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<p>Stack Overflow, <a rel="external" href="https://survey.stackoverflow.co/2025/"><em>Developer Survey 2025</em></a>, stackoverflow.co.</p>
+</div>
 
-[^3]: Becker, J. et al., [*Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity*](https://arxiv.org/abs/2507.09089), METR, arXiv:2507.09089, juillet 2025 ([résumé METR](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/)).
+<div class="footnote-definition" id="3"><sup class="footnote-definition-label">3</sup>
+<p>Becker, J. et al., <a rel="external" href="https://arxiv.org/abs/2507.09089"><em>Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity</em></a>, METR, arXiv:2507.09089, juillet 2025 (<a rel="external" href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/">résumé METR</a>).</p>
+</div>
 
-[^4]: Faros AI, [*The AI Productivity Paradox Research Report*](https://www.faros.ai/), faros.ai, 2025.
+<div class="footnote-definition" id="4"><sup class="footnote-definition-label">4</sup>
+<p>Faros AI, <a rel="external" href="https://www.faros.ai/"><em>The AI Productivity Paradox Research Report</em></a>, faros.ai, 2025.</p>
+</div>
 
-[^5]: GitClear, [*AI Copilot Code Quality 2025 Research Report*](https://www.gitclear.com/ai_assistant_code_quality_2025_research), gitclear.com, février 2025.
+<div class="footnote-definition" id="5"><sup class="footnote-definition-label">5</sup>
+<p>GitClear, <a rel="external" href="https://www.gitclear.com/ai_assistant_code_quality_2025_research"><em>AI Copilot Code Quality 2025 Research Report</em></a>, gitclear.com, février 2025.</p>
+</div>
 
-[^6]: Google, [*Accelerate State of DevOps Report 2024*](https://dora.dev/research/2024/dora-report/), dora.dev.
+<div class="footnote-definition" id="6"><sup class="footnote-definition-label">6</sup>
+<p>Google, <a rel="external" href="https://dora.dev/research/2024/dora-report/"><em>Accelerate State of DevOps Report 2024</em></a>, dora.dev.</p>
+</div>
 
-[^7]: Solar-Lezama, A., interview au [*Wall Street Journal*](https://www.wsj.com/), citée dans [DevOps.com](https://devops.com/), *AI in Software Development: Productivity at the Cost of Code Quality?*, 2025.
+<div class="footnote-definition" id="7"><sup class="footnote-definition-label">7</sup>
+<p>Solar-Lezama, A., interview au <a rel="external" href="https://www.wsj.com/"><em>Wall Street Journal</em></a>, citée dans <a rel="external" href="https://devops.com/">DevOps.com</a>, <em>AI in Software Development: Productivity at the Cost of Code Quality?</em>, 2025.</p>
+</div>
 
-[^8]: Vibe Coder Blog, [*Security Researchers Sound the Alarm on AI Code Vulnerabilities*](https://blog.vibecoder.me/), blog.vibecoder.me, avril 2026&nbsp;; voir aussi [CVE-2025-48757](https://nvd.nist.gov/vuln/detail/CVE-2025-48757).
+<div class="footnote-definition" id="8"><sup class="footnote-definition-label">8</sup>
+<p>Vibe Coder Blog, <a rel="external" href="https://blog.vibecoder.me/"><em>Security Researchers Sound the Alarm on AI Code Vulnerabilities</em></a>, blog.vibecoder.me, avril 2026&nbsp;; voir aussi <a rel="external" href="https://nvd.nist.gov/vuln/detail/CVE-2025-48757">CVE-2025-48757</a>.</p>
+</div>
 
-[^9]: Veracode, [*2025 GenAI Code Security Report*](https://www.veracode.com/resources/genai-code-security-report-2025/), veracode.com.
+<div class="footnote-definition" id="9"><sup class="footnote-definition-label">9</sup>
+<p>Veracode, <a rel="external" href="https://www.veracode.com/resources/genai-code-security-report-2025/"><em>2025 GenAI Code Security Report</em></a>, veracode.com.</p>
+</div>
 
-[^10]: SoftwareSeni, [analyse de Veracode 2025 et Apiiro](https://www.softwareseni.com/), softwareseni.com, février 2026.
+<div class="footnote-definition" id="10"><sup class="footnote-definition-label">10</sup>
+<p>SoftwareSeni, <a rel="external" href="https://www.softwareseni.com/">analyse de Veracode 2025 et Apiiro</a>, softwareseni.com, février 2026.</p>
+</div>
 
-[^11]: Futurity, [*AI-generated code is vulnerable*](https://www.futurity.org/), futurity.org, 2026.
+<div class="footnote-definition" id="11"><sup class="footnote-definition-label">11</sup>
+<p>Futurity, <a rel="external" href="https://www.futurity.org/"><em>AI-generated code is vulnerable</em></a>, futurity.org, 2026.</p>
+</div>
