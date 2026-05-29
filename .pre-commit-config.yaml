@@ -6,16 +6,35 @@
 # Lancement manuel sur le repo entier :
 #   uvx pre-commit run --all-files
 #
-# Les hooks sont aussi rejoués en CI (.github/workflows/deploy.yml) comme
-# filet de sécurité — pre-commit local n'est jamais garanti d'avoir tourné.
+# Le CI (.github/workflows/deploy.yml) lance EXACTEMENT ces hooks via
+# `pre-commit run --all-files` : local et CI partagent la même source de
+# vérité, donc aucun garde-fou ne peut exister d'un côté sans l'autre.
 
 repos:
-  # Validateur §XX.YY sur les articles publiés (cf. brainstorm 2026-05-24).
   - repo: local
     hooks:
+      # Validateur §XX.YY sur les articles publiés (cf. brainstorm 2026-05-24).
       - id: check-numeros
         name: check article §XX.YY numbering (published only)
         entry: uv run scripts/check-numeros.py
         language: system
         files: ^content/ecrits/.*\.md$
         pass_filenames: true
+
+      # Les corps de figures sont inlinés par le shortcode `figure.html` via
+      # `load_data(format="plain")`, qui ne parse PAS : tout token Tera y reste
+      # texte brut et sort visible dans la page. Cas réel : commit 809b643.
+      - id: no-tera-in-figures
+        name: no Tera tokens in figure bodies (format=plain)
+        entry: bash -c 'if grep -rEn "\{[#%]|\{\{" content/ecrits/*/figures/ 2>/dev/null; then echo "Tera tokens found in figures/ — loaded with format=plain, won''t be parsed. Use HTML comments (<!-- -->) instead."; exit 1; fi'
+        language: system
+        pass_filenames: false
+        files: ^content/ecrits/.*/figures/.*\.html$
+
+  # Lint Markdown (cf. .markdownlint.jsonc). Limité à la prose publiable :
+  # les docs de travail à la racine suivent leurs propres conventions.
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.18.1
+    hooks:
+      - id: markdownlint-cli2
+        files: ^content/.*\.md$

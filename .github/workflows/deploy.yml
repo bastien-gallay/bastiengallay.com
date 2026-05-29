@@ -24,16 +24,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Filet de sécurité : tout article publié doit avoir [extra] numero
-      # au format §XX.YY (cf. brainstorm 2026-05-24 + scripts/check-numeros.py).
-      # Le hook pre-commit fait la même chose en local — ici on garantit que
-      # rien ne déploie sans validation, même si un dev oublie pre-commit.
-      - name: Set up Python (for check-numeros)
+      # Filets de sécurité rapides (numérotation §XX.YY, anti-token-Tera dans
+      # les figures, markdownlint). Source unique : .pre-commit-config.yaml —
+      # on lance ICI exactement les mêmes hooks qu'en local, donc rien ne peut
+      # diverger entre le commit du dev et le déploiement.
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Check article §XX.YY numbering
-        run: python3 scripts/check-numeros.py
+      - name: Run pre-commit hooks
+        run: |
+          python3 -m pip install --quiet pre-commit
+          pre-commit run --all-files --show-diff-on-failure
 
       - name: Install Zola
         run: |
@@ -42,17 +44,13 @@ jobs:
             | sudo tar -xz -C /usr/local/bin
           zola --version
 
-      # Filet de sécurité : les corps de figures sont inlinés par le
-      # shortcode `figure.html` via `load_data(path=…, format="plain")`,
-      # qui ne parse PAS — les `{# … #}` y restent texte brut et sortent
-      # visibles dans la page. Toute syntaxe Tera dans ces fichiers est
-      # donc un piège, jamais utile. Cas réel : commit 809b643 (fig4).
-      - name: Check no Tera tokens in figure bodies
-        run: |
-          if grep -rEn '\{[#%]|\{\{' content/ecrits/*/figures/ 2>/dev/null; then
-            echo "::error::Tera tokens found in figures/ — these files are loaded with format=plain and won't be parsed. Use HTML comments (<!-- -->) instead."
-            exit 1
-          fi
+      # Filet de sécurité : `zola check` détecte les liens internes morts
+      # (ancres, liens relatifs entre pages). Régression récurrente sur les
+      # notes d'articles — cf. commits « fix(ecrits): liens morts des notes ».
+      # `--skip-external-links` : ne pas rendre le déploiement dépendant de la
+      # disponibilité de sites tiers (faux négatifs réseau).
+      - name: Check internal links
+        run: zola check --skip-external-links
 
       - name: Build
         run: zola build
