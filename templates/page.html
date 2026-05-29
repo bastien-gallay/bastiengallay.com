@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% import "macros/ecrit_hero.html" as hero %}
+{% import "macros/vsm.html" as vsm %}
 
 {% block title %}{{ page.title }} — Bastien Gallay{% endblock %}
 {% block description %}{{ page.description | default(value="Notes et articles de Bastien Gallay.") }}{% endblock %}
 
 {% block content %}
-<article class="ecrit-page{% if page.extra.hero | default(value='') %} ecrit-page--has-hero{% endif %}" aria-labelledby="ecrit-page-title">
+<article class="ecrit-page{% if page.extra.hero | default(value='') %} ecrit-page--has-hero{% endif %}{% if page.extra.vsm | default(value=false) %} ecrit-page--vsm{% endif %}" aria-labelledby="ecrit-page-title">
   <p class="issue-bar">
     <span class="issue-bar__left">
       <span class="issue-bar__pill">NUMÉRO §{{ page.extra.numero | default(value="01.10") }}</span>
@@ -44,9 +45,18 @@
     {% endif %}
   </header>
 
+  {%- if page.extra.vsm | default(value=false) -%}
+  <div class="ecrit-vsm">
+    <div class="ecrit-page__content prose has-dropcap">
+      {{ page.content | safe }}
+    </div>
+    {{ vsm::rail() }}
+  </div>
+  {%- else -%}
   <div class="ecrit-page__content prose has-dropcap">
     {{ page.content | safe }}
   </div>
+  {%- endif -%}
 
   <aside class="ecrit-page__signature" aria-label="À propos de l'auteur">
     <a class="ecrit-page__signature-name" href="{{ config.base_url | safe }}">— Bastien Gallay</a>

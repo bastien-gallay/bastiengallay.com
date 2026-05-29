@@ -1,0 +1,42 @@
+{#-
+  Rail VSM (Value Stream Map) de l'article « ce que l'IA m'apporte vraiment ».
+  Chaîne des 8 étapes du travail de dev, toujours visible (colonne droite
+  desktop ≥60rem / bandeau sticky haut sur mobile), + carte zoom du stage
+  courant. L'état (étape active / partielle / atténuée + contenu du zoom)
+  est piloté au scroll par `static/vsm.js`, déclenché par les ancres
+  `{{ stage(id="…") }}` posées dans le markdown.
+
+  Les LABELS des 8 étapes sont structurels (stables) → vivent ici.
+  Les CONTENUS de stage (titres de zoom, notes, mini-SVG) vivent dans
+  vsm.js (data STAGES/EXTRAS), source unique pilotée par le scroll.
+-#}
+{% macro rail() %}
+<aside class="vsm" aria-label="Value Stream Map — mon travail de développement" data-vsm>
+  <div class="vsm__inner">
+    <p class="vsm__label">
+      <span class="vsm__label-title">VSM · mon travail</span>
+      <span class="vsm__stage" data-vsm-stage>vue complète</span>
+    </p>
+
+    <ol class="vsm__chain" data-vsm-chain>
+      <li class="vsm__node" data-step="1"><span class="vsm__n">01</span><span class="vsm__nm">Compréhension domaine</span><span class="vsm__fx">admin</span></li>
+      <li class="vsm__node" data-step="2"><span class="vsm__n">02</span><span class="vsm__nm">Exploration / death match</span><span class="vsm__fx">fort</span></li>
+      <li class="vsm__node" data-step="3"><span class="vsm__n">03</span><span class="vsm__nm">Décision de design</span><span class="vsm__fx">qualité</span></li>
+      <li class="vsm__node" data-step="4"><span class="vsm__n">04</span><span class="vsm__nm">Génération du code</span><span class="vsm__fx">très fort</span></li>
+      <li class="vsm__node" data-step="5"><span class="vsm__n">05</span><span class="vsm__nm">Harnais qualité</span><span class="vsm__fx">fort</span></li>
+      <li class="vsm__node" data-step="6"><span class="vsm__n">06</span><span class="vsm__nm">Test / refacto / Reflect</span><span class="vsm__fx">partiel</span></li>
+      <li class="vsm__node" data-step="7"><span class="vsm__n">07</span><span class="vsm__nm">Revue / intégration</span><span class="vsm__fx">variable</span></li>
+      <li class="vsm__node" data-step="8"><span class="vsm__n">08</span><span class="vsm__nm">Maintenance / dette</span><span class="vsm__fx">ambigu</span></li>
+    </ol>
+
+    <div class="vsm__zoom" data-vsm-zoom>
+      <p class="vsm__zoom-h" data-vsm-zh>Vue d'ensemble</p>
+      <p class="vsm__zoom-t" data-vsm-zt>La carte entière de mon travail.</p>
+      <div class="vsm__zoom-x" data-vsm-zx></div>
+      <p class="vsm__zoom-n" data-vsm-zn>8 étapes. La capacité brute vit en 4 ; mon temps, lui, se loge ailleurs.</p>
+    </div>
+
+    <p class="vsm__hint" aria-hidden="true">↑ en mobile, la carte coiffe l'article en bandeau.</p>
+  </div>
+</aside>
+{% endmacro rail %}

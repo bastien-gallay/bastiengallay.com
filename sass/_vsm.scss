@@ -1,0 +1,272 @@
+// ──────────────────────────────────────────────────────────────────
+// VSM — Value Stream Map de l'article « ce que l'IA m'apporte vraiment »
+// (article 2/3 de la série « Coder avec l'IA »).
+//
+// Maquette de référence : draft-article-2-H3 (rail colonne droite desktop,
+// bandeau horizontal sticky en haut sur mobile + carte zoom du stage courant).
+// Palette des maquettes (paper/ink/accent en dur) remappée sur les tokens
+// du thème ; dark mode via la mixin theme-dark (cf. _tokens.scss).
+//
+// Activation : frontmatter `extra.vsm = true` → `page.html` ajoute la classe
+// `.ecrit-page--vsm` et enveloppe contenu + rail dans `.ecrit-vsm`.
+// Le scroll est piloté par `static/vsm.js` via les ancres `{{ stage() }}`.
+// ──────────────────────────────────────────────────────────────────
+
+// Ancre de scroll invisible (posée par le shortcode `stage`).
+.vsm-trigger {
+  display: block;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+// ── Layout : contenu + rail en deux colonnes (≥60rem) ───────────────
+// `.ecrit-page` est déjà élargie à measure-base + side-track + side-gap
+// pour la piste de marge (cf. _routes.scss). On réutilise cette piste.
+.ecrit-page--vsm .ecrit-vsm {
+  @media (min-width: 60rem) {
+    display: grid;
+    grid-template-columns: minmax(0, var(--measure-base)) var(--side-track);
+    column-gap: var(--side-gap);
+    align-items: start;
+  }
+}
+
+// En mode VSM le contenu remplit sa piste (le cap measure-base vient du grid).
+.ecrit-page--vsm .ecrit-page__content {
+  max-width: none;
+}
+
+// ── Rail ────────────────────────────────────────────────────────────
+.vsm {
+  --vsm-partial-bg: color-mix(in oklch, var(--accent) 14%, var(--surface));
+  font-family: var(--font-body);
+
+  @media (min-width: 60rem) {
+    // Le rail occupe la 2e colonne ; son contenu colle au scroll.
+    .vsm__inner {
+      position: sticky;
+      top: var(--space-lg);
+    }
+  }
+}
+
+.vsm__label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-2xs);
+  margin: 0 0 var(--space-2xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.vsm__stage {
+  color: var(--accent);
+  font-weight: 600;
+  text-align: right;
+}
+
+// ── Chaîne ──────────────────────────────────────────────────────────
+.vsm__chain {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+}
+
+.vsm__node {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: 0.4rem 0.55rem;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--surface-sub);
+  transition: background var(--dur-mid) var(--ease-out-quart),
+              border-color var(--dur-mid) var(--ease-out-quart),
+              transform var(--dur-mid) var(--ease-out-quart),
+              opacity var(--dur-mid) var(--ease-out-quart);
+}
+
+.vsm__n {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.66rem;
+  color: var(--accent);
+  min-width: 1.4rem;
+  font-variant-numeric: tabular-nums lining-nums;
+  transition: color var(--dur-mid) var(--ease-out-quart);
+}
+
+.vsm__nm {
+  font-size: 0.74rem;
+  line-height: 1.15;
+  color: var(--surface-ink);
+  transition: color var(--dur-mid) var(--ease-out-quart);
+}
+
+.vsm__fx {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  transition: color var(--dur-mid) var(--ease-out-quart);
+}
+
+// États pilotés par vsm.js. Actif = fond accent plein, texte qui flip via
+// --surface (cream en clair, ink en sombre) — même logique que l'issue-bar.
+.vsm__node.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translateX(4px);
+  box-shadow: 0 5px 16px -8px color-mix(in oklch, var(--accent) 60%, transparent);
+
+  .vsm__n,
+  .vsm__nm { color: var(--surface); }
+  .vsm__nm { font-weight: 600; }
+  .vsm__fx { color: color-mix(in oklch, var(--surface) 80%, transparent); }
+}
+
+// Active secondaire (patterns multi-étapes, ex. B) : accent atténué.
+.vsm__node.is-active-2 {
+  background: color-mix(in oklch, var(--accent) 82%, var(--surface));
+  border-color: var(--accent);
+
+  .vsm__n,
+  .vsm__nm { color: var(--surface); }
+  .vsm__fx { color: color-mix(in oklch, var(--surface) 78%, transparent); }
+}
+
+.vsm__node.is-partial {
+  background: var(--vsm-partial-bg);
+  border-color: color-mix(in oklch, var(--accent) 40%, var(--rule));
+}
+
+.vsm__node.is-dim { opacity: 0.4; }
+
+// ── Carte zoom ──────────────────────────────────────────────────────
+.vsm__zoom {
+  margin-top: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--surface-sub);
+}
+
+.vsm__zoom-h {
+  margin: 0 0 var(--space-2xs);
+  padding-bottom: var(--space-3xs);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.vsm__zoom-t {
+  margin: 0 0 var(--space-2xs);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-base);
+  line-height: 1.25;
+  color: var(--surface-ink);
+}
+
+.vsm__zoom-n {
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.vsm__zoom-x { color: var(--accent); }
+.vsm__zoom-x:empty { display: none; }
+.vsm__zoom-x svg { width: 100%; height: auto; margin: var(--space-2xs) 0; }
+
+// Découpage action → effet (pattern B), injecté dans le zoom.
+.vsm__ae {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  margin-top: var(--space-3xs);
+}
+.vsm__ae-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-3xs);
+}
+.vsm__ae-act,
+.vsm__ae-eff {
+  font-size: 0.64rem;
+  line-height: 1.2;
+  padding: 0.28rem 0.4rem;
+  border-radius: 2px;
+}
+.vsm__ae-act { background: color-mix(in oklch, var(--accent) 12%, var(--surface)); color: var(--surface-ink); }
+.vsm__ae-eff { background: var(--surface); color: var(--surface-ink); border: 1px solid var(--rule); }
+.vsm__ae-arr { color: var(--accent); font-size: 0.7rem; text-align: center; }
+
+.vsm__hint {
+  display: none;
+  margin: var(--space-2xs) 0 0;
+  font-size: 0.6rem;
+  font-style: italic;
+  color: var(--ink-mute);
+}
+
+// ── Mobile (<60rem) : bandeau horizontal sticky en haut + zoom dessous ─
+@media (max-width: calc(60rem - 1px)) {
+  .ecrit-page--vsm .ecrit-vsm { display: block; }
+
+  .vsm {
+    order: -1;
+    position: sticky;
+    top: var(--space-sm);
+    z-index: 10;
+    background: var(--surface);
+    margin: 0 0 var(--space-lg);
+    padding: var(--space-2xs) 0 var(--space-sm);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  // Le rail apparaît AVANT le contenu dans le flux mobile.
+  .ecrit-page--vsm .ecrit-vsm { display: flex; flex-direction: column; }
+
+  .vsm__chain { flex-direction: row; gap: 0; }
+
+  .vsm__node {
+    flex: 1;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.35rem 0.1rem;
+    text-align: center;
+    border-radius: 0;
+    border-right: none;
+  }
+  .vsm__node:first-child { border-radius: 3px 0 0 3px; }
+  .vsm__node:last-child  { border-radius: 0 3px 3px 0; border-right: 1px solid var(--rule); }
+
+  .vsm__node.is-active { transform: translateY(-2px); }
+  .vsm__nm { font-size: 0.5rem; line-height: 1.05; }
+  .vsm__fx { display: none; }
+  .vsm__n  { min-width: 0; }
+
+  .vsm__hint { display: block; }
+}
+
+// ── Accessibilité : pas de mouvement si l'utilisateur le refuse ────────
+@media (prefers-reduced-motion: reduce) {
+  .vsm__node { transition: none; }
+  .vsm__node.is-active,
+  .vsm__node.is-active-2 { transform: none; }
+}
