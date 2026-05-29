@@ -220,7 +220,7 @@ Article basé sur mes recherches personnelles, dont je partage les sources. J'at
 </div>
 
 <div class="footnote-definition" id="4"><sup class="footnote-definition-label">4</sup>
-<p>Faros AI, <a rel="external" href="https://www.faros.ai/"><em>The AI Productivity Paradox Research Report</em></a>, faros.ai, 2025.</p>
+<p>Faros AI, <a rel="external" href="https://www.faros.ai/blog/ai-software-engineering"><em>The AI Productivity Paradox Research Report</em></a>, faros.ai, 2025.</p>
 </div>
 
 <div class="footnote-definition" id="5"><sup class="footnote-definition-label">5</sup>
@@ -232,21 +232,21 @@ Article basé sur mes recherches personnelles, dont je partage les sources. J'at
 </div>
 
 <div class="footnote-definition" id="7"><sup class="footnote-definition-label">7</sup>
-<p>Solar-Lezama, A., interview au <a rel="external" href="https://www.wsj.com/"><em>Wall Street Journal</em></a>, citée dans <a rel="external" href="https://devops.com/">DevOps.com</a>, <em>AI in Software Development: Productivity at the Cost of Code Quality?</em>, 2025.</p>
+<p>Solar-Lezama, A., interview au <a rel="external" href="https://www.wsj.com/"><em>Wall Street Journal</em></a>, citée dans <a rel="external" href="https://devops.com/ai-in-software-development-productivity-at-the-cost-of-code-quality/">DevOps.com</a>, <em>AI in Software Development: Productivity at the Cost of Code Quality?</em>, 2025.</p>
 </div>
 
 <div class="footnote-definition" id="8"><sup class="footnote-definition-label">8</sup>
-<p>Vibe Coder Blog, <a rel="external" href="https://blog.vibecoder.me/"><em>Security Researchers Sound the Alarm on AI Code Vulnerabilities</em></a>, blog.vibecoder.me, avril 2026&nbsp;; voir aussi <a rel="external" href="https://nvd.nist.gov/vuln/detail/CVE-2025-48757">CVE-2025-48757</a>.</p>
+<p>Vibe Coder Blog, <a rel="external" href="https://blog.vibecoder.me/security-researchers-ai-code-vulnerability-crisis"><em>Security Researchers Sound the Alarm on AI Code Vulnerabilities</em></a>, blog.vibecoder.me, avril 2026&nbsp;; voir aussi <a rel="external" href="https://nvd.nist.gov/vuln/detail/CVE-2025-48757">CVE-2025-48757</a>.</p>
 </div>
 
 <div class="footnote-definition" id="9"><sup class="footnote-definition-label">9</sup>
-<p>Veracode, <a rel="external" href="https://www.veracode.com/resources/genai-code-security-report-2025/"><em>2025 GenAI Code Security Report</em></a>, veracode.com.</p>
+<p>Veracode, <a rel="external" href="https://www.veracode.com/resources/analyst-reports/2025-genai-code-security-report/"><em>2025 GenAI Code Security Report</em></a>, veracode.com.</p>
 </div>
 
 <div class="footnote-definition" id="10"><sup class="footnote-definition-label">10</sup>
-<p>SoftwareSeni, <a rel="external" href="https://www.softwareseni.com/">analyse de Veracode 2025 et Apiiro</a>, softwareseni.com, février 2026.</p>
+<p>SoftwareSeni, <a rel="external" href="https://www.softwareseni.com/risk-management-and-security-framework-for-legacy-system-modernization/">analyse de Veracode 2025 et Apiiro</a>, softwareseni.com, février 2026.</p>
 </div>
 
 <div class="footnote-definition" id="11"><sup class="footnote-definition-label">11</sup>
-<p>Futurity, <a rel="external" href="https://www.futurity.org/"><em>AI-generated code is vulnerable</em></a>, futurity.org, 2026.</p>
+<p>Futurity, <a rel="external" href="https://www.futurity.org/ai-generated-code-vulnerable-3330542/"><em>AI-generated code is vulnerable</em></a>, futurity.org, 2026.</p>
 </div>
