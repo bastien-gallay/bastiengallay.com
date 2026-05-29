@@ -11,9 +11,22 @@
   src: url("/fonts/Redaction-Regular.woff2") format("woff2");
 }
 
-// La feuille Google Fonts impose `font-synthesis: none` sur :root, ce qui
-// empêche le navigateur de synthétiser l'italique pour Redaction. On le
-// rétablit ici (seul le style nous intéresse, le poids reste fixé à 400).
+// Geist self-hosted (Vercel, OFL). Fichier variable unique (axe wght 100–900)
+// qui remplace les 4 instances statiques jadis servies par Google Fonts :
+// un seul fichier de 120 Ko, zéro requête tierce, pas de FOUT réseau, et
+// cohérence RGPD (plus d'appel à gstatic à chaque visite). L'italique reste
+// synthétisé (font-synthesis: style ci-dessous), comme avant.
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/Geist-Variable.woff2") format("woff2");
+}
+
+// On ne sert ni italique Redaction ni italique Geist : le navigateur les
+// synthétise. `font-synthesis: style` l'autorise explicitement (certains UA
+// le désactivent par défaut), sans réactiver la synthèse de graisse.
 * { font-synthesis: style; }
 
 

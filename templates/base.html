@@ -22,11 +22,11 @@
     })();
   </script>
 
-  {# Redaction est self-hosted ; seul Geist passe encore par Google Fonts. #}
+  {# Redaction et Geist sont tous deux self-hosted (woff2 dans static/fonts).
+     Plus aucun appel à Google Fonts : zéro requête tierce, pas de FOUT
+     réseau, cohérence RGPD. Geist est un fichier variable unique (axe wght). #}
   <link rel="preload" href="{{ get_url(path='fonts/Redaction-Regular.woff2') | safe }}" as="font" type="font/woff2" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap">
+  <link rel="preload" href="{{ get_url(path='fonts/Geist-Variable.woff2') | safe }}" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="{{ get_url(path='main.css') | safe }}">
 
