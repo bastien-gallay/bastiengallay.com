@@ -2,53 +2,66 @@
 // VSM — Value Stream Map de l'article « ce que l'IA m'apporte vraiment »
 // (article 2/3 de la série « Coder avec l'IA »).
 //
-// Maquette de référence : draft-article-2-H3 (rail colonne droite desktop,
-// bandeau horizontal sticky en haut sur mobile + carte zoom du stage courant).
-// Palette des maquettes (paper/ink/accent en dur) remappée sur les tokens
-// du thème ; dark mode via la mixin theme-dark (cf. _tokens.scss).
+// Modèle de référence : maquette A1-v2. Les 8 étapes du travail de dev,
+// toujours visibles ; au scroll, l'étape du pattern courant GRANDIT sur
+// place (flex-grow) et déploie son détail à l'intérieur du nœud.
+//   - desktop ≥60rem : rail sticky pleine hauteur, détail in-situ.
+//   - mobile  <60rem : bandeau horizontal sticky en haut + panneau détail
+//                      dessous (recopié du nœud actif par static/vsm.js).
 //
-// Activation : frontmatter `extra.vsm = true` → `page.html` ajoute la classe
-// `.ecrit-page--vsm` et enveloppe contenu + rail dans `.ecrit-vsm`.
-// Le scroll est piloté par `static/vsm.js` via les ancres `{{ stage() }}`.
+// Fatigue rouge : comme `.ecrit-page__content` (cf. _editorial.scss, diag.
+// 2026-05-26), on désature l'accent EN CONTEXTE RAIL — le rouge identitaire
+// (chroma 0.205) calibré pour un accent rare devient fatigant quand le nœud
+// actif le rappelle à chaque section. Dark mode via la seule mixin theme-dark.
 // ──────────────────────────────────────────────────────────────────
 
 // Ancre de scroll invisible (posée par le shortcode `stage`).
-.vsm-trigger {
-  display: block;
-  height: 0;
-  margin: 0;
-  padding: 0;
+.vsm-trigger { display: block; height: 0; margin: 0; padding: 0; }
+
+// Bloc placeholder de section (scaffold pré-rédaction). Hauteur d'écran pour
+// que le focus de la VSM soit visible au scroll. À supprimer à la rédaction.
+.vsm-placeholder {
+  min-height: 78vh;
+  padding: var(--space-md) 0;
+  color: var(--ink-mute);
+  font-style: italic;
+  border-left: 2px solid var(--rule);
+  padding-left: var(--space-md);
+}
+.vsm-placeholder code { font-style: normal; }
+// Pas de dropcap sur un placeholder (sinon énorme initiale sur l'italique muet).
+.ecrit-page__content.has-dropcap h2:first-of-type + p.vsm-placeholder::first-letter {
+  font-size: inherit; float: none; color: inherit; margin: 0; font-weight: inherit;
 }
 
 // ── Layout : contenu + rail en deux colonnes (≥60rem) ───────────────
-// `.ecrit-page` est déjà élargie à measure-base + side-track + side-gap
-// pour la piste de marge (cf. _routes.scss). On réutilise cette piste.
 .ecrit-page--vsm .ecrit-vsm {
   @media (min-width: 60rem) {
     display: grid;
     grid-template-columns: minmax(0, var(--measure-base)) var(--side-track);
     column-gap: var(--side-gap);
-    align-items: start;
+    // stretch (défaut) : la colonne du rail s'étire sur toute la hauteur pour
+    // que le `position: sticky` tienne tout le scroll (sinon il se libère).
+    align-items: stretch;
   }
 }
-
-// En mode VSM le contenu remplit sa piste (le cap measure-base vient du grid).
-.ecrit-page--vsm .ecrit-page__content {
-  max-width: none;
-}
+.ecrit-page--vsm .ecrit-page__content { max-width: none; }
 
 // ── Rail ────────────────────────────────────────────────────────────
 .vsm {
-  --vsm-partial-bg: color-mix(in oklch, var(--accent) 14%, var(--surface));
+  // Accent désaturé, aligné sur le contexte article (anti-fatigue rouge).
+  --accent:      oklch(0.48 0.12 25);
+  --accent-deep: oklch(0.40 0.13 25);
+  --vsm-partial-bg: color-mix(in oklch, var(--accent) 12%, var(--surface));
+  // Offset pour passer SOUS le masthead sticky (≈73px / 4.58rem, z-index 20).
+  --vsm-top: 5rem;
   font-family: var(--font-body);
-
-  @media (min-width: 60rem) {
-    // Le rail occupe la 2e colonne ; son contenu colle au scroll.
-    .vsm__inner {
-      position: sticky;
-      top: var(--space-lg);
-    }
-  }
+}
+// Dark : surcharger l'override ci-dessus (sinon :root[data-theme="dark"] écrase
+// .vsm). Double-gating explicite + @media porté par la mixin (_tokens.scss).
+@include theme-dark('.vsm') {
+  --accent:      oklch(0.66 0.12 25);
+  --accent-deep: oklch(0.58 0.13 25);
 }
 
 .vsm__label {
@@ -63,37 +76,53 @@
   text-transform: uppercase;
   color: var(--ink-mute);
 }
+.vsm__stage { color: var(--accent); font-weight: 600; text-align: right; }
 
-.vsm__stage {
-  color: var(--accent);
-  font-weight: 600;
-  text-align: right;
-}
-
-// ── Chaîne ──────────────────────────────────────────────────────────
 .vsm__chain {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3xs);
+  gap: var(--space-2xs);
 }
 
 .vsm__node {
+  position: relative;          // ancre les flèches inter-blocs
   display: flex;
-  align-items: center;
-  gap: var(--space-2xs);
+  flex-direction: column;
   padding: 0.4rem 0.55rem;
   border: 1px solid var(--rule);
   border-radius: 3px;
   background: var(--surface-sub);
-  transition: background var(--dur-mid) var(--ease-out-quart),
+  // Transitions adoucies : ease-out-quart (pas expo, trop sec), pas de saut
+  // de position — l'emphase passe par la couleur et la taille, pas un décalage.
+  transition: flex-grow var(--dur-slow) var(--ease-out-quart),
+              background var(--dur-mid) var(--ease-out-quart),
               border-color var(--dur-mid) var(--ease-out-quart),
-              transform var(--dur-mid) var(--ease-out-quart),
+              box-shadow var(--dur-mid) var(--ease-out-quart),
               opacity var(--dur-mid) var(--ease-out-quart);
 }
 
+// Flèche de flux entre les blocs (▾ vertical desktop, ▸ horizontal mobile).
+.vsm__node:not(:last-child)::after {
+  content: "▾";
+  position: absolute;
+  bottom: calc(-1 * var(--space-2xs));
+  left: 50%;
+  transform: translate(-50%, -10%);
+  font-size: 0.6rem;
+  line-height: 1;
+  color: var(--ink-mute);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.vsm__node-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2xs);
+}
 .vsm__n {
   font-family: var(--font-mono);
   font-weight: 600;
@@ -103,14 +132,12 @@
   font-variant-numeric: tabular-nums lining-nums;
   transition: color var(--dur-mid) var(--ease-out-quart);
 }
-
 .vsm__nm {
   font-size: 0.74rem;
   line-height: 1.15;
   color: var(--surface-ink);
   transition: color var(--dur-mid) var(--ease-out-quart);
 }
-
 .vsm__fx {
   margin-left: auto;
   font-family: var(--font-mono);
@@ -121,117 +148,112 @@
   transition: color var(--dur-mid) var(--ease-out-quart);
 }
 
-// États pilotés par vsm.js. Actif = fond accent plein, texte qui flip via
-// --surface (cream en clair, ink en sombre) — même logique que l'issue-bar.
+// Détail déployable — fermé par défaut. Le clip vit ICI (pas sur le nœud,
+// pour que les flèches ::after restent visibles).
+.vsm__detail {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  transition: max-height var(--dur-slow) var(--ease-out-quart),
+              opacity var(--dur-mid) var(--ease-out-quart),
+              margin-top var(--dur-mid) var(--ease-out-quart);
+}
+.vsm__d-title {
+  margin: 0 0 var(--space-2xs);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.98rem;
+  line-height: 1.25;
+}
+.vsm__d-note { margin: 0; font-size: 0.7rem; line-height: 1.45; }
+.vsm__svg { width: 100%; height: auto; margin: var(--space-2xs) 0; display: block; }
+
+// Découpage action → effet.
+.vsm__ae { display: flex; flex-direction: column; gap: var(--space-3xs); margin-top: var(--space-3xs); }
+.vsm__ae-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: var(--space-3xs); }
+.vsm__ae-act, .vsm__ae-eff { font-size: 0.62rem; line-height: 1.2; padding: 0.26rem 0.38rem; border-radius: 2px; }
+.vsm__ae-arr { font-size: 0.7rem; text-align: center; }
+
+// ── États (pilotés par vsm.js) ──────────────────────────────────────
+// Actif = fond accent (désaturé) ; texte/SVG flip via --surface.
 .vsm__node.is-active {
   background: var(--accent);
   border-color: var(--accent);
-  transform: translateX(4px);
-  box-shadow: 0 5px 16px -8px color-mix(in oklch, var(--accent) 60%, transparent);
-
-  .vsm__n,
-  .vsm__nm { color: var(--surface); }
+  box-shadow: 0 6px 20px -12px color-mix(in oklch, var(--accent) 45%, transparent);
+}
+.vsm__node.is-active-2 {
+  background: color-mix(in oklch, var(--accent) 86%, var(--surface));
+  border-color: var(--accent);
+}
+.vsm__node.is-active,
+.vsm__node.is-active-2 {
+  .vsm__n, .vsm__nm { color: var(--surface); }
   .vsm__nm { font-weight: 600; }
   .vsm__fx { color: color-mix(in oklch, var(--surface) 80%, transparent); }
-}
-
-// Active secondaire (patterns multi-étapes, ex. B) : accent atténué.
-.vsm__node.is-active-2 {
-  background: color-mix(in oklch, var(--accent) 82%, var(--surface));
-  border-color: var(--accent);
-
-  .vsm__n,
-  .vsm__nm { color: var(--surface); }
-  .vsm__fx { color: color-mix(in oklch, var(--surface) 78%, transparent); }
+  .vsm__detail { color: var(--surface); }
+  .vsm__ae-act { background: color-mix(in oklch, var(--surface) 18%, transparent); color: var(--surface); }
+  .vsm__ae-eff { background: var(--surface); color: var(--surface-ink); }
+  .vsm__ae-arr { color: color-mix(in oklch, var(--surface) 75%, transparent); }
 }
 
 .vsm__node.is-partial {
   background: var(--vsm-partial-bg);
-  border-color: color-mix(in oklch, var(--accent) 40%, var(--rule));
+  border-color: color-mix(in oklch, var(--accent) 35%, var(--rule));
 }
-
 .vsm__node.is-dim { opacity: 0.4; }
 
-// ── Carte zoom ──────────────────────────────────────────────────────
-.vsm__zoom {
-  margin-top: var(--space-sm);
-  padding: var(--space-xs) var(--space-sm);
-  border: 1px solid var(--rule);
-  border-radius: 3px;
-  background: var(--surface-sub);
-}
-
-.vsm__zoom-h {
-  margin: 0 0 var(--space-2xs);
-  padding-bottom: var(--space-3xs);
-  border-bottom: 1px solid var(--rule);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.vsm__zoom-t {
-  margin: 0 0 var(--space-2xs);
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: var(--text-base);
-  line-height: 1.25;
-  color: var(--surface-ink);
-}
-
-.vsm__zoom-n {
-  margin: 0;
-  font-size: 0.72rem;
-  line-height: 1.45;
-  color: var(--ink-soft);
-}
-
-.vsm__zoom-x { color: var(--accent); }
-.vsm__zoom-x:empty { display: none; }
-.vsm__zoom-x svg { width: 100%; height: auto; margin: var(--space-2xs) 0; }
-
-// Découpage action → effet (pattern B), injecté dans le zoom.
-.vsm__ae {
+// ── Légende (états + sens du tag) ───────────────────────────────────
+.vsm__legend {
+  list-style: none;
+  margin: var(--space-xs) 0 0;
+  padding: 0;
   display: flex;
-  flex-direction: column;
-  gap: var(--space-3xs);
-  margin-top: var(--space-3xs);
-}
-.vsm__ae-row {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: var(--space-3xs);
-}
-.vsm__ae-act,
-.vsm__ae-eff {
-  font-size: 0.64rem;
-  line-height: 1.2;
-  padding: 0.28rem 0.4rem;
-  border-radius: 2px;
-}
-.vsm__ae-act { background: color-mix(in oklch, var(--accent) 12%, var(--surface)); color: var(--surface-ink); }
-.vsm__ae-eff { background: var(--surface); color: var(--surface-ink); border: 1px solid var(--rule); }
-.vsm__ae-arr { color: var(--accent); font-size: 0.7rem; text-align: center; }
-
-.vsm__hint {
-  display: none;
-  margin: var(--space-2xs) 0 0;
-  font-size: 0.6rem;
-  font-style: italic;
+  flex-wrap: wrap;
+  gap: var(--space-3xs) var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--ink-mute);
 }
+.vsm__legend li { display: inline-flex; align-items: center; gap: 0.4em; }
+.vsm__legend-dot {
+  width: 0.62em; height: 0.62em; border-radius: 2px; display: inline-block; flex-shrink: 0;
+}
+.vsm__legend-dot--active  { background: var(--accent); }
+.vsm__legend-dot--partial { background: var(--vsm-partial-bg); border: 1px solid color-mix(in oklch, var(--accent) 35%, var(--rule)); }
+.vsm__legend-dot--dim     { background: var(--surface-sub); border: 1px solid var(--rule); opacity: 0.5; }
+.vsm__legend-note { font-style: normal; }
+.vsm__legend-note::before { content: "▾ "; color: var(--ink-mute); opacity: 0.7; }
 
-// ── Mobile (<60rem) : bandeau horizontal sticky en haut + zoom dessous ─
+// ── Desktop ≥60rem : rail pleine hauteur, nœud actif qui grandit ─────
+@media (min-width: 60rem) {
+  // Sticky simple : le rail colle au scroll, sa hauteur suit son contenu.
+  // Le nœud actif grandit en déployant son détail (pas un aplat qui remplit
+  // toute la colonne — ça limite le rouge, cf. retour fatigue visuelle).
+  .vsm__inner {
+    position: sticky;
+    top: var(--vsm-top);
+  }
+  .vsm__node.is-active .vsm__detail,
+  .vsm__node.is-active-2 .vsm__detail {
+    max-height: 60vh;
+    opacity: 1;
+    margin-top: var(--space-2xs);
+  }
+
+  .vsm__panel { display: none; }   // détail in-situ → pas de panneau desktop
+}
+
+// ── Mobile <60rem : bandeau horizontal sticky + panneau détail ──────
 @media (max-width: calc(60rem - 1px)) {
-  .ecrit-page--vsm .ecrit-vsm { display: block; }
+  .ecrit-page--vsm .ecrit-vsm { display: flex; flex-direction: column; }
 
   .vsm {
     order: -1;
     position: sticky;
-    top: var(--space-sm);
+    top: var(--vsm-top);          // passe sous le masthead sticky
     z-index: 10;
     background: var(--surface);
     margin: 0 0 var(--space-lg);
@@ -239,34 +261,57 @@
     border-bottom: 1px solid var(--rule);
   }
 
-  // Le rail apparaît AVANT le contenu dans le flux mobile.
-  .ecrit-page--vsm .ecrit-vsm { display: flex; flex-direction: column; }
-
   .vsm__chain { flex-direction: row; gap: 0; }
-
   .vsm__node {
     flex: 1;
-    flex-direction: column;
-    gap: 0.1rem;
     padding: 0.35rem 0.1rem;
-    text-align: center;
     border-radius: 0;
     border-right: none;
   }
   .vsm__node:first-child { border-radius: 3px 0 0 3px; }
   .vsm__node:last-child  { border-radius: 0 3px 3px 0; border-right: 1px solid var(--rule); }
-
-  .vsm__node.is-active { transform: translateY(-2px); }
+  .vsm__node-head { flex-direction: column; align-items: center; gap: 0.1rem; text-align: center; }
+  .vsm__node.is-active,
+  .vsm__node.is-active-2 { transform: translateY(-2px); }
   .vsm__nm { font-size: 0.5rem; line-height: 1.05; }
   .vsm__fx { display: none; }
   .vsm__n  { min-width: 0; }
 
-  .vsm__hint { display: block; }
-}
+  // Flèche horizontale (▸) entre les blocs du bandeau.
+  .vsm__node:not(:last-child)::after {
+    content: "▸";
+    bottom: auto; left: auto;
+    top: 50%; right: -0.32rem;
+    transform: translateY(-50%);
+  }
 
-// ── Accessibilité : pas de mouvement si l'utilisateur le refuse ────────
+  // Le détail in-situ est masqué ; vsm.js le recopie dans le panneau.
+  .vsm__detail { display: none; }
+
+  .vsm__panel {
+    margin-top: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--surface-sub);
+    color: var(--accent);
+  }
+  .vsm__panel:empty { display: none; }
+  .vsm__panel .vsm__d-title { color: var(--surface-ink); }
+  .vsm__panel .vsm__d-note  { color: var(--ink-soft); }
+  .vsm__panel .vsm__ae-act  { background: color-mix(in oklch, var(--accent) 12%, var(--surface)); color: var(--surface-ink); }
+  .vsm__panel .vsm__ae-eff  { background: var(--surface); color: var(--surface-ink); border: 1px solid var(--rule); }
+  .vsm__panel .vsm__ae-arr  { color: var(--accent); }
+
+  .vsm__legend { justify-content: center; margin-top: var(--space-2xs); }
+  .vsm__hint { display: block; margin: var(--space-2xs) 0 0; font-size: 0.6rem; font-style: italic; color: var(--ink-mute); text-align: center; }
+}
+.vsm__hint { display: none; }
+
+// ── Accessibilité : pas de mouvement si l'utilisateur le refuse ──────
 @media (prefers-reduced-motion: reduce) {
-  .vsm__node { transition: none; }
+  .vsm__node,
+  .vsm__detail { transition: none; }
   .vsm__node.is-active,
   .vsm__node.is-active-2 { transform: none; }
 }

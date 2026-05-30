@@ -11,6 +11,10 @@ series_index = 2
 series_total = 3
 series_part_subtitle = "ce que l'IA m'apporte vraiment"
 
+# Signature de série, 3 couches (cf .personal/research/2026-05-26-signatures-serie-coder-avec-l-ia.md).
+# Base 2/3 figée + anecdote B (préférence Bastien) — à confirmer à la rédaction.
+signature_bio = "Je ralentis toujours plus pour coder encore mieux. Je mesure ce que je déploie. J'ai mis vingt minutes à comprendre l'intention de mon propre code écrit l'an dernier."
+
 # Active le rail Value Stream Map (cf. macros/vsm.html + static/vsm.js).
 # Les sections portent leur ancre via le shortcode {{/* stage(id="…") */}}.
 vsm = true
@@ -28,8 +32,6 @@ Dans la discussion sur le Slack Okiwi, suite au rappel de Johan, Jean-Baptiste D
 
 Pour répondre à ces questions, j'ai besoin de vous expliquer comment je travaille désormais avec l'IA.
 
-[^1090]: Voir le premier article de la série. Avant l'IA, j'écrivais le code dans environ 10&nbsp;% de mon temps&nbsp;; les 90&nbsp;% restants allaient à le concevoir, le relire, l'organiser, le documenter et le maintenir. <!-- brouillon Claude — à ajuster à ta voix -->
-
 <!--
 === NOTE ÉDITORIALE (Claude) — §1 : reste hygiène finale ===
 (Notes d'édition. §1 considérée bouclée sur le fond.)
@@ -40,14 +42,73 @@ Pour répondre à ces questions, j'ai besoin de vous expliquer comment je travai
 === fin note éditoriale ===
 -->
 
-<!-- Déplacé depuis article 1 de la série — matériau logos à replacer (§2 ou plus loin) -->
+{{ stage(id="full2") }}
 
- Une 3e condition permet de passer d'une simple accélération à une vitesse continue: profiter du temps gagné initialement pour améliorer la qualité.
+## Mon travail, en huit étapes
 
-<!-- Fin déplacé -->
+<p class="vsm-placeholder">À écrire — §2 Entrée VSM : poser la carte des 8 étapes ; l'IA n'agit pas uniformément sur la chaîne ; distinction durée vs administration (étapes 1 et 3). Bijou cible : « La courbe METR vit à l'étape 4. Mon temps, lui, se loge ailleurs. » — supprimer ce bloc à la rédaction.</p>
 
-<!--
-Idée à reprendre: Frederick Brooks - The Mythical Man-Month
-il fait référence à un menu d'un restaurant français (en VO) et explique le parallèle avec le génie logiciel. J'ai encore l'image en tête et j'envisageais de l'y mettre. Mais les 2 autres arguments sont très justes.
-A reprendre tel quel ou à adapter (image restaurant)
- -->
+<!-- Matériau hérité de 1/3 à replacer ici (charnière VSM → patterns) :
+     « Une 3e condition permet de passer d'une simple accélération à une vitesse
+     continue : profiter du temps gagné initialement pour améliorer la qualité. »
+     + Métaphore Brooks (Mythical Man-Month, menu de restaurant français) — en
+     réserve, utilité baissée depuis la VSM (cf. SOURCES, sources en réserve). -->
+
+{{ stage(id="A") }}
+
+## Le harnais qui libère
+
+<p class="vsm-placeholder">À écrire — §3 Pattern A : N+1 (N mesures + 1 pour l'inconnu), les trois faces du harnais (pratiques classiques / leur évolution / nouvelles pratiques), le scaffold jour 1 de lucid-lint. Bijou : « J'écris une fois, ça sert à l'humain et à l'IA. » — supprimer à la rédaction.</p>
+
+{{ stage(id="courage") }}
+
+## Le courage
+
+<p class="vsm-placeholder">À écrire — §4 Pivot : la valeur Courage d'XP réactivée par Beck ; trois actes (suppression du path A vert, Category −3/6 en 24 h, renommage de 81 features) ; contrepoint Severity::Error. Bijou : « Le filet de sécurité… c'est ce qui m'autorise à être courageux. » → bascule « ce que ce courage libère, c'est du jugement ». — supprimer à la rédaction.</p>
+
+{{ stage(id="B") }}
+
+## L'IA, casseur de complaisance
+
+<p class="vsm-placeholder">À écrire — §5 Pattern B : réducteur de charge cognitive ET casseur de complaisance ; durée vs administration (étapes 1, 3) ; feature-torture, death matchs (design fixation, CHI 2024), auto-critique IA croisée ; contre-exemple lucid-lint 18→21→25. Bijou : « casser ma complaisance avant que je la confonde avec de la cohérence. » — supprimer à la rédaction.</p>
+
+{{ stage(id="C") }}
+
+## De la rigueur du cadre à la rigueur de la boucle
+
+<p class="vsm-placeholder">À écrire — §6 Pattern C' : TDD + Reflect (Reflect = ajout auteur, PAS Beck) ; trajectoire SDD marché → maison → abandon ; vocabulaire vs mécanique (Git lucid-lint) ; Reflect macro exécuter-et-inscrire. Bijoux : « le code généré par IA est, pour mon cerveau, du legacy de quelques heures. » + « la rigueur s'est déplacée du cadre figé vers la boucle réflexive. » — supprimer à la rédaction.</p>
+
+{{ stage(id="vigilance") }}
+
+## Note de vigilance
+
+<p class="vsm-placeholder">À écrire — §7 : triple debt (technique / cognitive / intent — Storey + Fowler) ; comment les patterns remboursent ; ce qu'ils ne suffisent pas à régler (ré-apprentissage, veille, multitasking) ; chiffres Gerlich, Shen &amp; Tamkin. Bijou : « Storey a nommé ce qui me hantait sans que je le sache. » — supprimer à la rédaction.</p>
+
+{{ stage(id="cliff") }}
+
+## Vers l'article 3
+
+<p class="vsm-placeholder">À écrire — §8 Cliffhanger : tous les patterns s'arrêtent à la frontière du clavier, mais ils produisent déjà du collectif ; question ouverte pour 3/3 (ce que l'organisation doit changer). Conclusion qui appelle, pas qui nuance. — supprimer à la rédaction.</p>
+
+## Notes et références
+
+[^1090]: Voir [le premier article de la série](@/ecrits/2026-05-28-avec-l-ia-je-code-plus-lentement/index.md). Avant l'IA, j'écrivais le code dans environ 10&nbsp;% de mon temps&nbsp;; les 90&nbsp;% restants allaient à le concevoir, le relire, l'organiser, le documenter et le maintenir. <!-- brouillon Claude — à ajuster à ta voix -->
+
+*Cadre source (placeholder draft — à convertir en notes `[^N]` au fil des citations ; URLs ⚠️ à confirmer en base arrière). Limites à signaler dans le texte : DeputyDev (auteurs-industrie), Storey/Starr (cadre conceptuel), Shen et Tamkin (vendor, associatif), Gerlich (pas software-specific), Wadinambiarachchi (design ≠ code).*
+
+1. **METR Time Horizon** — Kwa, West et al., *Measuring AI Ability to Complete Long Tasks*, mars 2025. <https://arxiv.org/abs/2503.14499>
+2. **METR Time Horizon 1.1** — *Measuring the time horizon*, 29 janvier 2026 (slug ⚠️ à confirmer). <https://metr.org/blog/2026-01-29-measuring-time-horizon/>
+3. **METR « Changing Experiment Design »** — *We Are Changing our Developer Productivity Experiment Design*, 24 février 2026. <https://metr.org/blog/2026-02-24-uplift-update/>
+4. **Beck, *Tidy First?*** — O'Reilly, 2023 (ISBN 978-1-098-15124-9).
+5. **Beck, « 90% of My Skills »** — tweet du 22 avril 2023 + essai. <https://x.com/KentBeck/status/1649817957235843072>
+6. **Beck, podcast Pragmatic Engineer** — juin 2025 (relayé par simonwillison.net).
+7. **Wadinambiarachchi et al., design fixation** — CHI 2024 (N=60 ; DOI ⚠️ à confirmer). <https://doi.org/10.1145/3613904.3642919>
+8. **HAI-CDP** — *Frontiers in Computer Science*, 2025 (URL ⚠️ à retrouver).
+9. **Kumar et al., DeputyDev (1mg)** — 2025 : −31,8&nbsp;% de cycle de revue, +28&nbsp;% de volume. <https://arxiv.org/abs/2509.19708>
+10. **Storey, *Cognitive debt*** — 15 février 2026 (cadre conceptuel).
+11. **Starr et Storey, triple debt** — 23 mars 2026. <https://arxiv.org/abs/2603.22106>
+12. **Fowler, *Fragments*** — 2 avril 2026. <https://martinfowler.com/fragments/2026-04-02.html>
+13. **Naur, *Programming as Theory Building*** — 1985.
+14. **Gerlich, cognitive offloading** — *Societies* (MDPI), 2025 (N=666 ; DOI ⚠️ à confirmer).
+15. **Shen et Tamkin, RCT Anthropic** — *How AI Impacts Skill Formation*, 28 janvier 2026 (N=52). <https://arxiv.org/abs/2601.20245>
+16. **Feathers, *Working Effectively with Legacy Code*** — 2004 (ISBN 978-0-13-117705-5).

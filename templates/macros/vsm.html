@@ -1,14 +1,19 @@
 {#-
   Rail VSM (Value Stream Map) de l'article « ce que l'IA m'apporte vraiment ».
-  Chaîne des 8 étapes du travail de dev, toujours visible (colonne droite
-  desktop ≥60rem / bandeau sticky haut sur mobile), + carte zoom du stage
-  courant. L'état (étape active / partielle / atténuée + contenu du zoom)
-  est piloté au scroll par `static/vsm.js`, déclenché par les ancres
-  `{{ stage(id="…") }}` posées dans le markdown.
+  Modèle de référence : maquette A1-v2. Les 8 étapes du travail de dev,
+  toujours visibles ; au scroll, l'étape (ou les étapes) du pattern courant
+  GRANDIT sur place (flex-grow) et déploie son détail à l'intérieur du nœud.
 
-  Les LABELS des 8 étapes sont structurels (stables) → vivent ici.
-  Les CONTENUS de stage (titres de zoom, notes, mini-SVG) vivent dans
-  vsm.js (data STAGES/EXTRAS), source unique pilotée par le scroll.
+  Layout :
+   - desktop ≥60rem : rail sticky pleine hauteur en colonne droite, détail
+     in-situ dans le nœud actif (A1-v2).
+   - mobile <60rem : la chaîne devient un bandeau horizontal sticky en haut ;
+     le détail du nœud actif est recopié dans `.vsm__panel` sous le bandeau.
+
+  L'état (actif / actif-2 / partiel / atténué) est piloté au scroll par
+  `static/vsm.js` via les ancres `{{ stage(id="…") }}` posées dans le markdown.
+  Le DÉTAIL de chaque étape vit ici, dans son nœud (source unique des deux
+  layouts). Les LABELS des 8 étapes sont structurels et stables.
 -#}
 {% macro rail() %}
 <aside class="vsm" aria-label="Value Stream Map — mon travail de développement" data-vsm>
@@ -19,22 +24,100 @@
     </p>
 
     <ol class="vsm__chain" data-vsm-chain>
-      <li class="vsm__node" data-step="1"><span class="vsm__n">01</span><span class="vsm__nm">Compréhension domaine</span><span class="vsm__fx">admin</span></li>
-      <li class="vsm__node" data-step="2"><span class="vsm__n">02</span><span class="vsm__nm">Exploration / death match</span><span class="vsm__fx">fort</span></li>
-      <li class="vsm__node" data-step="3"><span class="vsm__n">03</span><span class="vsm__nm">Décision de design</span><span class="vsm__fx">qualité</span></li>
-      <li class="vsm__node" data-step="4"><span class="vsm__n">04</span><span class="vsm__nm">Génération du code</span><span class="vsm__fx">très fort</span></li>
-      <li class="vsm__node" data-step="5"><span class="vsm__n">05</span><span class="vsm__nm">Harnais qualité</span><span class="vsm__fx">fort</span></li>
-      <li class="vsm__node" data-step="6"><span class="vsm__n">06</span><span class="vsm__nm">Test / refacto / Reflect</span><span class="vsm__fx">partiel</span></li>
-      <li class="vsm__node" data-step="7"><span class="vsm__n">07</span><span class="vsm__nm">Revue / intégration</span><span class="vsm__fx">variable</span></li>
-      <li class="vsm__node" data-step="8"><span class="vsm__n">08</span><span class="vsm__nm">Maintenance / dette</span><span class="vsm__fx">ambigu</span></li>
+      <li class="vsm__node" data-step="1">
+        <div class="vsm__node-head"><span class="vsm__n">01</span><span class="vsm__nm">Compréhension domaine</span><span class="vsm__fx">admin</span></div>
+        <div class="vsm__detail">
+          <p class="vsm__d-title">Comprendre ne s'accélère pas.</p>
+          <p class="vsm__d-note">L'IA allège l'administration (brainstorms transcrits, ateliers DDD/inception), pas le temps humain de comprendre.</p>
+        </div>
+      </li>
+
+      <li class="vsm__node" data-step="2">
+        <div class="vsm__node-head"><span class="vsm__n">02</span><span class="vsm__nm">Exploration / death match</span><span class="vsm__fx">fort</span></div>
+        <div class="vsm__detail">
+          <p class="vsm__d-title">Forcer la concurrence des idées.</p>
+          <div class="vsm__ae">
+            <div class="vsm__ae-row"><span class="vsm__ae-act">Générer N prototypes</span><span class="vsm__ae-arr">→</span><span class="vsm__ae-eff">échapper à la fixation</span></div>
+            <div class="vsm__ae-row"><span class="vsm__ae-act">Les mettre en death match</span><span class="vsm__ae-arr">→</span><span class="vsm__ae-eff">choisir sur preuve</span></div>
+          </div>
+        </div>
+      </li>
+
+      <li class="vsm__node" data-step="3">
+        <div class="vsm__node-head"><span class="vsm__n">03</span><span class="vsm__nm">Décision de design</span><span class="vsm__fx">qualité</span></div>
+        <div class="vsm__detail">
+          <p class="vsm__d-title">Décider mieux, pas plus vite.</p>
+          <div class="vsm__ae">
+            <div class="vsm__ae-row"><span class="vsm__ae-act">Auto-critique IA croisée</span><span class="vsm__ae-arr">→</span><span class="vsm__ae-eff">casser la complaisance</span></div>
+            <div class="vsm__ae-row"><span class="vsm__ae-act">feature-torture</span><span class="vsm__ae-arr">→</span><span class="vsm__ae-eff">tuer le superflu tôt</span></div>
+          </div>
+        </div>
+      </li>
+
+      <li class="vsm__node" data-step="4">
+        <div class="vsm__node-head"><span class="vsm__n">04</span><span class="vsm__nm">Génération du code</span><span class="vsm__fx">très fort</span></div>
+        <div class="vsm__detail">
+          <p class="vsm__d-title">Là où la courbe METR vit.</p>
+          <p class="vsm__d-note">La plus accélérée — et déjà la moins coûteuse en temps avant l'IA. Le cœur du malentendu.</p>
+        </div>
+      </li>
+
+      <li class="vsm__node" data-step="5">
+        <div class="vsm__node-head"><span class="vsm__n">05</span><span class="vsm__nm">Harnais qualité</span><span class="vsm__fx">fort</span></div>
+        <div class="vsm__detail">
+          <p class="vsm__d-title">Le scaffold du jour 1.</p>
+          <p class="vsm__d-note">CI, hooks, coverage, badges OpenSSF — avant la 1re règle métier.</p>
+          <svg class="vsm__svg" viewBox="0 0 220 46" role="img" aria-label="Commit jour 1 : CI, hooks, coverage avant la 1re règle">
+            <g font-family="monospace" font-size="7.5" fill="currentColor">
+              <text x="2" y="12" opacity="0.75">d153ad8 scaffold: CI, hooks…</text>
+              <text x="2" y="26" opacity="0.75">+ SECURITY.md + clippy + coverage</text>
+              <text x="2" y="40">— 1re règle métier : plus tard</text></g></svg>
+        </div>
+      </li>
+
+      <li class="vsm__node" data-step="6">
+        <div class="vsm__node-head"><span class="vsm__n">06</span><span class="vsm__nm">Test / refacto / Reflect</span><span class="vsm__fx">partiel</span></div>
+        <div class="vsm__detail">
+          <p class="vsm__d-title">Red → Green → Refactor → Reflect.</p>
+          <svg class="vsm__svg" viewBox="0 0 220 90" role="img" aria-label="Boucle Red, Green, Refactor, Reflect">
+            <g fill="none" stroke="currentColor" stroke-width="1.4">
+              <circle cx="110" cy="45" r="31" stroke-dasharray="3 3"/>
+              <path d="M110 14 l-4 6 l8 0 z" fill="currentColor" stroke="none"/></g>
+            <g font-family="sans-serif" font-size="7.5" fill="currentColor" text-anchor="middle">
+              <text x="110" y="20" opacity="0.75">Red</text><text x="140" y="48" opacity="0.75">Green</text>
+              <text x="110" y="79" opacity="0.75">Refactor</text>
+              <text x="74" y="48" font-weight="700">Reflect</text></g></svg>
+          <p class="vsm__d-note">Reflect macro : générer (IA) → exécuter (moi) → inscrire (moi).</p>
+        </div>
+      </li>
+
+      <li class="vsm__node" data-step="7">
+        <div class="vsm__node-head"><span class="vsm__n">07</span><span class="vsm__nm">Revue / intégration</span><span class="vsm__fx">variable</span></div>
+        <div class="vsm__detail">
+          <p class="vsm__d-title">L'étape sociale.</p>
+          <p class="vsm__d-note">DeputyDev : −31,8 % de cycle de revue avec outil dédié. Mais c'est déjà presque de l'organisationnel → article 3.</p>
+        </div>
+      </li>
+
+      <li class="vsm__node" data-step="8">
+        <div class="vsm__node-head"><span class="vsm__n">08</span><span class="vsm__nm">Maintenance / dette</span><span class="vsm__fx">ambigu</span></div>
+        <div class="vsm__detail">
+          <p class="vsm__d-title">Le plus lourd sur la durée.</p>
+          <p class="vsm__d-note">GitClear, METR (1/3). C'est ici que la cognitive debt se paie.</p>
+        </div>
+      </li>
     </ol>
 
-    <div class="vsm__zoom" data-vsm-zoom>
-      <p class="vsm__zoom-h" data-vsm-zh>Vue d'ensemble</p>
-      <p class="vsm__zoom-t" data-vsm-zt>La carte entière de mon travail.</p>
-      <div class="vsm__zoom-x" data-vsm-zx></div>
-      <p class="vsm__zoom-n" data-vsm-zn>8 étapes. La capacité brute vit en 4 ; mon temps, lui, se loge ailleurs.</p>
-    </div>
+    <ul class="vsm__legend" aria-hidden="true">
+      <li><span class="vsm__legend-dot vsm__legend-dot--active"></span>focus</li>
+      <li><span class="vsm__legend-dot vsm__legend-dot--partial"></span>touchée</li>
+      <li><span class="vsm__legend-dot vsm__legend-dot--dim"></span>en retrait</li>
+      <li class="vsm__legend-note">tag = effet de l'IA</li>
+    </ul>
+
+    {#- Détail recopié ici par vsm.js sur mobile (le détail in-situ des nœuds
+        est masqué quand la chaîne passe en bandeau horizontal). -#}
+    <div class="vsm__panel" data-vsm-panel aria-hidden="true"></div>
 
     <p class="vsm__hint" aria-hidden="true">↑ en mobile, la carte coiffe l'article en bandeau.</p>
   </div>
