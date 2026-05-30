@@ -44,11 +44,19 @@ Pour répondre à ces questions, j'ai besoin de vous expliquer comment je travai
 
 {{ stage(id="full2") }}
 
-## Mon travail, en huit étapes
+## Mon travail, en sept étapes
 
-<p class="vsm-placeholder">À écrire — §2 Entrée VSM : poser la carte des 8 étapes ; l'IA n'agit pas uniformément sur la chaîne ; distinction durée vs administration (étapes 1 et 3). Bijou cible : « La courbe METR vit à l'étape 4. Mon temps, lui, se loge ailleurs. » — supprimer ce bloc à la rédaction.</p>
+Ce qui suit est ma manière de travailler avec l'IA dans mes développements personnels, open source pour la plupart. Elle trouve ses origines dans mon expérience d'artisan logiciel, les concepts de product management et mes échanges avec d'autres praticiens.
 
-> Matériau hérité de 1/3 à replacer ici (charnière VSM → patterns) : « Une 3e condition permet de passer d'une simple accélération à une vitesse continue : profiter du temps gagné initialement pour améliorer la qualité. » + Métaphore Brooks (Mythical Man-Month, menu de restaurant français) — en réserve, utilité baissée depuis la VSM (cf. SOURCES, sources en réserve).
+Influencé par Lean et Agile, j'ai choisi une représentation inspirée de Value Stream Mapping. Elle est marquée par 7 étapes principales regroupées ainsi :
+
+- **Avant le code** : je prends le temps de définir le domaine, d'ajuster le périmètre visé et enfin de concevoir la forme globale. À l'issue de ces 3 étapes, j'ai un cadre précis de ce que je compte coder.
+- **Le code et sa boucle** : La responsabilité des 3 étapes suivantes est la mise en production d'un code de qualité. La génération du code est suivie par les vérifications de sa qualité. Ensuite, différentes revues et intégrations prennent le relais. Ces trois étapes sont orchestrées par une boucle de rétroaction continue centrée sur la compréhension humaine et l'adaptation.
+- **Après le code** : La dernière étape, le suivi de la livraison et sa maintenance, démarrent immédiatement après chaque livraison réussie. Cette étape comprend des activités comme le dogfood, la communication et le suivi statistique.
+
+Cette séquence est adaptable, jamais figée. Elle reste très classique et je la connaissais de manière empirique uniquement. Pour les besoins de l'article, j'ai reconstitué avec l'IA et mes commits sur lucid-lint les patterns et checkpoints les plus évidents, puis comparé avec l'idée abstraite que je m'en faisais. La dernière étape est très généraliste — presque fourre-tout. La raison : je garde lucid-lint comme exemple le plus récent et représentatif, et j'en suis pour l'instant le seul utilisateur quotidien.
+
+Parlons à nouveau des études METR. La courbe METR vit dans l'enchainement d'étapes semblables aux miennes. Le temps que je prends vit entre les boucles que ces étapes jalonnent. C'est le ralentissement volontaire pour les vérifications, celui des transitions entre deux actions finies, pour garantir à la deuxième qu'elle reprendra sur des bases saines.
 
 {{ stage(id="A") }}
 
