@@ -49,10 +49,15 @@
 
 // ── Rail ────────────────────────────────────────────────────────────
 .vsm {
-  // Accent désaturé, aligné sur le contexte article (anti-fatigue rouge).
+  // Anti-fatigue rouge (cf. .personal/research/2026-05-26-fatigue-visuelle-rouge.md) :
+  // la fatigue vient de la RÉCURRENCE d'un même rouge dans la même colonne au
+  // fil du scroll. Le focus du rail revenant à chaque section, il ne doit PAS
+  // être rouge → focus en inversion encre (neutre). Le rouge est réservé au
+  // seul libellé de pattern (repère unique, persistant, en tête de rail).
+  // Accent désaturé conservé pour ce seul usage, aligné sur le contexte article.
   --accent:      oklch(0.48 0.12 25);
   --accent-deep: oklch(0.40 0.13 25);
-  --vsm-partial-bg: color-mix(in oklch, var(--accent) 12%, var(--surface));
+  --vsm-partial-bg: color-mix(in oklch, var(--surface-ink) 7%, var(--surface));
   // Offset pour passer SOUS le masthead sticky (≈73px / 4.58rem, z-index 20).
   --vsm-top: 5rem;
   font-family: var(--font-body);
@@ -127,7 +132,7 @@
   font-family: var(--font-mono);
   font-weight: 600;
   font-size: 0.66rem;
-  color: var(--accent);
+  color: var(--ink-mute);   // neutre : plus de rouge récurrent sur les numéros
   min-width: 1.4rem;
   font-variant-numeric: tabular-nums lining-nums;
   transition: color var(--dur-mid) var(--ease-out-quart);
@@ -176,30 +181,32 @@
 .vsm__ae-arr { font-size: 0.7rem; text-align: center; }
 
 // ── États (pilotés par vsm.js) ──────────────────────────────────────
-// Actif = fond accent (désaturé) ; texte/SVG flip via --surface.
+// Focus = inversion ENCRE (neutre, pas de hue) : c'est le repère récurrent,
+// donc surtout pas rouge. Texte/SVG flip via --surface.
 .vsm__node.is-active {
-  background: var(--accent);
-  border-color: var(--accent);
-  box-shadow: 0 6px 20px -12px color-mix(in oklch, var(--accent) 45%, transparent);
+  background: var(--surface-ink);
+  border-color: var(--surface-ink);
+  box-shadow: 0 6px 20px -12px color-mix(in oklch, var(--surface-ink) 38%, transparent);
 }
 .vsm__node.is-active-2 {
-  background: color-mix(in oklch, var(--accent) 86%, var(--surface));
-  border-color: var(--accent);
+  background: color-mix(in oklch, var(--surface-ink) 70%, var(--surface));
+  border-color: color-mix(in oklch, var(--surface-ink) 70%, var(--surface));
 }
 .vsm__node.is-active,
 .vsm__node.is-active-2 {
   .vsm__n, .vsm__nm { color: var(--surface); }
   .vsm__nm { font-weight: 600; }
-  .vsm__fx { color: color-mix(in oklch, var(--surface) 80%, transparent); }
+  .vsm__fx { color: color-mix(in oklch, var(--surface) 72%, transparent); }
   .vsm__detail { color: var(--surface); }
-  .vsm__ae-act { background: color-mix(in oklch, var(--surface) 18%, transparent); color: var(--surface); }
+  .vsm__ae-act { background: color-mix(in oklch, var(--surface) 16%, transparent); color: var(--surface); }
   .vsm__ae-eff { background: var(--surface); color: var(--surface-ink); }
-  .vsm__ae-arr { color: color-mix(in oklch, var(--surface) 75%, transparent); }
+  .vsm__ae-arr { color: color-mix(in oklch, var(--surface) 70%, transparent); }
 }
 
+// Touchée = teinte neutre subtile (plus de rouge ambiant).
 .vsm__node.is-partial {
   background: var(--vsm-partial-bg);
-  border-color: color-mix(in oklch, var(--accent) 35%, var(--rule));
+  border-color: var(--rule-strong);
 }
 .vsm__node.is-dim { opacity: 0.4; }
 
@@ -221,8 +228,8 @@
 .vsm__legend-dot {
   width: 0.62em; height: 0.62em; border-radius: 2px; display: inline-block; flex-shrink: 0;
 }
-.vsm__legend-dot--active  { background: var(--accent); }
-.vsm__legend-dot--partial { background: var(--vsm-partial-bg); border: 1px solid color-mix(in oklch, var(--accent) 35%, var(--rule)); }
+.vsm__legend-dot--active  { background: var(--surface-ink); }
+.vsm__legend-dot--partial { background: var(--vsm-partial-bg); border: 1px solid var(--rule-strong); }
 .vsm__legend-dot--dim     { background: var(--surface-sub); border: 1px solid var(--rule); opacity: 0.5; }
 .vsm__legend-note { font-style: normal; }
 .vsm__legend-note::before { content: "▾ "; color: var(--ink-mute); opacity: 0.7; }
@@ -294,14 +301,14 @@
     border: 1px solid var(--rule);
     border-radius: 3px;
     background: var(--surface-sub);
-    color: var(--accent);
+    color: var(--ink-soft);   // SVG (currentColor) en encre neutre, pas rouge
   }
   .vsm__panel:empty { display: none; }
   .vsm__panel .vsm__d-title { color: var(--surface-ink); }
   .vsm__panel .vsm__d-note  { color: var(--ink-soft); }
-  .vsm__panel .vsm__ae-act  { background: color-mix(in oklch, var(--accent) 12%, var(--surface)); color: var(--surface-ink); }
+  .vsm__panel .vsm__ae-act  { background: color-mix(in oklch, var(--surface-ink) 8%, var(--surface)); color: var(--surface-ink); }
   .vsm__panel .vsm__ae-eff  { background: var(--surface); color: var(--surface-ink); border: 1px solid var(--rule); }
-  .vsm__panel .vsm__ae-arr  { color: var(--accent); }
+  .vsm__panel .vsm__ae-arr  { color: var(--ink-mute); }
 
   .vsm__legend { justify-content: center; margin-top: var(--space-2xs); }
   .vsm__hint { display: block; margin: var(--space-2xs) 0 0; font-size: 0.6rem; font-style: italic; color: var(--ink-mute); text-align: center; }
