@@ -48,11 +48,7 @@ Pour répondre à ces questions, j'ai besoin de vous expliquer comment je travai
 
 <p class="vsm-placeholder">À écrire — §2 Entrée VSM : poser la carte des 8 étapes ; l'IA n'agit pas uniformément sur la chaîne ; distinction durée vs administration (étapes 1 et 3). Bijou cible : « La courbe METR vit à l'étape 4. Mon temps, lui, se loge ailleurs. » — supprimer ce bloc à la rédaction.</p>
 
-<!-- Matériau hérité de 1/3 à replacer ici (charnière VSM → patterns) :
-     « Une 3e condition permet de passer d'une simple accélération à une vitesse
-     continue : profiter du temps gagné initialement pour améliorer la qualité. »
-     + Métaphore Brooks (Mythical Man-Month, menu de restaurant français) — en
-     réserve, utilité baissée depuis la VSM (cf. SOURCES, sources en réserve). -->
+> Matériau hérité de 1/3 à replacer ici (charnière VSM → patterns) : « Une 3e condition permet de passer d'une simple accélération à une vitesse continue : profiter du temps gagné initialement pour améliorer la qualité. » + Métaphore Brooks (Mythical Man-Month, menu de restaurant français) — en réserve, utilité baissée depuis la VSM (cf. SOURCES, sources en réserve).
 
 {{ stage(id="A") }}
 
