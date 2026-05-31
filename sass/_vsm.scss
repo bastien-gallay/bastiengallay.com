@@ -2,9 +2,11 @@
 // VSM — Value Stream Map de l'article « ce que l'IA m'apporte vraiment »
 // (article 2/3 de la série « Coder avec l'IA »).
 //
-// Modèle de référence : maquette A1-v2. Les 8 étapes du travail de dev,
+// Modèle de référence : maquette A1-v2. Les 7 étapes du travail de dev,
 // toujours visibles ; au scroll, l'étape du pattern courant GRANDIT sur
-// place (flex-grow) et déploie son détail à l'intérieur du nœud.
+// place (flex-grow) et déploie son détail à l'intérieur du nœud. Les étapes
+// 4-5-6 sont enserrées par la boucle externe « Reflect » (arête d'accent
+// partagée, cf. `.vsm__node--loop`).
 //   - desktop ≥60rem : rail sticky pleine hauteur, détail in-situ.
 //   - mobile  <60rem : bandeau horizontal sticky en haut + panneau détail
 //                      dessous (recopié du nœud actif par static/vsm.js).
@@ -210,6 +212,61 @@
 }
 .vsm__node.is-dim { opacity: 0.4; }
 
+// ── Boucle externe « Reflect » (étapes 4-5-6) ───────────────────────
+// Arête d'accent partagée par les 3 nœuds : un liseré VERTICAL (desktop)
+// qui devient HORIZONTAL en bandeau mobile (cf. media <60rem). Neutre par
+// défaut (anti-fatigue rouge — le rouge reste réservé) ; il ne passe à
+// l'accent que lorsque la section C' est active. Le liseré PONTE le gap
+// inter-nœuds pour que 4-5-6 se lisent comme une seule zone.
+.vsm__node--loop::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2.5px;
+  border-radius: 2px;
+  background: var(--rule-strong);
+  opacity: 0.9;
+  pointer-events: none;
+  transition: background var(--dur-mid) var(--ease-out-quart),
+              opacity var(--dur-mid) var(--ease-out-quart);
+}
+// Pontage du gap vertical jusqu'au nœud suivant de la boucle (sauf le dernier).
+.vsm__node--loop:not(.vsm__node--loop-end)::before { bottom: calc(-1 * var(--space-2xs)); }
+
+// États de la boucle (classe portée par le rail via vsm.js) — couleur/opacité
+// seulement, jamais la géométrie (pour ne pas casser la bascule mobile).
+.vsm--loop-partial .vsm__node--loop::before { background: var(--ink-mute); opacity: 0.7; }
+.vsm--loop-active  .vsm__node--loop::before { background: var(--accent);   opacity: 1; }
+.vsm--loop-dim     .vsm__node--loop::before { opacity: 0.3; }
+
+// Glyphe de boucle interne (Red→Green→Refactor) dans l'étape 4.
+.vsm__loop-in {
+  margin-left: 0.25rem;
+  font-size: 0.72rem;
+  line-height: 1;
+  color: var(--ink-mute);
+  transition: color var(--dur-mid) var(--ease-out-quart);
+}
+.vsm__node.is-active .vsm__loop-in,
+.vsm__node.is-active-2 .vsm__loop-in { color: color-mix(in oklch, var(--surface) 80%, transparent); }
+.vsm__d-loop { margin-top: var(--space-3xs); font-size: 0.7rem; line-height: 1.45; font-style: italic; }
+.vsm__loop-mark { color: var(--accent); font-weight: 600; font-style: normal; }
+
+// Légende de la boucle externe, sous la chaîne (hors flux des nœuds).
+.vsm__loop-cap {
+  margin: var(--space-2xs) 0 0;
+  padding-left: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.05em;
+  line-height: 1.35;
+  color: var(--ink-mute);
+  transition: color var(--dur-mid) var(--ease-out-quart);
+}
+.vsm--loop-active .vsm__loop-cap { color: var(--accent); }
+
 // ── Légende (états + sens du tag) ───────────────────────────────────
 .vsm__legend {
   list-style: none;
@@ -309,6 +366,19 @@
   .vsm__panel .vsm__ae-act  { background: color-mix(in oklch, var(--surface-ink) 8%, var(--surface)); color: var(--surface-ink); }
   .vsm__panel .vsm__ae-eff  { background: var(--surface); color: var(--surface-ink); border: 1px solid var(--rule); }
   .vsm__panel .vsm__ae-arr  { color: var(--ink-mute); }
+
+  // Boucle externe : le liseré vertical devient une arête HORIZONTALE sous
+  // les cellules 4-6 du bandeau (gap nul en mobile → aucun pontage à faire).
+  .vsm__node--loop::before,
+  .vsm__node--loop:not(.vsm__node--loop-end)::before {
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    width: auto;
+    height: 2.5px;
+  }
+  .vsm__loop-cap { padding-left: 0; text-align: center; }
 
   .vsm__legend { justify-content: center; margin-top: var(--space-2xs); }
   .vsm__hint { display: block; margin: var(--space-2xs) 0 0; font-size: 0.6rem; font-style: italic; color: var(--ink-mute); text-align: center; }

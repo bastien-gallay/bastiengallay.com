@@ -16,17 +16,19 @@
   if (!rail || !triggers.length) return;
 
   // Un stage = quelles étapes sont actives / actives-2 / partielles /
-  // atténuées, + le libellé. Le détail vit dans les nœuds (macro), pas ici.
-  // Aligné sur le PLAN, section par section.
+  // atténuées, + l'état de la boucle externe (4-6), + le libellé. Le détail
+  // vit dans les nœuds (macro), pas ici. Aligné sur le PLAN, section par
+  // section. NB : 7 étapes — l'ancien nœud 6 « test/refacto/Reflect » est
+  // devenu la boucle externe ; l'ancien 7 → 6, l'ancien 8 → 7.
   var STAGES = {
-    full:      { name: "vue complète",  active: [],  active2: [],        partial: [1],                      dim: [] },
-    full2:     { name: "cartographie",  active: [4], active2: [],        partial: [1, 3],                   dim: [] },
-    A:         { name: "Pattern A",     active: [5], active2: [],        partial: [3, 6, 7],                dim: [1, 2, 4, 8] },
-    courage:   { name: "Pivot courage", active: [],  active2: [2, 4, 6], partial: [5],                      dim: [1, 3, 7, 8] },
-    B:         { name: "Pattern B",     active: [2], active2: [3],       partial: [1],                      dim: [4, 5, 6, 7, 8] },
-    C:         { name: "Pattern C'",    active: [6], active2: [],        partial: [],                       dim: [1, 2, 3, 4, 5, 7, 8] },
-    vigilance: { name: "Vigilance",     active: [],  active2: [],        partial: [1, 2, 3, 4, 5, 6, 7, 8], dim: [] },
-    cliff:     { name: "Vers 3/3",      active: [],  active2: [],        partial: [],                       dim: [1, 2, 3, 4, 5, 6, 7, 8] }
+    full:      { name: "vue complète",  active: [],  active2: [],     partial: [1],                   dim: [],                    loop: "" },
+    full2:     { name: "cartographie",  active: [4], active2: [],     partial: [1, 3],                dim: [],                    loop: "" },
+    A:         { name: "Pattern A",     active: [5], active2: [],     partial: [3, 6],                dim: [1, 2, 4, 7],          loop: "partial" },
+    courage:   { name: "Pivot courage", active: [],  active2: [2, 4], partial: [5],                   dim: [1, 3, 6, 7],          loop: "partial" },
+    B:         { name: "Pattern B",     active: [2], active2: [3],    partial: [1],                   dim: [4, 5, 6],             loop: "dim" },
+    C:         { name: "Pattern C'",    active: [],  active2: [],     partial: [4, 5, 6],             dim: [1, 2, 3, 7],          loop: "active" },
+    vigilance: { name: "Vigilance",     active: [],  active2: [],     partial: [1, 2, 3, 4, 5, 6, 7], dim: [],                    loop: "partial" },
+    cliff:     { name: "Vers 3/3",      active: [],  active2: [],     partial: [],                    dim: [1, 2, 3, 4, 5, 6, 7], loop: "dim" }
   };
 
   var nodes = rail.querySelectorAll("[data-vsm-chain] .vsm__node");
@@ -64,6 +66,9 @@
       else if (has(c.partial, s)) node.classList.add("is-partial");
       else if (has(c.dim, s)) node.classList.add("is-dim");
     });
+    // État de la boucle externe (étapes 4-6) : classe portée par le rail.
+    rail.classList.remove("vsm--loop-active", "vsm--loop-partial", "vsm--loop-dim");
+    if (c.loop) rail.classList.add("vsm--loop-" + c.loop);
     if (elStage) elStage.textContent = c.name;
     syncPanel();
   }

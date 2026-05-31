@@ -1,8 +1,10 @@
 {#-
   Rail VSM (Value Stream Map) de l'article « ce que l'IA m'apporte vraiment ».
-  Modèle de référence : maquette A1-v2. Les 8 étapes du travail de dev,
+  Modèle de référence : maquette A1-v2. Les 7 étapes du travail de dev,
   toujours visibles ; au scroll, l'étape (ou les étapes) du pattern courant
   GRANDIT sur place (flex-grow) et déploie son détail à l'intérieur du nœud.
+  Les étapes 4-5-6 sont enserrées par la boucle externe « Reflect » ;
+  l'ancien nœud « test/refacto/Reflect » n'est pas une étape mais une boucle.
 
   Layout :
    - desktop ≥60rem : rail sticky pleine hauteur en colonne droite, détail
@@ -13,7 +15,7 @@
   L'état (actif / actif-2 / partiel / atténué) est piloté au scroll par
   `static/vsm.js` via les ancres `{{ stage(id="…") }}` posées dans le markdown.
   Le DÉTAIL de chaque étape vit ici, dans son nœud (source unique des deux
-  layouts). Les LABELS des 8 étapes sont structurels et stables.
+  layouts). Les LABELS des 7 étapes sont structurels et stables.
 -#}
 {% macro rail() %}
 <aside class="vsm" aria-label="Value Stream Map — mon travail de développement" data-vsm>
@@ -54,15 +56,20 @@
         </div>
       </li>
 
-      <li class="vsm__node" data-step="4">
-        <div class="vsm__node-head"><span class="vsm__n">04</span><span class="vsm__nm">Génération du code</span><span class="vsm__fx">très fort</span></div>
+      {#- Étapes 4-5-6 : zone de la boucle externe (Reflect). Arête d'accent
+          partagée (`.vsm__node--loop`, cf. _vsm.scss) qui bascule left→bottom
+          en bandeau mobile. La boucle interne (Red→Green→Refactor) vit dans
+          l'étape 4. -#}
+      <li class="vsm__node vsm__node--loop vsm__node--loop-start" data-step="4">
+        <div class="vsm__node-head"><span class="vsm__n">04</span><span class="vsm__nm">Génération du code</span><span class="vsm__loop-in" title="boucle interne : Red → Green → Refactor" aria-hidden="true">↺</span><span class="vsm__fx">très fort</span></div>
         <div class="vsm__detail">
           <p class="vsm__d-title">Là où la courbe METR vit.</p>
           <p class="vsm__d-note">La plus accélérée — et déjà la moins coûteuse en temps avant l'IA. Le cœur du malentendu.</p>
+          <p class="vsm__d-note vsm__d-loop"><span class="vsm__loop-mark" aria-hidden="true">↺</span> Boucle interne : Red → Green → Refactor.</p>
         </div>
       </li>
 
-      <li class="vsm__node" data-step="5">
+      <li class="vsm__node vsm__node--loop" data-step="5">
         <div class="vsm__node-head"><span class="vsm__n">05</span><span class="vsm__nm">Harnais qualité</span><span class="vsm__fx">fort</span></div>
         <div class="vsm__detail">
           <p class="vsm__d-title">Le scaffold du jour 1.</p>
@@ -75,38 +82,27 @@
         </div>
       </li>
 
-      <li class="vsm__node" data-step="6">
-        <div class="vsm__node-head"><span class="vsm__n">06</span><span class="vsm__nm">Test / refacto / Reflect</span><span class="vsm__fx">partiel</span></div>
-        <div class="vsm__detail">
-          <p class="vsm__d-title">Red → Green → Refactor → Reflect.</p>
-          <svg class="vsm__svg" viewBox="0 0 220 90" role="img" aria-label="Boucle Red, Green, Refactor, Reflect">
-            <g fill="none" stroke="currentColor" stroke-width="1.4">
-              <circle cx="110" cy="45" r="31" stroke-dasharray="3 3"/>
-              <path d="M110 14 l-4 6 l8 0 z" fill="currentColor" stroke="none"/></g>
-            <g font-family="sans-serif" font-size="7.5" fill="currentColor" text-anchor="middle">
-              <text x="110" y="20" opacity="0.75">Red</text><text x="140" y="48" opacity="0.75">Green</text>
-              <text x="110" y="79" opacity="0.75">Refactor</text>
-              <text x="74" y="48" font-weight="700">Reflect</text></g></svg>
-          <p class="vsm__d-note">Reflect macro : générer (IA) → exécuter (moi) → inscrire (moi).</p>
-        </div>
-      </li>
-
-      <li class="vsm__node" data-step="7">
-        <div class="vsm__node-head"><span class="vsm__n">07</span><span class="vsm__nm">Revue / intégration</span><span class="vsm__fx">variable</span></div>
+      <li class="vsm__node vsm__node--loop vsm__node--loop-end" data-step="6">
+        <div class="vsm__node-head"><span class="vsm__n">06</span><span class="vsm__nm">Revue / intégration</span><span class="vsm__fx">variable</span></div>
         <div class="vsm__detail">
           <p class="vsm__d-title">L'étape sociale.</p>
           <p class="vsm__d-note">DeputyDev : −31,8 % de cycle de revue avec outil dédié. Mais c'est déjà presque de l'organisationnel → article 3.</p>
         </div>
       </li>
 
-      <li class="vsm__node" data-step="8">
-        <div class="vsm__node-head"><span class="vsm__n">08</span><span class="vsm__nm">Maintenance / dette</span><span class="vsm__fx">ambigu</span></div>
+      <li class="vsm__node" data-step="7">
+        <div class="vsm__node-head"><span class="vsm__n">07</span><span class="vsm__nm">Maintenance / dette</span><span class="vsm__fx">ambigu</span></div>
         <div class="vsm__detail">
           <p class="vsm__d-title">Le plus lourd sur la durée.</p>
           <p class="vsm__d-note">GitClear, METR (1/3). C'est ici que la cognitive debt se paie.</p>
         </div>
       </li>
     </ol>
+
+    {#- Légende de la boucle externe (Reflect) couvrant les étapes 4-6. Hors
+        chaîne pour ne pas perturber la distribution flex (7 cellules égales en
+        bandeau mobile). S'intensifie quand la section C' est active. -#}
+    <p class="vsm__loop-cap"><span class="vsm__loop-mark" aria-hidden="true">⟲</span> Étapes 4–6 en boucle Reflect&#160;: générer&#160;→ exécuter&#160;→ inscrire.</p>
 
     <ul class="vsm__legend" aria-hidden="true">
       <li><span class="vsm__legend-dot vsm__legend-dot--active"></span>focus</li>
