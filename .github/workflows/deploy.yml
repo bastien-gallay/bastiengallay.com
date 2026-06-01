@@ -33,8 +33,11 @@ jobs:
         with:
           python-version: "3.11"
       - name: Run pre-commit hooks
+        # `uv` est requis par le hook `check-numeros` (entry: `uv run …`,
+        # script PEP 723). Il n'est pas préinstallé sur le runner — sans lui
+        # le hook échoue (`Executable uv not found`) et casse le déploiement.
         run: |
-          python3 -m pip install --quiet pre-commit
+          python3 -m pip install --quiet pre-commit uv
           pre-commit run --all-files --show-diff-on-failure
 
       - name: Install Zola
