@@ -22,14 +22,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # Filets de sécurité rapides (numérotation §XX.YY, anti-token-Tera dans
       # les figures, markdownlint). Source unique : .pre-commit-config.yaml —
       # on lance ICI exactement les mêmes hooks qu'en local, donc rien ne peut
       # diverger entre le commit du dev et le déploiement.
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
       - name: Run pre-commit hooks
@@ -59,10 +59,10 @@ jobs:
         run: zola build
 
       - name: Configure Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./public
 
@@ -75,4 +75,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
