@@ -89,3 +89,35 @@ svg-png svg scale="1":
       --default-background-color=00000000 --force-device-scale-factor={{scale}} \
       --window-size="${w:-1200},${h:-630}" --screenshot="$png" "$svg"
     echo "→ $png (${w:-1200}×${h:-630} @ {{scale}}×)"
+
+# Garde-fou de session : à lancer EN PREMIER dans une session de rédaction/édition.
+# Vérifie qu'on est bien dans un worktree dédié (pas la copie principale) et
+# soigne le symlink `.personal` (gitignoré, physiquement sur main) pour que les
+# chemins `.personal/…` résolvent depuis le worktree. Idempotent.
+[group('worktree')]
+guard:
+    #!/usr/bin/env bash
+    set -uo pipefail
+    root=$(git rev-parse --show-toplevel)
+    branch=$(git rev-parse --abbrev-ref HEAD)
+    common=$(cd "$(git rev-parse --git-common-dir)" && pwd)
+    main_root=$(dirname "$common")
+    echo "📍 checkout : $root"
+    echo "🌿 branche  : $branch"
+    if [ "$root" = "$main_root" ]; then
+      echo "⚠️  COPIE PRINCIPALE — l'édition/rédaction doit se faire dans un worktree dédié."
+      echo "    → git worktree add .claude/worktrees/<nom> -b worktree-<nom>  puis  cd dedans"
+    else
+      echo "✓ worktree dédié (pas la copie principale)"
+    fi
+    if [ -d "$root/.personal/ecriture" ]; then
+      echo "✓ .personal/ecriture atteignable"
+    elif [ "$root" != "$main_root" ] && [ -d "$main_root/.personal" ]; then
+      ln -s "$main_root/.personal" "$root/.personal"
+      grep -qxF '/.personal' "$common/info/exclude" 2>/dev/null \
+        || printf '\n# symlink .personal des worktrees (-> main/.personal)\n/.personal\n' >> "$common/info/exclude"
+      echo "↻ symlink .personal créé → $main_root/.personal (exclu localement)"
+    else
+      echo "✗ .personal introuvable (ni ici, ni sur main : $main_root/.personal)"
+    fi
+    echo "🔌 port zola de ce checkout : {{port}}"

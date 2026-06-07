@@ -60,6 +60,20 @@ Raison : isole les expérimentations du tronc, permet de jeter un essai raté sa
 
 Application : au démarrage d'une tâche d'implémentation, créer le worktree d'abord ; travailler dedans ; à la validation, faire revue + merge/rebase vers la branche principale. Les tâches de pure exploration / lecture (grep, brainstorm, runbooks dans `.personal/`) peuvent rester sur la copie principale.
 
+### Garde-fou de session : `just guard` en premier
+
+**Au démarrage de toute session de rédaction/édition dans un worktree, lancer `just guard` AVANT toute autre chose.** La recette :
+
+1. **Vérifie l'ancrage** — affiche le checkout + la branche, et **avertit si on est sur la copie principale** (où l'édition est interdite).
+2. **Soigne le symlink `.personal/`** — le crée s'il manque, vers `.personal/` de main (idempotent).
+
+Pourquoi c'est nécessaire — **le piège `.personal/`** : `.personal/` est gitignoré et n'existe **physiquement que sur la copie principale**. Un worktree fraîchement créé n'en a pas. Sans le symlink, deux pannes silencieuses :
+
+- les chemins `.personal/…` ne résolvent pas depuis le worktree (SUIVI, `ia-lentement-2/`, exports de sessions introuvables) — `/redaction .personal/…` échoue ;
+- un fichier écrit dans le `.personal/` *local* d'un worktree **disparaît avec lui**. Toute écriture `.personal/` doit atterrir sur main (le symlink l'assure).
+
+**Ne jamais lancer une session de rédaction depuis la copie principale** pour contourner ce piège : ça brise l'isolation worktree et **égare les sessions** (elles s'enregistrent sous le projet « dépôt principal », invisibles depuis le worktree, parfois non rechargeables si volumineuses). La bonne séquence reste : `cd` dans le worktree dédié → `just guard` → travailler.
+
 ## QA visuel avant de déclarer une modif CSS finie
 
 Toute modification CSS qui peut affecter le rendu doit être vérifiée **en navigation privée ou sur une origin neuve** (`127.0.0.1` plutôt que le domaine de prod), pour reproduire l'état primo-visiteur : pas de `data-theme` ni d'autre clé dans `localStorage`, OS en clair par défaut.
