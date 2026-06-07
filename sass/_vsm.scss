@@ -1,0 +1,394 @@
+// ──────────────────────────────────────────────────────────────────
+// VSM — Value Stream Map de l'article « ce que l'IA m'apporte vraiment »
+// (article 2/3 de la série « Coder avec l'IA »).
+//
+// Modèle de référence : maquette A1-v2. Les 7 étapes du travail de dev,
+// toujours visibles ; au scroll, l'étape du pattern courant GRANDIT sur
+// place (flex-grow) et déploie son détail à l'intérieur du nœud. Les étapes
+// 4-5-6 sont enserrées par la boucle externe « Reflect » (arête d'accent
+// partagée, cf. `.vsm__node--loop`).
+//   - desktop ≥60rem : rail sticky pleine hauteur, détail in-situ.
+//   - mobile  <60rem : bandeau horizontal sticky en haut + panneau détail
+//                      dessous (recopié du nœud actif par static/vsm.js).
+//
+// Fatigue rouge : comme `.ecrit-page__content` (cf. _editorial.scss, diag.
+// 2026-05-26), on désature l'accent EN CONTEXTE RAIL — le rouge identitaire
+// (chroma 0.205) calibré pour un accent rare devient fatigant quand le nœud
+// actif le rappelle à chaque section. Dark mode via la seule mixin theme-dark.
+// ──────────────────────────────────────────────────────────────────
+
+// Ancre de scroll invisible (posée par le shortcode `stage`).
+.vsm-trigger { display: block; height: 0; margin: 0; padding: 0; }
+
+// Bloc placeholder de section (scaffold pré-rédaction). Hauteur d'écran pour
+// que le focus de la VSM soit visible au scroll. À supprimer à la rédaction.
+.vsm-placeholder {
+  min-height: 78vh;
+  padding: var(--space-md) 0;
+  color: var(--ink-mute);
+  font-style: italic;
+  border-left: 2px solid var(--rule);
+  padding-left: var(--space-md);
+}
+.vsm-placeholder code { font-style: normal; }
+// Pas de dropcap sur un placeholder (sinon énorme initiale sur l'italique muet).
+.ecrit-page__content.has-dropcap h2:first-of-type + p.vsm-placeholder::first-letter {
+  font-size: inherit; float: none; color: inherit; margin: 0; font-weight: inherit;
+}
+
+// ── Layout : contenu + rail en deux colonnes (≥60rem) ───────────────
+.ecrit-page--vsm .ecrit-vsm {
+  @media (min-width: 60rem) {
+    display: grid;
+    grid-template-columns: minmax(0, var(--measure-base)) var(--side-track);
+    column-gap: var(--side-gap);
+    // stretch (défaut) : la colonne du rail s'étire sur toute la hauteur pour
+    // que le `position: sticky` tienne tout le scroll (sinon il se libère).
+    align-items: stretch;
+  }
+}
+.ecrit-page--vsm .ecrit-page__content { max-width: none; }
+
+// ── Rail ────────────────────────────────────────────────────────────
+.vsm {
+  // Anti-fatigue rouge (cf. .personal/research/2026-05-26-fatigue-visuelle-rouge.md) :
+  // la fatigue vient de la RÉCURRENCE d'un même rouge dans la même colonne au
+  // fil du scroll. Le focus du rail revenant à chaque section, il ne doit PAS
+  // être rouge → focus en inversion encre (neutre). Le rouge est réservé au
+  // seul libellé de pattern (repère unique, persistant, en tête de rail).
+  // Accent désaturé conservé pour ce seul usage, aligné sur le contexte article.
+  --accent:      oklch(0.48 0.12 25);
+  --accent-deep: oklch(0.40 0.13 25);
+  --vsm-partial-bg: color-mix(in oklch, var(--surface-ink) 7%, var(--surface));
+  // Offset pour passer SOUS le masthead sticky (≈73px / 4.58rem, z-index 20).
+  --vsm-top: 5rem;
+  font-family: var(--font-body);
+}
+// Dark : surcharger l'override ci-dessus (sinon :root[data-theme="dark"] écrase
+// .vsm). Double-gating explicite + @media porté par la mixin (_tokens.scss).
+@include theme-dark('.vsm') {
+  --accent:      oklch(0.66 0.12 25);
+  --accent-deep: oklch(0.58 0.13 25);
+}
+
+.vsm__label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-2xs);
+  margin: 0 0 var(--space-2xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.vsm__stage { color: var(--accent); font-weight: 600; text-align: right; }
+
+.vsm__chain {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.vsm__node {
+  position: relative;          // ancre les flèches inter-blocs
+  display: flex;
+  flex-direction: column;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--surface-sub);
+  // Transitions adoucies : ease-out-quart (pas expo, trop sec), pas de saut
+  // de position — l'emphase passe par la couleur et la taille, pas un décalage.
+  transition: flex-grow var(--dur-slow) var(--ease-out-quart),
+              background var(--dur-mid) var(--ease-out-quart),
+              border-color var(--dur-mid) var(--ease-out-quart),
+              box-shadow var(--dur-mid) var(--ease-out-quart),
+              opacity var(--dur-mid) var(--ease-out-quart);
+}
+
+// Flèche de flux entre les blocs (▾ vertical desktop, ▸ horizontal mobile).
+.vsm__node:not(:last-child)::after {
+  content: "▾";
+  position: absolute;
+  bottom: calc(-1 * var(--space-2xs));
+  left: 50%;
+  transform: translate(-50%, -10%);
+  font-size: 0.6rem;
+  line-height: 1;
+  color: var(--ink-mute);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.vsm__node-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2xs);
+}
+.vsm__n {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.66rem;
+  color: var(--ink-mute);   // neutre : plus de rouge récurrent sur les numéros
+  min-width: 1.4rem;
+  font-variant-numeric: tabular-nums lining-nums;
+  transition: color var(--dur-mid) var(--ease-out-quart);
+}
+.vsm__nm {
+  font-size: 0.74rem;
+  line-height: 1.15;
+  color: var(--surface-ink);
+  transition: color var(--dur-mid) var(--ease-out-quart);
+}
+.vsm__fx {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  transition: color var(--dur-mid) var(--ease-out-quart);
+}
+
+// Détail déployable — fermé par défaut. Le clip vit ICI (pas sur le nœud,
+// pour que les flèches ::after restent visibles).
+.vsm__detail {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  transition: max-height var(--dur-slow) var(--ease-out-quart),
+              opacity var(--dur-mid) var(--ease-out-quart),
+              margin-top var(--dur-mid) var(--ease-out-quart);
+}
+.vsm__d-title {
+  margin: 0 0 var(--space-2xs);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.98rem;
+  line-height: 1.25;
+}
+.vsm__d-note { margin: 0; font-size: 0.7rem; line-height: 1.45; }
+.vsm__svg { width: 100%; height: auto; margin: var(--space-2xs) 0; display: block; }
+
+// Découpage action → effet.
+.vsm__ae { display: flex; flex-direction: column; gap: var(--space-3xs); margin-top: var(--space-3xs); }
+.vsm__ae-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: var(--space-3xs); }
+.vsm__ae-act, .vsm__ae-eff { font-size: 0.62rem; line-height: 1.2; padding: 0.26rem 0.38rem; border-radius: 2px; }
+.vsm__ae-arr { font-size: 0.7rem; text-align: center; }
+
+// ── États (pilotés par vsm.js) ──────────────────────────────────────
+// Focus = inversion ENCRE (neutre, pas de hue) : c'est le repère récurrent,
+// donc surtout pas rouge. Texte/SVG flip via --surface.
+.vsm__node.is-active {
+  background: var(--surface-ink);
+  border-color: var(--surface-ink);
+  box-shadow: 0 6px 20px -12px color-mix(in oklch, var(--surface-ink) 38%, transparent);
+}
+.vsm__node.is-active-2 {
+  background: color-mix(in oklch, var(--surface-ink) 70%, var(--surface));
+  border-color: color-mix(in oklch, var(--surface-ink) 70%, var(--surface));
+}
+.vsm__node.is-active,
+.vsm__node.is-active-2 {
+  .vsm__n, .vsm__nm { color: var(--surface); }
+  .vsm__nm { font-weight: 600; }
+  .vsm__fx { color: color-mix(in oklch, var(--surface) 72%, transparent); }
+  .vsm__detail { color: var(--surface); }
+  .vsm__ae-act { background: color-mix(in oklch, var(--surface) 16%, transparent); color: var(--surface); }
+  .vsm__ae-eff { background: var(--surface); color: var(--surface-ink); }
+  .vsm__ae-arr { color: color-mix(in oklch, var(--surface) 70%, transparent); }
+}
+
+// Touchée = teinte neutre subtile (plus de rouge ambiant).
+.vsm__node.is-partial {
+  background: var(--vsm-partial-bg);
+  border-color: var(--rule-strong);
+}
+.vsm__node.is-dim { opacity: 0.4; }
+
+// ── Boucle externe « Reflect » (étapes 4-5-6) ───────────────────────
+// Arête d'accent partagée par les 3 nœuds : un liseré VERTICAL (desktop)
+// qui devient HORIZONTAL en bandeau mobile (cf. media <60rem). Neutre par
+// défaut (anti-fatigue rouge — le rouge reste réservé) ; il ne passe à
+// l'accent que lorsque la section C' est active. Le liseré PONTE le gap
+// inter-nœuds pour que 4-5-6 se lisent comme une seule zone.
+.vsm__node--loop::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2.5px;
+  border-radius: 2px;
+  background: var(--rule-strong);
+  opacity: 0.9;
+  pointer-events: none;
+  transition: background var(--dur-mid) var(--ease-out-quart),
+              opacity var(--dur-mid) var(--ease-out-quart);
+}
+// Pontage du gap vertical jusqu'au nœud suivant de la boucle (sauf le dernier).
+.vsm__node--loop:not(.vsm__node--loop-end)::before { bottom: calc(-1 * var(--space-2xs)); }
+
+// États de la boucle (classe portée par le rail via vsm.js) — couleur/opacité
+// seulement, jamais la géométrie (pour ne pas casser la bascule mobile).
+.vsm--loop-partial .vsm__node--loop::before { background: var(--ink-mute); opacity: 0.7; }
+.vsm--loop-active  .vsm__node--loop::before { background: var(--accent);   opacity: 1; }
+.vsm--loop-dim     .vsm__node--loop::before { opacity: 0.3; }
+
+// Glyphe de boucle interne (Red→Green→Refactor) dans l'étape 4.
+.vsm__loop-in {
+  margin-left: 0.25rem;
+  font-size: 0.72rem;
+  line-height: 1;
+  color: var(--ink-mute);
+  transition: color var(--dur-mid) var(--ease-out-quart);
+}
+.vsm__node.is-active .vsm__loop-in,
+.vsm__node.is-active-2 .vsm__loop-in { color: color-mix(in oklch, var(--surface) 80%, transparent); }
+.vsm__d-loop { margin-top: var(--space-3xs); font-size: 0.7rem; line-height: 1.45; font-style: italic; }
+.vsm__loop-mark { color: var(--accent); font-weight: 600; font-style: normal; }
+
+// Légende de la boucle externe, sous la chaîne (hors flux des nœuds).
+.vsm__loop-cap {
+  margin: var(--space-2xs) 0 0;
+  padding-left: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.05em;
+  line-height: 1.35;
+  color: var(--ink-mute);
+  transition: color var(--dur-mid) var(--ease-out-quart);
+}
+.vsm--loop-active .vsm__loop-cap { color: var(--accent); }
+
+// ── Légende (états + sens du tag) ───────────────────────────────────
+.vsm__legend {
+  list-style: none;
+  margin: var(--space-xs) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3xs) var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.vsm__legend li { display: inline-flex; align-items: center; gap: 0.4em; }
+.vsm__legend-dot {
+  width: 0.62em; height: 0.62em; border-radius: 2px; display: inline-block; flex-shrink: 0;
+}
+.vsm__legend-dot--active  { background: var(--surface-ink); }
+.vsm__legend-dot--partial { background: var(--vsm-partial-bg); border: 1px solid var(--rule-strong); }
+.vsm__legend-dot--dim     { background: var(--surface-sub); border: 1px solid var(--rule); opacity: 0.5; }
+.vsm__legend-note { font-style: normal; }
+.vsm__legend-note::before { content: "▾ "; color: var(--ink-mute); opacity: 0.7; }
+
+// ── Desktop ≥60rem : rail pleine hauteur, nœud actif qui grandit ─────
+@media (min-width: 60rem) {
+  // Sticky simple : le rail colle au scroll, sa hauteur suit son contenu.
+  // Le nœud actif grandit en déployant son détail (pas un aplat qui remplit
+  // toute la colonne — ça limite le rouge, cf. retour fatigue visuelle).
+  .vsm__inner {
+    position: sticky;
+    top: var(--vsm-top);
+  }
+  .vsm__node.is-active .vsm__detail,
+  .vsm__node.is-active-2 .vsm__detail {
+    max-height: 60vh;
+    opacity: 1;
+    margin-top: var(--space-2xs);
+  }
+
+  .vsm__panel { display: none; }   // détail in-situ → pas de panneau desktop
+}
+
+// ── Mobile <60rem : bandeau horizontal sticky + panneau détail ──────
+@media (max-width: calc(60rem - 1px)) {
+  .ecrit-page--vsm .ecrit-vsm { display: flex; flex-direction: column; }
+
+  .vsm {
+    order: -1;
+    position: sticky;
+    top: var(--vsm-top);          // passe sous le masthead sticky
+    z-index: 10;
+    background: var(--surface);
+    margin: 0 0 var(--space-lg);
+    padding: var(--space-2xs) 0 var(--space-sm);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .vsm__chain { flex-direction: row; gap: 0; }
+  .vsm__node {
+    flex: 1;
+    padding: 0.35rem 0.1rem;
+    border-radius: 0;
+    border-right: none;
+  }
+  .vsm__node:first-child { border-radius: 3px 0 0 3px; }
+  .vsm__node:last-child  { border-radius: 0 3px 3px 0; border-right: 1px solid var(--rule); }
+  .vsm__node-head { flex-direction: column; align-items: center; gap: 0.1rem; text-align: center; }
+  .vsm__node.is-active,
+  .vsm__node.is-active-2 { transform: translateY(-2px); }
+  .vsm__nm { font-size: 0.5rem; line-height: 1.05; }
+  .vsm__fx { display: none; }
+  .vsm__n  { min-width: 0; }
+
+  // Flèche horizontale (▸) entre les blocs du bandeau.
+  .vsm__node:not(:last-child)::after {
+    content: "▸";
+    bottom: auto; left: auto;
+    top: 50%; right: -0.32rem;
+    transform: translateY(-50%);
+  }
+
+  // Le détail in-situ est masqué ; vsm.js le recopie dans le panneau.
+  .vsm__detail { display: none; }
+
+  .vsm__panel {
+    margin-top: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--surface-sub);
+    color: var(--ink-soft);   // SVG (currentColor) en encre neutre, pas rouge
+  }
+  .vsm__panel:empty { display: none; }
+  .vsm__panel .vsm__d-title { color: var(--surface-ink); }
+  .vsm__panel .vsm__d-note  { color: var(--ink-soft); }
+  .vsm__panel .vsm__ae-act  { background: color-mix(in oklch, var(--surface-ink) 8%, var(--surface)); color: var(--surface-ink); }
+  .vsm__panel .vsm__ae-eff  { background: var(--surface); color: var(--surface-ink); border: 1px solid var(--rule); }
+  .vsm__panel .vsm__ae-arr  { color: var(--ink-mute); }
+
+  // Boucle externe : le liseré vertical devient une arête HORIZONTALE sous
+  // les cellules 4-6 du bandeau (gap nul en mobile → aucun pontage à faire).
+  .vsm__node--loop::before,
+  .vsm__node--loop:not(.vsm__node--loop-end)::before {
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    width: auto;
+    height: 2.5px;
+  }
+  .vsm__loop-cap { padding-left: 0; text-align: center; }
+
+  .vsm__legend { justify-content: center; margin-top: var(--space-2xs); }
+  .vsm__hint { display: block; margin: var(--space-2xs) 0 0; font-size: 0.6rem; font-style: italic; color: var(--ink-mute); text-align: center; }
+}
+.vsm__hint { display: none; }
+
+// ── Accessibilité : pas de mouvement si l'utilisateur le refuse ──────
+@media (prefers-reduced-motion: reduce) {
+  .vsm__node,
+  .vsm__detail { transition: none; }
+  .vsm__node.is-active,
+  .vsm__node.is-active-2 { transform: none; }
+}

@@ -1,0 +1,16 @@
+{#-
+  Marqueur de scroll pour la VSM (Value Stream Map) de l'article ai-2.
+  Posé au début de chaque section, il porte la clé d'étape (`id`) que le
+  scrollspy `static/vsm.js` lit pour piloter l'état du rail.
+
+  Élément bloc à hauteur nulle : aucune empreinte visuelle, mais une
+  position observable par l'IntersectionObserver. `aria-hidden` car c'est
+  une ancre technique, pas du contenu.
+
+  Clés valides (cf. STAGES dans vsm.js) :
+    full · full2 · A · courage · B · C · vigilance · cliff
+
+  Usage (au début d'une section, ligne isolée) :
+    {{ stage(id="A") }}
+-#}
+<div class="vsm-trigger" data-stage="{{ id }}" aria-hidden="true"></div>
