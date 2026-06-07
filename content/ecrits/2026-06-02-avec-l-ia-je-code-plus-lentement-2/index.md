@@ -56,7 +56,7 @@ Influencé par Lean et Agile, j'ai choisi une représentation inspirée de Value
 
 Cette séquence est adaptable, jamais figée. Elle reste très classique et je la connaissais de manière empirique uniquement. Pour les besoins de l'article, j'ai reconstitué avec l'IA et mes commits sur lucid-lint les patterns et checkpoints les plus évidents, puis comparé avec l'idée abstraite que je m'en faisais. La dernière étape est très généraliste — presque fourre-tout. La raison : je garde lucid-lint comme exemple le plus récent et représentatif, et j'en suis pour l'instant le seul utilisateur quotidien.
 
-Parlons à nouveau des études METR. La courbe METR vit dans l'enchainement d'étapes semblables aux miennes. Le temps que je prends vit entre les boucles que ces étapes jalonnent. C'est le ralentissement volontaire pour les vérifications, celui des transitions entre deux actions finies, pour garantir à la deuxième qu'elle reprendra sur des bases saines.
+Parlons à nouveau des études METR. La courbe METR vit dans l'enchainement d'étapes semblables aux miennes. Le temps que je prends vit entre les boucles que ces étapes jalonnent. C'est le ralentissement volontaire pour les vérifications, celui des transitions entre deux actions finies pour garantir à la deuxième qu'elle reprendra sur des bases saines.
 
 {{ stage(id="A") }}
 
@@ -101,9 +101,9 @@ J'aurais pu être découragé par un tel travail et simplement arrêter le proje
 
 Beaucoup penseraient que je parle d'accélération immédiate. Et c'est le cas. La différence c'est que cette accélération locale sert à oser booster la pérennité. Cela me rappelle le tweet de Kent Beck « 90 % de mes compétences viennent de perdre leur valeur, le levier sur les 10 % restants vient d'être multiplié par 1000. » Supprimer, réviser et refactorer sont des actes fondamentaux de ces 10&nbsp;%.
 
-Je reviens à mon fil rouge `lucid-lint`. Alors qu'il fonctionnait et donnait des résultats, j'ai pris quelques décisions folles. Au bout d'une journée d'existence de l'outil en production, <!-- note: revoir le délai exact --> j'ai jeté et refondu des fondamentaux : 3 catégories mortes en 24h. Plus tard, pour mieux m'y retrouver, j'ai renommé 84 features de la roadmap et créé un système de gestion pour celles-ci. Plus clivant encore : pour gagner 5,6 % de perf, j'ai réécrit le parseur Markdown alors que tous les tests, golden snapshots et property tests, étaient verts.
+Je reviens à mon fil rouge `lucid-lint`. Alors qu'il fonctionnait et donnait des résultats, j'ai pris quelques décisions folles. Au bout d'une journée d'existence de l'outil en production, <!-- note: revoir le délai exact -->j'ai jeté et refondu des fondamentaux : trois catégories mortes en 24h. Plus tard, pour mieux m'y retrouver, j'ai renommé 84 features de la roadmap et créé un système de gestion pour celles-ci. Plus clivant encore : pour gagner 5,6 % de perf, j'ai réécrit le parseur Markdown alors que tous les tests, golden snapshots et property tests, étaient verts.
 
-Le point commun ? Le filet de sécurité n'est pas un gage de qualité. C'est ce qui m'autorise à être courageux. <!-- Gardé pour réflexion: La crainte du changement et de ses conséquences avait perdu son emprise sur ma décision. --> Et ce que ce courage libère, ce n'est pas du temps — c'est du jugement.
+Le point commun ? Le filet de sécurité n'est pas un gage de qualité. C'est ce qui m'autorise à être courageux. <!-- Gardé pour réflexion: La crainte du changement et de ses conséquences avait perdu son emprise sur ma décision. -->Et ce que ce courage libère, ce n'est pas du temps — c'est du jugement.
 
 {{ stage(id="B") }}
 
@@ -128,11 +128,11 @@ Ce jugement, je le garde pour moi. Et pour l'enrichir, je le nourris des analyse
 
 Pour l'enrichissement critique, c'est le plus cruel pour moi. Je demande explicitement à l'IA d'être dure avec ce que nous produisons. J'ai même un skill, `/feature-torture`, dédié à faire un stress test d'une évolution prévue dans la roadmap. Une sorte de Dewey, de la série Malcolm « Toi tu vis. Toi tu vis. Toi tu crèves ! » Et aussi toi tu changes, toi tu te scindes. Une sortie riche de ce skill me permet de garder la tête froide et de prendre la décision finale. L'IA n'a pas d'égo, pas d'attachement émotionnel. J'utilise ces qualités pour mieux juger.
 
-Je suis encore plus dur avec moi-même sur la rédaction de mes articles. Celui-ci ne fait pas exception. Claude Code revoit chaque mot, phrase, paragraphe et relit la cohérence globale. Je ne le laisse pas me dire que c'est bien si c'est juste passable. C'est dur. C'est exténuant. Et le pire&nbsp;? Là où je croyais m'améliorer, les statistiques me montrent que je régresse sur l'utilisation abusive des hedge (parfois, souvent, plutôt, peut-être), alors que les conventions que J'AI choisies les proscrivent. Chaque paragraphe est repassé à la moulinette environ 4 fois — oui, nous avons compté — avant qu'il soit bon.
+Je suis encore plus dur avec moi-même sur la rédaction de mes articles. Celui-ci ne fait pas exception. Claude Code revoit chaque mot, phrase, paragraphe et relit la cohérence globale. Je ne le laisse pas me dire que c'est bien si c'est juste passable. C'est dur. C'est exténuant. Et le pire&nbsp;? Là où je croyais m'améliorer, les statistiques me montrent que je régresse sur l'utilisation abusive des hedge ("parfois", "souvent", "plutôt", "peut-être"), alors que les conventions que J'AI choisies les proscrivent. Chaque paragraphe est repassé à la moulinette environ 4 fois — oui, nous avons compté — avant qu'il soit bon.
 
 Est-ce abusif de compter tout cela&nbsp;? Pas si je veux être tranquille. Je ne veux pas laisser passer des phrases qui seraient mal comprises. Tout comme je m'interdis de laisser un bug ou une mauvaise conception s'échapper dans la nature. Pour éviter leur accumulation, je demande à l'IA de casser ma complaisance avant que je la confonde avec de la cohérence.
 
-Il arrive parfois, malgré tout, qu'une simple règle de lisibilité dans `lucid-lint` passe la torture, les revues locales et les tests, puis au premier essai en conditions réelles : le linter explose en vol ! Il s'agissait d'une règle, expérimentale, repérant les nombres sans ancrage proche — sans unité, par exemple. Mais lâchée dans le monde réel, elle délimitait mal les nombres, confondait les numéros de version avec de grandes valeurs numériques et finissait par crasher l'exécution. Bilan : quelques heures et 3 commits.
+Il arrive, malgré tout, qu'une simple règle de lisibilité dans `lucid-lint` passe la torture, les revues locales et les tests, puis au premier essai en conditions réelles : le linter explose en vol ! Il s'agissait d'une règle, expérimentale, repérant les nombres sans ancrage proche — sans unité, par exemple. Mais lâchée dans le monde réel, elle délimitait mal les nombres, confondait les numéros de version avec de grandes valeurs numériques et finissait par crasher l'exécution. Bilan : quelques heures et trois commits.
 
 <!-- > *reprise depuis section "harnais"* - non replacé. Gardé comme stock si besoin : La revue IA est aussi régulièrement lancée en mode adverse sur un aspect particulier. À chaque fois, une amélioration émerge de cet exercice. -->
 
@@ -160,20 +160,28 @@ Il arrive parfois, malgré tout, qu'une simple règle de lisibilité dans `lucid
                        cadre figé vers la boucle réflexive. » + 1 ligne Storey
                        (create/review mode) qui ouvre §7. -->
 
-Cela veut-il dire que les tests étaient superflu ? Non, mille fois non. Ou plutôt 814 fois non, si on se réfère au nombre de tests unitaires sur `lucid-lint`. Et la rigueur est là, elle aussi, dans leur diversité — certains tests s'assurent que chaque règle est documentée dans les deux langues — et dans le contrôle des tests eux-même — mutation testing et relectures humaines + IA pour s'assurer de leur pertinence. Est-ce que je fais toujours du TDD avec l'IA ? Oui et non. Pour plusieurs raisons.
+Cela veut-il dire que les tests étaient superflus ? Non, mille fois non. Ou plutôt 814 fois non — le nombre de tests unitaires sur `lucid-lint`. Et la rigueur est là, elle aussi, dans leur diversité — certains tests s'assurent que chaque règle est documentée dans les deux langues — et dans le contrôle des tests eux-mêmes — mutation testing et relectures humaines + IA pour s'assurer de leur pertinence. Est-ce que je fais toujours du TDD avec l'IA ?
 
-Un petit saut dans le temps. Dans mes premières utilisations de GitHub Copilot, j'avais tenté de lui faire faire du TDD. Deux constatations décevantes :
+Un petit saut dans le temps. Dans mes premières utilisations de GitHub Copilot, j'avais tenté de lui faire faire du TDD. Deux constatations décevantes&nbsp;:
 
 1. Les tests passaient souvent en test after malgré les directives
 2. En test first, Copilot générait une cohorte de tests avant de commencer à implémenter
 
-Le premier se corrigeait avec le temps. Le deuxième a demandé une astuce qui s'est révélée fondamentale: ajouter une étape à TDD. Red → Green → Refactor → **Reflect**.
+Le premier se corrigeait avec le temps. Le deuxième a demandé une astuce qui s'est révélée fondamentale&nbsp;: ajouter une étape à TDD. Red → Green → Refactor → **Reflect**.
 
-Cette 4 étape demande à l'IA de revoir l'exécution précédente des trois premières étapes, d'en tirer des apprentissages, et de changer le plan pour la suite quand nécessaire. Honnètement ? Peu de changements de plan dans l'ensemble. En revanche, une conception émergente qui revient car tous les assistants que j'ai utilisés se concentrent sur moins de tests et les exécutent plus souvent en premier. Le Red redevient respecté. Les tests inutiles ou en doublon sont à nouveau tués dans l'œuf. Et un bonus: une verbosité maîtrisée qui me donne des informations utiles en relecture de code.
+Cette 4e étape demande à l'IA de revoir l'exécution précédente des trois premières étapes, d'en tirer des apprentissages, et de changer le plan pour la suite quand nécessaire. Honnêtement ? Peu de changements de plan. Livrés à eux-mêmes en test first, les assistants génèrent une cohorte de tests d'un bloc, en amont. Reflect casse ce réflexe — le Red redevient respecté. Les tests inutiles ou en doublon sont à nouveau tués dans l'œuf. Et un bonus&nbsp;: une verbosité maîtrisée qui me donne des informations utiles en relecture de code.
+
+Dans mes explorations, j'ai travaillé en *Spec Driven Development* (SDD) avec IA. Avec des frameworks — SpecKit, OpenSpec et BMAD. Même si les implémentations sont vraiment bonnes, je les trouvais lourdes et inflexibles. J'ai tenté une implémentation maison de micro framework SDD, dans le but de reprendre la main grâce à des étapes plus hachées. Le problème était similaire, le cadre restait figé par l'enchainement des étapes. Dans certains cas, comme des mises à jour de doc ou des améliorations esthétiques simples, inutile. Dans d'autres cas, comme pour les refactos évoqués plus tôt, trop léger. Mais une perle s'est glissée dans mon cadre&nbsp;: une étape **Reflect** entre 2 boucles de feature. C'est cette étape qui m'a mené à abandonner le SDD au sens strict pour un cadre plus fluide et rigoureux à la fois.
+
+Ce Reflect macro, il apparait une fois par boucle code → harnais → revue → *Reflect*. Entre les cycles, l'IA génère un fichier de tests manuels à destination de l'humain. Je l'utilise comme une démo plus qu'une vérification. Il y a rarement des erreurs, mais souvent des remarques. Cette étape rétablit la conception émergente qui est atténuée en TDD agentique. Les idées de nouvelles features, des décisions de refacto et des ajustements pour l'expérience utilisateur sont issus de cette phase. Cela m'évite aussi de revenir du déjeuner incapable de dire à quoi sert le commit de 11 h, ni pourquoi sa conception est déjà à revoir. Je trouve cela important d'étudier et comprendre ce qui est produit car <span class="mark--soft">le code généré par IA est, pour mon cerveau, du legacy de quelques heures.</span>
+
+La rigueur ne s'est pas effacée. Elle s'est déplacée du cadre figé vers la boucle réflexive. Le rythme de mon travail alterne entre des phases de création, où l'IA dégrossit avec une influence humaine, et des phases de revues, où l'humain reprend la main activement sur les bases de l'agent IA.
 
 {{ stage(id="vigilance") }}
 
 ## Note de vigilance
+
+> "cognitive debt remains invisible until it is too late: the team feels they understand the system better than they do." - Storey Mars 2026
 
 <p class="vsm-placeholder">À écrire — §7 : triple debt (technique / cognitive / intent — Storey + Fowler) ; comment les patterns remboursent ; ce qu'ils ne suffisent pas à régler (ré-apprentissage, veille, multitasking) ; chiffres Gerlich, Shen &amp; Tamkin. Bijou : « Storey a nommé ce qui me hantait sans que je le sache. » — supprimer à la rédaction.</p>
 
@@ -190,7 +198,7 @@ Cette 4 étape demande à l'IA de revoir l'exécution précédente des trois pre
 *Cadre source (placeholder draft — à convertir en notes `[^N]` au fil des citations ; URLs ⚠️ à confirmer en base arrière). Limites à signaler dans le texte : DeputyDev (auteurs-industrie), Storey/Starr (cadre conceptuel), Shen et Tamkin (vendor, associatif), Gerlich (pas software-specific), Wadinambiarachchi (design ≠ code).*
 
 1. **METR Time Horizon** — Kwa, West et al., *Measuring AI Ability to Complete Long Tasks*, mars 2025. <https://arxiv.org/abs/2503.14499>
-2. **METR Time Horizon 1.1** — *Measuring the time horizon*, 29 janvier 2026 (slug ⚠️ à confirmer). <https://metr.org/blog/2026-01-29-measuring-time-horizon/>
+2. **METR Time Horizon 1.1** — *Measuring the time horizon*, 29 janvier 2026. <https://metr.org/blog/2026-1-29-time-horizon-1-1/>
 3. **METR « Changing Experiment Design »** — *We Are Changing our Developer Productivity Experiment Design*, 24 février 2026. <https://metr.org/blog/2026-02-24-uplift-update/>
 4. **Beck, *Tidy First?*** — O'Reilly, 2023 (ISBN 978-1-098-15124-9).
 5. **Beck, « 90% of My Skills »** — tweet du 22 avril 2023 + essai. <https://x.com/KentBeck/status/1649817957235843072>
