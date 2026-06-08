@@ -22,7 +22,7 @@
   // devenu la boucle externe ; l'ancien 7 → 6, l'ancien 8 → 7.
   var STAGES = {
     full:      { name: "vue complète",  active: [],  active2: [],     partial: [1],                   dim: [],                    loop: "" },
-    full2:     { name: "cartographie",  active: [4], active2: [],     partial: [1, 3],                dim: [],                    loop: "" },
+    full2:     { name: "cartographie",  active: [],  active2: [4],    partial: [1, 3],                dim: [],                    loop: "" },
     A:         { name: "Le harnais",   active: [5], active2: [],     partial: [3, 6],                dim: [1, 2, 4, 7],          loop: "partial" },
     courage:   { name: "Le courage",   active: [],  active2: [2, 4], partial: [5],                   dim: [1, 3, 6, 7],          loop: "partial" },
     B:         { name: "Casser la complaisance", active: [2], active2: [3], partial: [1],            dim: [4, 5, 6],             loop: "dim" },
