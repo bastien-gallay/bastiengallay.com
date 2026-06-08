@@ -111,7 +111,7 @@
               background var(--dur-mid) var(--ease-out-quart),
               border-color var(--dur-mid) var(--ease-out-quart),
               box-shadow var(--dur-mid) var(--ease-out-quart),
-              opacity var(--dur-mid) var(--ease-out-quart);
+              opacity var(--vsm-fade) var(--ease-out-quart);   // apparition « autour » de la courbe (§1→§2)
 }
 
 // Flèche de flux entre les blocs (▾ vertical desktop, ▸ horizontal mobile).
@@ -228,32 +228,38 @@
 // Transition douce : cross-fade opacité + `display` discret (allow-discrete)
 // pour ne pas laisser d'espace vide pendant le fondu. Repli propre : sur les
 // navigateurs sans allow-discrete, on retombe sur la bascule instantanée.
-.vsm__metr,
-.vsm__chain,
+// La courbe METR « vit » dans le nœud 04 (pas de bloc standalone séparé). En §1
+// (rail `vsm--intro`), le 04 est forcé ouvert — la courbe est visible à SA place
+// dans la chaîne — tandis que les six autres nœuds restent en place mais
+// transparents : ils réservent leur hauteur, donc la courbe NE BOUGE PAS en
+// passant à §2. La VSM se matérialise simplement autour d'elle (fondu lent).
+.vsm__label,
 .vsm__loop-cap,
 .vsm__legend {
-  transition: opacity var(--vsm-fade) var(--ease-out-quart),
-              display var(--vsm-fade) allow-discrete;
+  transition: opacity var(--vsm-fade) var(--ease-out-quart);
 }
-.vsm__metr { display: none; opacity: 0; }
-.vsm--intro .vsm__metr { display: block; opacity: 1; }
 .vsm--intro {
-  .vsm__chain,
-  .vsm__loop-cap,
-  .vsm__legend { opacity: 0; display: none; }
   .vsm__label,
-  .vsm__hint { display: none; }
-}
-// Fondu d'entrée (premier affichage de chaque bloc) plutôt qu'apparition sèche.
-@starting-style {
-  .vsm--intro .vsm__metr { opacity: 0; }
-  .vsm__chain,
   .vsm__loop-cap,
   .vsm__legend { opacity: 0; }
+  .vsm__hint { display: none; }
+}
+// Desktop : la courbe vit dans le 04, les autres nœuds réservent leur place
+// (transparents) → la courbe ne bouge pas, la VSM se matérialise autour.
+@media (min-width: 60rem) {
+  .vsm--intro {
+    .vsm__node:not([data-step="4"]) { opacity: 0; }
+    [data-step="4"] .vsm__detail { max-height: 60vh; opacity: 1; margin-top: var(--space-2xs); }
+  }
+}
+// Mobile : le bandeau reste complet ; la courbe (réduite) s'affiche AU-DESSOUS,
+// recopiée dans le panneau par vsm.js (voir syncPanel, cas intro).
+@media (max-width: calc(60rem - 1px)) {
+  .vsm__panel .metr { max-width: 16rem; margin: 0 auto; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .vsm__metr,
-  .vsm__chain,
+  .vsm__node,
+  .vsm__label,
   .vsm__loop-cap,
   .vsm__legend,
   .vsm__04 { transition: none; }

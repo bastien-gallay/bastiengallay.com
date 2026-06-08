@@ -46,6 +46,13 @@
   function syncPanel() {
     if (!panel) return;
     if (!mobile.matches) { panel.innerHTML = ""; return; }
+    // §1 (intro) : aucun nœud actif, mais la courbe « vit » dans le 04 → on la
+    // montre sous le bandeau (le détail porte courbe + boucle ; le CSS choisit).
+    if (rail.classList.contains("vsm--intro")) {
+      var d4 = rail.querySelector('[data-step="4"] .vsm__detail');
+      panel.innerHTML = d4 ? d4.innerHTML : "";
+      return;
+    }
     var html = "";
     nodes.forEach(function (node) {
       if (node.classList.contains("is-active") || node.classList.contains("is-active-2")) {

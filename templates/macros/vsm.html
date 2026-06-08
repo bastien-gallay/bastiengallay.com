@@ -28,12 +28,6 @@
       <span class="vsm__stage" data-vsm-stage>vue complète</span>
     </p>
 
-    {#- Courbe METR standalone. Visible seule en §1 (le rail porte alors
-        `vsm--intro`, posé par vsm.js) ; masquée dès que la VSM apparaît (§2+). -#}
-    <div class="vsm__metr" data-vsm-metr>
-      {{ metr::curve() }}
-    </div>
-
     <ol class="vsm__chain" data-vsm-chain>
       <li class="vsm__node" data-step="1">
         <div class="vsm__node-head"><span class="vsm__n">01</span><span class="vsm__nm">Compréhension domaine</span><span class="vsm__fx">admin</span></div>
