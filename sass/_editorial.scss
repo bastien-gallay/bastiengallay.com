@@ -1316,21 +1316,39 @@ p.has-dropcap::first-letter {
   overflow: visible;
 }
 
+// Diagramme conceptuel inline (shortcode `diagram.html`) — traitement LÉGER,
+// distinct du chrome statistique `.visuel` : pleine largeur de colonne, pas de
+// cadre rempli ni de numéro, juste un filet fin haut/bas (même rythme que les
+// blockquotes). Pour les schémas tissés dans l'argument, pas les figures de
+// données.
+.diagram {
+  margin: var(--space-l) 0;
+  padding: var(--space-sm) 0;
+  border-block: 1px solid var(--rule);
+}
+.diagram__cap {
+  margin-top: var(--space-sm);
+  color: var(--ink-mute);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
 // Schéma Reflect (§7) — anneaux concentriques (Quoi ⊂ Comment ⊂ Pourquoi) à
-// GAUCHE, légende lisible à DROITE. Flex pleine largeur de la figure : les
-// deux bords s'alignent sur la colonne de texte (un SVG seul, centré + capé,
-// « flottait » et désalignait titre/légende). Le mapping vit en HTML lisible ;
-// les anneaux ne portent que le visuel (plein → pointillé) + un ↻ par anneau.
+// GAUCHE, légende lisible à DROITE, en flex pleine largeur. Polychromie
+// SÉMANTIQUE 1:1 (comme la boucle TDD) : Quoi = info (bleu, opérationnel),
+// Comment = warning (ambre, intermédiaire), Pourquoi = problem (rouge, le plus
+// grave et le plus rare). La couleur porte la distinction des trois anneaux —
+// les pointillés/tirets ne se lisaient pas.
 .reflect {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
-  margin-top: var(--space-2xs);
+  gap: clamp(var(--space-md), 4vw, var(--space-xl));
 }
 
 .reflect__rings {
   flex: 0 0 auto;
-  width: clamp(8.5rem, 6rem + 8vw, 11rem);
+  width: clamp(9rem, 7rem + 8vw, 12rem);
   height: auto;
 }
 
@@ -1342,37 +1360,37 @@ p.has-dropcap::first-letter {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--space-sm);
 }
 
-// Une pastille-témoin par ligne, dont le trait reprend celui de son anneau
-// (plein = Quoi, pointillé = Comment, pointillé estompé = Pourquoi) : c'est ce
-// qui relie la légende aux anneaux sans recourir à la couleur (doctrine).
 .reflect__row {
   display: grid;
   grid-template-columns: auto 1fr;
-  column-gap: var(--space-xs);
+  column-gap: var(--space-sm);
   row-gap: 0;
 }
+
+// Pastille pleine, de la couleur de l'anneau correspondant : c'est elle qui
+// relie chaque ligne de légende à son anneau.
 .reflect__swatch {
   grid-column: 1;
   grid-row: 1 / span 2;
   align-self: center;
-  width: 0.8rem;
-  height: 0.8rem;
+  width: 0.85rem;
+  height: 0.85rem;
   border-radius: 50%;
-  border: 1.5px solid var(--ink-mute);
 }
-.reflect__swatch--outer { border-style: dashed; opacity: 0.5; }
-.reflect__swatch--mid   { border-style: dashed; }
-.reflect__swatch--inner { border-style: solid; }
+.reflect__row--why  .reflect__swatch { background: var(--c-problem); }
+.reflect__row--how  .reflect__swatch { background: var(--c-warning); }
+.reflect__row--what .reflect__swatch { background: var(--c-info); }
 
 .reflect__lvl {
   grid-column: 2;
   grid-row: 1;
   font-family: var(--font-mono);
   font-weight: 600;
-  letter-spacing: 0.02em;
+  font-size: 1.02rem;
+  letter-spacing: 0.01em;
 }
 .reflect__gloss {
   grid-column: 2;
@@ -1384,8 +1402,8 @@ p.has-dropcap::first-letter {
 
 // Étroit : anneaux au-dessus, légende en dessous, le tout calé à gauche.
 @media (max-width: 26rem) {
-  .reflect { flex-direction: column; align-items: flex-start; gap: var(--space-xs); }
-  .reflect__rings { width: 9rem; }
+  .reflect { flex-direction: column; align-items: flex-start; gap: var(--space-sm); }
+  .reflect__rings { width: 9.5rem; }
 }
 
 // Grille de fond — pointillés discrets. Stroke-width et dasharray exprimés
