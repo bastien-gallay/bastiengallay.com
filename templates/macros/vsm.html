@@ -18,6 +18,8 @@
   layouts). Les LABELS des 7 étapes sont structurels et stables.
 -#}
 {% import "macros/metr.html" as metr %}
+{% import "macros/dette.html" as dette %}
+{% import "macros/boucle.html" as boucle %}
 {% macro rail() %}
 <aside class="vsm" aria-label="Value Stream Map — mon travail de développement" data-vsm>
   <div class="vsm__inner">
@@ -70,9 +72,16 @@
       <li class="vsm__node vsm__node--loop vsm__node--loop-start" data-step="4">
         <div class="vsm__node-head"><span class="vsm__n">04</span><span class="vsm__nm">Génération du code</span><span class="vsm__loop-in" title="boucle interne : Red → Green → Refactor" aria-hidden="true">↺</span><span class="vsm__fx">très fort</span></div>
         <div class="vsm__detail">
-          <p class="vsm__d-title">Là où la courbe METR vit.</p>
-          <p class="vsm__d-note">La plus accélérée — et déjà la moins coûteuse en temps avant l'IA. Le cœur du malentendu.</p>
-          <p class="vsm__d-note vsm__d-loop"><span class="vsm__loop-mark" aria-hidden="true">↺</span> Boucle interne : Red → Green → Refactor.</p>
+          {#- La courbe METR « vit » dans le 04 et y persiste (§2→§5)… -#}
+          <div class="vsm__04 vsm__04--metr">
+            <p class="vsm__d-title">Là où la courbe METR vit.</p>
+            {{ metr::curve() }}
+          </div>
+          {#- …jusqu'à ce que la boucle interne la remplace (§6, rail `vsm--rgb`). -#}
+          <div class="vsm__04 vsm__04--loop">
+            <p class="vsm__d-title">La rigueur passe dans la boucle.</p>
+            {{ boucle::tdd() }}
+          </div>
         </div>
       </li>
 
@@ -102,6 +111,8 @@
         <div class="vsm__detail">
           <p class="vsm__d-title">Le plus lourd sur la durée.</p>
           <p class="vsm__d-note">GitClear, METR (1/3). C'est ici que la cognitive debt se paie.</p>
+          {#- Cercle des 3 dettes (Storey), visible quand le 07 s'ouvre (§7). -#}
+          <div class="vsm__dette">{{ dette::cercle() }}</div>
         </div>
       </li>
     </ol>

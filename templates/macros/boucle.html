@@ -1,0 +1,21 @@
+{#-
+  Boucle interne TDD + Reflect, affichée dans le nœud 04 de la VSM quand on
+  arrive en §6 (elle remplace la courbe METR). Red → Green → Refactor → Reflect,
+  où Reflect est le 4ᵉ temps ajouté par l'auteur (cf. §6, ligne « Red → Green →
+  Refactor → Reflect »).
+
+  Couleurs SÉMANTIQUES du site (polychromie 1:1, pas décoratif) : Red = problem,
+  Green = success, Refactor (le « B » de R-G-B) = info, Reflect = accent (la
+  signature). Pastilles carrées (doctrine De Stijl, pas de border-radius).
+-#}
+{% macro tdd() %}
+<figure class="rgb" aria-label="Boucle interne : Red, Green, Refactor, puis Reflect — le 4ᵉ temps ajouté.">
+  <p class="rgb__head"><span class="rgb__cyc" aria-hidden="true">↻</span> Boucle interne</p>
+  <ol class="rgb__steps">
+    <li class="rgb__step rgb__step--red"><span class="rgb__dot" aria-hidden="true"></span><span class="rgb__name">Red</span><span class="rgb__hint">le test échoue</span></li>
+    <li class="rgb__step rgb__step--green"><span class="rgb__dot" aria-hidden="true"></span><span class="rgb__name">Green</span><span class="rgb__hint">le test passe</span></li>
+    <li class="rgb__step rgb__step--refactor"><span class="rgb__dot" aria-hidden="true"></span><span class="rgb__name">Refactor</span><span class="rgb__hint">nettoyer</span></li>
+    <li class="rgb__step rgb__step--reflect"><span class="rgb__dot" aria-hidden="true"></span><span class="rgb__name">Reflect</span><span class="rgb__hint">4ᵉ temps : relire, apprendre, réajuster</span></li>
+  </ol>
+</figure>
+{% endmacro tdd %}

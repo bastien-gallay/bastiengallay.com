@@ -293,6 +293,65 @@
   color: var(--ink-mute);
 }
 
+// ── Cercle des 3 dettes (nœud 07, §7) ───────────────────────────────
+.dette { margin: var(--space-2xs) 0 0; }
+.dette__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  font-family: var(--font-mono);   // les <text> SVG : la var ne résout pas en attribut
+}
+
+// ── Nœud 04 : courbe METR (défaut) ↔ boucle interne (§6) ────────────
+// La courbe « vit » dans le 04 et y persiste (§2→§5) ; en §6 le rail porte
+// `vsm--rgb` (vsm.js) et la boucle interne TDD+Reflect la remplace.
+.vsm__04--loop { display: none; }
+.vsm--rgb .vsm__04--metr { display: none; }
+.vsm--rgb .vsm__04--loop { display: block; }
+
+// ── Boucle interne (Red → Green → Refactor → Reflect) ───────────────
+// Pastilles SÉMANTIQUES (problem/success/info + accent Reflect), carrées
+// (De Stijl). Apparaît dans le 04 en §6.
+.rgb { margin: var(--space-2xs) 0 0; }
+.rgb__head {
+  margin: 0 0 var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.rgb__cyc { color: var(--accent); font-weight: 600; }
+.rgb__steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.rgb__step {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+.rgb__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex: none;
+  align-self: center;
+  background: var(--ink-mute);
+}
+.rgb__name { font-weight: 600; }
+.rgb__hint { color: var(--ink-mute); font-style: italic; font-size: 0.85em; }
+.rgb__step--red .rgb__dot { background: var(--c-problem); }
+.rgb__step--green .rgb__dot { background: var(--c-success); }
+.rgb__step--refactor .rgb__dot { background: var(--c-info); }
+.rgb__step--reflect .rgb__dot { background: var(--accent); }
+.rgb__step--reflect .rgb__name { color: var(--accent); }
+
 // ── Boucle externe « Reflect » (étapes 4-5-6) ───────────────────────
 // Arête d'accent partagée par les 3 nœuds : un liseré VERTICAL (desktop)
 // qui devient HORIZONTAL en bandeau mobile (cf. media <60rem). Neutre par
