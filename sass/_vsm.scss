@@ -287,10 +287,13 @@
     [data-step="4"] .vsm__detail { max-height: 60vh; opacity: 1; margin-top: var(--space-2xs); }
   }
 }
-// Mobile : le bandeau reste complet ; la courbe (réduite) s'affiche AU-DESSOUS,
-// recopiée dans le panneau par vsm.js (voir syncPanel, cas intro).
+// Mobile : le bandeau reste complet ; la courbe s'affiche AU-DESSOUS, recopiée
+// dans le panneau par vsm.js (cas intro). Fortement réduite + note masquée pour
+// ne pas manger la hauteur de lecture (le bandeau est sticky).
 @media (max-width: calc(60rem - 1px)) {
-  .vsm__panel .metr { max-width: 16rem; margin: 0 auto; }
+  .vsm__panel .metr { max-width: 11rem; margin: 0 auto; }
+  .vsm__panel .metr__cap,
+  .vsm__panel .metr__note { display: none; }   // bandeau sticky : courbe nue
 }
 @media (prefers-reduced-motion: reduce) {
   .vsm__node,
@@ -347,20 +350,23 @@
   font-family: var(--font-mono);   // les <text> SVG : la var ne résout pas en attribut
 }
 
-// ── Nœud 04 : courbe METR (défaut) ↔ boucle interne (§6) ────────────
-// La courbe « vit » dans le 04 et y persiste (§2→§5) ; en §6 le rail porte
-// `vsm--rgb` (vsm.js) et la boucle interne TDD+Reflect la remplace.
+// ── Nœud 04 : courbe METR (§1-§2) ↔ boucle interne (§rigueur+) ──────
+// La courbe ne vit QUE en §1 (intro) et §2 (cartographie) — rail `vsm--metr`.
+// Dès §rigueur, la boucle TDD+Reflect prend le relais — rail `vsm--rgb`. Entre
+// les deux (harnais, courage, complaisance), le 04 n'affiche NI l'une NI
+// l'autre : il n'y est pas focalisé, son détail est replié. La courbe ne
+// « fuit » donc plus à partir du harnais (cf. retour auteur).
 .vsm__04 {
   transition: opacity var(--vsm-fade) var(--ease-out-quart),
               display var(--vsm-fade) allow-discrete;
 }
+.vsm__04--metr,
 .vsm__04--loop { display: none; opacity: 0; }
-.vsm__04--metr { opacity: 1; }
-.vsm--rgb .vsm__04--metr { display: none; opacity: 0; }
-.vsm--rgb .vsm__04--loop { display: block; opacity: 1; }
+.vsm--metr .vsm__04--metr { display: block; opacity: 1; }
+.vsm--rgb  .vsm__04--loop { display: block; opacity: 1; }
 @starting-style {
-  .vsm--rgb .vsm__04--loop { opacity: 0; }
-  .vsm__04--metr { opacity: 0; }
+  .vsm--metr .vsm__04--metr { opacity: 0; }
+  .vsm--rgb  .vsm__04--loop { opacity: 0; }
 }
 
 // ── Boucle interne (Red → Green → Refactor → Reflect), en CERCLE ─────
@@ -534,6 +540,14 @@
 
   // Le détail in-situ est masqué ; vsm.js le recopie dans le panneau.
   .vsm__detail { display: none; }
+
+  // Bandeau sticky = hauteur précieuse : on dégraisse le chrome explicatif
+  // (légende d'états, légende de boucle, hint) pour ne pas manger la lecture.
+  // La chaîne + le détail du nœud actif suffisent ; les états restent lisibles
+  // par la position/couleur des cellules.
+  .vsm__loop-cap,
+  .vsm__legend,
+  .vsm__hint { display: none; }
 
   .vsm__panel {
     margin-top: var(--space-sm);

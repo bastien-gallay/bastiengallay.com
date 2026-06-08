@@ -24,9 +24,9 @@
     full:      { name: "vue complète",  active: [],  active2: [],     partial: [1],                   dim: [],                    loop: "" },
     full2:     { name: "cartographie",  active: [],  active2: [4],    partial: [1, 3],                dim: [],                    loop: "" },
     A:         { name: "Le harnais",   active: [5], active2: [],     partial: [3, 6],                dim: [1, 2, 4, 7],          loop: "partial" },
-    courage:   { name: "Le courage",   active: [],  active2: [2, 4], partial: [5],                   dim: [1, 3, 6, 7],          loop: "partial" },
+    courage:   { name: "Le courage",   active: [],  active2: [2],    partial: [5],                   dim: [1, 3, 4, 6, 7],       loop: "partial" },
     B:         { name: "Casser la complaisance", active: [2], active2: [3], partial: [1],            dim: [4, 5, 6],             loop: "dim" },
-    C:             { name: "Rigueur du cadre", active: [4], active2: [],     partial: [5, 6],                dim: [1, 2, 3, 7],          loop: "dim" },
+    C:             { name: "Rigueur du cadre", active: [4], active2: [],     partial: [5, 6],                dim: [1, 2, 3, 7],          loop: "dim",     rgb: true },
     "rigueur-rgb":   { name: "Boucle interne",   active: [4], active2: [],     partial: [5, 6],                dim: [1, 2, 3, 7],          loop: "dim",     rgb: true },
     "rigueur-macro": { name: "Boucle 4–6",       active: [4], active2: [],     partial: [5, 6],                dim: [1, 2, 3, 7],          loop: "active",  rgb: true },
     vigilance: { name: "Vigilance",     active: [7], active2: [],     partial: [1, 2, 3],             dim: [4, 5, 6],             loop: "dim" },
@@ -80,7 +80,10 @@
     if (c.loop) rail.classList.add("vsm--loop-" + c.loop);
     // §1 (stage `full`) : la chaîne s'efface, seule la courbe METR reste.
     rail.classList.toggle("vsm--intro", key === "full");
-    // §6 : la boucle interne (TDD+Reflect) remplace la courbe dans le nœud 04.
+    // La courbe METR ne vit QUE en §1 (intro) et §2 (cartographie) ; dès le
+    // harnais elle disparaît (le 04 n'affiche plus rien jusqu'à la boucle).
+    rail.classList.toggle("vsm--metr", key === "full" || key === "full2");
+    // Dès §rigueur, la boucle interne (TDD+Reflect) occupe le nœud 04.
     rail.classList.toggle("vsm--rgb", !!c.rgb);
     if (elStage) elStage.textContent = c.name;
     syncPanel();
