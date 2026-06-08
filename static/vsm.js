@@ -51,6 +51,7 @@
     if (rail.classList.contains("vsm--intro")) {
       var d4 = rail.querySelector('[data-step="4"] .vsm__detail');
       panel.innerHTML = d4 ? d4.innerHTML : "";
+      markZoom();
       return;
     }
     var html = "";
@@ -61,6 +62,52 @@
       }
     });
     panel.innerHTML = html;
+    markZoom();
+  }
+
+  // ── Zoom courbe METR (mobile) ───────────────────────────────────────
+  // La courbe vit en petit dans le bandeau ; un tap (ou Entrée/Espace) ouvre
+  // un dialog plein écran avec la courbe en grand + sa légende + sa note.
+  function markZoom() {
+    var m = panel.querySelector(".metr");
+    if (!m) return;
+    m.setAttribute("role", "button");
+    m.setAttribute("tabindex", "0");
+    m.setAttribute("aria-label", "Agrandir la courbe METR");
+  }
+
+  var zoomDlg = null;
+  function openZoom() {
+    var src = rail.querySelector('[data-step="4"] .vsm__04--metr .metr');
+    if (!src || typeof HTMLDialogElement === "undefined") return;
+    if (!zoomDlg) {
+      zoomDlg = document.createElement("dialog");
+      zoomDlg.className = "metr-zoom";
+      zoomDlg.innerHTML =
+        '<div class="metr-zoom__head"><button type="button" class="metr-zoom__close" aria-label="Fermer">Fermer ✕</button></div>' +
+        '<div class="metr-zoom__body"></div>';
+      document.body.appendChild(zoomDlg);
+      zoomDlg.querySelector(".metr-zoom__close").addEventListener("click", function () { zoomDlg.close(); });
+      zoomDlg.addEventListener("click", function (e) { if (e.target === zoomDlg) zoomDlg.close(); });
+    }
+    var body = zoomDlg.querySelector(".metr-zoom__body");
+    var clone = src.cloneNode(true);
+    ["role", "tabindex", "aria-label"].forEach(function (a) { clone.removeAttribute(a); });
+    body.innerHTML = "";
+    body.appendChild(clone);
+    if (typeof zoomDlg.showModal === "function") zoomDlg.showModal();
+  }
+
+  if (panel) {
+    panel.addEventListener("click", function (e) {
+      if (e.target.closest(".metr")) openZoom();
+    });
+    panel.addEventListener("keydown", function (e) {
+      if ((e.key === "Enter" || e.key === " ") && e.target.closest(".metr")) {
+        e.preventDefault();
+        openZoom();
+      }
+    });
   }
 
   function apply(key) {

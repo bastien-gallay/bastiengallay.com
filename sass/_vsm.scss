@@ -291,9 +291,74 @@
 // dans le panneau par vsm.js (cas intro). Fortement réduite + note masquée pour
 // ne pas manger la hauteur de lecture (le bandeau est sticky).
 @media (max-width: calc(60rem - 1px)) {
-  .vsm__panel .metr { max-width: 11rem; margin: 0 auto; }
+  // Courbe = aperçu glanceable dans le bandeau (un peu plus grande qu'avant) ;
+  // tap pour l'agrandir dans un dialog plein écran (cf. vsm.js, openZoom).
+  .vsm__panel .metr {
+    max-width: 14rem;
+    margin: 0 auto;
+    position: relative;
+    padding-bottom: 1.35rem;        // place pour la pastille d'affordance
+    cursor: zoom-in;
+  }
   .vsm__panel .metr__cap,
-  .vsm__panel .metr__note { display: none; }   // bandeau sticky : courbe nue
+  .vsm__panel .metr__note { display: none; }   // contexte rétabli dans le zoom
+  // Affordance « agrandir » centrée sous la courbe (pas de chevauchement).
+  .vsm__panel .metr::after {
+    content: "⤢ agrandir";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-mute);
+    background: var(--surface);
+    padding: 0.12rem 0.4rem;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+  }
+}
+
+// ── Zoom courbe METR (mobile) : dialog plein écran au tap ────────────
+// La courbe vit en petit dans le bandeau sticky ; le tap l'ouvre en grand
+// avec sa légende + sa note (contexte complet, police lisible). Dialog natif
+// (top layer, focus trap, Esc) ; repli gracieux si showModal indisponible.
+.metr-zoom {
+  width: min(92vw, 30rem);
+  max-height: 88vh;
+  margin: auto;
+  padding: var(--space-sm) var(--space-md) var(--space-md);
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--surface-ink);
+  overflow: auto;
+}
+.metr-zoom::backdrop { background: color-mix(in oklch, var(--surface-ink) 55%, transparent); }
+.metr-zoom__head { display: flex; justify-content: flex-end; margin-bottom: var(--space-2xs); }
+.metr-zoom__close {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+}
+.metr-zoom__close:hover { color: var(--accent); border-color: var(--accent); }
+.metr-zoom__body .metr { margin: 0; }
+.metr-zoom__body .metr__svg { max-width: none; }   // pleine largeur du dialog
+@media (prefers-reduced-motion: no-preference) {
+  .metr-zoom, .metr-zoom::backdrop { transition: opacity 0.18s var(--ease-out-quart); }
+  .metr-zoom[open], .metr-zoom[open]::backdrop { opacity: 1; }
+  @starting-style {
+    .metr-zoom[open] { opacity: 0; }
+    .metr-zoom[open]::backdrop { opacity: 0; }
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .vsm__node,
