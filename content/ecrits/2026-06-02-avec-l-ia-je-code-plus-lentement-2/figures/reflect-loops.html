@@ -1,0 +1,35 @@
+  <p id="reflect-title" class="sr-only">Trois niveaux de Reflect imbriqués, en boucles concentriques.</p>
+  <p id="reflect-desc" class="sr-only">Trois anneaux emboîtés. Le plus interne, plein, est Quoi — la relecture de l'exécution. L'anneau médian est Comment — la relecture de la conception. L'anneau externe est Pourquoi — la relecture de l'intention. Chaque anneau est une boucle de relecture ; ensemble ils suivent la structure d'une user story (qui, quoi, pourquoi), le comment vivant dans les critères d'acceptation.</p>
+
+  <div class="reflect">
+    <svg class="reflect__rings" viewBox="0 0 160 160" role="img" aria-labelledby="reflect-title reflect-desc">
+      <g fill="none" stroke="var(--ink-mute)">
+        <circle cx="80" cy="80" r="74" stroke-width="1.3" stroke-dasharray="2 5" opacity="0.45"/>
+        <circle cx="80" cy="80" r="52" stroke-width="1.3" stroke-dasharray="2 5" opacity="0.7"/>
+        <circle cx="80" cy="80" r="30" stroke-width="1.7"/>
+      </g>
+      <g fill="var(--accent)" font-size="12" text-anchor="middle" aria-hidden="true">
+        <text x="133" y="32">↻</text>
+        <text x="117" y="48">↻</text>
+        <text x="101" y="64">↻</text>
+      </g>
+    </svg>
+
+    <ol class="reflect__legend">
+      <li class="reflect__row">
+        <span class="reflect__swatch reflect__swatch--outer" aria-hidden="true"></span>
+        <span class="reflect__lvl">Pourquoi</span>
+        <span class="reflect__gloss">l'intention · Reflect narratif</span>
+      </li>
+      <li class="reflect__row">
+        <span class="reflect__swatch reflect__swatch--mid" aria-hidden="true"></span>
+        <span class="reflect__lvl">Comment</span>
+        <span class="reflect__gloss">la conception · Reflect macro</span>
+      </li>
+      <li class="reflect__row">
+        <span class="reflect__swatch reflect__swatch--inner" aria-hidden="true"></span>
+        <span class="reflect__lvl">Quoi</span>
+        <span class="reflect__gloss">l'exécution · TDD + Reflect</span>
+      </li>
+    </ol>
+  </div>

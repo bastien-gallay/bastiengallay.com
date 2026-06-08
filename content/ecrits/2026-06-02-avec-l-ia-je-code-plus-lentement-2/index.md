@@ -28,9 +28,13 @@ Ce qui rend cette suite intéressante à mes yeux, c'est l'aveu de ses auteurs c
 
 Les difficultés de méthode, elles, n'ont pas été levées — METR juge même son suivi peu fiable. Et les nouveaux chiffres ne prolongent pas le premier : sur le même axe, la variation du temps quand l'IA est autorisée, le +19&nbsp;% de temps de 2025 — plus lent — devient −18&nbsp;% pour les développeurs initiaux et −4&nbsp;% pour les nouveaux — plus vite[^metr-refonte]. Le signe s'inverse. En cause : de moins en moins de développeurs acceptent de participer sans IA, et les projets greenfield affluent dans le panel.
 
-Dans la discussion sur le Slack Okiwi, suite au rappel de Johan, Jean-Baptiste Dusseaut nous questionne : « C'est quoi la productivité ? Quand je déclare fini ? Quand c'est en prod ? En prod sans défaut ? En prod sans défaut et que des gens s'en servent ? »
+Dans la discussion sur le Slack Okiwi, suite au rappel de Johan, Jean-Baptiste Dusseaut nous questionne&nbsp;:
+
+> « C'est quoi, la productivité&nbsp;? Quand je déclare fini&nbsp;? Quand c'est en prod&nbsp;? En prod sans défaut&nbsp;? En prod sans défaut et que des gens s'en servent&nbsp;? »
 
 Pour répondre à ces questions, j'ai besoin de vous expliquer comment je travaille désormais avec l'IA.
+
+---
 
 {{ stage(id="full2") }}
 
@@ -48,6 +52,8 @@ Cette séquence est adaptable, jamais figée. Elle reste très classique et je l
 
 Parlons à nouveau des études METR. La courbe METR vit dans l'enchainement d'étapes semblables aux miennes. Le temps que je prends vit entre les boucles que ces étapes jalonnent. C'est le ralentissement volontaire pour les vérifications, celui des transitions entre deux actions finies pour garantir à la deuxième qu'elle reprendra sur des bases saines. Voici comment toutes ces étapes s'articulent.
 
+---
+
 {{ stage(id="A") }}
 ## Le harnais qui libère
 
@@ -59,9 +65,11 @@ Certains principes ont en revanche changé avec l'IA. Parfois, parce que ses cap
 
 Je suis seul contributeur sur plusieurs projets open source, et un autre point de vue me semble important. J'utilise Claude Code au quotidien. J'ai automatisé la revue avec Gemini Code Assist. Là où mon assistant habituel et moi laissions régulièrement passer des imperfections, ce nouvel outil dans la chaîne pouvait les repérer.
 
-Lorsque je demande à l'IA de rendre visuel un aspect complexe de l'architecture ou du parcours utilisateur, je fais attention à critiquer et modifier pour mieux m'impliquer. Aussi, j'ai découvert qu'il était plus efficace de générer un script pour représenter un graphique à partir des données brutes, par exemple, que de générer le graphique directement. Le résultat de ces pratiques, ce sont des documents utiles pour moi et des inputs fiables dans mon contexte Claude Code. J'écris pour l'humain. J'écris pour l'IA. Je n'écris qu'une fois.
+Lorsque je demande à l'IA de rendre visuel un aspect complexe de l'architecture ou du parcours utilisateur, je fais attention à critiquer et modifier pour mieux m'impliquer. Aussi, j'ai découvert qu'il était plus efficace de générer un script pour représenter un graphique à partir des données brutes, par exemple, que de générer le graphique directement. Le résultat de ces pratiques, ce sont des documents utiles pour moi et des inputs fiables dans mon contexte Claude Code. J'écris pour l'humain. J'écris pour l'IA. <span class="mark--soft">Je n'écris qu'une fois.</span>
 
 Ce n'est pas parfait, mais ça me convient. Je me rappelle de mon premier commit sur `lucid-lint`, lorsque j'avais appliqué ce harnais en même temps que j'expérimentais la faisabilité sur quelques règles. La CI m'a crié dessus. Très fort. "It works on my machine" est aussi vrai pour la qualité. J'ai dû dédier 5 commits à corriger GitHub Actions, puis encore une vingtaine pour réaligner mes tests.
+
+---
 
 {{ stage(id="courage") }}
 
@@ -73,7 +81,9 @@ Beaucoup penseraient que je parle d'accélération immédiate. Et c'est le cas. 
 
 Je reviens à mon fil rouge `lucid-lint`. Alors qu'il fonctionnait et donnait des résultats, j'ai pris quelques décisions folles. Au bout d'une journée d'existence de l'outil en production, j'ai jeté et refondu des fondamentaux : quatre catégories mortes en 24 h. Plus tard, pour mieux m'y retrouver, j'ai renommé 81 features de la roadmap et créé un système de gestion pour celles-ci. Plus clivant encore : au lieu de gagner 5,6 % de perf sur les textes anglais longs, j'ai réécrit le parseur Markdown pour équilibrer un gain moindre, mais pour tous les textes. Et ce, alors que tous les tests, golden snapshots et property tests, étaient verts.
 
-Le point commun ? Le filet de sécurité n'est pas un gage de qualité. C'est ce qui m'autorise à être courageux. Et ce que ce courage libère, ce n'est pas du temps — c'est du jugement.
+Le point commun ? Le filet de sécurité n'est pas un gage de qualité. C'est ce qui m'autorise à être courageux. Et ce que ce courage libère, ce n'est pas du temps — <span class="mark">c'est du jugement.</span>
+
+---
 
 {{ stage(id="B") }}
 
@@ -85,9 +95,11 @@ Pour l'enrichissement critique, c'est le plus cruel pour moi. Je demande explici
 
 Je suis encore plus dur avec moi-même sur la rédaction de mes articles. Celui-ci ne fait pas exception. Claude Code revoit chaque mot, phrase, paragraphe et relit la cohérence globale. Je ne le laisse pas me dire que c'est bien si c'est juste passable. C'est dur. C'est exténuant. Et le pire&nbsp;? Là où je croyais m'améliorer, les statistiques me montrent que je régresse sur l'utilisation abusive des hedge ("parfois", "souvent", "plutôt", "peut-être"), alors que les conventions que J'AI choisies les proscrivent. Chaque paragraphe est repassé à la moulinette environ 4 fois — oui, nous avons compté — avant qu'il soit bon.
 
-Est-ce abusif de compter tout cela&nbsp;? Pas si je veux être tranquille. Je ne veux pas laisser passer des phrases qui seraient mal comprises. Tout comme je m'interdis de laisser un bug ou une mauvaise conception s'échapper dans la nature. Pour éviter leur accumulation, je demande à l'IA de casser ma complaisance avant que je la confonde avec de la cohérence.
+Est-ce abusif de compter tout cela&nbsp;? Pas si je veux être tranquille. Je ne veux pas laisser passer des phrases qui seraient mal comprises. Tout comme je m'interdis de laisser un bug ou une mauvaise conception s'échapper dans la nature. Pour éviter leur accumulation, je demande à l'IA de <span class="mark--soft">casser ma complaisance avant que je la confonde avec de la cohérence</span>.
 
 Il arrive, malgré tout, qu'une simple règle de lisibilité dans `lucid-lint` passe la torture, les revues locales et les tests, puis au premier essai en conditions réelles : le linter explose en vol ! Il s'agissait d'une règle, expérimentale, repérant les nombres sans ancrage proche — sans unité, par exemple. Mais lâchée dans le monde réel, elle délimitait mal les nombres, confondait les numéros de version avec de grandes valeurs numériques et finissait par crasher l'exécution. Bilan : quelques heures et trois commits.
+
+---
 
 {{ stage(id="C") }}
 
@@ -116,7 +128,9 @@ Ce Reflect macro, il apparait une fois par boucle code → harnais → revue →
 
 Les idées de nouvelles features, des décisions de refacto et des ajustements pour l'expérience utilisateur sont issus de cette phase. Cela m'évite aussi de revenir du déjeuner incapable de dire à quoi sert le commit de 11 h, ni pourquoi sa conception est déjà à revoir. Je trouve cela important d'étudier et comprendre ce qui est produit, car <span class="mark--soft">le code généré par IA est, pour mon cerveau, du legacy de quelques heures.</span>[^feathers]
 
-La rigueur ne s'est pas effacée. Elle s'est déplacée du cadre figé vers la boucle réflexive. Le rythme de mon travail alterne entre des phases de création, où l'IA dégrossit avec une influence humaine, et des phases de revues, où l'humain reprend la main activement sur les bases de l'agent IA.
+La rigueur ne s'est pas effacée. <span class="mark--soft">Elle s'est déplacée du cadre figé vers la boucle réflexive.</span> Le rythme de mon travail alterne entre des phases de création, où l'IA dégrossit avec une influence humaine, et des phases de revues, où l'humain reprend la main activement sur les bases de l'agent IA.
+
+---
 
 {{ stage(id="vigilance") }}
 
@@ -134,9 +148,13 @@ Fin 2025, je développais un jeu vidéo en dilettante. Je perfectionnais le syst
 
 L'apprentissage était fort : prendre le temps de se redemander "pourquoi" dans un troisième niveau de Reflect. Les trois niveaux de Reflect — quoi, comment et pourquoi — rappellent[^triple-loop] la définition des User stories : « As a `<who>` I want `<what>` so that `<why>` », le `<how>` se retrouvant dans le Acceptance Criteria. Sur des projets personnels, seul, avec un rythme irrégulier, je perds souvent le fil et omets l'un de ces niveaux.
 
+{{ figure(num="1", variant="chart", tag="Reflect · 3 niveaux", title="Trois boucles imbriquées", title_id="reflect-title", desc_id="reflect-desc", body="reflect-loops.html", pos="inline", caption="Trois anneaux emboîtés, une relecture chacun. Plus la boucle est externe, plus elle est rare — et plus son oubli coûte cher.") }}
+
 Le piège à éviter est de ne pas participer activement aux prises de notes et modélisations. C'est ce que Michael Gerlich a étudié[^gerlich], sur 666 personnes via des questionnaires et des entretiens. Il conclut à une corrélation négative forte entre l'usage fréquent d'outils IA et la capacité de pensée critique. Les plus jeunes, plus dépendants de l'IA, sont plus touchés tandis que le niveau d'éducation est corrélé à de meilleurs résultats. Mais le plus important : la décharge cognitive (*Cognitive offloading*, délégation à l'IA) est en cause. Ce que j'en tire, c'est que déléguer la recherche et la synthèse de connaissance peut aider, tandis que déléguer le raisonnement réduit la pensée critique.
 
 Cette étude montre le piège dans lequel je retombe souvent — par fatigue, paresse ou impatience : dépasser le seuil de la décharge cognitive vers une décharge de raisonnement. C'est-à-dire passer de l'aide vertueuse de l'IA pour mieux raisonner et se rappeler, au remplacement par l'IA qui effrite le sens critique. Le sens critique est justement ce qui déclenche les Reflect et les nourrit.
+
+---
 
 {{ stage(id="cliff") }}
 
