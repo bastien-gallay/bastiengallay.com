@@ -83,12 +83,14 @@
         <div class="vsm__node-head"><span class="vsm__n">05</span><span class="vsm__nm">Harnais qualité</span><span class="vsm__fx">fort</span></div>
         <div class="vsm__detail">
           <p class="vsm__d-title">Le scaffold du jour 1.</p>
-          <p class="vsm__d-note">CI, hooks, coverage, badges OpenSSF — avant la 1re règle métier.</p>
-          <svg class="vsm__svg" viewBox="0 0 220 46" role="img" aria-label="Commit jour 1 : CI, hooks, coverage avant la 1re règle">
-            <g font-family="monospace" font-size="7.5" fill="currentColor">
-              <text x="2" y="12" opacity="0.75">d153ad8 scaffold: CI, hooks…</text>
-              <text x="2" y="26" opacity="0.75">+ SECURITY.md + clippy + coverage</text>
-              <text x="2" y="40">— 1re règle métier : plus tard</text></g></svg>
+          <p class="vsm__d-note">Avant la 1re règle métier&#160;:</p>
+          <ul class="vsm__list" aria-label="Le harnais posé avant la première règle métier">
+            <li>tests manquants</li>
+            <li>linters</li>
+            <li>chaîne de livraison (CI)</li>
+            <li>docs d'intention — README · STANDARDS · LICENSE</li>
+          </ul>
+          <p class="vsm__np1"><span class="vsm__np1-tag">N+1</span> garde-fous connus, +1 pour l'inconnu — shift-left, mutation testing, analyse statique…</p>
         </div>
       </li>
 
@@ -104,7 +106,7 @@
         <div class="vsm__node-head"><span class="vsm__n">07</span><span class="vsm__nm">Maintenance / dette</span><span class="vsm__fx">ambigu</span></div>
         <div class="vsm__detail">
           <p class="vsm__d-title">Le plus lourd sur la durée.</p>
-          <p class="vsm__d-note">GitClear, METR (1/3). C'est ici que la cognitive debt se paie.</p>
+          <p class="vsm__d-note">C'est ici que la dette se paie — technique, puis cognitive, puis d'intention.</p>
           {#- Cercle des 3 dettes (Storey), visible quand le 07 s'ouvre (§7). -#}
           <div class="vsm__dette">{{ dette::cercle() }}</div>
         </div>

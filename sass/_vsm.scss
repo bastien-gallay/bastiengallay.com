@@ -177,7 +177,42 @@
   line-height: 1.25;
 }
 .vsm__d-note { margin: 0; font-size: 0.7rem; line-height: 1.45; }
-.vsm__svg { width: 100%; height: auto; margin: var(--space-2xs) 0; display: block; }
+
+// Checklist du harnais (nœud 05) : les énumérations du §5 mises en regard.
+// Soulignées du même jaune (#ffd900) que `.mark--soft` dans la prose → le
+// lecteur relie le texte souligné au cadre de l'étape. Le texte reste en encre
+// (lisible) ; seul le filet jaune porte le lien.
+.vsm__list {
+  margin: var(--space-3xs) 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  font-size: 0.66rem;
+  line-height: 1.3;
+}
+.vsm__list li {
+  align-self: flex-start;          // souligné collé au mot, pas pleine largeur
+  text-decoration: underline #ffd900;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.12em;
+  text-decoration-skip-ink: none;
+}
+
+// Encart N+1 : la règle d'hygiène (1 garde-fou pour l'inconnu). Tag en accent,
+// signature de l'étape ; distinct de la checklist jaune.
+.vsm__np1 {
+  margin: var(--space-2xs) 0 0;
+  font-size: 0.66rem;
+  line-height: 1.35;
+}
+.vsm__np1-tag {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--accent);
+  margin-right: 0.2em;
+}
 
 // Découpage action → effet.
 .vsm__ae { display: flex; flex-direction: column; gap: var(--space-3xs); margin-top: var(--space-3xs); }
