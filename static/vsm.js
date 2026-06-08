@@ -69,6 +69,8 @@
     // État de la boucle externe (étapes 4-6) : classe portée par le rail.
     rail.classList.remove("vsm--loop-active", "vsm--loop-partial", "vsm--loop-dim");
     if (c.loop) rail.classList.add("vsm--loop-" + c.loop);
+    // §1 (stage `full`) : la chaîne s'efface, seule la courbe METR reste.
+    rail.classList.toggle("vsm--intro", key === "full");
     if (elStage) elStage.textContent = c.name;
     syncPanel();
   }

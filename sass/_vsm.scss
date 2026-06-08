@@ -183,26 +183,32 @@
 .vsm__ae-arr { font-size: 0.7rem; text-align: center; }
 
 // ── États (pilotés par vsm.js) ──────────────────────────────────────
-// Focus = inversion ENCRE (neutre, pas de hue) : c'est le repère récurrent,
-// donc surtout pas rouge. Texte/SVG flip via --surface.
+// Focus = clair-accent (doctrine .impeccable : plus de bloc noir empilé ;
+// wash accent très léger + filet gauche + numéro accent comme signal, ≤10 %
+// de rouge). Le texte reste en encre (aucune inversion). Actif-2 = surface
+// relevée neutre, plus discret que le focus.
 .vsm__node.is-active {
-  background: var(--surface-ink);
-  border-color: var(--surface-ink);
-  box-shadow: 0 6px 20px -12px color-mix(in oklch, var(--surface-ink) 38%, transparent);
+  background: color-mix(in oklch, var(--accent) 6%, var(--surface));
+  border-color: var(--accent);
+  border-left-width: 3px;
+  box-shadow: 0 4px 16px -14px color-mix(in oklch, var(--surface-ink) 30%, transparent);
+
+  .vsm__n { color: var(--accent); }
+  .vsm__nm { color: var(--surface-ink); font-weight: 600; }
 }
 .vsm__node.is-active-2 {
-  background: color-mix(in oklch, var(--surface-ink) 70%, var(--surface));
-  border-color: color-mix(in oklch, var(--surface-ink) 70%, var(--surface));
+  background: var(--surface-sub);
+  border-color: var(--rule-strong);
+  border-left: 3px solid var(--rule-strong);
+
+  .vsm__nm { color: var(--surface-ink); font-weight: 600; }
 }
 .vsm__node.is-active,
 .vsm__node.is-active-2 {
-  .vsm__n, .vsm__nm { color: var(--surface); }
-  .vsm__nm { font-weight: 600; }
-  .vsm__fx { color: color-mix(in oklch, var(--surface) 72%, transparent); }
-  .vsm__detail { color: var(--surface); }
-  .vsm__ae-act { background: color-mix(in oklch, var(--surface) 16%, transparent); color: var(--surface); }
-  .vsm__ae-eff { background: var(--surface); color: var(--surface-ink); }
-  .vsm__ae-arr { color: color-mix(in oklch, var(--surface) 70%, transparent); }
+  .vsm__detail { color: var(--surface-ink); }
+  .vsm__ae-act { background: color-mix(in oklch, var(--surface-ink) 8%, var(--surface)); color: var(--surface-ink); }
+  .vsm__ae-eff { background: var(--surface); color: var(--surface-ink); border: 1px solid var(--rule); }
+  .vsm__ae-arr { color: var(--ink-mute); }
 }
 
 // Touchée = teinte neutre subtile (plus de rouge ambiant).
@@ -211,6 +217,81 @@
   border-color: var(--rule-strong);
 }
 .vsm__node.is-dim { opacity: 0.4; }
+
+// ── Bascule courbe METR (§1) ↔ chaîne VSM (§2+) ─────────────────────
+// En §1, le rail porte `vsm--intro` (vsm.js) : la chaîne et ses légendes
+// s'effacent, seule la courbe METR standalone reste. Dès §2, l'inverse.
+//
+// Transition douce : cross-fade opacité + `display` discret (allow-discrete)
+// pour ne pas laisser d'espace vide pendant le fondu. Repli propre : sur les
+// navigateurs sans allow-discrete, on retombe sur la bascule instantanée.
+.vsm__metr,
+.vsm__chain,
+.vsm__loop-cap,
+.vsm__legend {
+  transition: opacity var(--dur-slow) var(--ease-out-quart),
+              display var(--dur-slow) allow-discrete;
+}
+.vsm__metr { display: none; opacity: 0; }
+.vsm--intro .vsm__metr { display: block; opacity: 1; }
+.vsm--intro {
+  .vsm__chain,
+  .vsm__loop-cap,
+  .vsm__legend { opacity: 0; display: none; }
+  .vsm__label,
+  .vsm__hint { display: none; }
+}
+// Fondu d'entrée (premier affichage de chaque bloc) plutôt qu'apparition sèche.
+@starting-style {
+  .vsm--intro .vsm__metr { opacity: 0; }
+  .vsm__chain,
+  .vsm__loop-cap,
+  .vsm__legend { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vsm__metr,
+  .vsm__chain,
+  .vsm__loop-cap,
+  .vsm__legend { transition: none; }
+}
+
+// ── Courbe METR standalone ──────────────────────────────────────────
+.metr {
+  margin: 0;
+  color: var(--surface-ink);
+}
+.metr__cap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin-bottom: var(--space-2xs);
+}
+.metr__cap-k {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.metr__cap-t {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--ink-mute);
+}
+.metr__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  color: var(--surface-ink);   // currentColor des points/barres/axes
+  font-family: var(--font-mono);   // les <text> SVG : la var ne résout pas en attribut
+}
+.metr__note {
+  margin: var(--space-2xs) 0 0;
+  font-size: 0.7rem;
+  line-height: 1.45;
+  font-style: italic;
+  color: var(--ink-mute);
+}
 
 // ── Boucle externe « Reflect » (étapes 4-5-6) ───────────────────────
 // Arête d'accent partagée par les 3 nœuds : un liseré VERTICAL (desktop)
@@ -250,7 +331,7 @@
   transition: color var(--dur-mid) var(--ease-out-quart);
 }
 .vsm__node.is-active .vsm__loop-in,
-.vsm__node.is-active-2 .vsm__loop-in { color: color-mix(in oklch, var(--surface) 80%, transparent); }
+.vsm__node.is-active-2 .vsm__loop-in { color: var(--accent); }
 .vsm__d-loop { margin-top: var(--space-3xs); font-size: 0.7rem; line-height: 1.45; font-style: italic; }
 .vsm__loop-mark { color: var(--accent); font-weight: 600; font-style: normal; }
 

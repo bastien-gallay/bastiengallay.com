@@ -22,25 +22,15 @@ vsm = true
 
 {{ stage(id="full") }}
 
-Depuis le premier article de cette série, un retour m'a poussé à revoir ma copie. Johan Massin m'a signalé une nouvelle étude METR de février 2026 faisant suite aux -19&nbsp;% de perte de productivité avec l'IA. Alors, finalement, est-ce que cette augmentation de productivité attendue a du sens ?
+Depuis le premier article de cette série, un retour m'a poussé à revoir ma copie. Johan Massin m'a signalé une nouvelle étude METR de février 2026 faisant suite aux −19&nbsp;% de perte de productivité[^metr-prod] avec l'IA. Alors, finalement, est-ce que cette augmentation de productivité attendue a du sens ?
 
 Ce qui rend cette suite intéressante à mes yeux, c'est l'aveu de ses auteurs concernant les difficultés méthodologiques rencontrées. Les conditions changent. Les tâches changent de nature. Les développeurs travaillent sur autre chose pendant que l'agent tourne. Cela me rappelle cette proportion des 10/90[^1090] et la charge cognitive. Cet article METR s'arrête sur un problème nouveau : non seulement on ne mesure pas la bonne chose dans la vitesse de développement, mais on n'est plus capable de la mesurer de la bonne manière.
 
-Les problèmes de méthode ont été surmontés pour fournir de nouveaux chiffres. De -19&nbsp;% de productivité constaté dans le premier article, cette nouvelle expérience distingue -18&nbsp;% pour les développeurs initiaux et -4&nbsp;% pour les nouveaux développeurs du panel. Autres points intéressants&nbsp;: de moins en moins de développeurs acceptent de participer sans IA et on constate une augmentation de projets greenfield participant à l'étude.
+Les difficultés de méthode, elles, n'ont pas été levées — METR juge même son suivi peu fiable. Et les nouveaux chiffres ne prolongent pas le premier : sur le même axe, la variation du temps quand l'IA est autorisée, le +19&nbsp;% de temps de 2025 — plus lent — devient −18&nbsp;% pour les développeurs initiaux et −4&nbsp;% pour les nouveaux — plus vite[^metr-refonte]. Le signe s'inverse. En cause : de moins en moins de développeurs acceptent de participer sans IA, et les projets greenfield affluent dans le panel.
 
 Dans la discussion sur le Slack Okiwi, suite au rappel de Johan, Jean-Baptiste Dusseaut nous questionne : « C'est quoi la productivité ? Quand je déclare fini ? Quand c'est en prod ? En prod sans défaut ? En prod sans défaut et que des gens s'en servent ? »
 
 Pour répondre à ces questions, j'ai besoin de vous expliquer comment je travaille désormais avec l'IA.
-
-<!--
-=== NOTE ÉDITORIALE (Claude) — §1 : reste hygiène finale ===
-(Notes d'édition. §1 considérée bouclée sur le fond.)
-  • Confirmer en BASE ARRIÈRE les chiffres METR (−18 initiaux / −4 nouveaux) avant publication.
-  • IC à mettre en note [^N] : −18 (−38 à +9) ; −4 (−15 à +9). Sans IC, −4 = « moins négatif », pas « meilleur ».
-  • Cohérence typo % et signe moins (- vs −) sur tout l'article, à aligner sur 1/3.
-  • Vérifier le rendu de la note [^1090] (brouillon Claude à valider) sous zola serve --drafts.
-=== fin note éditoriale ===
--->
 
 {{ stage(id="full2") }}
 
@@ -56,15 +46,14 @@ Influencé par Lean et Agile, j'ai choisi une représentation inspirée de Value
 
 Cette séquence est adaptable, jamais figée. Elle reste très classique et je la connaissais de manière empirique uniquement. Pour les besoins de l'article, j'ai reconstitué avec l'IA et mes commits sur lucid-lint les patterns et checkpoints les plus évidents, puis comparé avec l'idée abstraite que je m'en faisais. La dernière étape est très généraliste — presque fourre-tout. La raison : je garde lucid-lint comme exemple le plus récent et représentatif, et j'en suis pour l'instant le seul utilisateur quotidien.
 
-Parlons à nouveau des études METR. La courbe METR vit dans l'enchainement d'étapes semblables aux miennes. Le temps que je prends vit entre les boucles que ces étapes jalonnent. C'est le ralentissement volontaire pour les vérifications, celui des transitions entre deux actions finies pour garantir à la deuxième qu'elle reprendra sur des bases saines.
+Parlons à nouveau des études METR. La courbe METR vit dans l'enchainement d'étapes semblables aux miennes. Le temps que je prends vit entre les boucles que ces étapes jalonnent. C'est le ralentissement volontaire pour les vérifications, celui des transitions entre deux actions finies pour garantir à la deuxième qu'elle reprendra sur des bases saines. Voici comment toutes ces étapes s'articulent.
 
 {{ stage(id="A") }}
-
 ## Le harnais qui libère
 
 Un logiciel personnel est souvent issu d'une expérimentation, ou d'un prototype de recherche. La qualité initiale se contente de quelques tests et documents de réflexion. Avant de coder plus, je génère les tests manquants, j'installe les linters, je construis la chaîne de livraison initiale. J'ajoute aussi les documents d'intention comme README, CODING_STANDARDS ou LICENSE et CONTRIBUTING pour l'open source. Ce sont les conditions pour implémenter sereinement les règles métier. Une fois ces conditions atteintes, j'ai une hygiène personnelle : le N+1. Lorsque je sécurise la qualité connue avec N garde-fous, j'en ajoute un pour ce qui est inconnu. Cela peut être du shift-left depuis la CI vers une règle pre-commit, du mutation testing, l'analyse statique ou une génération de documentation. Je choisis en fonction de la nature du projet ce qui me semble moins maitrisable.
 
-Ensuite, tout cela doit grandir avec les principes de développement classiques : test first, DDD, CUPID, etc. Ces principes sont issus du Lean, des méthodes agiles — en particulier eXtreme Programming — et du craft. Tidy First de Kent Beck m'inspire à chaque itération de code : la base saine du début doit le rester. Pour la faire évoluer, il faut la challenger avant chaque nouvelle fonctionnalité.
+Ensuite, tout cela doit grandir avec les principes de développement classiques : test first, DDD, CUPID, etc. Ces principes sont issus du Lean, des méthodes agiles — en particulier eXtreme Programming — et du craft. Tidy First de Kent Beck[^beck-tidy] m'inspire à chaque itération de code : la base saine du début doit le rester. Pour la faire évoluer, il faut la challenger avant chaque nouvelle fonctionnalité.
 
 Certains principes ont en revanche changé avec l'IA. Parfois, parce que ses capacités permettent de plus vite construire une qualité que j'aurais trouvée hors de portée ou overkill dans le passé. CodeQL et OpenSSF permettent des standards de qualité simples. Mais atteindre le minimum requis pour qu'ils ne lèvent pas d'alerte est long et rébarbatif. Avec une assistance IA, cela devient aisé. J'ai même trouvé cela ludique, sur lucid-lint, de chercher à atteindre ce badge BestPractices. Et le N+1 m'a mené à me poser la question de la revue par un autre contributeur. Je ne l'avais pas.
 
@@ -76,53 +65,19 @@ Ce n'est pas parfait, mais ça me convient. Je me rappelle de mon premier commit
 
 {{ stage(id="courage") }}
 
-## Le courage
+## Catalyser le courage
 
-<!--   1. Rebond + valeur Courage     reprends ta note L83 : la CI qui crie ne m'a pas
-                                 découragé — au contraire. Le filet rend l'annulation
-                                 peu coûteuse → j'ose. (valeur Courage d'XP, allusif)
+Sans l'IA, j'aurais pu être découragé par un tel travail et simplement arrêter le projet. Au contraire, j'ai eu en tête l'image de Senku, de Dr Stone, s'exclamant *« Voilà qui est follement excitant !! »* J'ai retroussé mes manches et celles de Claude Code, et ensemble, en deux heures, nous avons ajusté la base de code. Le courage de refuser le compromis. Un rêve que je n'atteignais que rarement auparavant. Ou alors en quelques jours plutôt qu'en quelques heures.
 
-  2. Beck — UNE citation          « 90 % de mes compétences valent 0, le levier sur
-                                 les 10 % restants ×1000. » (tweet 22 avr. 2023)
-                                 → c'est ici que « le moins compressible = le plus
-                                 de valeur » cashe : les 10 %, c'est le jugement.
+Beaucoup penseraient que je parle d'accélération immédiate. Et c'est le cas. La différence c'est que cette accélération locale sert à oser booster la pérennité. Cela me rappelle le tweet de Kent Beck « 90 % de mes compétences viennent de perdre leur valeur, le levier sur les 10 % restants vient d'être multiplié par 1000. »[^beck-90] Supprimer, réviser et refactorer sont des actes fondamentaux de ces 10&nbsp;%.
 
-  3. Trois actes (Git lucid-lint) · path A jeté à J+4 alors qu'il était VERT
-                                 (golden snapshots + property tests), pour ~5,6 %
-                                 · 3 variantes Category mortes en 24 h (fd56c3b)
-                                 · 81 features de roadmap renommées en 2 jours
+Je reviens à mon fil rouge `lucid-lint`. Alors qu'il fonctionnait et donnait des résultats, j'ai pris quelques décisions folles. Au bout d'une journée d'existence de l'outil en production, j'ai jeté et refondu des fondamentaux : quatre catégories mortes en 24 h. Plus tard, pour mieux m'y retrouver, j'ai renommé 81 features de la roadmap et créé un système de gestion pour celles-ci. Plus clivant encore : au lieu de gagner 5,6 % de perf sur les textes anglais longs, j'ai réécrit le parseur Markdown pour équilibrer un gain moindre, mais pour tous les textes. Et ce, alors que tous les tests, golden snapshots et property tests, étaient verts.
 
-  4. Bijou + bascule             « Le filet de sécurité n'est pas un gage de qualité.
-                                 C'est ce qui m'autorise à être courageux. »
-                                 → « Et ce que ce courage libère, ce n'est pas du
-                                    temps — c'est du jugement. »   (ouvre §5) -->
-
-J'aurais pu être découragé par un tel travail et simplement arrêter le projet, sans l'IA. Au contraire, j'ai eu en tête l'image de Senku, de Dr Stone, s'exclamant *« Voilà qui est follement excitant !! »* J'ai retroussé mes manches et celles de Claude Code, et ensemble, en deux heures, nous avons ajusté la base de code. Le courage de refuser le compromis. Un rêve que je n'atteignais que rarement auparavant. Ou alors en quelques jours plutôt qu'en quelques heures.
-
-Beaucoup penseraient que je parle d'accélération immédiate. Et c'est le cas. La différence c'est que cette accélération locale sert à oser booster la pérennité. Cela me rappelle le tweet de Kent Beck « 90 % de mes compétences viennent de perdre leur valeur, le levier sur les 10 % restants vient d'être multiplié par 1000. » Supprimer, réviser et refactorer sont des actes fondamentaux de ces 10&nbsp;%.
-
-Je reviens à mon fil rouge `lucid-lint`. Alors qu'il fonctionnait et donnait des résultats, j'ai pris quelques décisions folles. Au bout d'une journée d'existence de l'outil en production, <!-- note: revoir le délai exact -->j'ai jeté et refondu des fondamentaux : trois catégories mortes en 24h. Plus tard, pour mieux m'y retrouver, j'ai renommé 84 features de la roadmap et créé un système de gestion pour celles-ci. Plus clivant encore : pour gagner 5,6 % de perf, j'ai réécrit le parseur Markdown alors que tous les tests, golden snapshots et property tests, étaient verts.
-
-Le point commun ? Le filet de sécurité n'est pas un gage de qualité. C'est ce qui m'autorise à être courageux. <!-- Gardé pour réflexion: La crainte du changement et de ses conséquences avait perdu son emprise sur ma décision. -->Et ce que ce courage libère, ce n'est pas du temps — c'est du jugement.
+Le point commun ? Le filet de sécurité n'est pas un gage de qualité. C'est ce qui m'autorise à être courageux. Et ce que ce courage libère, ce n'est pas du temps — c'est du jugement.
 
 {{ stage(id="B") }}
 
 ## L'IA, casseur de complaisance
-
-<!-- 
-  1. Thèse           l'IA ne décide pas → réduit la charge POUR mieux juger,
-                     et casse ma complaisance (passe outre MON biais).
-  2. Durée vs admin   étapes 1 & 3 : pas de raccourci du temps humain (comprendre,
-                     décider), mais le poids ADMINISTRATIF tombe ; effet qualitatif.
-  3. Le casseur,      UNE feature torturée et abandonnée · death match vs design
-     incarné         fixation (Wadinambiarachchi CHI 2024 + transposition honnête) ·
-                     revue adverse cross-IA (ta phrase parquée L114).
-  4. Anecdote-cœur    ← ICI : tes propres articles. (voir intégration ci-dessous)
-  5. Bijou            « casser ma complaisance avant que je la confonde avec de
-                     la cohérence. »
-  6. Contre-exemple   lucid-lint 18→21→25 (sur-délégation, slop, raffiné tard).
-     (obligatoire)    Court, net, pas une lamentation.
--->
 
 Ce jugement, je le garde pour moi. Et pour l'enrichir, je le nourris des analyses de l'IA, d'un côté, et de ses critiques, de l'autre. Pour le premier enrichissement, j'ai pour seul objectif de réduire le poids administratif de collecte et de synthèse. Le temps gagné est ainsi réinvesti dans la qualification des options avant un choix, par exemple pour un death match entre 2 expérimentations prêtes à devenir de vrais projets.
 
@@ -134,33 +89,11 @@ Est-ce abusif de compter tout cela&nbsp;? Pas si je veux être tranquille. Je ne
 
 Il arrive, malgré tout, qu'une simple règle de lisibilité dans `lucid-lint` passe la torture, les revues locales et les tests, puis au premier essai en conditions réelles : le linter explose en vol ! Il s'agissait d'une règle, expérimentale, repérant les nombres sans ancrage proche — sans unité, par exemple. Mais lâchée dans le monde réel, elle délimitait mal les nombres, confondait les numéros de version avec de grandes valeurs numériques et finissait par crasher l'exécution. Bilan : quelques heures et trois commits.
 
-<!-- > *reprise depuis section "harnais"* - non replacé. Gardé comme stock si besoin : La revue IA est aussi régulièrement lancée en mode adverse sur un aspect particulier. À chaque fois, une amélioration émerge de cet exercice. -->
-
 {{ stage(id="C") }}
 
 ## De la rigueur du cadre à la rigueur de la boucle
 
-<!-- Mouvement (6 temps) :
-
-  1. Fausse promesse   « avec l'IA, plus besoin de rigueur/tests » → démentie :
-                       lucid-lint = 814 tests, snapshots, proptest. MAIS beaucoup
-                       de tests ≠ TDD canonique non plus → la rigueur a bougé.
-  2. Face 1 — TDD+Reflect  le 4e temps que TU as ajouté : Red→Green→Refactor→Reflect.
-                       <1 min, met à jour le PLAN pas le code, force : apply now /
-                       today / roadmap / forget it.
-  3. Face 2 — SDD       marché (BMAD, Speckit) → maison → abandon du maison.
-                       Leçon NOMMÉE : même un cadre sur-mesure fige une décision
-                       qui doit rester vivante. L'abandon = résultat de Reflect.
-  4. Face 3 — preuve Git  le vocabulaire tient (6 types jour 1 intacts), la mécanique
-                       craque (Category : 3 variantes sur 6 mortes en 24 h).
-  5. Reflect macro      l'IA génère les tests manuels → TU les exécutes → TU inscris.
-     (exécuter-inscrire)  → reprise de contrôle. Bijou : « le code généré par IA est,
-                       pour mon cerveau, du legacy de quelques heures. »
-  6. Clôture            « La rigueur ne s'est pas effacée. Elle s'est déplacée du
-                       cadre figé vers la boucle réflexive. » + 1 ligne Storey
-                       (create/review mode) qui ouvre §7. -->
-
-Cela veut-il dire que les tests étaient superflus ? Non, mille fois non. Ou plutôt 814 fois non — le nombre de tests unitaires sur `lucid-lint`. Et la rigueur est là, elle aussi, dans leur diversité — certains tests s'assurent que chaque règle est documentée dans les deux langues — et dans le contrôle des tests eux-mêmes — mutation testing et relectures humaines + IA pour s'assurer de leur pertinence. Est-ce que je fais toujours du TDD avec l'IA ?
+Cela veut-il dire que les tests étaient superflus ? Non, mille fois non. Ou plutôt 841 fois non — le nombre de tests unitaires sur `lucid-lint`. Et la rigueur est là, elle aussi, dans leur diversité — certains tests s'assurent que la documentation reste cohérente entre les deux langues — et dans le contrôle des tests eux-mêmes — mutation testing et relectures humaines + IA pour s'assurer de leur pertinence. Est-ce que je fais toujours du TDD avec l'IA ?
 
 Un petit saut dans le temps. Dans mes premières utilisations de GitHub Copilot, j'avais tenté de lui faire faire du TDD. Deux constatations décevantes&nbsp;:
 
@@ -171,9 +104,13 @@ Le premier se corrigeait avec le temps. Le deuxième a demandé une astuce qui s
 
 Cette 4e étape demande à l'IA de revoir l'exécution précédente des trois premières étapes, d'en tirer des apprentissages, et de changer le plan pour la suite quand nécessaire. Honnêtement ? Peu de changements de plan. Livrés à eux-mêmes en test first, les assistants génèrent une cohorte de tests d'un bloc, en amont. Reflect casse ce réflexe — le Red redevient respecté. Les tests inutiles ou en doublon sont à nouveau tués dans l'œuf. Et un bonus&nbsp;: une verbosité maîtrisée qui me donne des informations utiles en relecture de code.
 
-Dans mes explorations, j'ai travaillé en *Spec Driven Development* (SDD) avec IA. Avec des frameworks — SpecKit, OpenSpec et BMAD. Même si les implémentations sont vraiment bonnes, je les trouvais lourdes et inflexibles. J'ai tenté une implémentation maison de micro framework SDD, dans le but de reprendre la main grâce à des étapes plus hachées. Le problème était similaire, le cadre restait figé par l'enchainement des étapes. Dans certains cas, comme des mises à jour de doc ou des améliorations esthétiques simples, inutile. Dans d'autres cas, comme pour les refactos évoqués plus tôt, trop léger. Mais une perle s'est glissée dans mon cadre&nbsp;: une étape **Reflect** entre 2 boucles de feature. C'est cette étape qui m'a mené à abandonner le SDD au sens strict pour un cadre plus fluide et rigoureux à la fois.
+Dans mes explorations, j'ai travaillé en *Spec Driven Development* (SDD) avec l'IA. Avec des frameworks — SpecKit[^speckit], OpenSpec[^openspec] et BMAD. Même si les implémentations sont bonnes, je les trouvais lourdes et inflexibles. J'ai tenté une implémentation maison de micro framework SDD, dans le but de reprendre la main grâce à des micro-étapes plus granulaires. Le problème était similaire, le cadre restait figé par l'enchainement des étapes. Dans certains cas, comme des mises à jour de doc ou des améliorations esthétiques simples, il était inutile. Dans d'autres cas, comme pour les refactos évoqués plus tôt, trop léger. Mais une perle s'est glissée dans mon cadre&nbsp;: une étape **Reflect** entre deux boucles de feature. C'est cette étape qui m'a mené à abandonner le SDD au sens strict pour un cadre plus fluide et rigoureux à la fois.
 
-Ce Reflect macro, il apparait une fois par boucle code → harnais → revue → *Reflect*. Entre les cycles, l'IA génère un fichier de tests manuels à destination de l'humain. Je l'utilise comme une démo plus qu'une vérification. Il y a rarement des erreurs, mais souvent des remarques. Cette étape rétablit la conception émergente qui est atténuée en TDD agentique. Les idées de nouvelles features, des décisions de refacto et des ajustements pour l'expérience utilisateur sont issus de cette phase. Cela m'évite aussi de revenir du déjeuner incapable de dire à quoi sert le commit de 11 h, ni pourquoi sa conception est déjà à revoir. Je trouve cela important d'étudier et comprendre ce qui est produit car <span class="mark--soft">le code généré par IA est, pour mon cerveau, du legacy de quelques heures.</span>
+Une idée, venue au visionnage d'un tuto BMAD[^bmad], m'a mise sur cette piste : transférer la connaissance accumulée d'une session vers des documents de contexte, et redémarrer une session pour assurer ce transfert efficace. Les étapes 4-5-6 prennent ainsi la forme d'un double diamant compact : d'abord un *brainstorm adversarial* — l'IA est très dure avec mes idées, je suis très dur avec ses propositions — puis *session neuve* et enfin génération de *code+explication*. Ces deux diamants interviennent au sein de chaque bloc pour une implémentation substantielle, ou au travers des trois étapes quand cela est plus trivial.
+
+Ce Reflect macro, il apparait une fois par boucle code → harnais → revue → *Reflect*. Entre les cycles, l'IA génère un fichier de tests manuels à destination de l'humain. Je l'utilise comme une démo plus qu'une vérification. Il y a rarement des erreurs, mais souvent des remarques. Cette étape rétablit la conception émergente qui est atténuée en TDD agentique.
+
+Les idées de nouvelles features, des décisions de refacto et des ajustements pour l'expérience utilisateur sont issus de cette phase. Cela m'évite aussi de revenir du déjeuner incapable de dire à quoi sert le commit de 11 h, ni pourquoi sa conception est déjà à revoir. Je trouve cela important d'étudier et comprendre ce qui est produit, car <span class="mark--soft">le code généré par IA est, pour mon cerveau, du legacy de quelques heures.</span>[^feathers]
 
 La rigueur ne s'est pas effacée. Elle s'est déplacée du cadre figé vers la boucle réflexive. Le rythme de mon travail alterne entre des phases de création, où l'IA dégrossit avec une influence humaine, et des phases de revues, où l'humain reprend la main activement sur les bases de l'agent IA.
 
@@ -181,35 +118,49 @@ La rigueur ne s'est pas effacée. Elle s'est déplacée du cadre figé vers la b
 
 ## Note de vigilance
 
-> "cognitive debt remains invisible until it is too late: the team feels they understand the system better than they do." - Storey Mars 2026
+Avec l'évolution des modèles et des agents de code, associés à des bonnes pratiques, la dette technique peut être maîtrisée. Sur le long terme, quand la complexité augmente, deux autres dettes interviennent : la dette cognitive et la dette d'intention. Cette triple dette, c'est le cercle vicieux où chacune nourrit l'autre.
 
-<p class="vsm-placeholder">À écrire — §7 : triple debt (technique / cognitive / intent — Storey + Fowler) ; comment les patterns remboursent ; ce qu'ils ne suffisent pas à régler (ré-apprentissage, veille, multitasking) ; chiffres Gerlich, Shen &amp; Tamkin. Bijou : « Storey a nommé ce qui me hantait sans que je le sache. » — supprimer à la rédaction.</p>
+Par exemple, la semaine dernière, je modifiais une dizaine de repos d'un même système. Dès le troisième, je me rends compte que je n'ai ni relu, ni testé manuellement. J'avais pourtant appliqué ma méthode. C'est ce que Margaret-Anne Storey nomme la dette cognitive[^storey-cog] :
+
+> « la dette cognitive reste invisible jusqu'à ce qu'il soit trop tard : l'équipe a l'impression de connaitre le système mieux qu'elle ne le connait vraiment » — Storey Mars 2026. <!-- traduction à revoir "cognitive debt remains invisible until it is too late: the team feels they understand the system better than they do." -->
+
+Storey a nommé ce qui me hantait sans que je le sache. Dans mon cas, je l'ai repérée à temps. Mais c'est un rappel : le danger est de passer trop vite sans regarder ce qui est généré. Sans contribution active de ma part, ma compréhension du logiciel devient illusoire. Pour réduire ce risque de perte de compréhension, je me concentre sur le "comment".
+
+Fin 2025, je développais un jeu vidéo en dilettante. Je perfectionnais le système des dialogues à n'en plus finir. Ce faisant je me sentais de plus en plus perdu. Lors d'une revue, le problème m'a sauté aux yeux : j'avais perdu de vue le "Pourquoi". Pourquoi ce système de dialogue et pourquoi développer ce jeu. Parce que je voulais raconter et expérimenter. C'est la troisième dette, appelée par Storey "dette d'intention"[^storey-intent].
+
+L'apprentissage était fort : prendre le temps de se redemander "pourquoi" dans un troisième niveau de Reflect. Les trois niveaux de Reflect — quoi, comment et pourquoi — rappellent[^triple-loop] la définition des User stories : « As a `<who>` I want `<what>` so that `<why>` », le `<how>` se retrouvant dans le Acceptance Criteria. Sur des projets personnels, seul, avec un rythme irrégulier, je perds souvent le fil et omets l'un de ces niveaux.
+
+Le piège à éviter est de ne pas participer activement aux prises de notes et modélisations. C'est ce que Michael Gerlich a étudié[^gerlich], sur 666 personnes via des questionnaires et des entretiens. Il conclut à une corrélation négative forte entre l'usage fréquent d'outils IA et la capacité de pensée critique. Les plus jeunes, plus dépendants de l'IA, sont plus touchés tandis que le niveau d'éducation est corrélé à de meilleurs résultats. Mais le plus important : la décharge cognitive (*Cognitive offloading*, délégation à l'IA) est en cause. Ce que j'en tire, c'est que déléguer la recherche et la synthèse de connaissance peut aider, tandis que déléguer le raisonnement réduit la pensée critique.
+
+Cette étude montre le piège dans lequel je retombe souvent — par fatigue, paresse ou impatience : dépasser le seuil de la décharge cognitive vers une décharge de raisonnement. C'est-à-dire passer de l'aide vertueuse de l'IA pour mieux raisonner et se rappeler, au remplacement par l'IA qui effrite le sens critique. Le sens critique est justement ce qui déclenche les Reflect et les nourrit.
 
 {{ stage(id="cliff") }}
 
 ## Vers l'article 3
 
-<p class="vsm-placeholder">À écrire — §8 Cliffhanger : tous les patterns s'arrêtent à la frontière du clavier, mais ils produisent déjà du collectif ; question ouverte pour 3/3 (ce que l'organisation doit changer). Conclusion qui appelle, pas qui nuance. — supprimer à la rédaction.</p>
+Tous les patterns dont je parle s'arrêtent à la frontière du clavier. Ce sont les miens. S'ils peuvent inspirer, je n'ai aucune garantie qu'ils soient généralisables.
+
+Les artefacts qui me servent sont déjà transmis à d'autres. Des collègues, des clients pour lesquels je travaille et mon futur moi. De ce fait, c'est une transmission d'humain à humain où l'IA joue un rôle de médiateur et d'archiviste.
+
+Je reste sur la même idée. Je n'ai pas accéléré ma création de code. En revanche, je suis conscient d'avoir produit plus. D'avoir terminé plus de projets. Des projets plus aboutis. Mon accélération n'est pas dans l'immédiateté de génération du code, mais dans la qualité que je suis capable d'atteindre désormais.
+
+J'utilise un processus similaire pour l'écriture et pour le code. Et cet article m'a fait réfléchir à ma propre méthode, par des recherches, par l'effort de synthèse et par une introspection plus profonde que d'habitude. Comme un Reflect au-delà de mes 3 premières boucles, la boucle narrative. Celle de l'introspection personnelle.
+
+Le niveau supérieur que je souhaite partager, il est en lien avec mon quotidien professionnel. Je l'observe et le vis dans des projets en équipe, des projets d'entreprise. C'est le Reflect collectif au niveau de l'organisation. Ce sera l'objet du troisième et dernier article de cette série.
 
 ## Notes et références
 
-[^1090]: Voir [le premier article de la série](@/ecrits/2026-05-28-avec-l-ia-je-code-plus-lentement/index.md). Avant l'IA, j'écrivais le code dans environ 10&nbsp;% de mon temps&nbsp;; les 90&nbsp;% restants allaient à le concevoir, le relire, l'organiser, le documenter et le maintenir. <!-- brouillon Claude — à ajuster à ta voix -->
+[^1090]: Voir [le premier article de la série](@/ecrits/2026-05-28-avec-l-ia-je-code-plus-lentement/index.md). Avant l'IA, j'écrivais le code dans environ 10&nbsp;% de mon temps&nbsp;; les 90&nbsp;% restants allaient à le concevoir, le relire, l'organiser, le documenter et le maintenir. L'idée est ancienne et diffuse&nbsp;: Abelson et Sussman la posent en principe dès 1985 (« *Programs must be written for people to read, and only incidentally for machines to execute* », *SICP*), Peter Hallam la chiffre (2 à 5&nbsp;% d'écriture pure ; *What Do Programmers Really Do Anyway?*, 2006), et Robert C. Martin la fixe en formule mémorable — « lecture/écriture bien au-delà de 10:1 » (*Clean Code*, 2008). <!-- à ajuster à ta voix -->
 
-*Cadre source (placeholder draft — à convertir en notes `[^N]` au fil des citations ; URLs ⚠️ à confirmer en base arrière). Limites à signaler dans le texte : DeputyDev (auteurs-industrie), Storey/Starr (cadre conceptuel), Shen et Tamkin (vendor, associatif), Gerlich (pas software-specific), Wadinambiarachchi (design ≠ code).*
-
-1. **METR Time Horizon** — Kwa, West et al., *Measuring AI Ability to Complete Long Tasks*, mars 2025. <https://arxiv.org/abs/2503.14499>
-2. **METR Time Horizon 1.1** — *Measuring the time horizon*, 29 janvier 2026. <https://metr.org/blog/2026-1-29-time-horizon-1-1/>
-3. **METR « Changing Experiment Design »** — *We Are Changing our Developer Productivity Experiment Design*, 24 février 2026. <https://metr.org/blog/2026-02-24-uplift-update/>
-4. **Beck, *Tidy First?*** — O'Reilly, 2023 (ISBN 978-1-098-15124-9).
-5. **Beck, « 90% of My Skills »** — tweet du 22 avril 2023 + essai. <https://x.com/KentBeck/status/1649817957235843072>
-6. **Beck, podcast Pragmatic Engineer** — juin 2025 (relayé par simonwillison.net).
-7. **Wadinambiarachchi et al., design fixation** — CHI 2024 (N=60 ; DOI ⚠️ à confirmer). <https://doi.org/10.1145/3613904.3642919>
-8. **HAI-CDP** — *Frontiers in Computer Science*, 2025 (URL ⚠️ à retrouver).
-9. **Kumar et al., DeputyDev (1mg)** — 2025 : −31,8&nbsp;% de cycle de revue, +28&nbsp;% de volume. <https://arxiv.org/abs/2509.19708>
-10. **Storey, *Cognitive debt*** — 15 février 2026 (cadre conceptuel).
-11. **Starr et Storey, triple debt** — 23 mars 2026. <https://arxiv.org/abs/2603.22106>
-12. **Fowler, *Fragments*** — 2 avril 2026. <https://martinfowler.com/fragments/2026-04-02.html>
-13. **Naur, *Programming as Theory Building*** — 1985.
-14. **Gerlich, cognitive offloading** — *Societies* (MDPI), 2025 (N=666 ; DOI ⚠️ à confirmer).
-15. **Shen et Tamkin, RCT Anthropic** — *How AI Impacts Skill Formation*, 28 janvier 2026 (N=52). <https://arxiv.org/abs/2601.20245>
-16. **Feathers, *Working Effectively with Legacy Code*** — 2004 (ISBN 978-0-13-117705-5).
+[^metr-prod]: METR — *Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity*, juillet 2025 (16 développeurs, 246 tâches ; +19&nbsp;% de temps, soit −19&nbsp;% de productivité). <https://arxiv.org/abs/2507.09089>
+[^metr-refonte]: METR — *We Are Changing our Developer Productivity Experiment Design*, 24 février 2026. Sur l'axe « Change in time when AI allowed » (négatif = plus rapide), l'estimation revue donne −18&nbsp;% de temps (≈ 18&nbsp;% plus vite) pour les développeurs initiaux (IC −38&nbsp;% à +9&nbsp;%) et −4&nbsp;% pour les nouveaux (IC −15&nbsp;% à +9&nbsp;%) — un quasi-renversement du +19&nbsp;% de temps (plus lent) mesuré en 2025, que METR juge peu fiable du fait d'effets de sélection (de plus en plus de développeurs refusant de travailler sans IA). <https://metr.org/blog/2026-02-24-uplift-update/>
+[^beck-tidy]: Kent Beck — *Tidy First?*, O'Reilly, 2023 (ISBN 978-1-098-15124-9).
+[^beck-90]: Kent Beck — « The value of 90% of my skills just dropped to \$0. The leverage for the remaining 10% went up 1000x », tweet du 18 avril 2023 ; développé dans l'essai *90% of my skills are now worth \$0* (tidyfirst.substack.com). <!-- ⚠️ vérifier l'URL du tweet original -->
+[^speckit]: GitHub — *Spec Kit*. <https://github.com/github/spec-kit>
+[^openspec]: *OpenSpec*. <https://github.com/Fission-AI/OpenSpec> <!-- ⚠️ confirmer le dépôt exact -->
+[^bmad]: *BMAD-METHOD* (bmad-code-org), tutoriel *Getting Started*&nbsp;: « *Always start a fresh chat for each workflow.* » <https://github.com/bmad-code-org/BMAD-METHOD/blob/main/docs/tutorials/getting-started.md>
+[^feathers]: Michael Feathers — *Working Effectively with Legacy Code*, 2004 (ISBN 978-0-13-117705-5).
+[^storey-cog]: Margaret-Anne Storey — *How Generative and Agentic AI Shift Concern from Technical Debt to Cognitive Debt*, 9 février 2026 (cadre conceptuel). <https://margaretstorey.com/blog/2026/02/09/cognitive-debt/> — Martin Fowler reprend et discute ce cadre dans *Fragments* (2 avril 2026, <https://martinfowler.com/fragments/2026-04-02.html>).
+[^storey-intent]: Margaret-Anne Storey — *From Technical Debt to Cognitive and Intent Debt: Rethinking Software Health in the Age of AI*, mars 2026. <https://arxiv.org/abs/2603.22106>
+[^triple-loop]: Le *triple-loop learning* est souvent attribué à tort à Argyris et Schön, qui n'en décrivent que deux (simple et double boucle)&nbsp;; l'ancêtre du troisième niveau est le « Learning III » de Bateson (*Steps to an Ecology of Mind*, 1972), et Tosey, Visser et Saunders (*Management Learning*, 2012, DOI 10.1177/1350507611426239) montrent que cette généalogie est en partie reconstruite a posteriori. <!-- ossature factuelle — y ajouter ton clin d'œil, cf. note surattribution -->
+[^gerlich]: Michael Gerlich — *AI Tools in Society: Impacts on Cognitive Offloading and the Future of Critical Thinking*, *Societies* 15(1):6, 2025 (N=666 ; étude non spécifique au logiciel). DOI&nbsp;: 10.3390/soc15010006.

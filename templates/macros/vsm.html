@@ -17,6 +17,7 @@
   Le DÉTAIL de chaque étape vit ici, dans son nœud (source unique des deux
   layouts). Les LABELS des 7 étapes sont structurels et stables.
 -#}
+{% import "macros/metr.html" as metr %}
 {% macro rail() %}
 <aside class="vsm" aria-label="Value Stream Map — mon travail de développement" data-vsm>
   <div class="vsm__inner">
@@ -24,6 +25,12 @@
       <span class="vsm__label-title">VSM · mon travail</span>
       <span class="vsm__stage" data-vsm-stage>vue complète</span>
     </p>
+
+    {#- Courbe METR standalone. Visible seule en §1 (le rail porte alors
+        `vsm--intro`, posé par vsm.js) ; masquée dès que la VSM apparaît (§2+). -#}
+    <div class="vsm__metr" data-vsm-metr>
+      {{ metr::curve() }}
+    </div>
 
     <ol class="vsm__chain" data-vsm-chain>
       <li class="vsm__node" data-step="1">
