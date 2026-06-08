@@ -1,21 +1,51 @@
 {#-
-  Boucle interne TDD + Reflect, affichée dans le nœud 04 de la VSM quand on
-  arrive en §6 (elle remplace la courbe METR). Red → Green → Refactor → Reflect,
-  où Reflect est le 4ᵉ temps ajouté par l'auteur (cf. §6, ligne « Red → Green →
-  Refactor → Reflect »).
+  Boucle interne TDD + Reflect, en CERCLE, affichée dans le nœud 04 quand on
+  arrive en §6 (remplace la courbe METR). Red → Green → Refactor → Reflect
+  (4ᵉ temps ajouté par l'auteur), disposés en cycle horaire avec flèches.
 
   Couleurs SÉMANTIQUES du site (polychromie 1:1, pas décoratif) : Red = problem,
   Green = success, Refactor (le « B » de R-G-B) = info, Reflect = accent (la
-  signature). Pastilles carrées (doctrine De Stijl, pas de border-radius).
+  signature). Cercle = 4 pastilles sur un anneau, Reflect mis en avant.
 -#}
 {% macro tdd() %}
-<figure class="rgb" aria-label="Boucle interne : Red, Green, Refactor, puis Reflect — le 4ᵉ temps ajouté.">
-  <p class="rgb__head"><span class="rgb__cyc" aria-hidden="true">↻</span> Boucle interne</p>
-  <ol class="rgb__steps">
-    <li class="rgb__step rgb__step--red"><span class="rgb__dot" aria-hidden="true"></span><span class="rgb__name">Red</span><span class="rgb__hint">le test échoue</span></li>
-    <li class="rgb__step rgb__step--green"><span class="rgb__dot" aria-hidden="true"></span><span class="rgb__name">Green</span><span class="rgb__hint">le test passe</span></li>
-    <li class="rgb__step rgb__step--refactor"><span class="rgb__dot" aria-hidden="true"></span><span class="rgb__name">Refactor</span><span class="rgb__hint">nettoyer</span></li>
-    <li class="rgb__step rgb__step--reflect"><span class="rgb__dot" aria-hidden="true"></span><span class="rgb__name">Reflect</span><span class="rgb__hint">4ᵉ temps : relire, apprendre, réajuster</span></li>
-  </ol>
+<figure class="rgb" aria-label="Boucle interne en cercle : Red → Green → Refactor → Reflect (4ᵉ temps ajouté), en cycle.">
+  <svg class="rgb__svg" viewBox="0 0 200 180" role="img"
+       aria-label="Cycle Red (le test échoue), Green (le test passe), Refactor (nettoyer), Reflect (relire et réajuster), puis recommence.">
+    <defs>
+      <marker id="rgb-arrow" viewBox="0 0 8 8" refX="6" refY="4"
+              markerWidth="5" markerHeight="5" orient="auto">
+        <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+      </marker>
+    </defs>
+
+    {#- Arcs du cycle (sens horaire), flèche à chaque arrivée. Neutre. -#}
+    <g fill="none" stroke="var(--ink-mute)" stroke-width="1.2" opacity="0.55"
+       marker-end="url(#rgb-arrow)">
+      <path d="M115.4 32.2 A56 56 0 0 1 153.8 70.6"/>   {#- Red → Green -#}
+      <path d="M153.8 101.5 A56 56 0 0 1 115.4 139.8"/> {#- Green → Refactor -#}
+      <path d="M84.6 139.8 A56 56 0 0 1 46.2 101.5"/>   {#- Refactor → Reflect -#}
+      <path d="M46.2 70.6 A56 56 0 0 1 84.6 32.2"/>     {#- Reflect → Red -#}
+    </g>
+
+    {#- Centre : le cycle recommence. -#}
+    <text x="100" y="90" text-anchor="middle" font-size="13" fill="var(--accent)">↻</text>
+
+    {#- Pastilles + libellés. Red (haut), Green (droite), Refactor (bas),
+        Reflect (gauche, mis en avant accent). -#}
+    <g font-family="var(--font-mono)">
+      <circle cx="100" cy="30" r="4.5" fill="var(--c-problem)"/>
+      <text x="100" y="17" text-anchor="middle" font-size="9" font-weight="600" fill="currentColor">Red</text>
+
+      <circle cx="156" cy="86" r="4.5" fill="var(--c-success)"/>
+      <text x="165" y="89" text-anchor="start" font-size="9" font-weight="600" fill="currentColor">Green</text>
+
+      <circle cx="100" cy="142" r="4.5" fill="var(--c-info)"/>
+      <text x="100" y="162" text-anchor="middle" font-size="9" font-weight="600" fill="currentColor">Refactor</text>
+
+      <circle cx="44" cy="86" r="5.5" fill="var(--accent)"/>
+      <text x="35" y="83" text-anchor="end" font-size="9" font-weight="700" fill="var(--accent)">Reflect</text>
+      <text x="35" y="93" text-anchor="end" font-size="6" fill="currentColor" opacity="0.6">4ᵉ temps</text>
+    </g>
+  </svg>
 </figure>
 {% endmacro tdd %}

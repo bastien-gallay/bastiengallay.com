@@ -62,6 +62,9 @@
   --vsm-partial-bg: color-mix(in oklch, var(--surface-ink) 7%, var(--surface));
   // Offset pour passer SOUS le masthead sticky (≈73px / 4.58rem, z-index 20).
   --vsm-top: 5rem;
+  // Fondu des éléments du rail (courbe ↔ chaîne, courbe ↔ boucle) : lent et
+  // posé, pour que les apparitions/remplacements ne soient pas brutaux.
+  --vsm-fade: 0.9s;
   font-family: var(--font-body);
 }
 // Dark : surcharger l'override ci-dessus (sinon :root[data-theme="dark"] écrase
@@ -229,8 +232,8 @@
 .vsm__chain,
 .vsm__loop-cap,
 .vsm__legend {
-  transition: opacity var(--dur-slow) var(--ease-out-quart),
-              display var(--dur-slow) allow-discrete;
+  transition: opacity var(--vsm-fade) var(--ease-out-quart),
+              display var(--vsm-fade) allow-discrete;
 }
 .vsm__metr { display: none; opacity: 0; }
 .vsm--intro .vsm__metr { display: block; opacity: 1; }
@@ -252,7 +255,8 @@
   .vsm__metr,
   .vsm__chain,
   .vsm__loop-cap,
-  .vsm__legend { transition: none; }
+  .vsm__legend,
+  .vsm__04 { transition: none; }
 }
 
 // ── Courbe METR standalone ──────────────────────────────────────────
@@ -305,81 +309,79 @@
 // ── Nœud 04 : courbe METR (défaut) ↔ boucle interne (§6) ────────────
 // La courbe « vit » dans le 04 et y persiste (§2→§5) ; en §6 le rail porte
 // `vsm--rgb` (vsm.js) et la boucle interne TDD+Reflect la remplace.
-.vsm__04--loop { display: none; }
-.vsm--rgb .vsm__04--metr { display: none; }
-.vsm--rgb .vsm__04--loop { display: block; }
+.vsm__04 {
+  transition: opacity var(--vsm-fade) var(--ease-out-quart),
+              display var(--vsm-fade) allow-discrete;
+}
+.vsm__04--loop { display: none; opacity: 0; }
+.vsm__04--metr { opacity: 1; }
+.vsm--rgb .vsm__04--metr { display: none; opacity: 0; }
+.vsm--rgb .vsm__04--loop { display: block; opacity: 1; }
+@starting-style {
+  .vsm--rgb .vsm__04--loop { opacity: 0; }
+  .vsm__04--metr { opacity: 0; }
+}
 
-// ── Boucle interne (Red → Green → Refactor → Reflect) ───────────────
-// Pastilles SÉMANTIQUES (problem/success/info + accent Reflect), carrées
-// (De Stijl). Apparaît dans le 04 en §6.
-.rgb { margin: var(--space-2xs) 0 0; }
-.rgb__head {
-  margin: 0 0 var(--space-xs);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  color: var(--ink-mute);
+// ── Boucle interne (Red → Green → Refactor → Reflect), en CERCLE ─────
+// Pastilles SÉMANTIQUES (problem/success/info + accent Reflect). Apparaît
+// dans le 04 en §6, à la place de la courbe.
+.rgb { margin: var(--space-xs) 0 0; }
+.rgb__svg {
+  width: 100%;
+  max-width: 13rem;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  font-family: var(--font-mono);   // les <text> SVG : la var ne résout pas en attribut
+  color: var(--surface-ink);       // currentColor des libellés / du ↻
 }
-.rgb__cyc { color: var(--accent); font-weight: 600; }
-.rgb__steps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-.rgb__step {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-}
-.rgb__dot {
-  width: 0.5rem;
-  height: 0.5rem;
-  flex: none;
-  align-self: center;
-  background: var(--ink-mute);
-}
-.rgb__name { font-weight: 600; }
-.rgb__hint { color: var(--ink-mute); font-style: italic; font-size: 0.85em; }
-.rgb__step--red .rgb__dot { background: var(--c-problem); }
-.rgb__step--green .rgb__dot { background: var(--c-success); }
-.rgb__step--refactor .rgb__dot { background: var(--c-info); }
-.rgb__step--reflect .rgb__dot { background: var(--accent); }
-.rgb__step--reflect .rgb__name { color: var(--accent); }
 
 // ── Boucle externe « Reflect » (étapes 4-5-6) ───────────────────────
 // Arête d'accent partagée par les 3 nœuds : un liseré VERTICAL (desktop)
 // qui devient HORIZONTAL en bandeau mobile (cf. media <60rem). Neutre par
 // défaut (anti-fatigue rouge — le rouge reste réservé) ; il ne passe à
-// l'accent que lorsque la section C' est active. Le liseré PONTE le gap
-// inter-nœuds pour que 4-5-6 se lisent comme une seule zone.
+// l'accent que lorsque la section §6 (Rigueur) est active. Le liseré PONTE le
+// gap inter-nœuds pour que 4-5-6 se lisent comme une seule zone.
 .vsm__node--loop::before {
   content: "";
   position: absolute;
-  left: 0;
+  left: -1px;
   top: 0;
   bottom: 0;
-  width: 2.5px;
+  width: 3px;
   border-radius: 2px;
   background: var(--rule-strong);
   opacity: 0.9;
   pointer-events: none;
   transition: background var(--dur-mid) var(--ease-out-quart),
-              opacity var(--dur-mid) var(--ease-out-quart);
+              opacity var(--dur-mid) var(--ease-out-quart),
+              width var(--dur-mid) var(--ease-out-quart);
 }
 // Pontage du gap vertical jusqu'au nœud suivant de la boucle (sauf le dernier).
 .vsm__node--loop:not(.vsm__node--loop-end)::before { bottom: calc(-1 * var(--space-2xs)); }
 
+// Resserrer 4-5-6 pour qu'ils se lisent comme une seule boucle (gap réduit).
+.vsm__node--loop:not(.vsm__node--loop-start) { margin-top: calc(-0.35 * var(--space-2xs)); }
+
 // États de la boucle (classe portée par le rail via vsm.js) — couleur/opacité
-// seulement, jamais la géométrie (pour ne pas casser la bascule mobile).
+// (+ épaisseur du liseré à l'état actif pour rendre la boucle explicite).
 .vsm--loop-partial .vsm__node--loop::before { background: var(--ink-mute); opacity: 0.7; }
-.vsm--loop-active  .vsm__node--loop::before { background: var(--accent);   opacity: 1; }
+.vsm--loop-active  .vsm__node--loop::before { background: var(--accent);   opacity: 1; width: 4px; }
 .vsm--loop-dim     .vsm__node--loop::before { opacity: 0.3; }
+
+// Boucle active : le flux interne 4→5→6 passe en accent, et la sortie 06→07
+// devient un « réflexe » ⟲ (la boucle Reflect se referme avant la maintenance).
+.vsm--loop-active .vsm__node--loop:not(.vsm__node--loop-end)::after {
+  color: var(--accent);
+  opacity: 1;
+}
+.vsm--loop-active .vsm__node--loop-end::after {
+  content: "⟲";
+  color: var(--accent);
+  opacity: 1;
+  font-size: 0.85rem;
+  transform: translate(-50%, -5%);
+}
 
 // Glyphe de boucle interne (Red→Green→Refactor) dans l'étape 4.
 .vsm__loop-in {

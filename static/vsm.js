@@ -23,14 +23,14 @@
   var STAGES = {
     full:      { name: "vue complète",  active: [],  active2: [],     partial: [1],                   dim: [],                    loop: "" },
     full2:     { name: "cartographie",  active: [4], active2: [],     partial: [1, 3],                dim: [],                    loop: "" },
-    A:         { name: "Pattern A",     active: [5], active2: [],     partial: [3, 6],                dim: [1, 2, 4, 7],          loop: "partial" },
-    courage:   { name: "Pivot courage", active: [],  active2: [2, 4], partial: [5],                   dim: [1, 3, 6, 7],          loop: "partial" },
-    B:         { name: "Pattern B",     active: [2], active2: [3],    partial: [1],                   dim: [4, 5, 6],             loop: "dim" },
+    A:         { name: "Le harnais",   active: [5], active2: [],     partial: [3, 6],                dim: [1, 2, 4, 7],          loop: "partial" },
+    courage:   { name: "Le courage",   active: [],  active2: [2, 4], partial: [5],                   dim: [1, 3, 6, 7],          loop: "partial" },
+    B:         { name: "Casser la complaisance", active: [2], active2: [3], partial: [1],            dim: [4, 5, 6],             loop: "dim" },
     C:             { name: "Rigueur du cadre", active: [4], active2: [],     partial: [5, 6],                dim: [1, 2, 3, 7],          loop: "dim" },
     "rigueur-rgb":   { name: "Boucle interne",   active: [4], active2: [],     partial: [5, 6],                dim: [1, 2, 3, 7],          loop: "dim",     rgb: true },
     "rigueur-macro": { name: "Boucle 4–6",       active: [4], active2: [],     partial: [5, 6],                dim: [1, 2, 3, 7],          loop: "active",  rgb: true },
     vigilance: { name: "Vigilance",     active: [7], active2: [],     partial: [1, 2, 3],             dim: [4, 5, 6],             loop: "dim" },
-    cliff:     { name: "Vers 3/3",      active: [],  active2: [],     partial: [],                    dim: [1, 2, 3, 4, 5, 6, 7], loop: "dim" }
+    cliff:     { name: "Le domaine",    active: [1], active2: [],     partial: [],                    dim: [2, 3, 4, 5, 6, 7],    loop: "dim" }
   };
 
   var nodes = rail.querySelectorAll("[data-vsm-chain] .vsm__node");
