@@ -28,6 +28,30 @@
       <span class="vsm__stage" data-vsm-stage>vue complète</span>
     </p>
 
+    {#- Légende-gabarit EN TÊTE : on lit le mode d'emploi d'un nœud AVANT de
+        croiser les vrais nœuds (en bas de rail, le nœud actif déplié la
+        poussait hors écran). Faux nœud-tête (mêmes classes que les vrais) +
+        micro-glose alignée sous chaque emplacement ; le tag de droite (ex.
+        « fort ») = l'accélération IA. En §1 (intro) masquée (opacity:0). -#}
+    <div class="vsm__legend" aria-hidden="true">
+      <div class="vsm__legend-gabarit">
+        <span class="vsm__n">XX</span>
+        <span class="vsm__nm">titre de l'étape</span>
+        <span class="vsm__fx">fort</span>
+        <span class="vsm__legend-g">n°</span>
+        <span class="vsm__legend-g">l'action</span>
+        <span class="vsm__legend-g vsm__legend-g--end">accél. IA&#160;↑</span>
+      </div>
+      <div class="vsm__legend-status">
+        <p class="vsm__legend-scap">statut de l'étape</p>
+        <ul class="vsm__legend-states">
+          <li><span class="vsm__legend-dot vsm__legend-dot--active"></span>focus</li>
+          <li><span class="vsm__legend-dot vsm__legend-dot--partial"></span>touchée</li>
+          <li><span class="vsm__legend-dot vsm__legend-dot--dim"></span>en retrait</li>
+        </ul>
+      </div>
+    </div>
+
     <ol class="vsm__chain" data-vsm-chain>
       <li class="vsm__node" data-step="1">
         <div class="vsm__node-head"><span class="vsm__n">01</span><span class="vsm__nm">Compréhension domaine</span><span class="vsm__fx">admin</span></div>
@@ -112,18 +136,6 @@
         </div>
       </li>
     </ol>
-
-    {#- Légende de la boucle externe (Reflect) couvrant les étapes 4-6. Hors
-        chaîne pour ne pas perturber la distribution flex (7 cellules égales en
-        bandeau mobile). S'intensifie quand la section §6 (Rigueur) est active. -#}
-    <p class="vsm__loop-cap"><span class="vsm__loop-mark" aria-hidden="true">⟲</span> Étapes 4–6 en boucle Reflect&#160;: générer&#160;→ exécuter&#160;→ inscrire.</p>
-
-    <ul class="vsm__legend" aria-hidden="true">
-      <li><span class="vsm__legend-dot vsm__legend-dot--active"></span>focus</li>
-      <li><span class="vsm__legend-dot vsm__legend-dot--partial"></span>touchée</li>
-      <li><span class="vsm__legend-dot vsm__legend-dot--dim"></span>en retrait</li>
-      <li class="vsm__legend-note">tag = effet de l'IA</li>
-    </ul>
 
     {#- Détail recopié ici par vsm.js sur mobile (le détail in-situ des nœuds
         est masqué quand la chaîne passe en bandeau horizontal). -#}

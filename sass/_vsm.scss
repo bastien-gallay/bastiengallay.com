@@ -269,13 +269,11 @@
 // transparents : ils réservent leur hauteur, donc la courbe NE BOUGE PAS en
 // passant à §2. La VSM se matérialise simplement autour d'elle (fondu lent).
 .vsm__label,
-.vsm__loop-cap,
 .vsm__legend {
   transition: opacity var(--vsm-fade) var(--ease-out-quart);
 }
 .vsm--intro {
   .vsm__label,
-  .vsm__loop-cap,
   .vsm__legend { opacity: 0; }
   .vsm__hint { display: none; }
   // La courbe doit paraître vraiment « standalone » en §1 : on efface les
@@ -284,8 +282,13 @@
   // reviennent en §2 quand la chaîne se matérialise autour (transition douce).
   [data-step="4"]::before,
   [data-step="4"]::after { opacity: 0; }
+  // …et son chrome de NŒUD (numéro 04, libellé, ↺, tag « très fort ») : en §1
+  // la courbe doit lire comme une figure, pas comme un maillon de rail. Opacité
+  // (pas display) → la hauteur reste réservée, la courbe ne bouge pas en §1→§2.
+  [data-step="4"] .vsm__node-head { opacity: 0; }
 }
-[data-step="4"]::after {
+[data-step="4"]::after,
+[data-step="4"] .vsm__node-head {
   transition: opacity var(--vsm-fade) var(--ease-out-quart);
 }
 // Desktop : la courbe vit dans le 04, les autres nœuds réservent leur place
@@ -372,7 +375,6 @@
 @media (prefers-reduced-motion: reduce) {
   .vsm__node,
   .vsm__label,
-  .vsm__loop-cap,
   .vsm__legend,
   .vsm__04 { transition: none; }
 }
@@ -515,44 +517,76 @@
 .vsm__node.is-active .vsm__loop-in,
 .vsm__node.is-active-2 .vsm__loop-in { color: var(--accent); }
 .vsm__d-loop { margin-top: var(--space-3xs); font-size: 0.7rem; line-height: 1.45; font-style: italic; }
-.vsm__loop-mark { color: var(--accent); font-weight: 600; font-style: normal; }
 
-// Légende de la boucle externe, sous la chaîne (hors flux des nœuds).
-.vsm__loop-cap {
-  margin: var(--space-2xs) 0 0;
-  padding-left: 0.4rem;
-  font-family: var(--font-mono);
-  font-size: 0.56rem;
-  letter-spacing: 0.05em;
-  line-height: 1.35;
-  color: var(--ink-mute);
-  transition: color var(--dur-mid) var(--ease-out-quart);
-}
-.vsm--loop-active .vsm__loop-cap { color: var(--accent); }
-
-// ── Légende (états + sens du tag) ───────────────────────────────────
+// ── Légende-gabarit (anatomie d'un nœud + états) ────────────────────
 .vsm__legend {
-  list-style: none;
   margin: var(--space-xs) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-mute);
+}
+// Faux nœud-tête en GRILLE 2 rangées : rangée 1 = les 3 emplacements (réutilise
+// .vsm__n/.vsm__nm/.vsm__fx pour ressembler à un vrai maillon), rangée 2 = une
+// micro-glose alignée sous chacun. Encadré pointillé = « modèle, pas un nœud ».
+// Pas d'accent (doctrine Un Accent) — la flèche ↑ porte l'idée d'accélération.
+.vsm__legend-gabarit {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  column-gap: var(--space-2xs);
+  row-gap: 1px;
+  align-items: baseline;
+  padding: var(--space-3xs) var(--space-2xs);
+  border: 1px dashed var(--rule-strong);
+  border-radius: 3px;
+  .vsm__n  { min-width: 0; }                       // la grille place, pas le min-width
+  .vsm__fx { margin-left: 0; text-align: right; }  // colonne 3, calée à droite
+}
+.vsm__legend-g {
+  font-family: var(--font-mono);
+  font-size: 0.46rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  opacity: 0.85;
+}
+.vsm__legend-g--end { text-align: right; }
+// Statut de l'étape : indenté pour s'aligner sous le CONTENU du gabarit
+// (1px de bordure + padding interne), pas sur le bord brut du rail.
+.vsm__legend-status {
+  padding-left: calc(var(--space-2xs) + 1px);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.vsm__legend-scap {
+  margin: 0;
+  font-size: 0.46rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  opacity: 0.85;
+}
+.vsm__legend-states {
+  list-style: none;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3xs) var(--space-sm);
-  font-family: var(--font-mono);
-  font-size: 0.54rem;
-  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink-mute);
 }
-.vsm__legend li { display: inline-flex; align-items: center; gap: 0.4em; }
+.vsm__legend-states li { display: inline-flex; align-items: center; gap: 0.4em; }
 .vsm__legend-dot {
   width: 0.62em; height: 0.62em; border-radius: 2px; display: inline-block; flex-shrink: 0;
 }
 .vsm__legend-dot--active  { background: var(--surface-ink); }
 .vsm__legend-dot--partial { background: var(--vsm-partial-bg); border: 1px solid var(--rule-strong); }
-.vsm__legend-dot--dim     { background: var(--surface-sub); border: 1px solid var(--rule); opacity: 0.5; }
-.vsm__legend-note { font-style: normal; }
-.vsm__legend-note::before { content: "▾ "; color: var(--ink-mute); opacity: 0.7; }
+.vsm__legend-dot--dim     { background: var(--surface-sub); border: 1px solid var(--rule-strong); opacity: 0.85; }
 
 // ── Desktop ≥60rem : rail pleine hauteur, nœud actif qui grandit ─────
 @media (min-width: 60rem) {
@@ -619,7 +653,6 @@
   // (légende d'états, légende de boucle, hint) pour ne pas manger la lecture.
   // La chaîne + le détail du nœud actif suffisent ; les états restent lisibles
   // par la position/couleur des cellules.
-  .vsm__loop-cap,
   .vsm__legend,
   .vsm__hint { display: none; }
 
@@ -649,8 +682,6 @@
     width: auto;
     height: 2.5px;
   }
-  .vsm__loop-cap { padding-left: 0; text-align: center; }
-
   .vsm__legend { justify-content: center; margin-top: var(--space-2xs); }
   .vsm__hint { display: block; margin: var(--space-2xs) 0 0; font-size: 0.6rem; font-style: italic; color: var(--ink-mute); text-align: center; }
 }
