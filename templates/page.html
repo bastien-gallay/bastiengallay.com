@@ -67,6 +67,14 @@
   </div>
   {%- endif -%}
 
+  {# CTA périphérique (jamais une section de home, jamais de popup) :
+     un seul bloc discret après la prose, cf. plan lot 2. #}
+  <aside class="ecrit-page__lettre" aria-label="Recevoir les prochains essais">
+    <p>Ce texte est paru ici d'abord.
+      <a href="{{ get_url(path='newsletter/') | safe }}">Recevoir les prochains par courrier</a>
+      — ou suivre le <a href="{{ get_url(path='ecrits/atom.xml') | safe }}">flux Atom</a>.</p>
+  </aside>
+
   <aside class="ecrit-page__signature" aria-label="À propos de l'auteur">
     <a class="ecrit-page__signature-name" href="{{ config.base_url | safe }}">— Bastien Gallay</a>
     <span class="ecrit-page__signature-bio">{{ page.extra.signature_bio | default(value="outils open source pour mieux écrire et mieux penser.") }}</span>

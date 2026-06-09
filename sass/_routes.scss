@@ -127,6 +127,90 @@
   }
 }
 
+// ──────────────────────────────────────────────────────────────────
+// /newsletter — formulaire d'abonnement (page « La lettre »).
+// Tout en tokens : valide en clair comme en sombre sans sélecteur dédié.
+
+.lettre-form {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--rule-strong);
+  max-width: var(--measure-base);
+}
+
+.lettre-form__label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-mute);
+  margin-bottom: var(--space-2xs);
+}
+
+.lettre-form__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+
+.lettre-form__input {
+  flex: 1 1 14rem;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--surface-ink);
+  background: var(--surface);
+  border: 2px solid var(--surface-ink);
+  border-radius: 0;
+  padding: 0.55em 0.8em;
+
+  &::placeholder { color: var(--ink-mute); }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+.lettre-form__submit {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--surface);
+  background: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: 0;
+  padding: 0.55em 1.4em;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out-quart),
+              border-color var(--dur-fast) var(--ease-out-quart);
+
+  &:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+
+  &:focus-visible {
+    outline: 2px solid var(--surface-ink);
+    outline-offset: 2px;
+  }
+}
+
+.lettre-form__meta {
+  margin-top: var(--space-sm);
+  font-size: var(--text-xs);
+  color: var(--ink-mute);
+  max-width: var(--measure-base);
+}
+
+// CTA discret en fin d'article — périphérie, jamais une section de home.
+.ecrit-page__lettre {
+  margin-top: var(--space-lg);
+  font-size: var(--text-sm);
+  color: var(--ink-mute);
+  max-width: var(--measure-base);
+
+  a { color: var(--ink-soft); }
+}
+
 .ecrit-page__signature {
   margin-top: var(--space-2xl);
   padding-top: var(--space-md);

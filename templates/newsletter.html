@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}La lettre — Bastien Gallay{% endblock %}
+{% block description %}{{ section.description }}{% endblock %}
+
+{% block content %}
+<article class="newsletter ecrit-page" aria-labelledby="newsletter-title">
+  <p class="issue-bar">
+    <span class="issue-bar__left">
+      <span class="issue-bar__pill">NUMÉRO §06</span>
+      <span>LA LETTRE</span>
+    </span>
+    <span class="issue-bar__mid">UN ESSAI = UN COURRIER</span>
+    <span class="issue-bar__right">PAR ABONNEMENT</span>
+  </p>
+
+  <header class="ecrit-page__header">
+    <h1 class="ecrit-page__title" id="newsletter-title">
+      L'atelier, par courrier<i class="ecrit-page__title-mark" aria-hidden="true">.</i>
+    </h1>
+    {% if section.description %}
+    <p class="ecrit-page__subtitle">{{ section.description }}</p>
+    {% endif %}
+  </header>
+
+  <div class="ecrit-page__content prose">
+    {{ section.content | safe }}
+  </div>
+
+  {# Form natif POST vers l'endpoint d'embed Buttondown : zéro JS tiers,
+     zéro iframe — même discipline que les fontes self-hosted. La page de
+     confirmation est celle hébergée par Buttondown. #}
+  <form class="lettre-form"
+        action="https://buttondown.com/api/emails/embed-subscribe/{{ section.extra.buttondown_user }}"
+        method="post">
+    <label class="lettre-form__label" for="lettre-email">Adresse électronique</label>
+    <div class="lettre-form__row">
+      <input class="lettre-form__input" type="email" name="email" id="lettre-email"
+             required autocomplete="email" placeholder="adresse@exemple.fr">
+      <button class="lettre-form__submit" type="submit">S'abonner</button>
+    </div>
+    <p class="lettre-form__meta">
+      Liste hébergée par Buttondown · désinscription en un clic · aucun
+      tracker sur ce formulaire. Tu préfères un lecteur de flux ?
+      <a href="{{ get_url(path='ecrits/atom.xml') | safe }}">Flux Atom des écrits</a>.
+    </p>
+  </form>
+
+  <p class="ecrit-page__back">
+    <a href="{{ config.base_url | safe }}">← Retour à l'accueil</a>
+  </p>
+</article>
+{% endblock %}

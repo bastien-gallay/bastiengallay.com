@@ -108,6 +108,9 @@
           <a class="rail__link rail__link--route" href="{{ config.base_url | safe }}/now/" title="Maintenant — page dédiée"{% if current_path and current_path is starting_with("/now") %} aria-current="page"{% endif %} style="--link-color: var(--c-chrome); --link-shadow: var(--c-problem);">
             <span class="rail__link-label">Now</span>
           </a>
+          <a class="rail__link rail__link--route" href="{{ config.base_url | safe }}/newsletter/" title="La lettre — abonnement par courrier"{% if current_path and current_path is starting_with("/newsletter") %} aria-current="page"{% endif %} style="--link-color: var(--c-warning); --link-shadow: var(--c-info);">
+            <span class="rail__link-label">Lettre</span>
+          </a>
         </div>
       </nav>
 
@@ -136,7 +139,8 @@
     <div class="colophon__col">
       <p class="colophon__label">▍ Contact</p>
       <p class="colophon__value">
-        <a class="colophon__link" href="mailto:bastien@gallay.org">bastien@gallay.org</a>
+        <a class="colophon__link" href="mailto:bastien@gallay.org">bastien@gallay.org</a><br>
+        <a class="colophon__link" href="{{ config.base_url | safe }}/newsletter/">la lettre, par courrier</a>
       </p>
     </div>
 
