@@ -29,6 +29,15 @@
          l2=page.extra.hero_l2 | default(value=""),
          l3=page.extra.hero_l3 | default(value="")
     ) }}
+  {%- elif page.extra.hero | default(value="") == "b_v3b" -%}
+    {{ hero::b_v3b(
+         kicker=page.extra.hero_kicker | default(value=""),
+         soustitre=page.extra.hero_soustitre | default(value=""),
+         numero=page.extra.numero | default(value=""),
+         l1=page.extra.hero_l1 | default(value=""),
+         l2=page.extra.hero_l2 | default(value=""),
+         l3=page.extra.hero_l3 | default(value="")
+    ) }}
   {%- endif %}
 
   <header class="ecrit-page__header">
