@@ -128,18 +128,67 @@
 }
 
 // ──────────────────────────────────────────────────────────────────
-// /newsletter — formulaire d'abonnement (page « La lettre »).
+// /abonnement — bulletin « à découper » (pastiche coupon de fin de
+// magazine : cadre pointillé, ciseaux à cheval sur le filet).
 // Tout en tokens : valide en clair comme en sombre sans sélecteur dédié.
 
-.lettre-form {
+.bulletin {
+  position: relative;
   margin-top: var(--space-xl);
-  padding-top: var(--space-md);
-  border-top: 1px solid var(--rule-strong);
+  padding: var(--space-md);
+  border: 2px dashed var(--rule-strong);
   max-width: var(--measure-base);
+
+  // Les ciseaux « coupent » le filet haut : fond plein pour trouer le
+  // pointillé. ✂ pointe vers la gauche, sens de découpe naturel.
+  &::before {
+    content: "✂";
+    position: absolute;
+    top: -0.75em;
+    left: var(--space-md);
+    padding: 0 0.35em;
+    background: var(--surface);
+    color: var(--ink-mute);
+    font-size: var(--text-lg);
+    line-height: 1;
+  }
 }
 
-.lettre-form__label {
+.bulletin__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6em;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: var(--space-2xs);
+}
+
+.bulletin__head-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+.bulletin__head-hint {
+  font-size: var(--text-xs);
+  font-style: italic;
+  color: var(--ink-mute);
+}
+
+.bulletin__oui {
+  margin-top: var(--space-sm);
+  font-size: var(--text-base);
+  color: var(--ink-soft);
+
+  strong { color: var(--surface-ink); letter-spacing: 0.06em; }
+}
+
+.bulletin__label {
   display: block;
+  margin-top: var(--space-sm);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   text-transform: uppercase;
@@ -148,13 +197,13 @@
   margin-bottom: var(--space-2xs);
 }
 
-.lettre-form__row {
+.bulletin__row {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2xs);
 }
 
-.lettre-form__input {
+.bulletin__input {
   flex: 1 1 14rem;
   font-family: var(--font-body);
   font-size: var(--text-base);
@@ -172,7 +221,7 @@
   }
 }
 
-.lettre-form__submit {
+.bulletin__submit {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   text-transform: uppercase;
@@ -194,11 +243,10 @@
   }
 }
 
-.lettre-form__meta {
+.bulletin__meta {
   margin-top: var(--space-sm);
   font-size: var(--text-xs);
   color: var(--ink-mute);
-  max-width: var(--measure-base);
 }
 
 // CTA discret en fin d'article — périphérie, jamais une section de home.
