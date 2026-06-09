@@ -55,6 +55,7 @@ Parlons à nouveau des études METR. La courbe METR vit dans l'enchainement d'é
 ---
 
 {{ stage(id="A") }}
+
 ## Le harnais qui libère
 
 Un logiciel personnel est souvent issu d'une expérimentation, ou d'un prototype de recherche. La qualité initiale se contente de quelques tests et documents de réflexion. Avant de coder plus, je génère les <span class="mark--soft">tests manquants</span>, j'installe les <span class="mark--soft">linters</span>, je construis la <span class="mark--soft">chaîne de livraison</span> initiale. J'ajoute aussi les <span class="mark--soft">documents d'intention</span> comme README, CODING_STANDARDS ou LICENSE et CONTRIBUTING pour l'open source. Ce sont les conditions pour implémenter sereinement les règles métier. Une fois ces conditions atteintes, j'ai une hygiène personnelle : le N+1. Lorsque je sécurise la qualité connue avec N garde-fous, j'en ajoute un pour ce qui est inconnu. Cela peut être du shift-left depuis la CI vers une règle pre-commit, du mutation testing, l'analyse statique ou une génération de documentation. Je choisis en fonction de la nature du projet ce qui me semble moins maitrisable.
@@ -177,9 +178,9 @@ Le niveau supérieur que je souhaite partager, il est en lien avec mon quotidien
 [^metr-prod]: METR — *Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity*, juillet 2025 (16 développeurs, 246 tâches ; +19&nbsp;% de temps, soit −19&nbsp;% de productivité). <https://arxiv.org/abs/2507.09089>
 [^metr-refonte]: METR — *We Are Changing our Developer Productivity Experiment Design*, 24 février 2026. Sur l'axe « Change in time when AI allowed » (négatif = plus rapide), l'estimation revue donne −18&nbsp;% de temps (≈ 18&nbsp;% plus vite) pour les développeurs initiaux (IC −38&nbsp;% à +9&nbsp;%) et −4&nbsp;% pour les nouveaux (IC −15&nbsp;% à +9&nbsp;%) — un quasi-renversement du +19&nbsp;% de temps (plus lent) mesuré en 2025, que METR juge peu fiable du fait d'effets de sélection (de plus en plus de développeurs refusant de travailler sans IA). <https://metr.org/blog/2026-02-24-uplift-update/>
 [^beck-tidy]: Kent Beck — *Tidy First?*, O'Reilly, 2023 (ISBN 978-1-098-15124-9).
-[^beck-90]: Kent Beck — « The value of 90% of my skills just dropped to \$0. The leverage for the remaining 10% went up 1000x », tweet du 18 avril 2023 ; développé dans l'essai *90% of my skills are now worth \$0* (tidyfirst.substack.com). <!-- ⚠️ vérifier l'URL du tweet original -->
+[^beck-90]: Kent Beck — « The value of 90% of my skills just dropped to \$0. The leverage for the remaining 10% went up 1000x », tweet du 18 avril 2023 <https://x.com/KentBeck/status/1648413998025707520> ; développé dans l'essai *90% of my skills are now worth \$0* (tidyfirst.substack.com).
 [^speckit]: GitHub — *Spec Kit*. <https://github.com/github/spec-kit>
-[^openspec]: *OpenSpec*. <https://github.com/Fission-AI/OpenSpec> <!-- ⚠️ confirmer le dépôt exact -->
+[^openspec]: *OpenSpec*. <https://github.com/Fission-AI/OpenSpec>
 [^bmad]: *BMAD-METHOD* (bmad-code-org), tutoriel *Getting Started*&nbsp;: « *Always start a fresh chat for each workflow.* » <https://github.com/bmad-code-org/BMAD-METHOD/blob/main/docs/tutorials/getting-started.md>
 [^feathers]: Michael Feathers — *Working Effectively with Legacy Code*, 2004 (ISBN 978-0-13-117705-5).
 [^storey-cog]: Margaret-Anne Storey — *How Generative and Agentic AI Shift Concern from Technical Debt to Cognitive Debt*, 9 février 2026 (cadre conceptuel). <https://margaretstorey.com/blog/2026/02/09/cognitive-debt/> — Martin Fowler reprend et discute ce cadre dans *Fragments* (2 avril 2026, <https://martinfowler.com/fragments/2026-04-02.html>).
