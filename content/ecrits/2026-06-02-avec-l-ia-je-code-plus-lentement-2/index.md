@@ -5,6 +5,15 @@ draft = true
 
 [extra]
 numero = "01.21"
+
+# Hero in-article Mondrian b_v3b (cf. macros/ecrit_hero.html + page lab /lab/image-article-2-3).
+hero = "b_v3b"
+hero_kicker = "ARTICLE 2/3"
+hero_soustitre = "la qualité, pas la vitesse"
+hero_l1 = "AVEC L'IA,"
+hero_l2 = "JE CODE PLUS"
+hero_l3 = "LENTEMENT"
+
 series = "coder-avec-l-ia"
 series_title = "Coder avec l'IA"
 series_index = 2
