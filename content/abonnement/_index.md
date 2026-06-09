@@ -4,8 +4,8 @@ description = "Chaque essai publié ici, livré par courrier. Pas de cadence pro
 template = "abonnement.html"
 
 [extra]
-# Identifiant Buttondown — l'URL d'embed-subscribe se construit dessus.
-# À ALIGNER sur le compte réel avant mise en ligne (T2.1).
+# Identifiant Buttondown (compte confirmé 2026-06-09) — l'URL
+# d'embed-subscribe se construit dessus.
 buttondown_user = "bastiengallay"
 +++
 
