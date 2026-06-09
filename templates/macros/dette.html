@@ -2,15 +2,21 @@
   Cercle vicieux des trois dettes (Storey, « Triple Debt Model »), version
   petite et simplifiée pour le nœud 07 de la VSM (§7 « Note de vigilance »).
   Référence : figure Storey (Intent / Technical / Cognitive debt, chaque paire
-  « amplifies : repairs », l'IA au centre). Idiome du site : mono-accent, encre
-  + ink-mute, boîtes carrées (pas de border-radius), centre accent.
+  « amplifies », l'IA au centre).
 
-  Trois sommets d'un triangle, arcs orientés en cycle = le cercle qui s'amplifie.
+  Disposition : la dette TECHNIQUE en haut (la dette connue, point d'entrée),
+  puis cycle horaire technique → cognitive (bas droite) → intention (bas gauche).
+
+  Couleurs reprises du schéma quoi/comment/pourquoi (figures/reflect-loops) pour
+  faire dialoguer les deux visuels : technique = --c-info (bleu, « quoi »),
+  cognitive = --c-warning (ambre, « comment »), intention = --c-problem (rouge,
+  « pourquoi »). Bordures colorées, fond neutre (texte en encre lisible), centre
+  en --accent. Boîtes carrées (pas de border-radius), idiome du site.
 -#}
 {% macro cercle() %}
-<figure class="dette" aria-label="Cercle des trois dettes : intention, technique, cognitive — l'IA accélère chacune, et chacune amplifie les autres.">
-  <svg class="dette__svg" viewBox="0 0 240 206" role="img"
-       aria-label="Triangle des dettes d'intention (artefacts), technique (logiciel) et cognitive (humains), reliées par des flèches « amplifie » en cycle, l'IA au centre.">
+<figure class="dette" aria-label="Cercle des trois dettes : technique (en haut), cognitive et intention — l'IA accélère chacune, et chacune amplifie les autres en cycle.">
+  <svg class="dette__svg" viewBox="0 0 240 212" role="img"
+       aria-label="Triangle des dettes : technique (logiciel) en haut, cognitive (humains) en bas à droite, intention (artefacts) en bas à gauche, reliées par des flèches « amplifie » en cycle horaire, l'IA au centre.">
     <defs>
       <marker id="dette-arrow" viewBox="0 0 8 8" refX="6" refY="4"
               markerWidth="5" markerHeight="5" orient="auto-start-reverse">
@@ -18,42 +24,44 @@
       </marker>
     </defs>
 
-    {#- Arcs du cycle (sens horaire) : intention → cognitive → technique →
-        intention. Tracés sous les boîtes pour ne pas couper le texte. -#}
+    {#- Arcs du cycle (sens horaire) : technique (haut) → cognitive (bas droite)
+        → intention (bas gauche) → technique. Tracés à l'extérieur des boîtes ;
+        l'arc du bas est descendu SOUS les deux boîtes basses, avec un écart. -#}
     <g fill="none" stroke="currentColor" stroke-width="1" opacity="0.5"
        marker-end="url(#dette-arrow)">
-      <path d="M150 40 Q196 70 198 138"/>          {#- intention → cognitive -#}
-      <path d="M168 180 Q120 196 72 180"/>          {#- cognitive → technique -#}
-      <path d="M42 138 Q44 70 90 40"/>              {#- technique → intention -#}
+      <path d="M156 44 Q202 86 196 148"/>          {#- technique → cognitive -#}
+      <path d="M168 192 Q120 208 72 192"/>          {#- cognitive → intention (bas) -#}
+      <path d="M44 148 Q38 86 84 44"/>              {#- intention → technique -#}
     </g>
     <g fill="currentColor" opacity="0.55" font-size="5.5" font-style="italic" text-anchor="middle">
-      <text x="207" y="92">amplifie</text>
-      <text x="120" y="201">amplifie</text>
-      <text x="33" y="92">amplifie</text>
+      <text x="208" y="94">amplifie</text>
+      <text x="120" y="207">amplifie</text>
+      <text x="32" y="94">amplifie</text>
     </g>
 
     {#- Centre : l'IA accélère les trois. -#}
     <g text-anchor="middle">
-      <text x="120" y="104" fill="var(--accent)" font-size="8" font-weight="600">l'IA accélère</text>
-      <text x="120" y="116" fill="var(--accent)" font-size="9" font-weight="600">↻</text>
+      <text x="120" y="100" fill="var(--accent)" font-size="8" font-weight="600">l'IA accélère</text>
+      <text x="120" y="112" fill="var(--accent)" font-size="9" font-weight="600">↻</text>
     </g>
 
-    {#- Sommets. Boîtes carrées, fond surface-sub, filet rule. -#}
+    {#- Sommets. Boîtes carrées élargies (w90), fond neutre, bordure = couleur
+        de la dette (dialogue avec le schéma quoi/comment/pourquoi). -#}
     <g class="dette__node">
-      {#- Intention (haut) -#}
-      <rect x="78" y="6" width="84" height="36" fill="var(--surface-sub)" stroke="var(--rule-strong)" stroke-width="1"/>
-      <text x="120" y="20" text-anchor="middle" font-size="8" font-weight="600" fill="currentColor">Dette d'intention</text>
-      <text x="120" y="33" text-anchor="middle" font-size="6.5" fill="currentColor" opacity="0.6">vit dans les artefacts</text>
+      {#- Technique (haut) — bleu (--c-info, « quoi ») -#}
+      <rect x="75" y="6" width="90" height="36" fill="var(--surface-sub)" stroke="var(--c-info)" stroke-width="1.6"/>
+      <text x="120" y="20" text-anchor="middle" font-size="8" font-weight="600" fill="currentColor">Dette technique</text>
+      <text x="120" y="33" text-anchor="middle" font-size="6.5" fill="currentColor" opacity="0.6">vit dans le logiciel</text>
 
-      {#- Technique (bas gauche) -#}
-      <rect x="2" y="150" width="84" height="36" fill="var(--surface-sub)" stroke="var(--rule-strong)" stroke-width="1"/>
-      <text x="44" y="164" text-anchor="middle" font-size="8" font-weight="600" fill="currentColor">Dette technique</text>
-      <text x="44" y="177" text-anchor="middle" font-size="6.5" fill="currentColor" opacity="0.6">vit dans le logiciel</text>
+      {#- Intention (bas gauche) — rouge (--c-problem, « pourquoi ») -#}
+      <rect x="1" y="150" width="90" height="36" fill="var(--surface-sub)" stroke="var(--c-problem)" stroke-width="1.6"/>
+      <text x="46" y="164" text-anchor="middle" font-size="8" font-weight="600" fill="currentColor">Dette d'intention</text>
+      <text x="46" y="177" text-anchor="middle" font-size="6.5" fill="currentColor" opacity="0.6">vit dans les artefacts</text>
 
-      {#- Cognitive (bas droite) -#}
-      <rect x="154" y="150" width="84" height="36" fill="var(--surface-sub)" stroke="var(--rule-strong)" stroke-width="1"/>
-      <text x="196" y="164" text-anchor="middle" font-size="8" font-weight="600" fill="currentColor">Dette cognitive</text>
-      <text x="196" y="177" text-anchor="middle" font-size="6.5" fill="currentColor" opacity="0.6">vit dans les humains</text>
+      {#- Cognitive (bas droite) — ambre (--c-warning, « comment ») -#}
+      <rect x="149" y="150" width="90" height="36" fill="var(--surface-sub)" stroke="var(--c-warning)" stroke-width="1.6"/>
+      <text x="194" y="164" text-anchor="middle" font-size="8" font-weight="600" fill="currentColor">Dette cognitive</text>
+      <text x="194" y="177" text-anchor="middle" font-size="6.5" fill="currentColor" opacity="0.6">vit dans les humains</text>
     </g>
   </svg>
 </figure>

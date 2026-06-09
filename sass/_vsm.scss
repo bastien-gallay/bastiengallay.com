@@ -178,6 +178,40 @@
 }
 .vsm__d-note { margin: 0; font-size: 0.7rem; line-height: 1.45; }
 
+// Marqueur d'entrée (nœud 05) : « on sort d'un prototype » — d'où l'on arrive,
+// avant la checklist du harnais. Picto + renvoi au death match (nœud 02).
+.vsm__d-entry {
+  margin: 0 0 var(--space-2xs);
+  font-size: 0.62rem;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+.vsm__d-entry-ico { font-style: normal; color: var(--ink-mute); margin-right: 0.25em; }
+.vsm__d-entry-ref {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.9em;
+  letter-spacing: 0.03em;
+  color: var(--ink-mute);
+}
+
+// Puces neutres (nœud 01) : contenu listé SANS le souligné jaune de .vsm__list
+// (réservé au lien harnais↔prose §5).
+.vsm__items {
+  margin: var(--space-3xs) 0 var(--space-2xs);
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: 0.66rem;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+.vsm__items li { padding-left: 0.85em; position: relative; }
+.vsm__items li::before { content: "–"; position: absolute; left: 0; color: var(--ink-mute); }
+
 // Checklist du harnais (nœud 05) : les énumérations du §5 mises en regard.
 // Soulignées du même jaune (#ffd900) que `.mark--soft` dans la prose → le
 // lecteur relie le texte souligné au cadre de l'étape. Le texte reste en encre
