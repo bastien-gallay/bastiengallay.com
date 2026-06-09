@@ -1,0 +1,34 @@
+  <p id="reflect-desc" class="sr-only">Trois anneaux concentriques colorés, une boucle de relecture chacun. L'anneau interne (bleu) est Quoi, la relecture de l'exécution. L'anneau médian (ambre) est Comment, la relecture de la conception. L'anneau externe (rouge) est Pourquoi, la relecture de l'intention. Ensemble ils suivent la structure d'une user story : qui, quoi, pourquoi — le comment vivant dans les critères d'acceptation.</p>
+
+  <div class="reflect">
+    <svg class="reflect__rings" viewBox="0 0 160 160" role="img" aria-labelledby="reflect-desc">
+      <g fill="none">
+        <circle cx="80" cy="80" r="74" stroke="var(--c-problem)" stroke-width="1.7"/>
+        <circle cx="80" cy="80" r="52" stroke="var(--c-warning)" stroke-width="1.7"/>
+        <circle cx="80" cy="80" r="30" stroke="var(--c-info)" stroke-width="2.2"/>
+      </g>
+      <g font-size="12" text-anchor="middle" aria-hidden="true">
+        <text x="133" y="32" fill="var(--c-problem)">↻</text>
+        <text x="117" y="48" fill="var(--c-warning)">↻</text>
+        <text x="101" y="64" fill="var(--c-info)">↻</text>
+      </g>
+    </svg>
+
+    <ol class="reflect__legend">
+      <li class="reflect__row reflect__row--why">
+        <span class="reflect__swatch" aria-hidden="true"></span>
+        <span class="reflect__lvl">Pourquoi</span>
+        <span class="reflect__gloss">l'intention · Reflect narratif</span>
+      </li>
+      <li class="reflect__row reflect__row--how">
+        <span class="reflect__swatch" aria-hidden="true"></span>
+        <span class="reflect__lvl">Comment</span>
+        <span class="reflect__gloss">la conception · Reflect macro</span>
+      </li>
+      <li class="reflect__row reflect__row--what">
+        <span class="reflect__swatch" aria-hidden="true"></span>
+        <span class="reflect__lvl">Quoi</span>
+        <span class="reflect__gloss">l'exécution · TDD + Reflect</span>
+      </li>
+    </ol>
+  </div>

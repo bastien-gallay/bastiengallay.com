@@ -62,6 +62,9 @@
   --vsm-partial-bg: color-mix(in oklch, var(--surface-ink) 7%, var(--surface));
   // Offset pour passer SOUS le masthead sticky (≈73px / 4.58rem, z-index 20).
   --vsm-top: 5rem;
+  // Fondu des éléments du rail (courbe ↔ chaîne, courbe ↔ boucle) : lent et
+  // posé, pour que les apparitions/remplacements ne soient pas brutaux.
+  --vsm-fade: 0.9s;
   font-family: var(--font-body);
 }
 // Dark : surcharger l'override ci-dessus (sinon :root[data-theme="dark"] écrase
@@ -108,7 +111,7 @@
               background var(--dur-mid) var(--ease-out-quart),
               border-color var(--dur-mid) var(--ease-out-quart),
               box-shadow var(--dur-mid) var(--ease-out-quart),
-              opacity var(--dur-mid) var(--ease-out-quart);
+              opacity var(--vsm-fade) var(--ease-out-quart);   // apparition « autour » de la courbe (§1→§2)
 }
 
 // Flèche de flux entre les blocs (▾ vertical desktop, ▸ horizontal mobile).
@@ -174,7 +177,42 @@
   line-height: 1.25;
 }
 .vsm__d-note { margin: 0; font-size: 0.7rem; line-height: 1.45; }
-.vsm__svg { width: 100%; height: auto; margin: var(--space-2xs) 0; display: block; }
+
+// Checklist du harnais (nœud 05) : les énumérations du §5 mises en regard.
+// Soulignées du même jaune (#ffd900) que `.mark--soft` dans la prose → le
+// lecteur relie le texte souligné au cadre de l'étape. Le texte reste en encre
+// (lisible) ; seul le filet jaune porte le lien.
+.vsm__list {
+  margin: var(--space-3xs) 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  font-size: 0.66rem;
+  line-height: 1.3;
+}
+.vsm__list li {
+  align-self: flex-start;          // souligné collé au mot, pas pleine largeur
+  text-decoration: underline #ffd900;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.12em;
+  text-decoration-skip-ink: none;
+}
+
+// Encart N+1 : la règle d'hygiène (1 garde-fou pour l'inconnu). Tag en accent,
+// signature de l'étape ; distinct de la checklist jaune.
+.vsm__np1 {
+  margin: var(--space-2xs) 0 0;
+  font-size: 0.66rem;
+  line-height: 1.35;
+}
+.vsm__np1-tag {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--accent);
+  margin-right: 0.2em;
+}
 
 // Découpage action → effet.
 .vsm__ae { display: flex; flex-direction: column; gap: var(--space-3xs); margin-top: var(--space-3xs); }
@@ -183,26 +221,32 @@
 .vsm__ae-arr { font-size: 0.7rem; text-align: center; }
 
 // ── États (pilotés par vsm.js) ──────────────────────────────────────
-// Focus = inversion ENCRE (neutre, pas de hue) : c'est le repère récurrent,
-// donc surtout pas rouge. Texte/SVG flip via --surface.
+// Focus = clair-accent (doctrine .impeccable : plus de bloc noir empilé ;
+// wash accent très léger + filet gauche + numéro accent comme signal, ≤10 %
+// de rouge). Le texte reste en encre (aucune inversion). Actif-2 = surface
+// relevée neutre, plus discret que le focus.
 .vsm__node.is-active {
-  background: var(--surface-ink);
-  border-color: var(--surface-ink);
-  box-shadow: 0 6px 20px -12px color-mix(in oklch, var(--surface-ink) 38%, transparent);
+  background: color-mix(in oklch, var(--accent) 6%, var(--surface));
+  border-color: var(--accent);
+  border-left-width: 3px;
+  box-shadow: 0 4px 16px -14px color-mix(in oklch, var(--surface-ink) 30%, transparent);
+
+  .vsm__n { color: var(--accent); }
+  .vsm__nm { color: var(--surface-ink); font-weight: 600; }
 }
 .vsm__node.is-active-2 {
-  background: color-mix(in oklch, var(--surface-ink) 70%, var(--surface));
-  border-color: color-mix(in oklch, var(--surface-ink) 70%, var(--surface));
+  background: var(--surface-sub);
+  border-color: var(--rule-strong);
+  border-left: 3px solid var(--rule-strong);
+
+  .vsm__nm { color: var(--surface-ink); font-weight: 600; }
 }
 .vsm__node.is-active,
 .vsm__node.is-active-2 {
-  .vsm__n, .vsm__nm { color: var(--surface); }
-  .vsm__nm { font-weight: 600; }
-  .vsm__fx { color: color-mix(in oklch, var(--surface) 72%, transparent); }
-  .vsm__detail { color: var(--surface); }
-  .vsm__ae-act { background: color-mix(in oklch, var(--surface) 16%, transparent); color: var(--surface); }
-  .vsm__ae-eff { background: var(--surface); color: var(--surface-ink); }
-  .vsm__ae-arr { color: color-mix(in oklch, var(--surface) 70%, transparent); }
+  .vsm__detail { color: var(--surface-ink); }
+  .vsm__ae-act { background: color-mix(in oklch, var(--surface-ink) 8%, var(--surface)); color: var(--surface-ink); }
+  .vsm__ae-eff { background: var(--surface); color: var(--surface-ink); border: 1px solid var(--rule); }
+  .vsm__ae-arr { color: var(--ink-mute); }
 }
 
 // Touchée = teinte neutre subtile (plus de rouge ambiant).
@@ -212,34 +256,253 @@
 }
 .vsm__node.is-dim { opacity: 0.4; }
 
+// ── Bascule courbe METR (§1) ↔ chaîne VSM (§2+) ─────────────────────
+// En §1, le rail porte `vsm--intro` (vsm.js) : la chaîne et ses légendes
+// s'effacent, seule la courbe METR standalone reste. Dès §2, l'inverse.
+//
+// Transition douce : cross-fade opacité + `display` discret (allow-discrete)
+// pour ne pas laisser d'espace vide pendant le fondu. Repli propre : sur les
+// navigateurs sans allow-discrete, on retombe sur la bascule instantanée.
+// La courbe METR « vit » dans le nœud 04 (pas de bloc standalone séparé). En §1
+// (rail `vsm--intro`), le 04 est forcé ouvert — la courbe est visible à SA place
+// dans la chaîne — tandis que les six autres nœuds restent en place mais
+// transparents : ils réservent leur hauteur, donc la courbe NE BOUGE PAS en
+// passant à §2. La VSM se matérialise simplement autour d'elle (fondu lent).
+.vsm__label,
+.vsm__loop-cap,
+.vsm__legend {
+  transition: opacity var(--vsm-fade) var(--ease-out-quart);
+}
+.vsm--intro {
+  .vsm__label,
+  .vsm__loop-cap,
+  .vsm__legend { opacity: 0; }
+  .vsm__hint { display: none; }
+  // La courbe doit paraître vraiment « standalone » en §1 : on efface les
+  // connecteurs VSM propres au nœud 04 (arête de boucle + flèche de flux),
+  // sinon un reliquat de lignes flotte autour de la courbe isolée. Ils
+  // reviennent en §2 quand la chaîne se matérialise autour (transition douce).
+  [data-step="4"]::before,
+  [data-step="4"]::after { opacity: 0; }
+}
+[data-step="4"]::after {
+  transition: opacity var(--vsm-fade) var(--ease-out-quart);
+}
+// Desktop : la courbe vit dans le 04, les autres nœuds réservent leur place
+// (transparents) → la courbe ne bouge pas, la VSM se matérialise autour.
+@media (min-width: 60rem) {
+  .vsm--intro {
+    .vsm__node:not([data-step="4"]) { opacity: 0; }
+    [data-step="4"] .vsm__detail { max-height: 60vh; opacity: 1; margin-top: var(--space-2xs); }
+  }
+}
+// Mobile : le bandeau reste complet ; la courbe s'affiche AU-DESSOUS, recopiée
+// dans le panneau par vsm.js (cas intro). Fortement réduite + note masquée pour
+// ne pas manger la hauteur de lecture (le bandeau est sticky).
+@media (max-width: calc(60rem - 1px)) {
+  // Courbe = aperçu glanceable dans le bandeau (un peu plus grande qu'avant) ;
+  // tap pour l'agrandir dans un dialog plein écran (cf. vsm.js, openZoom).
+  .vsm__panel .metr {
+    max-width: 14rem;
+    margin: 0 auto;
+    position: relative;
+    padding-bottom: 1.35rem;        // place pour la pastille d'affordance
+    cursor: zoom-in;
+  }
+  .vsm__panel .metr__cap,
+  .vsm__panel .metr__note { display: none; }   // contexte rétabli dans le zoom
+  // Affordance « agrandir » centrée sous la courbe (pas de chevauchement).
+  .vsm__panel .metr::after {
+    content: "⤢ agrandir";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-mute);
+    background: var(--surface);
+    padding: 0.12rem 0.4rem;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+  }
+}
+
+// ── Zoom courbe METR (mobile) : dialog plein écran au tap ────────────
+// La courbe vit en petit dans le bandeau sticky ; le tap l'ouvre en grand
+// avec sa légende + sa note (contexte complet, police lisible). Dialog natif
+// (top layer, focus trap, Esc) ; repli gracieux si showModal indisponible.
+.metr-zoom {
+  width: min(92vw, 30rem);
+  max-height: 88vh;
+  margin: auto;
+  padding: var(--space-sm) var(--space-md) var(--space-md);
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--surface-ink);
+  overflow: auto;
+}
+.metr-zoom::backdrop { background: color-mix(in oklch, var(--surface-ink) 55%, transparent); }
+.metr-zoom__head { display: flex; justify-content: flex-end; margin-bottom: var(--space-2xs); }
+.metr-zoom__close {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+}
+.metr-zoom__close:hover { color: var(--accent); border-color: var(--accent); }
+.metr-zoom__body .metr { margin: 0; }
+.metr-zoom__body .metr__svg { max-width: none; }   // pleine largeur du dialog
+@media (prefers-reduced-motion: no-preference) {
+  .metr-zoom, .metr-zoom::backdrop { transition: opacity 0.18s var(--ease-out-quart); }
+  .metr-zoom[open], .metr-zoom[open]::backdrop { opacity: 1; }
+  @starting-style {
+    .metr-zoom[open] { opacity: 0; }
+    .metr-zoom[open]::backdrop { opacity: 0; }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vsm__node,
+  .vsm__label,
+  .vsm__loop-cap,
+  .vsm__legend,
+  .vsm__04 { transition: none; }
+}
+
+// ── Courbe METR standalone ──────────────────────────────────────────
+.metr {
+  margin: 0;
+  color: var(--surface-ink);
+}
+.metr__cap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin-bottom: var(--space-2xs);
+}
+.metr__cap-k {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.metr__cap-t {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--ink-mute);
+}
+.metr__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  color: var(--surface-ink);   // currentColor des points/barres/axes
+  font-family: var(--font-mono);   // les <text> SVG : la var ne résout pas en attribut
+}
+.metr__note {
+  margin: var(--space-2xs) 0 0;
+  font-size: 0.7rem;
+  line-height: 1.45;
+  font-style: italic;
+  color: var(--ink-mute);
+}
+
+// ── Cercle des 3 dettes (nœud 07, §7) ───────────────────────────────
+.dette { margin: var(--space-2xs) 0 0; }
+.dette__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  font-family: var(--font-mono);   // les <text> SVG : la var ne résout pas en attribut
+}
+
+// ── Nœud 04 : courbe METR (§1-§2) ↔ boucle interne (§rigueur+) ──────
+// La courbe ne vit QUE en §1 (intro) et §2 (cartographie) — rail `vsm--metr`.
+// Dès §rigueur, la boucle TDD+Reflect prend le relais — rail `vsm--rgb`. Entre
+// les deux (harnais, courage, complaisance), le 04 n'affiche NI l'une NI
+// l'autre : il n'y est pas focalisé, son détail est replié. La courbe ne
+// « fuit » donc plus à partir du harnais (cf. retour auteur).
+.vsm__04 {
+  transition: opacity var(--vsm-fade) var(--ease-out-quart),
+              display var(--vsm-fade) allow-discrete;
+}
+.vsm__04--metr,
+.vsm__04--loop { display: none; opacity: 0; }
+.vsm--metr .vsm__04--metr { display: block; opacity: 1; }
+.vsm--rgb  .vsm__04--loop { display: block; opacity: 1; }
+@starting-style {
+  .vsm--metr .vsm__04--metr { opacity: 0; }
+  .vsm--rgb  .vsm__04--loop { opacity: 0; }
+}
+
+// ── Boucle interne (Red → Green → Refactor → Reflect), en CERCLE ─────
+// Pastilles SÉMANTIQUES (problem/success/info + accent Reflect). Apparaît
+// dans le 04 en §6, à la place de la courbe.
+.rgb { margin: var(--space-xs) 0 0; }
+.rgb__svg {
+  width: 100%;
+  max-width: 13rem;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  font-family: var(--font-mono);   // les <text> SVG : la var ne résout pas en attribut
+  color: var(--surface-ink);       // currentColor des libellés / du ↻
+}
+
 // ── Boucle externe « Reflect » (étapes 4-5-6) ───────────────────────
 // Arête d'accent partagée par les 3 nœuds : un liseré VERTICAL (desktop)
 // qui devient HORIZONTAL en bandeau mobile (cf. media <60rem). Neutre par
 // défaut (anti-fatigue rouge — le rouge reste réservé) ; il ne passe à
-// l'accent que lorsque la section C' est active. Le liseré PONTE le gap
-// inter-nœuds pour que 4-5-6 se lisent comme une seule zone.
+// l'accent que lorsque la section §6 (Rigueur) est active. Le liseré PONTE le
+// gap inter-nœuds pour que 4-5-6 se lisent comme une seule zone.
 .vsm__node--loop::before {
   content: "";
   position: absolute;
-  left: 0;
+  left: -1px;
   top: 0;
   bottom: 0;
-  width: 2.5px;
+  width: 3px;
   border-radius: 2px;
   background: var(--rule-strong);
   opacity: 0.9;
   pointer-events: none;
   transition: background var(--dur-mid) var(--ease-out-quart),
-              opacity var(--dur-mid) var(--ease-out-quart);
+              opacity var(--dur-mid) var(--ease-out-quart),
+              width var(--dur-mid) var(--ease-out-quart);
 }
 // Pontage du gap vertical jusqu'au nœud suivant de la boucle (sauf le dernier).
 .vsm__node--loop:not(.vsm__node--loop-end)::before { bottom: calc(-1 * var(--space-2xs)); }
 
+// Resserrer 4-5-6 pour qu'ils se lisent comme une seule boucle (gap réduit).
+.vsm__node--loop:not(.vsm__node--loop-start) { margin-top: calc(-0.35 * var(--space-2xs)); }
+
 // États de la boucle (classe portée par le rail via vsm.js) — couleur/opacité
-// seulement, jamais la géométrie (pour ne pas casser la bascule mobile).
+// (+ épaisseur du liseré à l'état actif pour rendre la boucle explicite).
 .vsm--loop-partial .vsm__node--loop::before { background: var(--ink-mute); opacity: 0.7; }
-.vsm--loop-active  .vsm__node--loop::before { background: var(--accent);   opacity: 1; }
+.vsm--loop-active  .vsm__node--loop::before { background: var(--accent);   opacity: 1; width: 4px; }
 .vsm--loop-dim     .vsm__node--loop::before { opacity: 0.3; }
+
+// Boucle active : le flux interne 4→5→6 passe en accent, et la sortie 06→07
+// devient un « réflexe » ⟲ (la boucle Reflect se referme avant la maintenance).
+.vsm--loop-active .vsm__node--loop:not(.vsm__node--loop-end)::after {
+  color: var(--accent);
+  opacity: 1;
+}
+.vsm--loop-active .vsm__node--loop-end::after {
+  content: "⟲";
+  color: var(--accent);
+  opacity: 1;
+  font-size: 0.85rem;
+  transform: translate(-50%, -5%);
+}
 
 // Glyphe de boucle interne (Red→Green→Refactor) dans l'étape 4.
 .vsm__loop-in {
@@ -250,7 +513,7 @@
   transition: color var(--dur-mid) var(--ease-out-quart);
 }
 .vsm__node.is-active .vsm__loop-in,
-.vsm__node.is-active-2 .vsm__loop-in { color: color-mix(in oklch, var(--surface) 80%, transparent); }
+.vsm__node.is-active-2 .vsm__loop-in { color: var(--accent); }
 .vsm__d-loop { margin-top: var(--space-3xs); font-size: 0.7rem; line-height: 1.45; font-style: italic; }
 .vsm__loop-mark { color: var(--accent); font-weight: 600; font-style: normal; }
 
@@ -351,6 +614,14 @@
 
   // Le détail in-situ est masqué ; vsm.js le recopie dans le panneau.
   .vsm__detail { display: none; }
+
+  // Bandeau sticky = hauteur précieuse : on dégraisse le chrome explicatif
+  // (légende d'états, légende de boucle, hint) pour ne pas manger la lecture.
+  // La chaîne + le détail du nœud actif suffisent ; les états restent lisibles
+  // par la position/couleur des cellules.
+  .vsm__loop-cap,
+  .vsm__legend,
+  .vsm__hint { display: none; }
 
   .vsm__panel {
     margin-top: var(--space-sm);

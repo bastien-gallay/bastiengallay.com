@@ -1,0 +1,26 @@
+{#-
+  Diagramme conceptuel inline, LÉGER — volontairement distinct du chrome
+  statistique de `figure.html`. Pas de bandeau « Figure N · tag », pas de cadre
+  rempli, pas de numérotation : ces schémas sont tissés dans l'argument, ce ne
+  sont pas des figures de données citées. Pleine largeur de colonne, encadré
+  seulement par un filet fin haut/bas (rythme éditorial, comme les blockquotes).
+
+  Le corps (SVG/HTML) vit colocalisé dans `figures/<body>`, inliné via load_data
+  — même convention que `figure.html`. Une légende optionnelle suit, en encre
+  muette.
+
+  Paramètres :
+    body    · nom du fichier corps dans `figures/` (ex. "reflect-loops.html")
+    caption · texte éditorial de légende (optionnel)
+    label   · aria-label du <figure> (optionnel)
+
+  Usage (dans le markdown du page bundle) :
+    {{ diagram(body="reflect-loops.html", caption="…") }}
+-#}
+{%- set caption = caption | default(value="") -%}
+<figure class="diagram"{% if label %} aria-label="{{ label }}"{% endif %}>
+{{ load_data(path="content/" ~ page.colocated_path ~ "figures/" ~ body, format="plain") | safe }}
+{%- if caption %}
+  <figcaption class="diagram__cap">{{ caption | safe }}</figcaption>
+{%- endif %}
+</figure>
