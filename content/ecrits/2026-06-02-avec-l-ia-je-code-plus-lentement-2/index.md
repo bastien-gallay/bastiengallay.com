@@ -67,7 +67,7 @@ Parlons à nouveau des études METR. La courbe METR vit dans l'enchainement d'é
 
 ## Le harnais qui libère
 
-Un logiciel personnel est souvent issu d'une expérimentation, ou d'un prototype de recherche. La qualité initiale se contente de quelques tests et documents de réflexion. Avant de coder plus, je génère les <span class="mark--soft">tests manquants</span>, j'installe les <span class="mark--soft">linters</span>, je construis la <span class="mark--soft">chaîne de livraison</span> initiale. J'ajoute aussi les <span class="mark--soft">documents d'intention</span> comme README, CODING_STANDARDS ou LICENSE et CONTRIBUTING pour l'open source. Ce sont les conditions pour implémenter sereinement les règles métier. Une fois ces conditions atteintes, j'ai une hygiène personnelle : le N+1. Lorsque je sécurise la qualité connue avec N garde-fous, j'en ajoute un pour ce qui est inconnu. Cela peut être du shift-left depuis la CI vers une règle pre-commit, du mutation testing, l'analyse statique ou une génération de documentation. Je choisis en fonction de la nature du projet ce qui me semble moins maitrisable.
+Un logiciel personnel est souvent issu d'une expérimentation, ou d'un prototype de recherche. La qualité initiale se contente de quelques tests et documents de réflexion. Avant de coder plus, <span class="mark--soft">je génère les tests manquants, j'installe les linters, je construis la chaîne de livraison initiale</span>. J'ajoute aussi les documents d'intention comme README, CODING_STANDARDS ou LICENSE et CONTRIBUTING pour l'open source. Ce sont les conditions pour implémenter sereinement les règles métier. Une fois ces conditions atteintes, j'ai une hygiène personnelle : le N+1. Lorsque je sécurise la qualité connue avec N garde-fous, j'en ajoute un pour ce qui est inconnu. Cela peut être du shift-left depuis la CI vers une règle pre-commit, du mutation testing, l'analyse statique ou une génération de documentation. Je choisis en fonction de la nature du projet ce qui me semble moins maitrisable.
 
 Ensuite, tout cela doit grandir avec les principes de développement classiques : test first, DDD, CUPID, etc. Ces principes sont issus du Lean, des méthodes agiles — en particulier eXtreme Programming — et du craft. Tidy First de Kent Beck[^beck-tidy] m'inspire à chaque itération de code : la base saine du début doit le rester. Pour la faire évoluer, il faut la challenger avant chaque nouvelle fonctionnalité.
 
@@ -87,7 +87,11 @@ Ce n'est pas parfait, mais ça me convient. Je me rappelle de mon premier commit
 
 Sans l'IA, j'aurais pu être découragé par un tel travail et simplement arrêter le projet. Au contraire, j'ai eu en tête l'image de Senku, de Dr Stone, s'exclamant *« Voilà qui est follement excitant !! »* J'ai retroussé mes manches et celles de Claude Code, et ensemble, en deux heures, nous avons ajusté la base de code. Le courage de refuser le compromis. Un rêve que je n'atteignais que rarement auparavant. Ou alors en quelques jours plutôt qu'en quelques heures.
 
-Beaucoup penseraient que je parle d'accélération immédiate. Et c'est le cas. La différence c'est que cette accélération locale sert à oser booster la pérennité. Cela me rappelle le tweet de Kent Beck « 90 % de mes compétences viennent de perdre leur valeur, le levier sur les 10 % restants vient d'être multiplié par 1000. »[^beck-90] Supprimer, réviser et refactorer sont des actes fondamentaux de ces 10&nbsp;%.
+Beaucoup penseraient que je parle d'accélération immédiate. Et c'est le cas. La différence c'est que cette accélération locale sert à oser booster la pérennité. Cela me rappelle le tweet de Kent Beck&nbsp;:
+
+> « 90 % de mes compétences viennent de perdre leur valeur, le levier sur les 10 % restants vient d'être multiplié par 1000. »[^beck-90]
+
+Supprimer, réviser et refactorer sont des actes fondamentaux de ces 10&nbsp;%.
 
 Je reviens à mon fil rouge `lucid-lint`. Alors qu'il fonctionnait et donnait des résultats, j'ai pris quelques décisions folles. Au bout d'une journée d'existence de l'outil en production, j'ai jeté et refondu des fondamentaux : quatre catégories mortes en 24 h. Plus tard, pour mieux m'y retrouver, j'ai renommé 81 features de la roadmap et créé un système de gestion pour celles-ci. Plus clivant encore : au lieu de gagner 5,6 % de perf sur les textes anglais longs, j'ai réécrit le parseur Markdown pour équilibrer un gain moindre, mais pour tous les textes. Et ce, alors que tous les tests, golden snapshots et property tests, étaient verts.
 
@@ -101,7 +105,7 @@ Le point commun ? Le filet de sécurité n'est pas un gage de qualité. C'est ce
 
 Ce jugement, je le garde pour moi. Et pour l'enrichir, je le nourris des analyses de l'IA, d'un côté, et de ses critiques, de l'autre. Pour le premier enrichissement, j'ai pour seul objectif de réduire le poids administratif de collecte et de synthèse. Le temps gagné est ainsi réinvesti dans la qualification des options avant un choix, par exemple pour un death match entre 2 expérimentations prêtes à devenir de vrais projets.
 
-Pour l'enrichissement critique, c'est le plus cruel pour moi. Je demande explicitement à l'IA d'être dure avec ce que nous produisons. J'ai même un skill, `/feature-torture`, dédié à faire un stress test d'une évolution prévue dans la roadmap. Une sorte de Dewey, de la série Malcolm « Toi tu vis. Toi tu vis. Toi tu crèves ! » Et aussi toi tu changes, toi tu te scindes. Une sortie riche de ce skill me permet de garder la tête froide et de prendre la décision finale. L'IA n'a pas d'égo, pas d'attachement émotionnel. J'utilise ces qualités pour mieux juger.
+Pour l'enrichissement critique, c'est le plus cruel pour moi. Je demande explicitement à l'IA d'être dure avec ce que nous produisons. J'ai même un skill, `/feature-torture`, dédié à faire un stress test d'une évolution prévue dans la roadmap. Une sorte de Dewey, de la série Malcolm&nbsp;: *« Toi tu vis. Toi tu vis. Toi tu crèves ! »* Et aussi toi tu changes, toi tu te scindes. Une sortie riche de ce skill me permet de garder la tête froide et de prendre la décision finale. L'IA n'a pas d'égo, pas d'attachement émotionnel. J'utilise ces qualités pour mieux juger.
 
 Je suis encore plus dur avec moi-même sur la rédaction de mes articles. Celui-ci ne fait pas exception. Claude Code revoit chaque mot, phrase, paragraphe et relit la cohérence globale. Je ne le laisse pas me dire que c'est bien si c'est juste passable. C'est dur. C'est exténuant. Et le pire&nbsp;? Là où je croyais m'améliorer, les statistiques me montrent que je régresse sur l'utilisation abusive des hedge ("parfois", "souvent", "plutôt", "peut-être"), alors que les conventions que J'AI choisies les proscrivent. Chaque paragraphe est repassé à la moulinette environ 4 fois — oui, nous avons compté — avant qu'il soit bon.
 
@@ -179,6 +183,8 @@ Je reste sur la même idée. Je n'ai pas accéléré ma création de code. En re
 J'utilise un processus similaire pour l'écriture et pour le code. Et cet article m'a fait réfléchir à ma propre méthode, par des recherches, par l'effort de synthèse et par une introspection plus profonde que d'habitude. Comme un Reflect au-delà de mes 3 premières boucles, la boucle narrative. Celle de l'introspection personnelle.
 
 Le niveau supérieur que je souhaite partager, il est en lien avec mon quotidien professionnel. Je l'observe et le vis dans des projets en équipe, des projets d'entreprise. C'est le Reflect collectif au niveau de l'organisation. Ce sera l'objet du troisième et dernier article de cette série.
+
+---
 
 ## Notes et références
 
