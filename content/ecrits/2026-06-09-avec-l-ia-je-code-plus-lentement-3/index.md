@@ -20,6 +20,11 @@ Pourquoi en ouverture du 3/3 :
   et rime avec la clôture du 2/3 (« Et la compréhension ne s'accélère pas. ») + le nœud 01 VSM ;
 - User Story Mapping traite de la compréhension partagée à l'échelle équipe/orga = cœur du 3/3.
 À faire avant publication : sourcer page/chapitre exact ; traduction FR (comme la citation Storey).
+
+NOTE figure (brainstorm Lot B, 2026-06-09) : la figure « User Story » (I2,
+gabarit As a <who> / I want <what> / so that <why>) est codée pour le 2/3 §7
+(`figures/i2-user-story.html`). Candidate à reprise ICI (3/3) avec le seed Patton
+ci-dessus — DÉCISION NON PRISE, à trancher au brainstorm du 3/3.
 -->
 
 <!-- déplacé depuis le premier article de la série -->
