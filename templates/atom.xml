@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{#- Surcharge du template Atom embarqué de Zola.
+
+    Exigences (roadmap §S, décisions 2026-06-09) :
+    - title/subtitle depuis la section (un feed au titre vide est rejeté
+      par certains lecteurs), repli sur la config ;
+    - contenu COMPLET dans <content type="html"> — Tera échappe le HTML
+      hors `safe`, ce qui est exactement ce que demande le XML ;
+    - GUID = permalink de la page : ne jamais changer l'URL d'un article
+      publié ;
+    - un feed par section, une seule langue par feed (le futur /en/ aura
+      le sien). -#}
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{{ lang }}">
+  <title>{% if section is defined and section.title %}{{ section.title }} — {{ config.title }}{% else %}{{ config.title }}{% endif %}</title>
+  <subtitle>{% if section is defined and section.description %}{{ section.description }}{% else %}{{ config.description }}{% endif %}</subtitle>
+  <link href="{{ feed_url | safe }}" rel="self" type="application/atom+xml"/>
+  <link href="{% if section is defined %}{{ section.permalink | safe }}{% else %}{{ config.base_url | safe }}{% endif %}" rel="alternate" type="text/html"/>
+  <generator uri="https://www.getzola.org/">Zola</generator>
+  <updated>{{ last_updated | date(format="%+") }}</updated>
+  <id>{{ feed_url | safe }}</id>
+  <author>
+    <name>Bastien Gallay</name>
+    <uri>{{ config.base_url | safe }}</uri>
+  </author>
+{%- for page in pages %}
+  <entry xml:lang="{{ page.lang }}">
+    <title>{{ page.title }}</title>
+    <published>{{ page.date | date(format="%+") }}</published>
+    <updated>{{ page.updated | default(value=page.date) | date(format="%+") }}</updated>
+    <link rel="alternate" type="text/html" href="{{ page.permalink | safe }}"/>
+    <id>{{ page.permalink | safe }}</id>
+    {%- if page.description %}
+    <summary type="html">{{ page.description }}</summary>
+    {%- endif %}
+    <content type="html">{{ page.content }}</content>
+  </entry>
+{%- endfor %}
+</feed>

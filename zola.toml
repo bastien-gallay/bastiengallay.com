@@ -1,8 +1,19 @@
 # The URL the site will be built for
 base_url = "https://bastiengallay.com"
 
+# Renseignés pour les feeds Atom (un feed au titre vide est rejeté par
+# certains lecteurs) ; servent de repli quand une section n'a pas les siens.
+title = "Bastien Gallay"
+description = "Outils open source pour mieux écrire et mieux penser."
+
 # Site en français — affecte par défaut le filtre `date` et la i18n future.
 default_language = "fr"
+
+# Feeds Atom par section UNIQUEMENT (pas de `generate_feeds` global : un feed
+# racine inclurait /lab/, hors nav publique). Chaque section opte via son
+# front matter ; /now/ attendra d'avoir des entrées datées (pages), un feed
+# de section ne liste pas le contenu du _index.
+feed_filenames = ["atom.xml"]
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true

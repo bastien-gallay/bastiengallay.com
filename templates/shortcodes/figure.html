@@ -49,5 +49,7 @@
 
 {{ visuel::frame_end(
     caption_text_html=caption | default(value=""),
-    caption_source_html=source | default(value="")
+    caption_source_html=source | default(value=""),
+    feed_href=page.permalink ~ "#fig-" ~ num,
+    num=num
 ) }}

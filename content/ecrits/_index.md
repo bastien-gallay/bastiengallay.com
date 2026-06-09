@@ -3,6 +3,7 @@ title = "Écrits"
 description = "Notes et articles. Pas de cadence promise."
 template = "ecrits.html"
 sort_by = "date"
+generate_feeds = true
 +++
 
 <!-- TODO(contenu) — accroche d'index à écrire (Block B) -->

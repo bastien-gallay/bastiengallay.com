@@ -36,7 +36,7 @@
 {# `variant` (défaut "chart") permet d'utiliser le chrome avec d'autres
    types de figure (V4 incidents, V6 table, …). Génère `.visuel--{variant}`. #}
 {% macro frame_start(num, tag, title_html, pos="side", title_id, desc_id, legend_html="", variant="chart") %}
-<figure class="visuel visuel--{{ variant }} visuel--{{ pos }}" data-anchor="fig-{{ num }}" role="figure" aria-labelledby="{{ title_id }} {{ desc_id }}">
+<figure class="visuel visuel--{{ variant }} visuel--{{ pos }}" id="fig-{{ num }}" data-anchor="fig-{{ num }}" role="figure" aria-labelledby="{{ title_id }} {{ desc_id }}">
   <header class="visuel__band">
     <span class="visuel__band-mark" aria-hidden="true">▍</span>
     <span class="visuel__band-num">Figure {{ num }}</span>
@@ -52,7 +52,7 @@
 {% endmacro frame_start %}
 
 
-{% macro frame_end(caption_text_html="", caption_source_html="") %}
+{% macro frame_end(caption_text_html="", caption_source_html="", feed_href="", num="") %}
   {# Pas de <figcaption> émise si rien à dire : éviter le wrapper vide.
      Cas usage : figure perso (Fig 1 cas zéro) qui n'a ni texte de lift
      éditorial ni source externe — la prose porte tout. #}
@@ -65,6 +65,12 @@
     <span class="visuel__caption-source">{{ caption_source_html | safe }}</span>
     {% endif %}
   </figcaption>
+  {% endif %}
+  {# Repli pour les lecteurs de flux : la plupart des agrégateurs web
+     sanitizent le HTML et suppriment <svg> (vecteur XSS). Ce lien absolu,
+     masqué sur le site (CSS), reste alors le seul accès à la figure. #}
+  {% if feed_href %}
+  <a class="visuel__feedlink" href="{{ feed_href | safe }}">Voir la figure {{ num }} sur le site ↗</a>
   {% endif %}
 </figure>
 {% endmacro frame_end %}

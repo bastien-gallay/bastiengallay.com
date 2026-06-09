@@ -1571,6 +1571,12 @@ p.has-dropcap::first-letter {
   color: var(--ink-mute);
 }
 
+// Lien de repli destiné aux lecteurs de flux (leurs sanitizers suppriment
+// les <svg> inline) ; sur le site la figure est là, le lien est superflu.
+.visuel__feedlink {
+  display: none;
+}
+
 // Back-link injecté par footnotes.js — petite flèche accent.
 .footnote-backref {
   display: inline-block;
