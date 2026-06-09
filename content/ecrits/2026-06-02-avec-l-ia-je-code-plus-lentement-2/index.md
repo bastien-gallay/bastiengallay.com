@@ -176,9 +176,9 @@ Cette étude montre le piège dans lequel je retombe souvent — par fatigue, pa
 
 Tous les patterns dont je parle s'arrêtent à la frontière du clavier. Ce sont les miens. S'ils peuvent inspirer, je n'ai aucune garantie qu'ils soient généralisables.
 
-Les artefacts qui me servent sont déjà transmis à d'autres. Des collègues, des clients pour lesquels je travaille et mon futur moi. De ce fait, c'est une transmission d'humain à humain où l'IA joue un rôle de médiateur et d'archiviste.
+Les artefacts qui me servent sont déjà transmis à d'autres. Des collègues, des clients pour lesquels je travaille et mon futur moi. De ce fait, c'est une transmission d'humain à humain. <span class="mark--soft">Et la compréhension ne s'accélère pas.</span> L'IA, quant à elle, joue un rôle de médiateur et d'archiviste.
 
-Je reste sur la même idée. Je n'ai pas accéléré ma création de code. En revanche, je suis conscient d'avoir produit plus. D'avoir terminé plus de projets. Des projets plus aboutis. Mon accélération n'est pas dans l'immédiateté de génération du code, mais dans la qualité que je suis capable d'atteindre désormais.
+Je reste sur la même idée. Je n'ai pas accéléré ma création de code. En revanche, je suis conscient d'avoir produit plus. D'avoir terminé plus de projets. Des projets plus aboutis. <span class="mark--soft">Mon accélération n'est pas dans l'immédiateté de génération du code, mais dans la qualité que je suis capable d'atteindre désormais.</span>
 
 J'utilise un processus similaire pour l'écriture et pour le code. Et cet article m'a fait réfléchir à ma propre méthode, par des recherches, par l'effort de synthèse et par une introspection plus profonde que d'habitude. Comme un Reflect au-delà de mes 3 premières boucles, la boucle narrative. Celle de l'introspection personnelle.
 

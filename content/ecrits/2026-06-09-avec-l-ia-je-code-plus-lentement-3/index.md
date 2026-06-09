@@ -12,6 +12,16 @@ series_total = 3
 series_part_subtitle = "quelle stratégie d'équipe ?"
 +++
 
+<!--
+SEED — citation d'ouverture candidate (routée depuis l'article 2/3, §8 → ici, 2026-06-09).
+Jeff Patton, « User Story Mapping » (O'Reilly) : « Shared documents aren't shared understanding »
+Pourquoi en ouverture du 3/3 :
+- ferme la boucle ouverte en 2/3 §7 (user story « As a <who> I want <what> so that <why> »)
+  et rime avec la clôture du 2/3 (« Et la compréhension ne s'accélère pas. ») + le nœud 01 VSM ;
+- User Story Mapping traite de la compréhension partagée à l'échelle équipe/orga = cœur du 3/3.
+À faire avant publication : sourcer page/chapitre exact ; traduction FR (comme la citation Storey).
+-->
+
 <!-- déplacé depuis le premier article de la série -->
 
 Prendre le temps de produire un code maîtrisé par le développeur, c'est long. Mais faisons le calcul rapidement. Étudions le cas de deux entreprises A et B:
