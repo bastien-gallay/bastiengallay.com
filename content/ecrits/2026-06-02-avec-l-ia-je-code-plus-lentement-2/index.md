@@ -132,6 +132,8 @@ Le premier se corrigeait avec le temps. Le deuxième a demandé une astuce qui s
 
 Cette 4e étape demande à l'IA de revoir l'exécution précédente des trois premières étapes, d'en tirer des apprentissages, et de changer le plan pour la suite quand nécessaire. Honnêtement ? Peu de changements de plan. Livrés à eux-mêmes en test first, les assistants génèrent une cohorte de tests d'un bloc, en amont. Reflect casse ce réflexe — le Red redevient respecté. Les tests inutiles ou en doublon sont à nouveau tués dans l'œuf. Et un bonus&nbsp;: une verbosité maîtrisée qui me donne des informations utiles en relecture de code.
 
+{{ diagram(body="h2-tdd-reflect.html", label="Le cycle TDD agentique sans puis avec l'étape Reflect : à gauche la cohorte de tests court-circuite le Red, à droite Reflect occupe le coin vide et referme la boucle.") }}
+
 Dans mes explorations, j'ai travaillé en *Spec Driven Development* (SDD) avec l'IA. Avec des frameworks — SpecKit[^speckit], OpenSpec[^openspec] et BMAD. Même si les implémentations sont bonnes, je les trouvais lourdes et inflexibles. J'ai tenté une implémentation maison de micro framework SDD, dans le but de reprendre la main grâce à des micro-étapes plus granulaires. Le problème était similaire, le cadre restait figé par l'enchainement des étapes. Dans certains cas, comme des mises à jour de doc ou des améliorations esthétiques simples, il était inutile. Dans d'autres cas, comme pour les refactos évoqués plus tôt, trop léger. Mais une perle s'est glissée dans mon cadre&nbsp;: une étape **Reflect** entre deux boucles de feature. C'est cette étape qui m'a mené à abandonner le SDD au sens strict pour un cadre plus fluide et rigoureux à la fois.
 
 {{ stage(id="rigueur-macro") }}

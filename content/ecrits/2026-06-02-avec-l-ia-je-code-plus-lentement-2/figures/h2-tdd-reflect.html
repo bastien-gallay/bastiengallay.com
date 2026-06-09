@@ -1,0 +1,95 @@
+  <p id="h2-desc" class="sr-only">Deux roues du cycle TDD agentique, avant et après l'ajout de Reflect. À gauche, sans Reflect : les trois temps Red, Green, Refactor forment un triangle, Red en haut à gauche. Une cohorte de tests générée d'un bloc, posée au-dessus du cycle, tombe directement sur Green ; sa flèche vers Red est barrée — le Red est court-circuité. À droite, avec Reflect : le cycle est complet, Red en haut à gauche puis Green, Refactor, et une quatrième étape Reflect en bas à gauche qui referme la boucle vers un nouveau Red.</p>
+
+  <div class="tddw" role="img" aria-labelledby="h2-desc">
+
+    <!-- ── Roue gauche : TDD 3 temps (triangle tourné 30° anti-horaire),
+         cohorte HORS du cycle, en haut au centre ── -->
+    <figure class="tddw__col tddw__col--before">
+      <figcaption class="tddw__head">Sans Reflect<span class="tddw__tag">état courant</span></figcaption>
+      <svg class="tddw__svg" viewBox="-16 0 226 184" aria-hidden="true">
+        <defs>
+          <marker id="tddw-ar" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+          </marker>
+        </defs>
+        <!-- la cohorte est posée HORS du cycle, en haut au centre -->
+        <g class="tddw__cohorte">
+          <rect x="34" y="4" width="116" height="32" rx="4"/>
+          <text x="92" y="18" text-anchor="middle" class="tddw__cohorte-l">cohorte de tests</text>
+          <text x="92" y="30" text-anchor="middle" class="tddw__cohorte-s">générée d'un bloc</text>
+        </g>
+        <!-- anneau du cycle -->
+        <circle class="tddw__ring" cx="92" cy="102" r="54" fill="none"/>
+        <!-- sens du cycle : 3 chevrons (Red ↗ Green, Green ↘ Refactor, Refactor ↖ Red) -->
+        <g class="tddw__dir" aria-hidden="true">
+          <text x="92" y="52" text-anchor="middle">▸</text>
+          <text x="140" y="135" text-anchor="middle">▾</text>
+          <text x="44" y="135" text-anchor="middle">▴</text>
+        </g>
+        <!-- flèche grasse : la cohorte tombe sur Green (le court-circuit réel) -->
+        <path class="tddw__shortcut" d="M124 34 Q140 50 139 69" fill="none" marker-end="url(#tddw-ar)"/>
+        <!-- flèche BARRÉE : le chemin cohorte → Red, sauté -->
+        <g class="tddw__barred">
+          <path d="M60 34 Q47 50 46 69" fill="none" marker-end="url(#tddw-ar)"/>
+          <g class="tddw__bar-x"><line x1="45" y1="44" x2="57" y2="54"/><line x1="57" y1="44" x2="45" y2="54"/></g>
+        </g>
+        <!-- sommets : Red (haut-gauche, sauté), Green (haut-droite), Refactor (bas) -->
+        <g class="tddw__node tddw__node--red tddw__node--shorted">
+          <circle cx="45" cy="75" r="5"/>
+          <text x="34" y="72" text-anchor="end" class="tddw__lbl">Red</text>
+        </g>
+        <g class="tddw__node tddw__node--green">
+          <circle cx="139" cy="75" r="5"/>
+          <text x="148" y="72" text-anchor="start" class="tddw__lbl">Green</text>
+        </g>
+        <g class="tddw__node tddw__node--refactor">
+          <circle cx="92" cy="156" r="5"/>
+          <text x="92" y="174" text-anchor="middle" class="tddw__lbl">Refactor</text>
+        </g>
+      </svg>
+      <p class="tddw__cap">La cohorte tombe d'un bloc&#160;: le Red est court-circuité, écrit après coup.</p>
+    </figure>
+
+    <!-- ── Transition : l'ajout de Reflect (le détail « ce qu'il apporte » vit
+         dans le rail, nœud 04) ── -->
+    <div class="tddw__link" aria-hidden="true"><span class="tddw__link-arrow">→</span></div>
+
+    <!-- ── Roue droite : TDD 4 temps (diamant tourné 90° anti-horaire → Red au
+         nord-ouest), Reflect en bas à gauche referme la boucle ── -->
+    <figure class="tddw__col tddw__col--after">
+      <figcaption class="tddw__head">Avec Reflect<span class="tddw__tag">vue cible</span></figcaption>
+      <svg class="tddw__svg" viewBox="-16 0 226 184" aria-hidden="true">
+        <circle class="tddw__ring" cx="105" cy="100" r="57" fill="none"/>
+        <g class="tddw__dir" aria-hidden="true">
+          <text x="105" y="42" text-anchor="middle">▸</text>
+          <text x="167" y="104" text-anchor="middle">▾</text>
+          <text x="105" y="168" text-anchor="middle">◂</text>
+          <text x="44" y="98" text-anchor="middle">▴</text>
+        </g>
+        <text x="105" y="105" text-anchor="middle" class="tddw__hub">↻</text>
+        <!-- Red au nord-ouest (même entrée que la roue gauche) -->
+        <g class="tddw__node tddw__node--red">
+          <circle cx="64" cy="59" r="5"/>
+          <text x="55" y="55" text-anchor="end" class="tddw__lbl">Red</text>
+        </g>
+        <!-- Green au nord-est -->
+        <g class="tddw__node tddw__node--green">
+          <circle cx="146" cy="59" r="5"/>
+          <text x="155" y="55" text-anchor="start" class="tddw__lbl">Green</text>
+        </g>
+        <!-- Refactor au sud-est -->
+        <g class="tddw__node tddw__node--refactor">
+          <circle cx="146" cy="141" r="5"/>
+          <text x="155" y="145" text-anchor="start" class="tddw__lbl">Refactor</text>
+        </g>
+        <!-- Reflect au sud-ouest : 4ᵉ temps, referme vers un nouveau Red -->
+        <g class="tddw__node tddw__node--reflect">
+          <circle cx="64" cy="141" r="6"/>
+          <text x="55" y="138" text-anchor="end" class="tddw__lbl tddw__lbl--reflect">Reflect</text>
+          <text x="55" y="149" text-anchor="end" class="tddw__sub">4ᵉ temps</text>
+        </g>
+      </svg>
+      <p class="tddw__cap">Le Red redevient un vrai départ&#160;: moins de tests créés à la fois, la boucle se referme.</p>
+    </figure>
+
+  </div>

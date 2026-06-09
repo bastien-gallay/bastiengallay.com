@@ -178,6 +178,45 @@
 }
 .vsm__d-note { margin: 0; font-size: 0.7rem; line-height: 1.45; }
 
+// Checklist « ce que Reflect apporte » (nœud 04, §rigueur) : pictos en accent,
+// SANS le souligné jaune de .vsm__list (réservé au lien harnais↔prose §5).
+.vsm__gains {
+  margin: var(--space-3xs) 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  font-size: 0.66rem;
+  line-height: 1.3;
+}
+.vsm__gains li {
+  display: grid;
+  grid-template-columns: 1.3em 1fr;
+  align-items: baseline;
+}
+.vsm__gain-ic { color: var(--accent); font-family: var(--font-mono); }
+.vsm__gain-t { font-weight: 600; }
+.vsm__gain-g { color: var(--ink-mute); }
+
+// Mini-cycle R → G → R → ● (Reflect) en tête du nœud 04 : ancre visuelle,
+// rappel compact de la roue. Couleurs 1:1 avec la figure.
+.vsm__mini {
+  margin: var(--space-3xs) 0 var(--space-2xs);
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.vsm__mini i { font-style: normal; font-weight: 400; color: var(--ink-mute); }
+.vsm__mini-d--red      { color: var(--c-problem); }
+.vsm__mini-d--green    { color: var(--c-success); }
+.vsm__mini-d--refactor { color: var(--c-info); }
+.vsm__mini-d--reflect  { color: var(--accent); font-size: 1.1em; }
+
 // Marqueur d'entrée (nœud 05) : « on sort d'un prototype » — d'où l'on arrive,
 // avant la checklist du harnais. Picto + renvoi au death match (nœud 02).
 .vsm__d-entry {
@@ -462,10 +501,10 @@
 
 // ── Nœud 04 : courbe METR (§1-§2) ↔ boucle interne (§rigueur+) ──────
 // La courbe ne vit QUE en §1 (intro) et §2 (cartographie) — rail `vsm--metr`.
-// Dès §rigueur, la boucle TDD+Reflect prend le relais — rail `vsm--rgb`. Entre
-// les deux (harnais, courage, complaisance), le 04 n'affiche NI l'une NI
-// l'autre : il n'y est pas focalisé, son détail est replié. La courbe ne
-// « fuit » donc plus à partir du harnais (cf. retour auteur).
+// Dès §rigueur, le détail du 04 se replie (la boucle TDD+Reflect est traitée en
+// figure inline, plus dans le rail). Entre/au-delà, le 04 n'affiche rien : il
+// n'y est pas focalisé. La courbe ne « fuit » donc plus à partir du harnais
+// (cf. retour auteur).
 .vsm__04 {
   transition: opacity var(--vsm-fade) var(--ease-out-quart),
               display var(--vsm-fade) allow-discrete;

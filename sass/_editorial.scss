@@ -1406,6 +1406,119 @@ p.has-dropcap::first-letter {
   .reflect__rings { width: 9.5rem; }
 }
 
+// ── H2 · Deux roues TDD, séparées par « ce que Reflect apporte » ──────────────
+// Roue gauche : TDD 3 temps sans Reflect — la cohorte de tests occupe le coin
+// haut-gauche et court-circuite le Red (grisé, barré) en tombant sur Green. Roue
+// droite : le même cycle, mais Reflect occupe CE coin (4ᵉ temps, accent) et referme
+// la boucle. Le pont central liste ce que Reflect apporte. Nœuds en diamant (45°)
+// → labels horizontaux qui ne débordent pas la colonne. Couleurs 1:1 avec
+// reflect-loops/boucle : Red=problem, Green=success, Refactor=info, Reflect=accent.
+.tddw {
+  display: flex;
+  align-items: center;
+  gap: clamp(var(--space-xs), 2vw, var(--space-md));
+}
+
+.tddw__col {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.tddw__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5ch;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+.tddw__tag {
+  font-weight: 400;
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.tddw__col--after .tddw__head { color: var(--accent); }
+
+.tddw__svg {
+  display: block;
+  width: 100%;
+  max-width: 15.5rem;
+  height: auto;
+  margin: 0.2rem auto 0;
+}
+
+// — éléments SVG des roues —
+.tddw__ring { stroke: var(--rule-strong); stroke-width: 1.2; opacity: 0.65; }
+.tddw__dir text { fill: var(--ink-mute); font-size: 12px; opacity: 0.75; }
+.tddw__hub { fill: var(--accent); font-size: 15px; }
+
+.tddw__lbl {
+  fill: var(--surface-ink);   // texte thème-aware (clair sur sombre, sombre sur clair)
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 11px;
+}
+.tddw__lbl--reflect { fill: var(--accent); font-weight: 700; }
+.tddw__sub { fill: var(--ink-mute); font-size: 7.5px; }
+
+.tddw__node--red      circle { fill: var(--c-problem); }
+.tddw__node--green    circle { fill: var(--c-success); }
+.tddw__node--refactor circle { fill: var(--c-info); }
+.tddw__node--reflect  circle { fill: var(--accent); }
+
+// Red court-circuité : grisé, atténué, barré.
+.tddw__node--shorted circle { fill: var(--ink-mute); opacity: 0.5; }
+.tddw__node--shorted .tddw__lbl { fill: var(--ink-mute); opacity: 0.7; text-decoration: line-through; }
+.tddw__strike { stroke: var(--ink-mute); stroke-width: 1.4; }
+
+// Cohorte : encadré pointillé, posé HORS du cycle (ce n'est pas une étape).
+.tddw__cohorte rect { fill: none; stroke: var(--rule-strong); stroke-width: 1; stroke-dasharray: 3 2.5; }
+.tddw__cohorte-l { fill: var(--ink-mute); font-family: var(--font-mono); font-size: 10.5px; }
+.tddw__cohorte-s { fill: var(--ink-mute); font-size: 8px; }
+// Flèche grasse : cohorte court-circuite Red → tombe sur Green.
+.tddw__shortcut { stroke: var(--ink-mute); stroke-width: 2; color: var(--ink-mute); }
+// Flèche BARRÉE : le chemin cohorte → Red, sauté (croix accent-problème).
+.tddw__barred path { stroke: var(--ink-mute); stroke-width: 1.5; color: var(--ink-mute); opacity: 0.55; }
+.tddw__bar-x line { stroke: var(--c-problem); stroke-width: 1.7; }
+
+.tddw__cap {
+  margin: 0;
+  color: var(--ink-mute);
+  font-size: var(--text-xs);
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+// — transition fine entre les deux roues (le détail « ce que Reflect apporte »
+//   vit dans le rail, nœud 04) —
+.tddw__link {
+  flex: 0 0 auto;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3xs);
+}
+.tddw__link-arrow {
+  font-size: 1.7rem;
+  line-height: 1;
+  color: var(--rule-strong);
+}
+
+// Étroit : roues empilées, la flèche pivote.
+@media (max-width: 38rem) {
+  .tddw { flex-direction: column; align-items: stretch; gap: var(--space-sm); }
+  .tddw__svg { max-width: 16rem; }
+  .tddw__link-arrow { display: inline-block; transform: rotate(90deg); }
+}
+
 // Grille de fond — pointillés discrets. Stroke-width et dasharray exprimés
 // en unités viewBox (rendu à ~0.5× en --side).
 .visuel__grid line {
