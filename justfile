@@ -40,14 +40,24 @@ serve-lan *ARGS: kill
     @echo "→ http://{{lan_ip}}:{{port}} (drafts exposés sur le réseau local)"
     zola serve --drafts --interface 0.0.0.0 --port {{port}} --base-url {{lan_ip}} {{ARGS}}
 
-# Vérifie que le serveur de CE port répond (à lancer après `just serve` en arrière-plan)
-ping:
+# Vérifie que le serveur de CE port répond (à lancer après `just serve` en arrière-plan).
+# Optionnel : un CHEMIN précis (→ HTTP + taille) et une CHAÎNE à chercher dans la page.
+# Usage : just ping
+#         just ping /ecrits/mon-article/
+#         just ping /ecrits/mon-article/ tdd-shift   (assert présence)
+ping path="/" needle="":
     @for i in 1 2 3 4 5; do \
-       if curl -sfI http://127.0.0.1:{{port}}/ >/dev/null 2>&1; then \
-         echo "✓ zola répond sur http://127.0.0.1:{{port}}"; exit 0; fi; \
+       if curl -sfI http://127.0.0.1:{{port}}/ >/dev/null 2>&1; then break; fi; \
+       if [ "$i" = "5" ]; then echo "✗ aucune réponse sur :{{port}} après 5s"; exit 1; fi; \
        sleep 1; \
      done; \
-     echo "✗ aucune réponse sur :{{port}} après 5s"; exit 1
+     out=$(curl -s -o /dev/null -w '%{http_code} %{size_download}o' "http://127.0.0.1:{{port}}{{path}}"); \
+     echo "✓ zola :{{port}} — {{path}} → HTTP $out"; \
+     if [ -n "{{needle}}" ]; then \
+       if curl -s "http://127.0.0.1:{{port}}{{path}}" | grep -q -- "{{needle}}"; then \
+         echo "  ✓ « {{needle}} » présent"; \
+       else echo "  ✗ « {{needle}} » ABSENT"; exit 1; fi; \
+     fi
 
 # Build de production (sans drafts), erreurs en clair
 build *ARGS:
