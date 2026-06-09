@@ -278,6 +278,15 @@
   .vsm__loop-cap,
   .vsm__legend { opacity: 0; }
   .vsm__hint { display: none; }
+  // La courbe doit paraître vraiment « standalone » en §1 : on efface les
+  // connecteurs VSM propres au nœud 04 (arête de boucle + flèche de flux),
+  // sinon un reliquat de lignes flotte autour de la courbe isolée. Ils
+  // reviennent en §2 quand la chaîne se matérialise autour (transition douce).
+  [data-step="4"]::before,
+  [data-step="4"]::after { opacity: 0; }
+}
+[data-step="4"]::after {
+  transition: opacity var(--vsm-fade) var(--ease-out-quart);
 }
 // Desktop : la courbe vit dans le 04, les autres nœuds réservent leur place
 // (transparents) → la courbe ne bouge pas, la VSM se matérialise autour.
