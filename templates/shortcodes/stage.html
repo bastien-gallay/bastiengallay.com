@@ -10,7 +10,13 @@
   Clés valides (cf. STAGES dans vsm.js) :
     full · full2 · A · courage · B · C · vigilance · cliff
 
+  `anchor` (optionnel) pose une VRAIE ancre HTML (id) sur le trigger :
+  cible des clics C1.2 du rail (vsm.js pousse le hash dans l'URL → lien
+  partageable) et des accès directs `…/#ancre` (scroll natif au
+  chargement, avant tout JS). Ne le poser que sur les stages ciblés par
+  STEP_ANCHOR — pas d'id parasite sur les triggers purement scrollspy.
+
   Usage (au début d'une section, ligne isolée) :
-    {{ stage(id="A") }}
+    {{ stage(id="A", anchor="harnais") }}
 -#}
-<div class="vsm-trigger" data-stage="{{ id }}" aria-hidden="true"></div>
+<div class="vsm-trigger" data-stage="{{ id }}"{% if anchor %} id="{{ anchor }}"{% endif %} aria-hidden="true"></div>

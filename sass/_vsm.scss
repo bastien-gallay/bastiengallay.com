@@ -354,6 +354,13 @@
   &:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 }
 
+// Les triggers porteurs d'une ancre partageable (stage(anchor=…)) :
+// dégage le header sticky à l'atterrissage — même geste que les
+// footnotes (scroll-margin-top, cf. _editorial.scss).
+.vsm-trigger[id] {
+  scroll-margin-top: var(--space-xl);
+}
+
 // Côté prose (§2) : les titres de groupes portent les numéros d'étapes
 // (lien prose↔rail lisible sans survol — mobile, impression) et un
 // souligné pointillé comme affordance discrète du survol-allumage.

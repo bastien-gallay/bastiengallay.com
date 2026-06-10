@@ -136,10 +136,23 @@
     syncPanel();
   }
 
+  // Navigation par ancre (clic C1.2 ou hash partagé) : le stage cible est
+  // « épinglé » — l'observer est suspendu jusqu'au premier geste de scroll
+  // de l'utilisateur. Sans ça, la bande médiane voit le trigger SUIVANT
+  // (l'ancre atterrit en haut du viewport) et le rail affiche la mauvaise
+  // étape. Le scroll natif du chargement ne déclenche aucun de ces
+  // événements : seul un geste réel dé-épingle.
+  var pinned = false;
+  function unpin() { pinned = false; }
+  ["wheel", "touchstart", "keydown"].forEach(function (ev) {
+    window.addEventListener(ev, unpin, { passive: true });
+  });
+
   // Bande de déclenchement au milieu du viewport : un trigger qui y entre
   // active son stage, qui persiste jusqu'au trigger suivant.
   var obs = new IntersectionObserver(
     function (entries) {
+      if (pinned) return;
       entries.forEach(function (e) {
         if (e.isIntersecting) apply(e.target.dataset.stage);
       });
@@ -185,6 +198,14 @@
     head.setAttribute("tabindex", "0");
     head.setAttribute("aria-label", "Aller au passage où « " + (nm ? nm.textContent : "cette étape") + " » est au premier plan");
     function go() {
+      // Vraie ancre HTML : le hash part dans l'URL (lien partageable, bouton
+      // retour utilisable) via pushState — qui ne déclenche PAS le saut
+      // brutal de `location.hash`, le scroll doux reste le nôtre. Le stage
+      // cible est appliqué tout de suite et épinglé : feedback immédiat sur
+      // le rail, et l'observer ne le réécrira pas à l'atterrissage.
+      if (target.id) history.pushState(null, "", "#" + target.id);
+      pinned = true;
+      apply(key);
       target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
     }
     head.addEventListener("click", go);
@@ -195,4 +216,14 @@
 
   // État initial : la clé du premier trigger, sinon vue complète.
   apply(triggers[0].dataset.stage || "full");
+
+  // Accès direct par ancre partagée (#harnais…) : le stage du trigger ciblé
+  // fait foi, épinglé jusqu'au premier geste de scroll de l'utilisateur.
+  if (location.hash) {
+    var shared = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (shared && shared.classList.contains("vsm-trigger")) {
+      pinned = true;
+      apply(shared.dataset.stage);
+    }
+  }
 })();
