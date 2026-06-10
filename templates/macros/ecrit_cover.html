@@ -36,3 +36,45 @@
   <rect x="0" y="0" width="360" height="240" fill="none" stroke="#111" stroke-width="3"/>
 </svg>
 {%- endmacro m4 -%}
+
+{#-
+  Variante M4 « roue Reflect » (article 2/3) : même chrome que m4 (fond
+  crème, §numéro, bandeau bleu, cadre noir), mais le cercle jaune chiffré
+  est remplacé par la boucle TDD + Reflect du rail (cf. macros/boucle.html),
+  toutes légendes supprimées sauf le mot « Reflect » au centre.
+  Couleurs sémantiques 1:1 avec le rail (problem/success/info/accent),
+  en hex figés comme le reste de la miniature (SVG autonome).
+
+  Frontmatter article :
+    [extra]
+    cover_reflect = true
+    cover_source = "ARTICLE 2/3"
+    cover_titre_court = "QUALITÉ, PAS VITESSE"
+-#}
+{%- macro m4_reflect(source, numero, titre_court) -%}
+<svg class="ecrit__cover ecrit__cover--m4" viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Boucle TDD + Reflect — §{{ numero }}" width="180" height="120">
+  <rect x="0" y="0" width="360" height="240" fill="#f5efe6"/>
+  <text x="22" y="115" font-family="Redaction, Georgia, serif" font-weight="700" fill="#1f3d8c" letter-spacing="-0.02em"><tspan baseline-shift="super" font-size="28">§</tspan><tspan font-size="54" dx="-2">{{ numero }}</tspan></text>
+  <defs>
+    <marker id="m4r-arrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="#111"/>
+    </marker>
+  </defs>
+  <g fill="none" stroke="#111" stroke-width="1.6" opacity="0.5" marker-end="url(#m4r-arrow)">
+    <path d="M279.5 39.4 A58 58 0 0 1 318.6 78.5"/>
+    <path d="M318.6 111.5 A58 58 0 0 1 279.5 150.6"/>
+    <path d="M246.5 150.6 A58 58 0 0 1 207.4 111.5"/>
+    <path d="M207.4 78.5 A58 58 0 0 1 246.5 39.4"/>
+  </g>
+  <circle cx="263" cy="37" r="6" fill="#bf2950"/>
+  <circle cx="321" cy="95" r="6" fill="#1e7a52"/>
+  <circle cx="263" cy="153" r="6" fill="#1f3d8c"/>
+  <circle cx="205" cy="95" r="8" fill="#b8252e"/>
+  <text x="263" y="104" text-anchor="middle" font-family="Redaction, Georgia, serif" font-size="28" font-weight="700" fill="#b8252e">Reflect</text>
+  <rect x="0" y="200" width="360" height="40" fill="#1f3d8c"/>
+  <line x1="0" y1="200" x2="360" y2="200" stroke="#111" stroke-width="3"/>
+  <text x="18" y="225" font-family="ui-monospace, monospace" font-size="11" letter-spacing="2" fill="#f5efe6" font-weight="700">{{ source }}</text>
+  <text x="342" y="225" text-anchor="end" font-family="ui-monospace, monospace" font-size="11" letter-spacing="2" fill="#f5efe6">{{ titre_court }}</text>
+  <rect x="0" y="0" width="360" height="240" fill="none" stroke="#111" stroke-width="3"/>
+</svg>
+{%- endmacro m4_reflect -%}

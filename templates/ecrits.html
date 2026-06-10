@@ -39,6 +39,15 @@
              alt="{{ page.extra.cover_alt | default(value='') }}"
              width="180" height="120"
              loading="lazy" decoding="async">
+      {%- elif page.extra.cover_reflect -%}
+        {#- 1bis. Variante M4 roue TDD + Reflect (article 2/3) : même
+            chrome, roue à la place du cercle chiffré, « Reflect » seul
+            au centre. -#}
+        {{ cover::m4_reflect(
+             source=page.extra.cover_source | default(value=""),
+             numero=page.extra.numero | default(value="01.10"),
+             titre_court=page.extra.cover_titre_court | default(value="")
+        ) }}
       {%- elif page.extra.cover_chiffre -%}
         {#- 2. Template SVG M4 paramétré : cercle jaune + bandeau bleu
             + slots variables (chiffre, source, titre court). Cf. macro

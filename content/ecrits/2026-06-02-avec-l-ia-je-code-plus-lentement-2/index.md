@@ -8,11 +8,10 @@ description = "Ce que l'IA m'apporte vraiment : pas de la vitesse, mais des stan
 numero = "01.21"
 heading_html = "Avec l'IA, je code plus <mark class=\"mark\">lentement</mark> — 2"
 
-# Miniature M4 pour la liste /ecrits (écho au −19 % du 1/3, signe presque
-# identique, sens inversé — c'est le propos de la série).
-cover_chiffre = "−18"
-cover_unite = "%"
-cover_source = "METR · 2026"
+# Miniature M4 pour la liste /ecrits : roue TDD + Reflect, « Reflect »
+# seul au centre (pas de chiffre — −18 ne se compare pas au −19 du 1/3).
+cover_reflect = true
+cover_source = "ARTICLE 2/3"
 cover_titre_court = "QUALITÉ, PAS VITESSE"
 
 # Hero in-article Mondrian b_v3b (cf. macros/ecrit_hero.html + page lab /lab/image-article-2-3).

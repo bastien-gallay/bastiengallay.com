@@ -102,7 +102,6 @@ L'écart entre la perception et la réalité dépassait les 39 points. Ces déve
 
 J'ai moi-même vécu cet écart. Il y a deux ans, avec des modèles bien moins performants, ce qui m'aurait pris une ou deux heures me prenait souvent une demi-journée. Encore aujourd'hui, il m'arrive par réflexe de demander à Claude Code l'édition d'un fichier qu'il fera en trente secondes, là où j'aurais pu terminer en dix.
 
-<!-- brouillon Claude (encart erratum) — prose à revoir à ta voix -->
 <aside class="visuel--side erratum" role="note" aria-label="Mise à jour — février 2026">
   <p class="erratum__kicker">Mise à jour · fév. 2026</p>
   <p>METR a publié une suite à cette étude&nbsp;: sur le même axe, le signe s'inverse — −18&nbsp;% de temps pour les développeurs initiaux, −4&nbsp;% pour les nouveaux — et METR juge ce suivi peu fiable (effets de sélection, projets greenfield).</p>
