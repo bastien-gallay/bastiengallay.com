@@ -2,9 +2,18 @@
 title = "Avec l'IA, je code plus lentement — 2"
 date = 2026-06-02
 draft = true
+description = "Ce que l'IA m'apporte vraiment : pas de la vitesse, mais des standards de qualité tenus sans payer leur coût habituel."
 
 [extra]
 numero = "01.21"
+heading_html = "Avec l'IA, je code plus <mark class=\"mark\">lentement</mark> — 2"
+
+# Miniature M4 pour la liste /ecrits (écho au −19 % du 1/3, signe presque
+# identique, sens inversé — c'est le propos de la série).
+cover_chiffre = "−18"
+cover_unite = "%"
+cover_source = "METR · 2026"
+cover_titre_court = "QUALITÉ, PAS VITESSE"
 
 # Hero in-article Mondrian b_v3b (cf. macros/ecrit_hero.html + page lab /lab/image-article-2-3).
 hero = "b_v3b"
