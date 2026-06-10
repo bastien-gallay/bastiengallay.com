@@ -329,6 +329,47 @@
 }
 .vsm__node.is-dim { opacity: 0.4; }
 
+// ── C1 · survol des puces §2 : groupe « allumé » ────────────────────
+// Pendant le survol d'un titre de groupe (data-vsm-group côté prose),
+// le rail passe en vsm--hot : les nœuds du groupe prennent le wash
+// focus (même langage que is-active, sans déployer le détail), les
+// autres s'estompent. L'état scrollspy reprend la main au mouseleave.
+.vsm--hot .vsm__node { opacity: 0.35; }
+.vsm--hot .vsm__node.is-lit {
+  opacity: 1;
+  background: color-mix(in oklch, var(--accent) 6%, var(--surface));
+  border-color: var(--accent);
+  border-left-width: 3px;
+
+  .vsm__n { color: var(--accent); }
+  .vsm__nm { color: var(--surface-ink); font-weight: 600; }
+}
+
+// ── C1.2 · nœud cliquable → ancre où l'étape est au premier plan ────
+// role=link + tabindex posés par vsm.js (STEP_ANCHOR) ; sans JS, aucun
+// curseur menteur.
+.vsm__node-head[role="link"] {
+  cursor: pointer;
+
+  &:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+}
+
+// Côté prose (§2) : les titres de groupes portent les numéros d'étapes
+// (lien prose↔rail lisible sans survol — mobile, impression) et un
+// souligné pointillé comme affordance discrète du survol-allumage.
+.ecrit-page__content .vsm-hot {
+  text-decoration: underline dotted 1px;
+  text-decoration-color: var(--ink-mute);
+  text-underline-offset: 0.2em;
+}
+.ecrit-page__content .vsm-hot__n {
+  font-family: var(--font-mono);
+  font-size: 0.78em;
+  font-weight: 500;
+  color: var(--ink-mute);
+  letter-spacing: 0.03em;
+}
+
 // ── Bascule courbe METR (§1) ↔ chaîne VSM (§2+) ─────────────────────
 // En §1, le rail porte `vsm--intro` (vsm.js) : la chaîne et ses légendes
 // s'effacent, seule la courbe METR standalone reste. Dès §2, l'inverse.

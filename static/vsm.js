@@ -153,6 +153,46 @@
   if (mobile.addEventListener) mobile.addEventListener("change", onChange);
   else if (mobile.addListener) mobile.addListener(onChange);
 
+  // ── C1 · survol des puces §2 → groupe allumé dans le rail ──────────
+  // Les titres de groupes (data-vsm-group côté prose) allument leurs
+  // étapes pendant le survol ; l'état scrollspy reprend la main au
+  // mouseleave. Enrichissement seul : les numéros d'étapes dans la puce
+  // portent déjà le lien prose↔rail sans survol (mobile, clavier).
+  function litGroup(spec) {
+    var steps = spec ? spec.split(" ") : [];
+    rail.classList.toggle("vsm--hot", steps.length > 0);
+    nodes.forEach(function (node) {
+      node.classList.toggle("is-lit", steps.indexOf(node.dataset.step) !== -1);
+    });
+  }
+  document.querySelectorAll("[data-vsm-group]").forEach(function (h) {
+    h.addEventListener("mouseenter", function () { litGroup(h.dataset.vsmGroup); });
+    h.addEventListener("mouseleave", function () { litGroup(null); });
+  });
+
+  // ── C1.2 · clic sur une étape du rail → ancre où elle est le focus ──
+  // Chaque nœud renvoie au trigger du stage où l'étape est au premier
+  // plan (active/active2 dans STAGES) ; le scrollspy fait le reste.
+  var STEP_ANCHOR = { 1: "cliff", 2: "B", 3: "B", 4: "C", 5: "A", 6: "rigueur-macro", 7: "vigilance" };
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  nodes.forEach(function (node) {
+    var key = STEP_ANCHOR[+node.dataset.step];
+    var target = key && document.querySelector('.vsm-trigger[data-stage="' + key + '"]');
+    var head = node.querySelector(".vsm__node-head");
+    if (!target || !head) return;
+    var nm = node.querySelector(".vsm__nm");
+    head.setAttribute("role", "link");
+    head.setAttribute("tabindex", "0");
+    head.setAttribute("aria-label", "Aller au passage où « " + (nm ? nm.textContent : "cette étape") + " » est au premier plan");
+    function go() {
+      target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+    }
+    head.addEventListener("click", go);
+    head.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
+    });
+  });
+
   // État initial : la clé du premier trigger, sinon vue complète.
   apply(triggers[0].dataset.stage || "full");
 })();
