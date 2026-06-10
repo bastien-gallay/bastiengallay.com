@@ -102,6 +102,13 @@ L'écart entre la perception et la réalité dépassait les 39 points. Ces déve
 
 J'ai moi-même vécu cet écart. Il y a deux ans, avec des modèles bien moins performants, ce qui m'aurait pris une ou deux heures me prenait souvent une demi-journée. Encore aujourd'hui, il m'arrive par réflexe de demander à Claude Code l'édition d'un fichier qu'il fera en trente secondes, là où j'aurais pu terminer en dix.
 
+<!-- brouillon Claude (encart erratum) — prose à revoir à ta voix -->
+<aside class="visuel--side erratum" role="note" aria-label="Mise à jour — février 2026">
+  <p class="erratum__kicker">Mise à jour · fév. 2026</p>
+  <p>METR a publié une suite à cette étude&nbsp;: sur le même axe, le signe s'inverse — −18&nbsp;% de temps pour les développeurs initiaux, −4&nbsp;% pour les nouveaux — et METR juge ce suivi peu fiable (effets de sélection, projets greenfield).</p>
+  <p class="erratum__lien"><a href="/ecrits/avec-l-ia-je-code-plus-lentement-2/">J'en tire les conséquences dans l'article&nbsp;2&nbsp;→</a></p>
+</aside>
+
 Les études antérieures, qui annonçaient 56&nbsp;% ou 21&nbsp;% d'accélération<sup class="footnote-reference"><a href="#3">3</a></sup>, reposaient sur des tâches synthétiques. Or les conditions synthétiques masquent ce qui rend les vrais projets coûteux&nbsp;: la cohérence avec l'existant, la dette technique, les conventions tacites, les contraintes invisibles.
 
 ### On mesure la rédaction, pas la livraison
