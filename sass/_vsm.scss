@@ -293,6 +293,40 @@
 .vsm__ae-act, .vsm__ae-eff { font-size: 0.62rem; line-height: 1.2; padding: 0.26rem 0.38rem; border-radius: 2px; }
 .vsm__ae-arr { font-size: 0.7rem; text-align: center; }
 
+// ── G1 · nœuds 02-03 « vivants » à l'activation ─────────────────────
+// Quand le nœud prend le focus, ses rangées action→effet entrent en
+// léger décalé et la flèche s'allume (accent) avant de retomber en
+// encre muette : « une action PRODUIT son effet » devient un geste
+// visible, pas une ligne morte. Le pattern vsm__ae n'existe que dans
+// les nœuds 02-03 (+ copie panneau mobile) : sélecteur générique = G1.
+// CSS pur ; neutralisé plus bas en prefers-reduced-motion.
+@keyframes vsm-ae-in {
+  from { opacity: 0; transform: translateX(-4px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes vsm-arr-light {
+  0%   { color: var(--accent); }
+  55%  { color: var(--accent); }
+  100% { color: var(--ink-mute); }
+}
+.vsm__node.is-active .vsm__ae-row,
+.vsm__node.is-active-2 .vsm__ae-row,
+.vsm__panel .vsm__ae-row {
+  animation: vsm-ae-in var(--dur-mid) var(--ease-out-quart) backwards;
+}
+.vsm__node.is-active .vsm__ae-arr,
+.vsm__node.is-active-2 .vsm__ae-arr,
+.vsm__panel .vsm__ae-arr {
+  animation: vsm-arr-light 900ms var(--ease-out-quart) backwards;
+}
+.vsm__node.is-active .vsm__ae-row:nth-child(2),
+.vsm__node.is-active-2 .vsm__ae-row:nth-child(2),
+.vsm__panel .vsm__ae-row:nth-child(2) {
+  animation-delay: 140ms;
+
+  .vsm__ae-arr { animation-delay: 140ms; }
+}
+
 // ── États (pilotés par vsm.js) ──────────────────────────────────────
 // Focus = clair-accent (doctrine .impeccable : plus de bloc noir empilé ;
 // wash accent très léger + filet gauche + numéro accent comme signal, ≤10 %
@@ -814,4 +848,6 @@
   .vsm__detail { transition: none; }
   .vsm__node.is-active,
   .vsm__node.is-active-2 { transform: none; }
+  .vsm__ae-row,
+  .vsm__ae-arr { animation: none; }
 }
