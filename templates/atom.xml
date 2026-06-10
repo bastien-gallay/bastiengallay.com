@@ -32,7 +32,10 @@
     {%- if page.description %}
     <summary type="html">{{ page.description }}</summary>
     {%- endif %}
-    <content type="html">{{ page.content }}</content>
+    {#- xml:base : filet de sécurité pour toute URL relative restée dans le
+        contenu (assets colocalisés) — les lecteurs conformes la résolvent
+        contre le permalink de la page, pas contre l'URL du feed. -#}
+    <content type="html" xml:base="{{ page.permalink | safe }}">{{ page.content }}</content>
   </entry>
 {%- endfor %}
 </feed>
