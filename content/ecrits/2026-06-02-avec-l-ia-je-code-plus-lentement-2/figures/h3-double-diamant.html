@@ -1,0 +1,46 @@
+  <p id="h3-desc" class="sr-only">Le double diamant compact des étapes 4-5-6, lu de gauche à droite. En entrée, une intention. Premier losange, le brainstorm adversarial : on explore (l'humain et l'IA se challengent), puis on tranche. Au point de jonction, une session neuve repart d'un contexte transféré. Second losange, code et explication : on code, puis on explique. En sortie, du code maîtrisé.</p>
+
+  <div class="ddia" role="img" aria-labelledby="h3-desc">
+    <svg class="ddia__svg" viewBox="0 0 412 196" aria-hidden="true">
+      <defs>
+        <marker id="ddia-ar" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0 0 L8 4 L0 8 z" fill="currentColor"/>
+        </marker>
+      </defs>
+
+      <!-- entrée : une intention -->
+      <text class="ddia__io" x="40" y="80" text-anchor="middle">une intention</text>
+      <line class="ddia__flow" x1="20" y1="92" x2="66" y2="92" marker-end="url(#ddia-ar)"/>
+
+      <!-- diamant 1 : brainstorm adversarial (espace d'exploration) -->
+      <path class="ddia__diamond ddia__diamond--explore" d="M72 92 L139 52 L206 92 L139 132 Z"/>
+      <!-- diamant 2 : code + explication (espace de construction) -->
+      <path class="ddia__diamond ddia__diamond--build" d="M206 92 L273 52 L340 92 L273 132 Z"/>
+
+      <!-- taille de chaque losange = inflexion diverge | converge -->
+      <line class="ddia__waist" x1="139" y1="58" x2="139" y2="126"/>
+      <line class="ddia__waist" x1="273" y1="58" x2="273" y2="126"/>
+
+      <!-- verbes diverge → converge, à l'intérieur -->
+      <text class="ddia__verb" x="106" y="95" text-anchor="middle">explorer</text>
+      <text class="ddia__verb" x="172" y="95" text-anchor="middle">trancher</text>
+      <text class="ddia__verb" x="240" y="95" text-anchor="middle">coder</text>
+      <text class="ddia__verb" x="306" y="95" text-anchor="middle">expliquer</text>
+
+      <!-- tension adversariale dans le 1er losange : humain ⇄ IA -->
+      <text class="ddia__adv" x="139" y="80" text-anchor="middle" aria-hidden="true">⇄</text>
+
+      <!-- pivot : session neuve (repart d'un contexte transféré) -->
+      <line class="ddia__pivot-stem" x1="206" y1="46" x2="206" y2="88"/>
+      <circle class="ddia__pivot" cx="206" cy="92" r="4.5"/>
+      <text class="ddia__lbl--pivot" x="206" y="40" text-anchor="middle">session neuve</text>
+
+      <!-- titres des deux temps -->
+      <text class="ddia__title" x="139" y="154" text-anchor="middle">brainstorm adversarial</text>
+      <text class="ddia__title" x="273" y="154" text-anchor="middle">code + explication</text>
+
+      <!-- sortie : du code maîtrisé -->
+      <text class="ddia__io" x="374" y="80" text-anchor="middle">code maîtrisé</text>
+      <line class="ddia__flow" x1="344" y1="92" x2="392" y2="92" marker-end="url(#ddia-ar)"/>
+    </svg>
+  </div>

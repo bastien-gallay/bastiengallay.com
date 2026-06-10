@@ -1519,6 +1519,59 @@ p.has-dropcap::first-letter {
   .tddw__link-arrow { display: inline-block; transform: rotate(90deg); }
 }
 
+// ── H3 · Double diamant compact (§ « rigueur de la boucle macro ») ────────────
+// Étapes 4-5-6 en double losange diverge/converge : brainstorm adversarial →
+// session neuve (pivot) → code + explication. Forme que le rail (vertical,
+// séquentiel) ne montre pas. Pivot + tension adversariale ⇄ en accent.
+.ddia { margin: 0; }
+.ddia__svg {
+  display: block;
+  width: 100%;
+  max-width: 34rem;
+  height: auto;
+  margin: 0.2rem auto 0;
+}
+// Les deux espaces : exploration (neutre, problème) puis construction (accent,
+// solution). Le remplissage léger donne corps aux losanges et les distingue.
+.ddia__diamond { stroke: var(--rule-strong); stroke-width: 1.4; }
+.ddia__diamond--explore { fill: var(--surface-sub); }
+.ddia__diamond--build   { fill: var(--accent-soft); stroke: var(--accent); }
+// Taille du losange : trait pointillé marquant le passage diverge → converge.
+.ddia__waist { stroke: var(--rule-strong); stroke-width: 1; stroke-dasharray: 2 3; opacity: 0.7; }
+.ddia__flow { stroke: var(--ink-mute); stroke-width: 1.4; color: var(--ink-mute); }
+// Verbes diverge/converge, à l'intérieur des losanges. Couleur pleine
+// (--surface-ink) pour un contraste sûr sur les deux remplissages, clair et
+// sombre ; rang secondaire porté par le mono + la petite taille face aux titres.
+.ddia__verb {
+  fill: var(--surface-ink);
+  font-family: var(--font-mono);
+  font-size: 9px;
+}
+.ddia__adv { fill: var(--accent); font-size: 14px; }
+.ddia__pivot { fill: var(--accent); }
+.ddia__pivot-stem { stroke: var(--accent); stroke-width: 1; stroke-dasharray: 2 2; }
+// Titres des deux temps (sous chaque losange).
+.ddia__title {
+  fill: var(--surface-ink);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 10px;
+}
+// Entrée / sortie sur les flèches.
+.ddia__io {
+  fill: var(--ink-mute);
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.01em;
+}
+// Pivot : session neuve.
+.ddia__lbl--pivot {
+  fill: var(--accent);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 9px;
+}
+
 // Grille de fond — pointillés discrets. Stroke-width et dasharray exprimés
 // en unités viewBox (rendu à ~0.5× en --side).
 .visuel__grid line {
