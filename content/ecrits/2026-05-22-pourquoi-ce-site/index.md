@@ -22,7 +22,7 @@ milieu de l'écran montrait qu'il y avait eu des erreurs de recopie. Le jeu
 ne répondait à rien.
 
 <figure class="ecrit-figure">
-  <img src="tilt-hs05-aout-1987.webp" width="1400" height="1883" loading="lazy" decoding="async" alt="Tilt - Micro Jeux - Numéro HS 05 - Août 1987 - Couverture">
+  <img src="https://bastiengallay.com/ecrits/pourquoi-ce-site/tilt-hs05-aout-1987.webp" width="1400" height="1883" loading="lazy" decoding="async" alt="Tilt - Micro Jeux - Numéro HS 05 - Août 1987 - Couverture">
   <figcaption class="fig-mark">FIG. 1 · Couverture <em>Tilt — Micro-Jeux</em>, HS 05, août 1987 · <a href="https://www.abandonware-magazines.org/affiche_mag.php?mag=28&amp;num=1013" rel="external">scan abandonware-magazines</a></figcaption>
 </figure>
 
@@ -46,7 +46,7 @@ infinis, un jeu *« nombre secret »* avec des IF/PRINT/INPUT. J'essayais de
 dessiner un polygone avec POINT/LINE — il s'avérait mal fermé à l'affichage.
 
 <figure class="ecrit-figure">
-  <img src="elephant-ca-compte-enormement.png" alt="« Un éléphant ça compte énormément » d'Helme Heine, folio benjamin.">
+  <img src="https://bastiengallay.com/ecrits/pourquoi-ce-site/elephant-ca-compte-enormement.png" alt="« Un éléphant ça compte énormément » d'Helme Heine, folio benjamin.">
   <figcaption class="fig-mark">FIG. 2 · Helme Heine, <em>Un éléphant ça compte énormément</em>, Gallimard Jeunesse, coll. folio benjamin.</figcaption>
 </figure>
 
