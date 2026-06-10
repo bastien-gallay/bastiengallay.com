@@ -1519,6 +1519,16 @@ p.has-dropcap::first-letter {
   .tddw__link-arrow { display: inline-block; transform: rotate(90deg); }
 }
 
+// ── I2 · Gabarit user story en gherkin (§ « note de vigilance ») ──────────────
+// Pré inline au milieu du paragraphe, à la place de la citation. Hérite du
+// fond radical-contrast des pre de prose ; les slots reprennent les classes
+// lt-* des listings (quoi=info, pourquoi=problem ; le ‹how› reste en prose,
+// coloré warning). Seule la compacité est surchargée : 3 lignes, pas un mur.
+.ecrit-page__content pre.gherkin {
+  padding: 0.7rem 1.1rem;
+  line-height: 1.75;
+}
+
 // ── H3 · Double diamant compact (§ « rigueur de la boucle macro ») ────────────
 // Étapes 4-5-6 en double losange diverge/converge : brainstorm adversarial →
 // session neuve (pivot) → code + explication. Forme que le rail (vertical,

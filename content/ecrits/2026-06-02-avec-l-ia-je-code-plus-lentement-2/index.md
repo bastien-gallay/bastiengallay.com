@@ -164,7 +164,13 @@ Storey a nommé ce qui me hantait sans que je le sache. Dans mon cas, je l'ai re
 
 Fin 2025, je développais un jeu vidéo en dilettante. Je perfectionnais le système des dialogues à n'en plus finir. Ce faisant je me sentais de plus en plus perdu. Lors d'une revue, le problème m'a sauté aux yeux : j'avais perdu de vue le "Pourquoi". Pourquoi ce système de dialogue et pourquoi développer ce jeu. Parce que je voulais raconter et expérimenter. C'est la troisième dette, appelée par Storey "dette d'intention"[^storey-intent].
 
-L'apprentissage était fort : prendre le temps de se redemander "pourquoi" dans un troisième niveau de Reflect. Les trois niveaux de Reflect — quoi, comment et pourquoi — rappellent[^triple-loop] la définition des User stories : « As a `<who>` I want `<what>` so that `<why>` », le `<how>` se retrouvant dans le Acceptance Criteria. Sur des projets personnels, seul, avec un rythme irrégulier, je perds souvent le fil et omets l'un de ces niveaux.
+L'apprentissage était fort : prendre le temps de se redemander "pourquoi" dans un troisième niveau de Reflect. Les trois niveaux de Reflect — quoi, comment et pourquoi — rappellent[^triple-loop] la définition des User stories :
+
+<pre class="gherkin">As a    <span class="lt-mute">&lt;who&gt;</span>
+I want  <span class="lt-info lt-strong">&lt;what&gt;</span>
+so that <span class="lt-problem lt-strong">&lt;why&gt;</span></pre>
+
+Le <code class="lt-warning">&lt;how&gt;</code> se retrouve dans le Acceptance Criteria. Sur des projets personnels, seul, avec un rythme irrégulier, je perds souvent le fil et omets l'un de ces niveaux.
 
 {{ diagram(body="reflect-loops.html", label="Les trois niveaux de Reflect en boucles concentriques", caption="Trois anneaux emboîtés, une relecture chacun. Plus la boucle est externe, plus elle est rare — et plus son oubli coûte cher.") }}
 
