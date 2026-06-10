@@ -16,3 +16,6 @@ brainstorm/
 # Zola
 public/
 static/processed_images/
+
+# Lanceur de session local (pointe un worktree de cette machine)
+.claude/launch.json
