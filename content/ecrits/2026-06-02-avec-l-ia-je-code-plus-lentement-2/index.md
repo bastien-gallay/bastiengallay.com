@@ -31,13 +31,13 @@ vsm = true
 
 {{ stage(id="full") }}
 
-Depuis le premier article de cette série, un retour m'a poussé à revoir ma copie. Johan Massin m'a signalé une nouvelle étude METR de février 2026 faisant suite aux −19&nbsp;% de perte de productivité[^metr-prod] avec l'IA. Alors, finalement, est-ce que cette augmentation de productivité attendue a du sens ?
+Depuis le [premier article de cette série](@/ecrits/2026-05-28-avec-l-ia-je-code-plus-lentement/index.md), un retour m'a poussé à revoir ma copie. [Johan Massin](https://www.linkedin.com/in/bob6664569/) m'a signalé une nouvelle étude METR de février 2026 faisant suite aux −19&nbsp;% de perte de productivité[^metr-prod] avec l'IA. Alors, finalement, est-ce que cette augmentation de productivité attendue a du sens ?
 
 Ce qui rend cette suite intéressante à mes yeux, c'est l'aveu de ses auteurs concernant les difficultés méthodologiques rencontrées. Les conditions changent. Les tâches changent de nature. Les développeurs travaillent sur autre chose pendant que l'agent tourne. Cela me rappelle cette proportion des 10/90[^1090] et la charge cognitive. Cet article METR s'arrête sur un problème nouveau : non seulement on ne mesure pas la bonne chose dans la vitesse de développement, mais on n'est plus capable de la mesurer de la bonne manière.
 
 Les difficultés de méthode, elles, n'ont pas été levées — METR juge même son suivi peu fiable. Et les nouveaux chiffres ne prolongent pas le premier : sur le même axe, la variation du temps quand l'IA est autorisée, le +19&nbsp;% de temps de 2025 — plus lent — devient −18&nbsp;% pour les développeurs initiaux et −4&nbsp;% pour les nouveaux — plus vite[^metr-refonte]. Le signe s'inverse. En cause : de moins en moins de développeurs acceptent de participer sans IA, et les projets greenfield affluent dans le panel.
 
-Dans la discussion sur le Slack Okiwi, suite au rappel de Johan, Jean-Baptiste Dusseaut nous questionne&nbsp;:
+Dans la discussion sur le Slack Okiwi, suite au rappel de Johan, [Jean-Baptiste Dusseaut](https://www.linkedin.com/in/jbdusseaut/) nous questionne&nbsp;:
 
 > « C'est quoi, la productivité&nbsp;? Quand je déclare fini&nbsp;? Quand c'est en prod&nbsp;? En prod sans défaut&nbsp;? En prod sans défaut et que des gens s'en servent&nbsp;? »
 
