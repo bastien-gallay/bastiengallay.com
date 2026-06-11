@@ -20,15 +20,17 @@
   // vit dans les nœuds (macro), pas ici. Aligné sur le PLAN, section par
   // section. NB : 7 étapes — l'ancien nœud 6 « test/refacto/Reflect » est
   // devenu la boucle externe ; l'ancien 7 → 6, l'ancien 8 → 7.
+  // 04/05 inversés (2026-06-11) : 04 = Harnais qualité, 05 = Génération du
+  // code (courbe METR + boucle interne).
   var STAGES = {
     full:      { name: "vue complète",  active: [],  active2: [],     partial: [1],                   dim: [],                    loop: "" },
-    full2:     { name: "cartographie",  active: [],  active2: [4],    partial: [1, 3],                dim: [],                    loop: "" },
-    A:         { name: "Le harnais",   active: [5], active2: [],     partial: [3, 6],                dim: [1, 2, 4, 7],          loop: "partial" },
-    courage:   { name: "Le courage",   active: [],  active2: [2],    partial: [5],                   dim: [1, 3, 4, 6, 7],       loop: "partial" },
+    full2:     { name: "cartographie",  active: [],  active2: [5],    partial: [1, 3],                dim: [],                    loop: "" },
+    A:         { name: "Le harnais",   active: [4], active2: [],     partial: [3, 6],                dim: [1, 2, 5, 7],          loop: "partial" },
+    courage:   { name: "Le courage",   active: [],  active2: [2],    partial: [4],                   dim: [1, 3, 5, 6, 7],       loop: "partial" },
     B:         { name: "Casser la complaisance", active: [2], active2: [3], partial: [1],            dim: [4, 5, 6],             loop: "dim" },
-    C:             { name: "Rigueur du cadre", active: [4], active2: [],     partial: [5, 6],                dim: [1, 2, 3, 7],          loop: "dim",     rgb: true },
-    "rigueur-rgb":   { name: "Boucle interne",   active: [4], active2: [],     partial: [5, 6],                dim: [1, 2, 3, 7],          loop: "dim",     rgb: true },
-    "rigueur-macro": { name: "Boucle 4–6",       active: [4], active2: [],     partial: [5, 6],                dim: [1, 2, 3, 7],          loop: "active",  rgb: true },
+    C:             { name: "Rigueur du cadre", active: [5], active2: [],     partial: [4, 6],                dim: [1, 2, 3, 7],          loop: "dim",     rgb: true },
+    "rigueur-rgb":   { name: "Boucle interne",   active: [5], active2: [],     partial: [4, 6],                dim: [1, 2, 3, 7],          loop: "dim",     rgb: true },
+    "rigueur-macro": { name: "Boucle 4–6",       active: [5], active2: [],     partial: [4, 6],                dim: [1, 2, 3, 7],          loop: "active",  rgb: true },
     vigilance: { name: "Vigilance",     active: [7], active2: [],     partial: [1, 2, 3],             dim: [4, 5, 6],             loop: "dim" },
     cliff:     { name: "Le domaine",    active: [1], active2: [],     partial: [],                    dim: [2, 3, 4, 5, 6, 7],    loop: "dim" }
   };
@@ -46,11 +48,11 @@
   function syncPanel() {
     if (!panel) return;
     if (!mobile.matches) { panel.innerHTML = ""; return; }
-    // §1 (intro) : aucun nœud actif, mais la courbe « vit » dans le 04 → on la
+    // §1 (intro) : aucun nœud actif, mais la courbe « vit » dans le 05 → on la
     // montre sous le bandeau (le détail porte courbe + boucle ; le CSS choisit).
     if (rail.classList.contains("vsm--intro")) {
-      var d4 = rail.querySelector('[data-step="4"] .vsm__detail');
-      panel.innerHTML = d4 ? d4.innerHTML : "";
+      var d5 = rail.querySelector('[data-step="5"] .vsm__detail');
+      panel.innerHTML = d5 ? d5.innerHTML : "";
       markZoom();
       return;
     }
@@ -78,7 +80,7 @@
 
   var zoomDlg = null;
   function openZoom() {
-    var src = rail.querySelector('[data-step="4"] .vsm__04--metr .metr');
+    var src = rail.querySelector('[data-step="5"] .vsm__gen--metr .metr');
     if (!src || typeof HTMLDialogElement === "undefined") return;
     if (!zoomDlg) {
       zoomDlg = document.createElement("dialog");
@@ -128,9 +130,9 @@
     // §1 (stage `full`) : la chaîne s'efface, seule la courbe METR reste.
     rail.classList.toggle("vsm--intro", key === "full");
     // La courbe METR ne vit QUE en §1 (intro) et §2 (cartographie) ; dès le
-    // harnais elle disparaît (le 04 n'affiche plus rien jusqu'à la boucle).
+    // harnais elle disparaît (le 05 n'affiche plus rien jusqu'à la boucle).
     rail.classList.toggle("vsm--metr", key === "full" || key === "full2");
-    // Dès §rigueur, la boucle interne (TDD+Reflect) occupe le nœud 04.
+    // Dès §rigueur, la boucle interne (TDD+Reflect) occupe le nœud 05.
     rail.classList.toggle("vsm--rgb", !!c.rgb);
     if (elStage) elStage.textContent = c.name;
     syncPanel();
@@ -186,7 +188,7 @@
   // ── C1.2 · clic sur une étape du rail → ancre où elle est le focus ──
   // Chaque nœud renvoie au trigger du stage où l'étape est au premier
   // plan (active/active2 dans STAGES) ; le scrollspy fait le reste.
-  var STEP_ANCHOR = { 1: "cliff", 2: "B", 3: "B", 4: "C", 5: "A", 6: "rigueur-macro", 7: "vigilance" };
+  var STEP_ANCHOR = { 1: "cliff", 2: "B", 3: "B", 4: "A", 5: "C", 6: "rigueur-macro", 7: "vigilance" };
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
   nodes.forEach(function (node) {
     var key = STEP_ANCHOR[+node.dataset.step];
