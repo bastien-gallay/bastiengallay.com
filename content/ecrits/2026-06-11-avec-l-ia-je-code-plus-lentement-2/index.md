@@ -38,6 +38,13 @@ vsm = true
 
 {{ stage(id="full") }}
 
+> **Série en 3 articles — *Coder avec l'IA***
+> Article 2/3 — *ce que l'IA m'apporte vraiment*.
+> Précédemment&nbsp;: [*Ce que les chiffres ne mesurent pas*](@/ecrits/2026-05-28-avec-l-ia-je-code-plus-lentement/index.md) (art. 1). À suivre&nbsp;: *Quelle stratégie d'équipe&nbsp;?* (art. 3).
+<!-- Lien 3/3 désactivé tant qu'il est draft — à réactiver à sa publication. -->
+
+---
+
 Depuis le [premier article de cette série](@/ecrits/2026-05-28-avec-l-ia-je-code-plus-lentement/index.md), un retour m'a poussé à revoir ma copie. [Johan Massin](https://www.linkedin.com/in/bob6664569/) m'a signalé une nouvelle étude METR de février 2026 faisant suite aux −19&nbsp;% de perte de productivité[^metr-prod] avec l'IA. Alors, finalement, est-ce que cette augmentation de productivité attendue a du sens ?
 
 Ce qui rend cette suite intéressante à mes yeux, c'est l'aveu de ses auteurs concernant les difficultés méthodologiques rencontrées. Les conditions changent. Les tâches changent de nature. Les développeurs travaillent sur autre chose pendant que l'agent tourne. Cela me rappelle cette proportion des 10/90[^1090] et la charge cognitive. Cet article METR s'arrête sur un problème nouveau : non seulement on ne mesure pas la bonne chose dans la vitesse de développement, mais on n'est plus capable de la mesurer de la bonne manière.
