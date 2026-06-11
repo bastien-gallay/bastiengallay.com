@@ -1,7 +1,6 @@
 +++
 title = "Avec l'IA, je code plus lentement — 2"
-date = 2026-06-02
-draft = true
+date = 2026-06-11
 description = "Ce que l'IA m'apporte vraiment : pas de la vitesse, mais des standards de qualité tenus sans payer leur coût habituel."
 
 [extra]

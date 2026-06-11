@@ -36,9 +36,8 @@ une_objet = "sablier"
 
 > **Série en 3 articles — *Coder avec l'IA***
 > Article 1/3 — *ce que les chiffres ne mesurent pas*.
-> À suivre&nbsp;: *Ce que l'IA m'apporte vraiment* (art. 2) · *Quelle stratégie d'équipe&nbsp;?* (art. 3).
-<!-- Liens internes désactivés tant que 2/3 et 3/3 sont draft. À réactiver
-     quand 2/3 est publié — cf. Bloc «&nbsp;article 2/3&nbsp;». -->
+> À suivre&nbsp;: [*Ce que l'IA m'apporte vraiment*](@/ecrits/2026-06-11-avec-l-ia-je-code-plus-lentement-2/index.md) (art. 2) · *Quelle stratégie d'équipe&nbsp;?* (art. 3).
+<!-- Lien 3/3 désactivé tant qu'il est draft — à réactiver à sa publication. -->
 
 ---
 
