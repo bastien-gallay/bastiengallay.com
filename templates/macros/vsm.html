@@ -89,19 +89,41 @@
       {#- Étapes 4-5-6 : zone de la boucle externe (Reflect). Arête d'accent
           partagée (`.vsm__node--loop`, cf. _vsm.scss) qui bascule left→bottom
           en bandeau mobile. La boucle interne (Red→Green→Refactor) vit dans
-          l'étape 4. -#}
+          l'étape 5.
+          04/05 inversés (2026-06-11) : le harnais se pose AVANT de coder —
+          écho test-first et au contre-pied d'ouverture du §3 (« Avant de
+          coder plus, je génère les tests… »). -#}
       <li class="vsm__node vsm__node--loop vsm__node--loop-start" data-step="4">
-        <div class="vsm__node-head"><span class="vsm__n">04</span><span class="vsm__nm">Génération du code</span><span class="vsm__loop-in" title="boucle interne : Red → Green → Refactor" aria-hidden="true">↺</span><span class="vsm__fx">très fort</span></div>
+        <div class="vsm__node-head"><span class="vsm__n">04</span><span class="vsm__nm">Harnais qualité</span><span class="vsm__fx">fort</span></div>
         <div class="vsm__detail">
-          {#- La courbe METR « vit » dans le 04 (§1-§2)… -#}
-          <div class="vsm__04 vsm__04--metr">
+          <p class="vsm__d-title">Le scaffold du jour 1.</p>
+          <p class="vsm__d-entry"><span class="vsm__d-entry-ico" aria-hidden="true">⤳</span> on sort d'un prototype <a class="vsm__d-entry-ref" href="/ecrits/pourquoi-ce-site/">death match · 02</a></p>
+          <p class="vsm__d-note">Avant la 1re règle métier&#160;:</p>
+          {#- Checklist N + 1 : les 4 garde-fous connus cochés, puis la ligne
+              N+1 en case pointillée — le dispositif MONTRE le concept
+              (N connus + 1 pour l'inconnu) au lieu de le redire. -#}
+          <ul class="vsm__check" aria-label="Le harnais : N garde-fous connus, plus un pour l'inconnu">
+            <li>tests manquants</li>
+            <li>linters</li>
+            <li>chaîne de livraison (CI)</li>
+            <li>docs d'intention — README · STANDARDS · LICENSE</li>
+            <li class="vsm__check-np1"><span class="vsm__np1-tag">N+1</span> un de plus, pour l'inconnu</li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="vsm__node vsm__node--loop" data-step="5">
+        <div class="vsm__node-head"><span class="vsm__n">05</span><span class="vsm__nm">Génération du code</span><span class="vsm__loop-in" title="boucle interne : Red → Green → Refactor" aria-hidden="true">↺</span><span class="vsm__fx">très fort</span></div>
+        <div class="vsm__detail">
+          {#- La courbe METR « vit » dans le nœud génération (§1-§2)… -#}
+          <div class="vsm__gen vsm__gen--metr">
             <p class="vsm__d-title">Là où la courbe METR vit.</p>
             {{ metr::curve() }}
           </div>
           {#- …puis, dès §rigueur, le cercle process quitte le rail (traité en figure
-              inline `figures/h2-tdd-reflect.html`) et le 04 porte ce que la 4ᵉ étape
+              inline `figures/h2-tdd-reflect.html`) et le nœud porte ce que la 4ᵉ étape
               Reflect APPORTE — la charge utile, là où le cercle était. -#}
-          <div class="vsm__04 vsm__04--loop">
+          <div class="vsm__gen vsm__gen--loop">
             <p class="vsm__d-title">Ce que Reflect apporte.</p>
             {#- mini-cycle : R → G → R → Reflect (4ᵉ point, accent) — ancre le haut. -#}
             <p class="vsm__mini" aria-hidden="true">
@@ -114,22 +136,6 @@
               <li><span class="vsm__gain-ic" aria-hidden="true">↩</span><span><b class="vsm__gain-t">rend la main</b> <span class="vsm__gain-g">à l'humain, plus souvent</span></span></li>
             </ul>
           </div>
-        </div>
-      </li>
-
-      <li class="vsm__node vsm__node--loop" data-step="5">
-        <div class="vsm__node-head"><span class="vsm__n">05</span><span class="vsm__nm">Harnais qualité</span><span class="vsm__fx">fort</span></div>
-        <div class="vsm__detail">
-          <p class="vsm__d-title">Le scaffold du jour 1.</p>
-          <p class="vsm__d-entry"><span class="vsm__d-entry-ico" aria-hidden="true">⤳</span> on sort d'un prototype <span class="vsm__d-entry-ref">death match · 02</span></p>
-          <p class="vsm__d-note">Avant la 1re règle métier&#160;:</p>
-          <ul class="vsm__list" aria-label="Le harnais posé avant la première règle métier">
-            <li>tests manquants</li>
-            <li>linters</li>
-            <li>chaîne de livraison (CI)</li>
-            <li>docs d'intention — README · STANDARDS · LICENSE</li>
-          </ul>
-          <p class="vsm__np1"><span class="vsm__np1-tag">N+1</span> garde-fous connus, +1 pour l'inconnu — shift-left, mutation testing, analyse statique…</p>
         </div>
       </li>
 
