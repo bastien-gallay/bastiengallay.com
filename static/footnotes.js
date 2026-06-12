@@ -22,6 +22,7 @@
     "metr-refonte": "METR 2026",
     "beck-tidy": "Tidy First",
     "beck-90": "Beck, 90 %",
+    "reflect-directive": "CODING_STANDARDS",
     "speckit": "Spec Kit",
     "openspec": "OpenSpec",
     "bmad": "BMAD",
