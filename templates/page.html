@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% import "macros/ecrit_hero.html" as hero %}
 {% import "macros/vsm.html" as vsm %}
+{% import "macros/serie.html" as serie %}
 
 {% block title %}{{ page.title }} — Bastien Gallay{% endblock %}
 {% block description %}{{ page.description | default(value="Notes et articles de Bastien Gallay.") }}{% endblock %}
@@ -54,6 +55,12 @@
     {% endif %}
   </header>
 
+  {#- Encart de série généré depuis le front-matter (macros/serie.html) —
+      remplace les blockquotes manuels dans la prose. -#}
+  {%- if page.extra.series | default(value="") -%}
+  {{ serie::encart(page=page) }}
+  {%- endif -%}
+
   {%- if page.extra.vsm | default(value=false) -%}
   <div class="ecrit-vsm">
     <div class="ecrit-page__content prose has-dropcap">
@@ -65,6 +72,12 @@
   <div class="ecrit-page__content prose has-dropcap">
     {{ page.content | safe }}
   </div>
+  {%- endif -%}
+
+  {#- Nav de série en fin de lecture : tous les épisodes, le courant marqué,
+      les à-paraître inertes (jamais de lien mort en prod). -#}
+  {%- if page.extra.series | default(value="") -%}
+  {{ serie::nav(page=page) }}
   {%- endif -%}
 
   {# CTA périphérique (jamais une section de home, jamais de popup) :

@@ -292,6 +292,122 @@
   font-style: italic;
 }
 
+// ── Série (A2) — encart de tête + nav de fin, générés par macros/serie.html.
+// Langage §NN : pill saturée + mono, filets, pas de boîte. Tokens sémantiques
+// uniquement → aucun override dark nécessaire.
+.serie-encart {
+  margin-top: var(--space-md);
+  max-width: var(--measure-base);
+  border-top: 2px solid var(--surface-ink);
+  border-bottom: 1px solid var(--rule);
+  padding: var(--space-2xs) 0 var(--space-xs);
+  font-size: var(--text-sm);
+  color: var(--ink-mute);
+}
+
+.serie-encart__kicker {
+  display: flex;
+  gap: 0.6em;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.serie-encart__pill {
+  background: var(--c-problem);
+  color: var(--surface);
+  padding: 0.18em 0.6em;
+  font-weight: 600;
+}
+
+.serie-encart__titre { color: var(--surface-ink); }
+
+.serie-encart__fil {
+  margin-top: var(--space-2xs);
+
+  a { color: var(--ink-soft); }
+}
+
+.serie-encart__ici { color: var(--surface-ink); }
+.serie-encart__avenir { color: var(--ink-mute); }
+
+.serie-nav {
+  margin-top: var(--space-xl);
+  max-width: var(--measure-base);
+  border-top: 2px solid var(--surface-ink);
+  padding-top: var(--space-xs);
+}
+
+.serie-nav__kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-problem);
+  font-weight: 600;
+}
+
+.serie-nav__liste {
+  margin: var(--space-xs) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: serie;
+  font-size: var(--text-sm);
+}
+
+.serie-nav__item {
+  counter-increment: serie;
+  display: flex;
+  gap: 0.6em;
+  align-items: baseline;
+  padding: 0.35em 0;
+
+  & + & { border-top: 1px solid var(--rule); }
+
+  &::before {
+    content: counter(serie) ".";
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-mute);
+    min-width: 1.4em;
+  }
+}
+
+.serie-nav__item--ici::before { color: var(--c-problem); font-weight: 600; }
+
+.serie-nav__titre {
+  font-style: italic;
+  color: var(--ink-soft);
+
+  .serie-nav__item--ici & {
+    color: var(--surface-ink);
+    font-weight: 600;
+  }
+
+  .serie-nav__item--avenir & { color: var(--ink-mute); }
+}
+
+.serie-nav__meta {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-mute);
+}
+
+.serie-nav__meta--ici { color: var(--c-problem); font-weight: 600; }
+
+.serie-nav__badge {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  border: 1px solid var(--ink-mute);
+  padding: 0.1em 0.45em;
+  color: var(--ink-mute);
+}
+
 .ecrit-page__content {
   font-family: var(--font-body);
   font-size: var(--text-base);

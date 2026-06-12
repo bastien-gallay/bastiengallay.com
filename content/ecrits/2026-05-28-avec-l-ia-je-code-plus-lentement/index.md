@@ -34,13 +34,6 @@ cover_titre_court = "CODER LENTEMENT"
 une_objet = "sablier"
 +++
 
-> **Série en 3 articles — *Coder avec l'IA***
-> Article 1/3 — *ce que les chiffres ne mesurent pas*.
-> À suivre&nbsp;: [*Ce que l'IA m'apporte vraiment*](@/ecrits/2026-06-11-avec-l-ia-je-code-plus-lentement-2/index.md) (art. 2) · *Quelle stratégie d'équipe&nbsp;?* (art. 3).
-<!-- Lien 3/3 désactivé tant qu'il est draft — à réactiver à sa publication. -->
-
----
-
 ## Une anecdote, pour commencer
 
 Le 4 avril 2026, j'ai vibe-codé un outil en quelques heures pour gérer mes tâches quotidiennes. Il s'appelait `daily-ops`. Une glu en Python autour de mes `TODO.md`, capable de me faire passer d'un projet à l'autre sans friction. Ça marchait. J'étais content.

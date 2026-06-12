@@ -1,0 +1,90 @@
+{#- Navigation de série auto-générée depuis le front-matter (A2, torture 2026-06-12).
+
+    Source de vérité : extra.series / series_title / series_index /
+    series_total / series_part_subtitle des épisodes PUBLIÉS — en build prod,
+    Zola exclut les drafts de section.pages : un épisode non publié n'est
+    jamais lié, par construction.
+
+    Teasers des épisodes à paraître : table [extra.series_a_paraitre] de
+    content/ecrits/_index.md, clé = slug de série, valeur = liste de
+    sous-titres. Supprimer l'entrée à la publication de l'épisode ; le
+    slice sur `restant` rend l'oubli inoffensif (rien ne s'affiche en trop).
+
+    Deux macros, même donnée : encart(page) en tête (orientation, une ligne),
+    nav(page) en fin (liste actionnable). -#}
+
+{%- macro encart(page) -%}
+{%- set section = get_section(path="ecrits/_index.md") -%}
+{%- set publies = section.pages | filter(attribute="extra.series", value=page.extra.series) | sort(attribute="extra.series_index") -%}
+{%- set registre = section.extra | get(key="series_a_paraitre", default=false) -%}
+{%- if registre and page.extra.series in registre -%}
+  {%- set teasers = registre[page.extra.series] -%}
+{%- else -%}
+  {%- set teasers = [] -%}
+{%- endif -%}
+{%- set base = publies | length -%}
+{%- set restant = page.extra.series_total - base -%}
+<aside class="serie-encart" aria-label="Série « {{ page.extra.series_title }} », article {{ page.extra.series_index }} sur {{ page.extra.series_total }}">
+  <p class="serie-encart__kicker">
+    <span class="serie-encart__pill">SÉRIE {{ page.extra.series_index }}/{{ page.extra.series_total }}</span>
+    <span class="serie-encart__titre">{{ page.extra.series_title }}</span>
+  </p>
+  <p class="serie-encart__fil">
+    {%- for ep in publies -%}
+      {%- if not loop.first %} · {% endif -%}
+      {%- if ep.extra.series_index == page.extra.series_index -%}
+        <span class="serie-encart__ici"><em>{{ ep.extra.series_part_subtitle }}</em>&nbsp;(art.&nbsp;{{ ep.extra.series_index }}, ici)</span>
+      {%- else -%}
+        <a href="{{ ep.permalink | safe }}"><em>{{ ep.extra.series_part_subtitle }}</em></a>&nbsp;(art.&nbsp;{{ ep.extra.series_index }})
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if restant > 0 -%}
+      {%- for teaser in teasers | slice(end=restant) %} · <span class="serie-encart__avenir"><em>{{ teaser }}</em>&nbsp;(art.&nbsp;{{ base + loop.index }}, à&nbsp;paraître)</span>{%- endfor -%}
+      {%- if teasers | length == 0 %} · <span class="serie-encart__avenir">{{ restant }} épisode{{ restant | pluralize }} à&nbsp;paraître</span>{%- endif -%}
+    {%- endif -%}
+  </p>
+</aside>
+{%- endmacro encart -%}
+
+{%- macro nav(page) -%}
+{%- set section = get_section(path="ecrits/_index.md") -%}
+{%- set publies = section.pages | filter(attribute="extra.series", value=page.extra.series) | sort(attribute="extra.series_index") -%}
+{%- set registre = section.extra | get(key="series_a_paraitre", default=false) -%}
+{%- if registre and page.extra.series in registre -%}
+  {%- set teasers = registre[page.extra.series] -%}
+{%- else -%}
+  {%- set teasers = [] -%}
+{%- endif -%}
+{%- set base = publies | length -%}
+{%- set restant = page.extra.series_total - base -%}
+<nav class="serie-nav" aria-label="Tous les épisodes de la série « {{ page.extra.series_title }} »">
+  <p class="serie-nav__kicker">SÉRIE — {{ page.extra.series_title }} · {{ page.extra.series_index }}/{{ page.extra.series_total }}</p>
+  <ol class="serie-nav__liste">
+    {%- for ep in publies %}
+    <li class="serie-nav__item{% if ep.extra.series_index == page.extra.series_index %} serie-nav__item--ici{% endif %}">
+      {%- if ep.extra.series_index == page.extra.series_index -%}
+        <span class="serie-nav__titre">{{ ep.extra.series_part_subtitle }}</span>
+        <span class="serie-nav__meta serie-nav__meta--ici" aria-hidden="true">ICI</span>
+      {%- else -%}
+        <a class="serie-nav__titre" href="{{ ep.permalink | safe }}">{{ ep.extra.series_part_subtitle }}</a>
+        <span class="serie-nav__meta">{{ ep.date | date(format="%d/%m/%Y") }}</span>
+      {%- endif -%}
+    </li>
+    {%- endfor -%}
+    {%- if restant > 0 -%}
+      {%- for teaser in teasers | slice(end=restant) %}
+    <li class="serie-nav__item serie-nav__item--avenir">
+      <span class="serie-nav__titre">{{ teaser }}</span>
+      <span class="serie-nav__badge">À PARAÎTRE</span>
+    </li>
+      {%- endfor -%}
+      {%- if teasers | length == 0 %}
+    <li class="serie-nav__item serie-nav__item--avenir">
+      <span class="serie-nav__titre">{{ restant }} épisode{{ restant | pluralize }}</span>
+      <span class="serie-nav__badge">À PARAÎTRE</span>
+    </li>
+      {%- endif -%}
+    {%- endif -%}
+  </ol>
+</nav>
+{%- endmacro nav -%}
