@@ -49,8 +49,17 @@ si aucun finding n'a changé d'axe.
 
 ## Migration fondatrice
 
-Au premier `synthese` via ce skill : `git mv` (dépôt `.personal`) de
-`improvements/2026-06-11-revue-site/charte.typ` et
-`…/synthese-transverse.typ` vers `revues/`, ajuster le chemin des imports
-(`#import "charte.typ"` reste valide si les deux bougent ensemble), recompiler,
-committer dans `.personal`. Les decks d'axe fondateurs ne bougent pas.
+Au premier `synthese` via ce skill, dans le dépôt `.personal` :
+
+- **Copier** (pas déplacer) `improvements/2026-06-11-revue-site/charte.typ`
+  vers `revues/charte.typ` — les trois decks fondateurs importent
+  `charte.typ` colocalisée : la déplacer casserait leur recompilation
+  (ce sont des instantanés, ils doivent rester compilables tels quels).
+- `git mv` de `…/synthese-transverse.typ` (et son PDF) vers `revues/` —
+  lui seul est vivant, il importera la copie de `revues/`.
+- Recompiler la synthèse ET un deck fondateur (preuve que rien n'est cassé),
+  committer dans `.personal`.
+
+Les deux `charte.typ` divergeront peut-être un jour : celle de `revues/`
+fait foi pour les runs futurs ; celle du dossier fondateur est gelée avec
+ses decks.

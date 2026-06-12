@@ -1,12 +1,6 @@
 ---
 name: revue
-description: >
-  Mise à jour totale ou partielle de la revue multi-axes du site (éditorial,
-  visuel, tech, prose — plus perf en demi-axe et mesure/pilotage prototypé
-  inactif), avec synthèse transverse vivante, vérification adversariale,
-  reprise incrémentale et relecture des passes précédentes. Trigger : l'utilisateur
-  tape `/revue`, demande à « rejouer la revue », « mettre à jour la synthèse »,
-  « relancer l'axe visuel/tech/éditorial/prose », ou « où en est la revue ? ».
+description: Mise à jour totale ou partielle de la revue multi-axes du site (éditorial, visuel, tech, prose — plus perf en demi-axe et mesure/pilotage prototypé inactif), avec synthèse transverse vivante, vérification adversariale, reprise incrémentale et relecture des passes précédentes. Trigger : l'utilisateur tape `/revue`, demande à « rejouer la revue », « mettre à jour la synthèse », « relancer l'axe visuel/tech/éditorial/prose », ou « où en est la revue ? ».
 ---
 
 # /revue — revue multi-axes du site, incrémentale et adversariale
@@ -20,8 +14,10 @@ ailleurs : l'état persistant, la relecture des passes, la synthèse transverse.
 
 1. **Lecture seule sur le site.** Une revue ne modifie jamais `content/`,
    `templates/`, `sass/`, `static/`. Les artefacts vont dans `.personal/revues/`.
-2. **Instantanés vs vivant.** Chaque passe d'axe est un instantané daté qu'on
-   ne réédite pas. Seule la synthèse (`synthese-transverse.typ`) se met à jour.
+2. **Instantanés vs vivant.** Les *decks* d'axe sont des instantanés datés
+   qu'on ne réédite jamais ; seule la synthèse (`synthese-transverse.typ`) se
+   met à jour. Les *findings JSON* suivent une règle propre — voir « Cycle de
+   vie des findings » plus bas.
 3. **Adversarial partout.** Tout finding non trivial passe au tribunal :
    CONFIRMÉ / PLAUSIBLE / RÉFUTÉ, citation `fichier:ligne` obligatoire. Les
    réfutés sont consignés dans le JSON du run (anti-réouverture).
@@ -57,7 +53,7 @@ ailleurs : l'état persistant, la relecture des passes, la synthèse transverse.
 | `/revue visuelle [--rapide] [--fraiche]` | Axe visuel via `/impeccable critique` + section perf obligatoire. |
 | `/revue tech [--rapide] [--fraiche]` | Axe technique via `/code-review` (cadré dépôt entier si l'arbre est propre). |
 | `/revue prose [--rapide] [--fraiche]` | Axe prose : lucid-lint sur les articles publiés (dogfood). |
-| `/revue perf` | Le demi-axe seul : poids des pages, fonts, budget — sans relancer le visuel. |
+| `/revue perf` | Le demi-axe seul : poids des pages, fonts, budget — sans relancer le visuel. Référence : la section perf de `reference/axe-visuel.md`. |
 | `/revue mesure` | Prototype **inactif** : explique l'état et les conditions d'activation. Jamais d'auto-activation. |
 | `/revue synthese` | Recalcule convergences + file unique, met à jour le deck vivant et les slots feature-torture. |
 | `/revue maj` | Après un lot terminé ou un verdict `/feature-torture` : met à jour statuts, baselines, synthèse. |
@@ -88,9 +84,12 @@ jamais l'ordre :
 
 **Reprise incrémentale** : la relecture EST la reprise. On ne re-juge que
 (a) les findings dont les fichiers ont bougé depuis le run précédent,
-(b) les zones nouvelles (`git log --name-only --since=<date du run>`).
-Un run incrémental qui ne trouve rien de neuf met à jour les statuts et la
-date — il ne fabrique pas de deck pour rien.
+(b) les findings « hors dépôt » (`fichiers: []` — LinkedIn, Buttondown,
+décisions : git ne peut rien en dire, le LLM les re-juge à chaque run),
+(c) les zones nouvelles (`git log --name-only --since=<horodatage>`).
+Même en mode complet : si la relecture ne change rien et ne trouve rien de
+neuf, on met à jour JSON et baselines et on **ne fabrique pas de deck** —
+un deck vide n'est pas un livrable.
 
 | Axe | Script d'évidence | Moteur LLM |
 | --- | --- | --- |
@@ -140,7 +139,23 @@ date — il ne fabrique pas de deck pour rien.
 
 Cycle des statuts : `ouvert` → `corrige` | `perime` | `refute-aposteriori`
 | `reporte` | `exempte` (décision utilisateur). Les ids restent stables d'un
-run à l'autre quand le finding persiste.
+run à l'autre quand le finding persiste. Le champ optionnel `horodatage`
+(ISO 8601 avec heure) précise le moment du run — `relecture.py` s'en sert
+pour `git --since` au lieu de la date à minuit (sinon : bruit de faux
+« à revérifier » pour tout commit du jour du run).
+
+### Cycle de vie des findings (qui édite quoi)
+
+- **Un run d'axe** écrit un **nouveau** JSON daté qui **reporte tous les
+  findings** du run précédent (tous statuts confondus, ids stables) avec les
+  statuts mis à jour, plus les nouveaux. L'ancien JSON devient immuable.
+- **`/revue maj`** (lot terminé, verdict torture) édite **le dernier JSON de
+  l'axe en place** — c'est l'état courant, le seul fichier mutable.
+- **Un run par axe et par jour** : relancer le même jour écrase le JSON du
+  jour (c'est voulu : l'état du jour). La synthèse lit toujours « le plus
+  récent par axe » = dernier nom de fichier en tri lexicographique.
+- Un finding `exempte` ne se rouvre **que** sur demande explicite de
+  l'utilisateur — jamais par une relecture.
 
 ## État persistant — `.personal/revues/`
 
@@ -194,3 +209,8 @@ fondateurs sont déjà seedés dans `findings/`.
   publié » doit filtrer `draft = true`.
 - Typst : pièges listés dans `reference/typst.md` (les revues fondatrices ont
   toutes trébuché dessus).
+- Scripts : Python ≥ 3.11 requis (`tomllib`) — `uv run` sur cette machine le
+  garantit ; ailleurs, vérifier avant d'accuser le script.
+- `runs/` et ses sous-dossiers se créent au premier run concerné (`mkdir -p`),
+  ils n'existent pas d'avance. Les captures fondatrices restent dans
+  `improvements/2026-06-11-revue-site/captures/` (documenté dans le README).

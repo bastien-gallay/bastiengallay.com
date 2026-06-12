@@ -165,8 +165,13 @@ def check_liens_commentes(toutes: list) -> dict:
         for i, ligne in enumerate(body.splitlines(), 1):
             if "<!--" in ligne:
                 en_commentaire = True
-            if en_commentaire and ("](@/" in ligne or "href=" in ligne):
-                details.append(f"{rel}:{i + decalage} : lien dans un commentaire HTML (maintenance manuelle)")
+            if en_commentaire:
+                pos_lien = max(ligne.find("](@/"), ligne.find("href="))
+                pos_fin = ligne.find("-->")
+                # Lien après la fermeture du commentaire sur la même ligne :
+                # il n'est PAS commenté, ne pas le signaler.
+                if pos_lien != -1 and (pos_fin == -1 or pos_lien < pos_fin):
+                    details.append(f"{rel}:{i + decalage} : lien dans un commentaire HTML (maintenance manuelle)")
             if "-->" in ligne:
                 en_commentaire = False
     return {"id": "liens-commentes", "statut": "alerte" if details else "ok", "details": details[:20]}

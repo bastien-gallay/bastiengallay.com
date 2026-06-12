@@ -27,6 +27,13 @@ def racine() -> Path:
     return Path(out.stdout.strip())
 
 
+def page_de(html: Path, public: Path) -> str:
+    if html.name != "index.html":
+        return "/" + str(html.relative_to(public))
+    parent = html.relative_to(public).parent
+    return "/" if str(parent) == "." else "/" + str(parent)
+
+
 def asset_local(url: str) -> str | None:
     for base in BASE_URLS:
         if url.startswith(base):
@@ -65,7 +72,7 @@ def main() -> int:
         for f in refs:
             compteur_assets[str(f.relative_to(public))] = f.stat().st_size
         poids_pages.append({
-            "page": ("/" + str(html.relative_to(public).parent)).replace("/.", "/") if html.name == "index.html" else "/" + str(html.relative_to(public)),
+            "page": page_de(html, public),
             "html_ko": round(html_ko, 1),
             "assets_ko": round(assets_ko, 1),
             "total_ko": round(html_ko + assets_ko, 1),

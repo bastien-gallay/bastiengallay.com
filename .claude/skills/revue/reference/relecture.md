@@ -15,10 +15,15 @@ incrémentale : un run ne repart jamais de zéro sans raison.
      zéro re-jugement (c'est l'économie principale).
    - **`fichier_disparu`** : candidat `perime` — vérifier que la disparition
      règle le fond (un fichier renommé déplace le finding, il ne le clôt pas).
-2. **Mise à jour des statuts** dans un NOUVEAU findings JSON daté (on ne
-   réédite pas l'ancien) : `corrige` (avec commit si identifiable), `perime`,
+2. **Mise à jour des statuts** dans un NOUVEAU findings JSON daté (l'ancien
+   devient immuable) : `corrige` (avec commit si identifiable), `perime`,
    `refute-aposteriori` (le run précédent s'était trompé — le dire), ou
-   maintien `ouvert`.
+   maintien `ouvert`. **Règle de report** : le nouveau JSON reprend TOUS les
+   findings du précédent, y compris `corrige`/`exempte`/`reporte` (ids
+   stables) — un finding ne disparaît jamais silencieusement. Les `exempte`
+   sont reportés tels quels, jamais rejugés sans demande utilisateur.
+   Les findings « hors dépôt » (`fichiers: []`, triés `hors_depot` par le
+   script) sont re-jugés par le LLM à chaque run : git ne peut rien en dire.
 3. **Chasse au neuf ciblée** : `git log --name-only --since=<date du dernier
    run>` donne les zones à examiner en priorité. En `--rapide`, c'est la
    seule chasse au neuf.
@@ -33,8 +38,9 @@ fondée sur des erreurs ou un mauvais contenu (mauvais build, mauvais
 checkout, contexte faux, outil cassé). Alors :
 
 - Exiger la raison, la consigner : `"fraiche_raison": "…"` dans le JSON.
-- L'ancien run reste sur disque (instantané), mais ses findings `ouvert`
-  passent `refute-aposteriori` en bloc avec la même raison.
+- L'ancien fichier reste sur disque, **intouché** ; c'est dans le NOUVEAU
+  JSON que ses findings `ouvert` sont reportés en `refute-aposteriori`
+  en bloc, avec la même raison.
 - Le nouveau run repart sans liste anti-réouverture (elle était suspecte
   aussi).
 

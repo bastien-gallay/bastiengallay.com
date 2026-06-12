@@ -70,8 +70,10 @@ def main() -> int:
         return 2
 
     data = json.loads(source.read_text(encoding="utf-8"))
-    date = data.get("date", "1970-01-01")
-    triage = {"a_reverifier": [], "inchange": [], "fichier_disparu": []}
+    # L'horodatage précis (s'il existe) évite le bruit des commits du jour du
+    # run : --since à la date seule repart de minuit et re-signale tout.
+    date = data.get("horodatage") or data.get("date", "1970-01-01")
+    triage = {"a_reverifier": [], "inchange": [], "fichier_disparu": [], "hors_depot": []}
 
     def a_un_historique(fi: str) -> bool:
         run = subprocess.run(
@@ -85,6 +87,11 @@ def main() -> int:
             continue
         fichiers = f.get("fichiers", [])
         entree = {"id": f.get("id"), "titre": f.get("titre"), "fichiers": fichiers}
+        if not fichiers:
+            # Hors dépôt (LinkedIn, Buttondown, décisions) : git ne peut rien
+            # en dire — à re-juger par le LLM à chaque run.
+            triage["hors_depot"].append(entree)
+            continue
         if any(commits_depuis(root, date, fi) for fi in fichiers):
             # Du mouvement depuis le run (création, modif ou suppression) → re-juger.
             entree["commits"] = {fi: commits_depuis(root, date, fi)[:5] for fi in fichiers}
@@ -111,8 +118,9 @@ def main() -> int:
         "compte": {k: len(v) for k, v in triage.items()},
         "refutes_anti_reouverture": data.get("refutes", []),
         "zones_modifiees_depuis": zones_modifiees(root, date),
-        "conseil": "Ne re-juger que `a_reverifier` et `fichier_disparu` ; "
-                   "chasser du neuf dans `zones_modifiees_depuis` uniquement.",
+        "conseil": "Re-juger `a_reverifier`, `fichier_disparu` et `hors_depot` "
+                   "(git est aveugle sur ces derniers) ; reporter TOUS les findings "
+                   "dans le nouveau JSON ; chasser du neuf dans `zones_modifiees_depuis` uniquement.",
     }, ensure_ascii=False, indent=2))
     return 0
 

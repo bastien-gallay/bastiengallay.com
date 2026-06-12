@@ -61,10 +61,10 @@ def main() -> int:
         if len(axes) >= 2:
             groupes.append({"type": "fichier_partage", "cle": fichier, "findings": liste})
 
-    deja = {(g["findings"][0]["id"], g["findings"][-1]["id"]) for g in groupes}
+    deja = [{f["id"] for f in g["findings"]} for g in groupes]
     for i, (e1, t1) in enumerate(entrees):
         for e2, t2 in entrees[i + 1:]:
-            if e1["axe"] == e2["axe"] or (e1["id"], e2["id"]) in deja:
+            if e1["axe"] == e2["axe"] or any({e1["id"], e2["id"]} <= ids for ids in deja):
                 continue
             communs = t1 & t2
             if len(communs) >= 2:

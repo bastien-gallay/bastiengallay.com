@@ -11,6 +11,9 @@
      `.github/workflows/`, `zola.toml`.
    - Effort : `high` par défaut, `xhigh` si l'utilisateur veut l'exhaustivité
      (budget : 9 finders + 1 vérification par candidat + sweep).
+   - **En `--rapide` : ne PAS invoquer le moteur** (incompatible avec le
+     budget « zéro ou un sous-agent »). Le run rapide = relecture + triage
+     git seulement ; au mieux, un seul vérificateur sur les `a_reverifier`.
 3. **Adaptation des angles au dépôt entier** (quand pas de diff) : scan
    ligne à ligne templates et JS ; auditeur d'invariants des garde-fous
    (hooks, CI, zola check) ; traceur de contrats croisés templates↔JS↔Sass↔
