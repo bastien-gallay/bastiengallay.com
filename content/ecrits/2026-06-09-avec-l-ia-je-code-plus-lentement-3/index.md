@@ -27,15 +27,20 @@ gabarit As a <who> / I want <what> / so that <why>) est codée pour le 2/3 §7
 ci-dessus — DÉCISION NON PRISE, à trancher au brainstorm du 3/3.
 -->
 
-<!-- déplacé depuis le premier article de la série -->
+<!--
+SQUELETTE §1 — opposition A vs B, QUALITATIVE (à finaliser en /redaction).
+Nettoyage 2026-07-01 : tous les chiffres du « calcul » précédent (9 %, −50 %,
+−19 %/+41 %, facteur 2, +30 %, −35 %) ont été RETIRÉS — aucune source (absents des
+notes et de l'article 1 publié), et le dispositif chiffré tombait sous l'anti-pattern
+A12 (« faux concret générique »). Décision : garder l'opposition en qualitatif, courte,
+assumée comme modèle explicite (pas un faux témoignage). La preuve chiffrée est déportée
+sur des sources (METR, DORA « amplifier », Spinellis). Cf. SUIVI §4.1.
+-->
 
-Prendre le temps de produire un code maîtrisé par le développeur, c'est long. Mais faisons le calcul rapidement. Étudions le cas de deux entreprises A et B:
+Prendre le temps de produire un code que le développeur maîtrise, c'est long. Posons deux façons de faire, deux entreprises A et B.
 
-L'entreprise A se concentre sur l'accélération par l'IA: les développeurs optimisent la création de code - les 10% - en priorité.
-L'entreprise B se concentre sur la qualité avec l'IA: les développeurs  pour créer un logiciel de haute qualité.
+L'entreprise A mise sur l'accélération par l'IA : les développeurs optimisent en priorité la création de code. L'entreprise B mise sur la qualité avec l'IA : les développeurs collaborent pour produire un logiciel qu'ils maîtrisent.
 
-Dans le cas A,  les développeurs ont les meilleurs outils pour générer du code rapidement, le documenter, le pousser sur git et livrer en production. Ils décuplent la productivité brute. Ce sera ainsi 9% de gain. Ils optimisent aussi leur temps de réflexion. Mais un code produit vite, c'est un code non maîtrisé. Ils sont vite rattrapés par ce manque de compréhension. Mon estimation: il gagneront encore 10% dans des projets simples et perdront jusqu'à 50% du temps dans les projets complexes <!-- il est certainement possible de sourcer ces chiffre, je crois les avoir vus quelque part. DORA corrobore cela en partie. -->. Résultat en temps de livraison du logiciel: entre -19% et +41% <!-- ça pourrait être bien d'arrondir? -->. Avec plus d'incertitude due au manque de maîtrise. Petit bonus<!--ironie: est-elle assez marquée? -->: tout logiciel tant à se complexifier, et l'IA accélère ce phénomène.
+Dans le cas A, les développeurs ont les meilleurs outils pour générer du code rapidement, le documenter, le pousser sur git et livrer en production. Ils optimisent aussi leur temps de réflexion. Mais un code produit vite est un code non maîtrisé : ils sont vite rattrapés par ce manque de compréhension, avec d'autant plus d'incertitude. Et tout logiciel tend à se complexifier — l'IA accélère ce phénomène.
 
-Dans le cas B, les développeurs et les parties prenantes collaborent pour s'assurer que chaque ligne de code produite a du sens, répond au besoin, est testée de manière robuste et tourne sur une prod robuste. Bien sûr, passer moins de temps sur la génération automatique et prendre le temps de relire attentivement réduit les gains. Ils atteignent difficilement un facteur 2. 10% --> 5%. Côté réflexion, par contre, ils s'outillent en permanence et trouvent des manières toujours plus efficaces de passer le relai aux autres métiers et d'automatiser la qualité. Ils gagnent environ 30%, selon moi. Mais c'est net. Bonus: ce gain reste stable avec le temps. Total de l'addition: -35% de temps pour livrer le même logiciel.
-
-<!-- Fin déplacement -->
+Dans le cas B, les développeurs et les parties prenantes collaborent pour s'assurer que chaque ligne de code a du sens, répond au besoin, est testée de manière robuste et tourne sur une prod robuste. Bien sûr, passer moins de temps sur la génération automatique et relire attentivement réduit le gain brut. Mais côté réflexion, ils s'outillent en permanence, trouvent des manières toujours plus efficaces de passer le relai aux autres métiers et d'automatiser la qualité. Leur gain est plus modeste, mais net — et il reste stable avec le temps.
