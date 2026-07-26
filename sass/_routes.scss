@@ -915,7 +915,7 @@
 // au lien (règle Un Accent) ; ici c'est un constat, pas une alerte.
 .now-perime {
   max-width: var(--measure-base);
-  border-left: 3px solid var(--rule-strong);
+  border-left: 1px solid var(--rule-strong);
   padding: var(--space-2xs) 0 var(--space-2xs) var(--space-sm);
   margin: 0;
   font-family: var(--font-mono);
@@ -1043,6 +1043,14 @@
 .now-releve__ligne.is-ralenti { --etat: var(--c-warning); }
 .now-releve__ligne.is-dormant {
   --etat: var(--c-problem);
+  color: var(--ink-mute);
+}
+
+// Dépôt absent du disque : pas un état de l'astre, un trou dans la mesure.
+// Donc l'encre sourde du dormant, mais aucune couleur d'état — colorer un
+// silence qu'on n'a pas mesuré serait affirmer plus que ce qu'on sait.
+.now-releve__ligne.is-hors-releve {
+  --etat: var(--ink-mute);
   color: var(--ink-mute);
 }
 
@@ -1204,14 +1212,19 @@
   .now-releve__colonnes { display: none; }
 
   .now-releve__ligne {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1.15rem 1fr;
   }
+  // Le glyphe garde sa gouttière ; l'identité prend toute la largeur restante.
+  // Sans ces deux règles l'auto-placement met le glyphe dans la piste large et
+  // pousse le nom dans la piste étroite — la ligne se lit à l'envers.
+  .now-releve__glyphe { grid-column: 1; }
+  .now-releve__ident  { grid-column: 2; }
   .now-releve__question {
     grid-column: 1 / -1;
     margin-top: 0.15em;
   }
   .now-releve__mesure {
-    grid-column: 1;
+    grid-column: 1 / -1;
     justify-content: flex-start;
   }
   .now-releve__barre { max-inline-size: 6rem; }
@@ -1341,11 +1354,17 @@
   align-self: center;
 }
 
-// 30 colonnes d'égale largeur, ancrées sur une ligne de base commune. `gap`
-// d'1px : les jours restent distincts sans devenir des bâtons décoratifs.
+// Autant de colonnes d'égale largeur que de jours mesurés, ancrées sur une
+// ligne de base commune. `gap` d'1px : les jours restent distincts sans devenir
+// des bâtons décoratifs.
+//
+// Le nombre de colonnes appartient à Python (`MAIN_WINDOW`) et arrive par
+// `--jours` sur l'élément. Le codait-on ici en dur qu'un changement de fenêtre
+// laisserait des colonnes vides ou déborderait sur une seconde rangée — sans
+// erreur de build, donc sans qu'on le voie.
 .now-jours__plot {
   display: grid;
-  grid-template-columns: repeat(30, 1fr);
+  grid-template-columns: repeat(var(--jours), minmax(0, 1fr));
   align-items: end;
   gap: 1px;
   block-size: 2.4rem;

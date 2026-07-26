@@ -38,11 +38,17 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 SOURCE = REPO_ROOT / "data" / "constellation.toml"
 TARGET = REPO_ROOT / "data" / "activity.json"
 
-# Fenêtres de relevé, en jours. La courte dit le focus, la longue dit le poids.
-WINDOWS = (7, 30)
-
-# La fenêtre affichée sur la page ; l'autre sert d'appoint (infobulle).
+# La fenêtre affichée sur la page — et la seule mesure faite. Tout le reste en
+# est dérivé.
 MAIN_WINDOW = 30
+
+# Fenêtres de relevé, en jours. La courte dit le focus, la longue dit le poids.
+# Ce sont des SOUS-ENSEMBLES de la série quotidienne, pas des comptages à part :
+# un `rev-list --since` filtre sur la date de commit, un `log --format=%ad` sur
+# la date d'auteur, et les deux tombaient sur des totaux différents (termherd
+# affichait 84 en total pour 83 barres). Une seule mesure ne peut pas se
+# contredire.
+WINDOWS = (7, MAIN_WINDOW)
 
 
 def git(repo: Path, *args: str) -> str | None:
@@ -67,17 +73,20 @@ def survey(
     if last is None:
         return {"status": "missing"}
 
-    counts = {}
-    for days in WINDOWS:
-        out = git(repo, "rev-list", "--count", "HEAD", f"--since={days} days ago")
-        counts[f"d{days}"] = int(out) if out and out.isdigit() else 0
-
     # Série quotidienne : un seul `git log` puis comptage, plutôt que 30 appels.
     # Indexée sur le calendrier commun pour que les colonnes de tous les dépôts
     # tombent sur les mêmes jours — sinon les rangées ne se comparent plus.
-    log = git(repo, "log", f"--since={MAIN_WINDOW} days ago", "--format=%ad", "--date=short")
+    # `--since` prend large (MAIN_WINDOW + 1) : le filtre est un horodatage à
+    # H×24h en arrière, alors que le calendrier est en jours civils. Les commits
+    # en trop retombent hors du calendrier et sont ignorés au comptage.
+    log = git(
+        repo, "log", f"--since={MAIN_WINDOW + 1} days ago", "--format=%ad", "--date=short"
+    )
     per_day = Counter((log or "").split())
     series = [per_day.get(day, 0) for day in calendar]
+
+    # Les totaux SONT la série, découpée. Voir le commentaire sur WINDOWS.
+    counts = {f"d{days}": sum(series[-days:]) for days in WINDOWS}
 
     last_date = date.fromisoformat(last)
     days_since = (date.today() - last_date).days

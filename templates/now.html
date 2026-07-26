@@ -85,8 +85,9 @@
         {% set mesure = activity.repos[astre.name] %}
         {% set etat = mesure.state | default(value="hors-releve") %}
         <li class="now-releve__ligne is-{{ etat }}">
-          {# Icône : SVG inliné (et non <img>) pour qu'il hérite de currentColor,
-             donc de la couleur d'état. Sans marque propre → monogramme. #}
+          {# Icône : SVG inliné, et non référencé en balise image — l'inlining est
+             ce qui lui fait hériter de currentColor, donc de la couleur d'état.
+             Sans marque propre → monogramme. #}
           {% if astre.icon %}
           <span class="now-releve__glyphe">{{ load_data(path="static/astres/" ~ astre.icon, format="plain") | safe }}</span>
           {% else %}
@@ -159,6 +160,7 @@
     <div class="now-jours__rangee is-{{ mesure.state }}">
       <span class="now-jours__nom">{{ astre.name }}</span>
       <span class="now-jours__plot" role="img"
+            style="--jours: {{ activity.main_window }}"
             aria-label="{{ astre.name }} : {{ mesure.d30 }} commits sur {{ activity.main_window }} jours">
         {% for n in mesure.series %}
         {% if activity.series_max > 0 %}{% set h = n * 100 / activity.series_max %}{% else %}{% set h = 0 %}{% endif %}
