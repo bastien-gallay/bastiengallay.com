@@ -59,8 +59,11 @@ if git diff --quiet -- data/activity.json; then
     exit 0
 fi
 
-git -c commit.gpgsign=false commit --quiet -- data/activity.json \
+# `-- <chemin>` en DERNIER : tout ce qui suit `--` est lu comme un pathspec,
+# `-m` compris. Le job ne commite que ce fichier, jamais `git add`.
+git -c commit.gpgsign=false commit --quiet \
     -m "chore(now): relevé du $(date '+%Y-%m-%d')" \
+    -- data/activity.json \
     || abort "commit refusé"
 
 git push --quiet origin main || abort "push refusé — le commit reste local"
