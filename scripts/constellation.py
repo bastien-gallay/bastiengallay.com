@@ -44,11 +44,6 @@ WINDOWS = (7, 30)
 # La fenêtre affichée sur la page ; l'autre sert d'appoint (infobulle).
 MAIN_WINDOW = 30
 
-# Un dépôt touché dans les N derniers jours est « actif ». Entre ça et le seuil
-# de dormance, il est « ralenti ». Trois états, pas plus : la nuance en
-# demanderait un quatrième et la page cesserait d'être lisible d'un coup d'œil.
-ACTIVE_DAYS = 7
-
 
 def git(repo: Path, *args: str) -> str | None:
     """Sort du git dans `repo`, ou None si le dépôt est inutilisable."""
@@ -64,7 +59,9 @@ def git(repo: Path, *args: str) -> str | None:
     return done.stdout.strip() if done.returncode == 0 else None
 
 
-def survey(repo: Path, calendar: list[str], dormant_after: int) -> dict[str, object]:
+def survey(
+    repo: Path, calendar: list[str], active_within: int, dormant_after: int
+) -> dict[str, object]:
     """Relève un dépôt : commits par fenêtre, série quotidienne, état."""
     last = git(repo, "log", "-1", "--format=%ad", "--date=short")
     if last is None:
@@ -84,7 +81,7 @@ def survey(repo: Path, calendar: list[str], dormant_after: int) -> dict[str, obj
 
     last_date = date.fromisoformat(last)
     days_since = (date.today() - last_date).days
-    if days_since <= ACTIVE_DAYS:
+    if days_since <= active_within:
         state = "actif"
     elif days_since <= dormant_after:
         state = "ralenti"
@@ -108,6 +105,7 @@ def config() -> dict[str, object]:
 def build() -> dict[str, object]:
     conf = config()
     root = Path(conf["root"]).expanduser()
+    active_within = conf["thresholds"]["active_days"]
     dormant_after = conf["thresholds"]["dormant_days"]
 
     # Calendrier commun, du plus ancien au plus récent, aujourd'hui inclus.
@@ -119,7 +117,9 @@ def build() -> dict[str, object]:
 
     repos = {}
     for astre in conf["astres"]:
-        repos[astre["name"]] = survey(root / astre["path"], calendar, dormant_after)
+        repos[astre["name"]] = survey(
+            root / astre["path"], calendar, active_within, dormant_after
+        )
 
     alive = [r for r in repos.values() if r["status"] == "ok"]
 
@@ -145,7 +145,6 @@ def build() -> dict[str, object]:
         "surveyed_on": date.today().isoformat(),
         "windows": list(WINDOWS),
         "main_window": MAIN_WINDOW,
-        "active_days": ACTIVE_DAYS,
         "calendar": calendar,
         "scale_max": scale_max,
         "series_max": series_max,

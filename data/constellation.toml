@@ -17,6 +17,10 @@ root = "~/Dev"
 # un template. Chacun répond à une question différente :
 [thresholds]
 
+# « L'astre a-t-il bougé récemment ? » — en deçà il est « actif ». Entre ce
+# seuil et le suivant, « ralenti ».
+active_days = 7
+
 # « L'astre bouge-t-il encore ? » — au-delà, la ligne est grisée (classe
 # `is-dormant`) et l'astre devient candidat au death match. C'est ce seuil qui
 # grise rhetorix.
@@ -49,9 +53,9 @@ label = "substrat — la couche par laquelle les autres se branchent"
 
 # `icon` : nom d'un fichier de `static/astres/`, inliné dans la page pour que la
 # marque hérite de `currentColor` (donc du thème et de la couleur d'état). Absent
-# = monogramme placeholder. termherd est volontairement sans icône : son logo est
-# une image applicative en dégradés, et le projet est co-maintenu — on ne reprend
-# pas la marque de quelqu'un d'autre pour décorer un tableau.
+# = monogramme sur deux lettres. Les SVG de `static/astres/` sont des réductions
+# monochromes des marques d'origine : à 18px, un logo applicatif en dégradés ne
+# se lit pas et ne suit pas le thème.
 
 [[astres]]
 name = "faceto"
@@ -96,6 +100,7 @@ question = "où en étais-je ?"
 name = "termherd"
 path = "oss/termherd"
 family = "maker"
+icon = "termherd.svg"
 url = "https://github.com/Termherd/termherd"
 question = "où en est cette session ?"
 shared = "co-maintenu"
