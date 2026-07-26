@@ -47,10 +47,17 @@ label = "charge cognitive du praticien"
 key = "substrate"
 label = "substrat — la couche par laquelle les autres se branchent"
 
+# `icon` : nom d'un fichier de `static/astres/`, inliné dans la page pour que la
+# marque hérite de `currentColor` (donc du thème et de la couleur d'état). Absent
+# = monogramme placeholder. termherd est volontairement sans icône : son logo est
+# une image applicative en dégradés, et le projet est co-maintenu — on ne reprend
+# pas la marque de quelqu'un d'autre pour décorer un tableau.
+
 [[astres]]
 name = "faceto"
 path = "oss/faceto"
 family = "reader"
+icon = "faceto.svg"
 url = "https://github.com/bastien-gallay/faceto"
 question = "quelle structure ?"
 
@@ -58,6 +65,7 @@ question = "quelle structure ?"
 name = "lucid-lint"
 path = "oss/lucid-lint"
 family = "reader"
+icon = "lucid-lint.svg"
 url = "https://github.com/bastien-gallay/lucid-lint"
 question = "est-ce digeste ?"
 
@@ -73,7 +81,7 @@ name = "roadmark"
 path = "oss/roadmark"
 family = "maker"
 url = "https://github.com/bastien-gallay/roadmark"
-question = "la roadmap dit-elle encore vrai ?"
+question = "la roadmap dit-elle vrai ?"
 
 [[astres]]
 name = "daily-ops"
@@ -89,7 +97,7 @@ name = "termherd"
 path = "oss/termherd"
 family = "maker"
 url = "https://github.com/Termherd/termherd"
-question = "quelle session, où, dans quel état ?"
+question = "où en est cette session ?"
 shared = "co-maintenu"
 
 [[astres]]
@@ -97,11 +105,11 @@ name = "skills"
 path = "oss/skills-hub"
 family = "substrate"
 url = "https://bastien-gallay.github.io/skills/"
-question = "par quoi les outils se branchent-ils ?"
+question = "par quoi ça se branche ?"
 
 [[astres]]
 name = "ce site"
 path = "personal/bastiengallay.com"
 family = "substrate"
 url = "https://bastiengallay.com"
-question = "qu'est-ce qui est encore vrai ici ?"
+question = "qu'est-ce qui est vrai ici ?"

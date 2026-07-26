@@ -30,7 +30,8 @@ import json
 import subprocess
 import sys
 import tomllib
-from datetime import date
+from collections import Counter
+from datetime import date, timedelta
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -42,6 +43,11 @@ WINDOWS = (7, 30)
 
 # La fenêtre affichée sur la page ; l'autre sert d'appoint (infobulle).
 MAIN_WINDOW = 30
+
+# Un dépôt touché dans les N derniers jours est « actif ». Entre ça et le seuil
+# de dormance, il est « ralenti ». Trois états, pas plus : la nuance en
+# demanderait un quatrième et la page cesserait d'être lisible d'un coup d'œil.
+ACTIVE_DAYS = 7
 
 
 def git(repo: Path, *args: str) -> str | None:
@@ -58,8 +64,8 @@ def git(repo: Path, *args: str) -> str | None:
     return done.stdout.strip() if done.returncode == 0 else None
 
 
-def survey(repo: Path) -> dict[str, object]:
-    """Relève un dépôt : commits par fenêtre, dernier commit, ancienneté."""
+def survey(repo: Path, calendar: list[str], dormant_after: int) -> dict[str, object]:
+    """Relève un dépôt : commits par fenêtre, série quotidienne, état."""
     last = git(repo, "log", "-1", "--format=%ad", "--date=short")
     if last is None:
         return {"status": "missing"}
@@ -69,11 +75,28 @@ def survey(repo: Path) -> dict[str, object]:
         out = git(repo, "rev-list", "--count", "HEAD", f"--since={days} days ago")
         counts[f"d{days}"] = int(out) if out and out.isdigit() else 0
 
+    # Série quotidienne : un seul `git log` puis comptage, plutôt que 30 appels.
+    # Indexée sur le calendrier commun pour que les colonnes de tous les dépôts
+    # tombent sur les mêmes jours — sinon les rangées ne se comparent plus.
+    log = git(repo, "log", f"--since={MAIN_WINDOW} days ago", "--format=%ad", "--date=short")
+    per_day = Counter((log or "").split())
+    series = [per_day.get(day, 0) for day in calendar]
+
     last_date = date.fromisoformat(last)
+    days_since = (date.today() - last_date).days
+    if days_since <= ACTIVE_DAYS:
+        state = "actif"
+    elif days_since <= dormant_after:
+        state = "ralenti"
+    else:
+        state = "dormant"
+
     return {
         "status": "ok",
         "last_commit": last,
-        "days_since": (date.today() - last_date).days,
+        "days_since": days_since,
+        "state": state,
+        "series": series,
         **counts,
     }
 
@@ -87,9 +110,16 @@ def build() -> dict[str, object]:
     root = Path(conf["root"]).expanduser()
     dormant_after = conf["thresholds"]["dormant_days"]
 
+    # Calendrier commun, du plus ancien au plus récent, aujourd'hui inclus.
+    today = date.today()
+    calendar = [
+        (today - timedelta(days=n)).isoformat()
+        for n in range(MAIN_WINDOW - 1, -1, -1)
+    ]
+
     repos = {}
     for astre in conf["astres"]:
-        repos[astre["name"]] = survey(root / astre["path"])
+        repos[astre["name"]] = survey(root / astre["path"], calendar, dormant_after)
 
     alive = [r for r in repos.values() if r["status"] == "ok"]
 
@@ -106,12 +136,19 @@ def build() -> dict[str, object]:
         (name for name, r in repos.items() if r is challenger), None
     )
 
+    # Échelle du graphique quotidien : commune à toutes les rangées, sinon un
+    # dépôt calme paraîtrait aussi actif que le plus actif.
+    series_max = max((max(r["series"]) for r in alive if r["series"]), default=0)
+
     return {
         "_comment": "Généré par scripts/constellation.py — ne pas éditer à la main.",
         "surveyed_on": date.today().isoformat(),
         "windows": list(WINDOWS),
         "main_window": MAIN_WINDOW,
+        "active_days": ACTIVE_DAYS,
+        "calendar": calendar,
         "scale_max": scale_max,
+        "series_max": series_max,
         "challenger": {"name": challenger_name, "days_since": challenger["days_since"]}
         if challenger
         else None,

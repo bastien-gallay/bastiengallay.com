@@ -928,7 +928,7 @@
   // ne vaut pas la même largeur d'une fonte à l'autre. Une seule déclaration,
   // partagée par la ligne d'entêtes et les lignes de données — sinon elles
   // désalignent au premier ajustement.
-  --releve-cols: 11rem 1fr 9.5rem 6.5rem;
+  --releve-cols: 1.15rem 8.5rem minmax(0, 1fr) 8rem 6rem;
 
   max-width: var(--measure-base);
   border-top: 2px solid var(--surface-ink);
@@ -959,6 +959,18 @@
 
 .now-releve__col-mesure,
 .now-releve__col-delai { text-align: right; }
+
+// Interlettrage réduit sur ce seul intitulé : à `--tracking-caps` il se coupait
+// en deux lignes, ce qui donnait un repli accidentel là où il faut au contraire
+// que la fenêtre de mesure se lise d'un bloc.
+.now-releve__col-mesure {
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+// La colonne de glyphe n'a pas d'intitulé : l'entête commence donc décalée
+// d'une cellule vide plutôt que d'inventer un libellé pour une icône.
+.now-releve__colonnes > :first-child { grid-column: 2; }
 
 // Entête du relevé : pill + intitulé + date de la mesure.
 .now-releve__head {
@@ -1019,14 +1031,51 @@
   font-size: var(--text-sm);
 }
 
-// Dormant : mesuré à zéro depuis longtemps, ou hors relevé. Estompé, jamais
-// masqué — l'absence de mouvement est une information, pas une honte.
+// Couleur d'ÉTAT, pas d'identité : la famille est déjà nommée par son titre,
+// alors que « est-ce que ça bouge encore » n'était lisible nulle part. Chaque
+// état arrive doublé d'un mot (le délai sur la ligne, la légende en marge) —
+// jamais la couleur seule, elle ne porterait pas l'information à elle.
+.now-releve__ligne {
+  --etat: var(--ink-mute);
+}
+
+.now-releve__ligne.is-actif   { --etat: var(--c-success); }
+.now-releve__ligne.is-ralenti { --etat: var(--c-warning); }
 .now-releve__ligne.is-dormant {
+  --etat: var(--c-problem);
   color: var(--ink-mute);
 }
 
 // Cellule d'identité : nom + éventuelle mention de partage, empilés pour ne
 // jamais empiéter sur la colonne question.
+// Glyphe : la marque du projet quand elle existe, sinon un monogramme encadré.
+// Les deux occupent exactement la même boîte pour que la colonne reste droite.
+.now-releve__glyphe {
+  inline-size: 1.15rem;
+  block-size: 1.15rem;
+  display: grid;
+  place-items: center;
+  color: var(--etat);
+
+  svg {
+    inline-size: 100%;
+    block-size: 100%;
+    display: block;
+  }
+}
+
+.now-releve__glyphe--vide {
+  border: 1px solid currentcolor;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  line-height: 1;
+  opacity: 0.75;
+}
+
 .now-releve__ident {
   display: flex;
   flex-direction: column;
@@ -1046,9 +1095,12 @@
   letter-spacing: var(--tracking-caps);
 }
 
+// Corps `xs` : la question est secondaire face au nom et au chiffre. Au corps
+// `sm` elle passait sur deux lignes et cassait la régularité des rangées.
 .now-releve__question {
   color: var(--ink-soft);
   font-style: italic;
+  font-size: var(--text-xs);
   min-width: 0;
 }
 
@@ -1061,8 +1113,7 @@
   min-width: 0;
 }
 
-// Marque fine, ancrée à gauche, extrémité arrondie côté donnée. Une seule
-// teinte (encre) : mesure unique, pas de série — et le rouge reste au lien.
+// Marque fine, ancrée à gauche, extrémité arrondie côté donnée. Teinte = état.
 .now-releve__barre {
   flex: 1 1 auto;
   min-width: 0;
@@ -1075,12 +1126,10 @@
     display: block;
     block-size: 100%;
     min-inline-size: 2px;   // un dépôt à 0 garde un trait visible
-    background: var(--surface-ink);
+    background: var(--etat);
     border-radius: 2px;
   }
 }
-
-.is-dormant .now-releve__barre i { background: var(--rule-strong); }
 
 // `nowrap` : « il y a 218 j » se replierait sur deux lignes et désalignerait
 // toute la ligne du relevé.
@@ -1167,4 +1216,183 @@
   }
   .now-releve__barre { max-inline-size: 6rem; }
   .now-releve__chiffre { flex: 0 0 auto; }
+}
+
+// ──────────────────────────────────────────────────────────────────
+// /now — deux pistes desktop : corps à la mesure de lecture, marge habillée
+//
+// Sans ça la colonne de contenu s'arrête bien avant la largeur du header et le
+// déséquilibre se voit. Même patron que `_vsm.scss` : on n'élargit pas la
+// mesure de lecture, on occupe la piste latérale.
+// ──────────────────────────────────────────────────────────────────
+.now-cadre {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: minmax(0, 1fr);
+
+  @media (min-width: 60rem) {
+    grid-template-columns: minmax(0, var(--measure-base)) var(--side-track);
+    gap: var(--side-gap);
+    align-items: start;
+  }
+}
+
+.now-cadre__corps {
+  min-width: 0;
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.now-marge {
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-mute);
+
+  // Filet d'attache côté prose : la marge est un appareil de lecture, pas un
+  // encadré décoratif.
+  @media (min-width: 60rem) {
+    border-left: 1px solid var(--rule);
+    padding-left: var(--space-sm);
+    position: sticky;
+    // 5rem = même offset que `--vsm-top` : le masthead est sticky, un `top`
+    // plus petit ferait glisser la légende dessous.
+    top: 5rem;
+  }
+}
+
+.now-marge__legende {
+  margin: 0;
+
+  > div {
+    --etat: var(--ink-mute);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 0.5em;
+    padding-block: 0.35rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .is-actif   { --etat: var(--c-success); }
+  .is-ralenti { --etat: var(--c-warning); }
+  .is-dormant { --etat: var(--c-problem); }
+
+  dt {
+    display: flex;
+    align-items: center;
+    gap: 0.45em;
+    font-weight: 700;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    color: var(--surface-ink);
+  }
+
+  dd {
+    grid-column: 1 / -1;
+    margin: 0.15em 0 0;
+  }
+}
+
+.now-marge__puce {
+  inline-size: 0.6rem;
+  block-size: 0.6rem;
+  border-radius: 1px;
+  background: var(--etat);
+  flex: none;
+}
+
+.now-marge__note {
+  max-width: none;
+  margin: var(--space-sm) 0 0;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Journal quotidien — petits multiples, une rangée par dépôt actif
+//
+// Chaque rangée est nommée, donc pas de légende de couleur à lire : la teinte
+// ne fait que redire l'état déjà porté par le tableau. Échelle verticale
+// commune calculée par le script.
+// ──────────────────────────────────────────────────────────────────
+.now-jours {
+  max-width: none;
+}
+
+.now-jours__rangee {
+  --etat: var(--ink-mute);
+  display: grid;
+  grid-template-columns: 7.5rem 1fr 2.6rem;
+  align-items: end;
+  gap: 0 var(--space-xs);
+  padding-block: 0.4rem;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.now-jours__rangee.is-actif   { --etat: var(--c-success); }
+.now-jours__rangee.is-ralenti { --etat: var(--c-warning); }
+.now-jours__rangee.is-dormant { --etat: var(--c-problem); }
+
+.now-jours__nom {
+  font-weight: 600;
+  color: var(--surface-ink);
+  align-self: center;
+}
+
+// 30 colonnes d'égale largeur, ancrées sur une ligne de base commune. `gap`
+// d'1px : les jours restent distincts sans devenir des bâtons décoratifs.
+.now-jours__plot {
+  display: grid;
+  grid-template-columns: repeat(30, 1fr);
+  align-items: end;
+  gap: 1px;
+  block-size: 2.4rem;
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+.now-jours__jour {
+  display: block;
+  align-self: end;
+  block-size: var(--h, 0%);
+  min-block-size: 1px;
+  background: var(--etat);
+  border-radius: 1px 1px 0 0;
+}
+
+// Jour sans commit : un point de base sur l'axe, pour que le creux se lise
+// comme une absence mesurée et non comme une donnée manquante.
+.now-jours__jour.is-vide {
+  block-size: 1px;
+  background: var(--rule);
+  border-radius: 0;
+}
+
+.now-jours__total {
+  align-self: center;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--surface-ink);
+}
+
+.now-jours__axe {
+  max-width: none;
+  display: flex;
+  justify-content: space-between;
+  margin: var(--space-2xs) 0 0;
+  padding-left: calc(7.5rem + var(--space-xs));
+  padding-right: calc(2.6rem + var(--space-xs));
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-mute);
+}
+
+@media (max-width: 40rem) {
+  .now-jours__rangee {
+    grid-template-columns: 1fr 2.6rem;
+  }
+  .now-jours__nom { grid-column: 1 / -1; }
+  .now-jours__axe { padding-left: 0; }
 }

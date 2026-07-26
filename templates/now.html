@@ -51,7 +51,13 @@
     {{ section.content | safe }}
   </div>
 
-  <section class="now-releve" aria-labelledby="now-releve-title">
+  {# Deux pistes au-delà de 60rem (même patron que _vsm.scss) : le relevé et le
+     journal à la mesure de lecture, la marge droite habillée par la légende.
+     Sans ça la colonne s'arrête bien avant le header et le déséquilibre se voit
+     sur desktop. #}
+  <div class="now-cadre">
+   <div class="now-cadre__corps">
+    <section class="now-releve" aria-labelledby="now-releve-title">
     <p class="now-releve__head">
       <span class="now-releve__pill">RELEVÉ</span>
       <span id="now-releve-title">Activité par dépôt</span>
@@ -77,8 +83,15 @@
         {% for astre in constellation.astres %}
         {% if astre.family == famille.key %}
         {% set mesure = activity.repos[astre.name] %}
-        {% set dormant = mesure.status != "ok" or mesure.days_since > seuils.dormant_days %}
-        <li class="now-releve__ligne{% if dormant %} is-dormant{% endif %}">
+        {% set etat = mesure.state | default(value="hors-releve") %}
+        <li class="now-releve__ligne is-{{ etat }}">
+          {# Icône : SVG inliné (et non <img>) pour qu'il hérite de currentColor,
+             donc de la couleur d'état. Sans marque propre → monogramme. #}
+          {% if astre.icon %}
+          <span class="now-releve__glyphe">{{ load_data(path="static/astres/" ~ astre.icon, format="plain") | safe }}</span>
+          {% else %}
+          <span class="now-releve__glyphe now-releve__glyphe--vide" aria-hidden="true">{{ astre.name | truncate(length=2, end="") }}</span>
+          {% endif %}
           {# nom et mention de partage dans UNE seule cellule : sinon le badge
              occupe la colonne question et décale toute la ligne. #}
           <span class="now-releve__ident">
@@ -122,21 +135,89 @@
 
     <p class="now-releve__echelle">
       Barres à l'échelle commune — pleine largeur = {{ activity.scale_max }} commits.
-      Au-delà de {{ seuils.dormant_days }} jours sans commit, la ligne est estompée.
     </p>
-    {# Death match : désigné par le script (l'astre le plus longtemps silencieux
-       passé le seuil), formulé en question. Disparaît de lui-même si plus aucun
-       astre n'est dormant — le seul état où la page n'a rien à demander. #}
-    {% if activity.challenger %}
-    <p class="now-defi">
-      <span class="now-defi__pill">DEATH MATCH</span>
-      <span class="now-defi__texte">
-        <strong>{{ activity.challenger.name }}</strong> n'a rien commité depuis
-        {{ activity.challenger.days_since }} jours. Passera-t-il le prochain ?
+    </section>
+
+
+    {# ── Graphique quotidien ──────────────────────────────────────────────
+     Petits multiples plutôt qu'un empilement : chaque rangée est nommée, donc
+     aucune légende de couleur n'est nécessaire et les dépôts se comparent
+     ligne à ligne. Échelle verticale commune (calculée par le script), sinon
+     un dépôt calme aurait l'air aussi actif que le plus actif.
+     Seuls les dépôts qui ont bougé sur la fenêtre y figurent : une rangée
+     entièrement vide n'apprend rien que le tableau ne dise déjà. #}
+    <section class="now-jours" aria-labelledby="now-jours-title">
+      <p class="now-releve__head">
+        <span class="now-releve__pill">JOURNAL</span>
+      <span id="now-jours-title">Commits par jour, {{ activity.main_window }} derniers jours</span>
+      <span class="now-releve__date">pic à {{ activity.series_max }}/j</span>
+    </p>
+
+    {% for astre in constellation.astres %}
+    {% set mesure = activity.repos[astre.name] %}
+    {% if mesure.status == "ok" and mesure.d30 > 0 %}
+    <div class="now-jours__rangee is-{{ mesure.state }}">
+      <span class="now-jours__nom">{{ astre.name }}</span>
+      <span class="now-jours__plot" role="img"
+            aria-label="{{ astre.name }} : {{ mesure.d30 }} commits sur {{ activity.main_window }} jours">
+        {% for n in mesure.series %}
+        {% if activity.series_max > 0 %}{% set h = n * 100 / activity.series_max %}{% else %}{% set h = 0 %}{% endif %}
+        <i class="now-jours__jour{% if n == 0 %} is-vide{% endif %}"
+           style="--h: {{ h | round }}%"
+           title="{{ activity.calendar[loop.index0] }} — {{ n }} commit{{ n | pluralize }}"></i>
+        {% endfor %}
       </span>
-    </p>
+      <span class="now-jours__total">{{ mesure.d30 }}</span>
+    </div>
     {% endif %}
-  </section>
+    {% endfor %}
+
+      <p class="now-jours__axe" aria-hidden="true">
+        <span>{{ activity.calendar | first | date(format="%d/%m") }}</span>
+        <span>aujourd'hui</span>
+      </p>
+    </section>
+   </div>
+
+   <aside class="now-marge" aria-label="Légende du relevé">
+     {# Légende : les couleurs d'état sont un encodage de STATUT, donc elles
+        arrivent toujours doublées d'un mot — ici la légende, sur chaque ligne
+        le délai en clair. Jamais la couleur seule. #}
+     <dl class="now-marge__legende">
+       <div class="is-actif">
+         <dt><span class="now-marge__puce" aria-hidden="true"></span>actif</dt>
+         <dd>commité dans les {{ activity.active_days }} derniers jours</dd>
+       </div>
+       <div class="is-ralenti">
+         <dt><span class="now-marge__puce" aria-hidden="true"></span>ralenti</dt>
+         <dd>rien depuis plus de {{ activity.active_days }} jours</dd>
+       </div>
+       <div class="is-dormant">
+         <dt><span class="now-marge__puce" aria-hidden="true"></span>dormant</dt>
+         <dd>rien depuis plus de {{ seuils.dormant_days }} jours</dd>
+       </div>
+     </dl>
+
+     {# Death match : désigné par le script (l'astre le plus longtemps silencieux
+        passé le seuil), formulé en question. Disparaît de lui-même si plus aucun
+        astre n'est dormant — le seul état où la page n'a rien à demander. #}
+     {% if activity.challenger %}
+     <p class="now-defi">
+       <span class="now-defi__pill">DEATH MATCH</span>
+       <span class="now-defi__texte">
+         <strong>{{ activity.challenger.name }}</strong> n'a rien commité depuis
+         {{ activity.challenger.days_since }} jours. Passera-t-il le prochain ?
+       </span>
+     </p>
+     {% endif %}
+
+     <p class="now-marge__note">
+       Relevé généré depuis les dépôts par <code>just releve</code>, pas relu à
+       la main. Il vire à l'erreur passé {{ seuils.survey_stale_days }} jours ;
+       la prose de cette page s'auto-dénonce passé {{ seuils.prose_stale_days }}.
+     </p>
+   </aside>
+  </div>
 
   <p class="ecrit-page__back">
     <a href="{{ config.base_url | safe }}">← Retour à l'accueil</a>
