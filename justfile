@@ -20,6 +20,9 @@ port := `bash scripts/zola-port.sh`
 # IP LAN de cette machine (interface Wi-Fi en0), pour `serve-lan`
 lan_ip := `ipconfig getifaddr en0 2>/dev/null || echo 127.0.0.1`
 
+# Label launchd de la relève quotidienne (cf. recettes cron-*)
+cron_label := "local.bastiengallay.releve"
+
 # Liste les recettes disponibles
 default:
     @just --list --unsorted
@@ -81,6 +84,62 @@ releve:
 [group('now')]
 releve-check:
     @uv run scripts/constellation.py --check
+
+# Le plist est GÉNÉRÉ, pas versionné : il contient des chemins absolus, et le
+# job doit viser la COPIE PRINCIPALE (seul checkout stable — les worktrees vont
+# et viennent). D'où `--git-common-dir`, qui remonte à main depuis n'importe où.
+
+# Installe la relève quotidienne (launchd, 7h10) — vise toujours la copie principale
+[group('now')]
+cron-install:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    main=$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)")
+    plist="$HOME/Library/LaunchAgents/{{cron_label}}.plist"
+    log="$HOME/Library/Logs/bastiengallay-releve.log"
+    cat > "$plist" <<PLIST
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+    <dict>
+      <key>Label</key><string>{{cron_label}}</string>
+      <key>ProgramArguments</key>
+      <array><string>$main/scripts/releve-cron.sh</string></array>
+      <key>StartCalendarInterval</key>
+      <dict><key>Hour</key><integer>7</integer><key>Minute</key><integer>10</integer></dict>
+      <key>StandardOutPath</key><string>$log</string>
+      <key>StandardErrorPath</key><string>$log</string>
+      <key>ProcessType</key><string>Background</string>
+    </dict>
+    </plist>
+    PLIST
+    launchctl bootout gui/$UID/{{cron_label}} 2>/dev/null || true
+    launchctl bootstrap gui/$UID "$plist"
+    echo "✓ {{cron_label}} — 7h10, cible $main"
+    echo "  log : $log"
+
+# Désinstalle la relève quotidienne
+[group('now')]
+cron-uninstall:
+    @launchctl bootout gui/$UID/{{cron_label}} 2>/dev/null || true
+    @rm -f "$HOME/Library/LaunchAgents/{{cron_label}}.plist"
+    @echo "✓ {{cron_label}} retiré"
+
+# État du job (dernier code de sortie, prochaine exécution)
+[group('now')]
+cron-status:
+    @launchctl print gui/$UID/{{cron_label}} 2>/dev/null \
+       | grep -E 'state|last exit|program =' || echo "✗ {{cron_label}} non chargé"
+
+# Déclenche la relève tout de suite, sans attendre 7h10
+[group('now')]
+cron-run:
+    @launchctl kickstart -p gui/$UID/{{cron_label}} && echo "→ lancé, voir just cron-log"
+
+# 20 dernières lignes du log de la relève automatique
+[group('now')]
+cron-log:
+    @tail -20 "$HOME/Library/Logs/bastiengallay-releve.log" 2>/dev/null || echo "aucun log encore"
 
 # Tue le serveur zola de CE port s'il tourne
 kill:

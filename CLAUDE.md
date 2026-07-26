@@ -35,7 +35,7 @@ Architecture intent (matters when implementing any section):
   2. Teragone Factory → outbound link only
   3. Productivité du travail intellectuel avec IA → daily-ops, skills, inflecv
   Plus a discreet "Réalisations clients" block (gallay-avocat.fr) — kept low-key on purpose.
-- **`/now` route** — separate from the single-page scroll, fed by a weekly digest auto-generated from the `daily-ops` repo (`../daily-ops`, sibling). Wiring is TBD; likely a weekly commit of the digest into this repo at build time.
+- **`/now` route** — separate from the single-page scroll. Wired on 2026-07-26 (the earlier daily-ops digest idea was dropped: daily-ops records intent, not outcome, and covers client repos). See "La relève de `/now`" below.
 - **Blog** — Markdown in-repo → static build → push. Site-first; LinkedIn is a teaser + link only. No cadence promised on the site itself.
 
 Sections deliberately **excluded** (don't add them back without asking): testimonials, newsletter signup, stack/colophon, tech pedagogy content.
@@ -50,7 +50,7 @@ The README, brainstorm docs, and likely future content are in **French**. Keep p
 - No "Claude" signature in git commit messages.
 - For any Python tooling that gets added, use `uv` / `uvx`.
 - Before running `git commit` / `git push` / `git rebase` / `git reset --hard` with `dangerouslyDisableSandbox: true`, ask the user first (session-wide authorization, once granted, is respected).
-- After each commit, run `daily-ops capture` (this repo is daily-ops-tracked).
+- After each commit, capture with `daily-ops add --topic <sujet> "<texte>"` (this repo is daily-ops-tracked). The old `daily-ops capture` / `item capture` commands were removed in v0 (2026-07-01), and the post-commit hook that called them is disabled — the capture is manual.
 
 ## Working in a git worktree
 
@@ -79,3 +79,26 @@ Pourquoi c'est nécessaire — **le piège `.personal/`** : `.personal/` est git
 Toute modification CSS qui peut affecter le rendu doit être vérifiée **en navigation privée ou sur une origin neuve** (`127.0.0.1` plutôt que le domaine de prod), pour reproduire l'état primo-visiteur : pas de `data-theme` ni d'autre clé dans `localStorage`, OS en clair par défaut.
 
 Raison : `theme.js` ne pose `data-theme` sur `<html>` que si une valeur est sauvegardée. Tout sélecteur qui suppose un attribut posé (`:not([data-theme="light"])` & similaires) doit aussi avoir un fallback `@media (prefers-color-scheme: …)` — sinon il s'applique aussi à l'état initial sans attribut. Cf. régression couleur figure 4 (commit `809b643`, 2026-05-28). Pour le dark mode, passer **systématiquement** par la mixin `@include theme-dark` (`sass/_tokens.scss`), pas par un sélecteur écrit à la main.
+
+## La relève de `/now`
+
+`/now` repose sur **deux fichiers de natures opposées, qui ne doivent jamais fusionner** :
+
+- `data/constellation.toml` — ce qui est **affirmé** (identité des astres, famille, question, seuils). Tenu à la main, jamais calculé.
+- `data/activity.json` — ce qui est **mesuré** (commits par fenêtre, dernier commit, série quotidienne). Généré par `scripts/constellation.py`, jamais édité à la main.
+
+L'écart entre les deux *est* le contenu de la page. Un `/now` qui ne peut pas se contredire ne sert à rien.
+
+Le script est **local-only** : il lit les dépôts du disque sous `root` (`~/Dev`). Son produit étant commité, le build CI n'a jamais besoin de lui. Un dépôt absent ressort `missing` et le manque se voit sur la page.
+
+### Relève automatique (launchd, quotidienne)
+
+Depuis le 2026-07-26, `scripts/releve-cron.sh` tourne tous les jours à 7h10 via un LaunchAgent (`local.bastiengallay.releve`, installé par `just cron-install`), sur la **copie principale**. Il mesure, commite `data/activity.json` **sans signature GPG** (le commit atteste d'une mesure machine, pas d'une intention) et pousse ; GitHub Pages rebuild seul.
+
+Conséquences à connaître avant toute session :
+
+- Des commits `chore(now): relevé du …` apparaissent sur `main` sans intervention. Ce n'est pas une anomalie.
+- Le job **abandonne sans rien réparer** si `main` est sale hors `data/activity.json`, en retard sur `origin`, ou porteur de commits non poussés. Laisser `main` propre et synchronisée, c'est ce qui le garde vivant.
+- Diagnostic : `just cron-status`, `just cron-log`, `just cron-run` (déclenche tout de suite).
+
+Le plist n'est pas versionné — il contient des chemins absolus et doit viser la copie principale, pas un worktree. `just cron-install` le régénère et le recharge ; c'est idempotent.
