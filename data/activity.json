@@ -1,0 +1,72 @@
+{
+  "_comment": "Généré par scripts/constellation.py — ne pas éditer à la main.",
+  "surveyed_on": "2026-07-26",
+  "windows": [
+    7,
+    30
+  ],
+  "main_window": 30,
+  "scale_max": 273,
+  "challenger": {
+    "name": "rhetorix",
+    "days_since": 218
+  },
+  "repos": {
+    "faceto": {
+      "status": "ok",
+      "last_commit": "2026-07-26",
+      "days_since": 0,
+      "d7": 30,
+      "d30": 273
+    },
+    "lucid-lint": {
+      "status": "ok",
+      "last_commit": "2026-07-13",
+      "days_since": 13,
+      "d7": 0,
+      "d30": 91
+    },
+    "rhetorix": {
+      "status": "ok",
+      "last_commit": "2025-12-20",
+      "days_since": 218,
+      "d7": 0,
+      "d30": 0
+    },
+    "roadmark": {
+      "status": "ok",
+      "last_commit": "2026-07-26",
+      "days_since": 0,
+      "d7": 26,
+      "d30": 82
+    },
+    "daily-ops": {
+      "status": "ok",
+      "last_commit": "2026-07-01",
+      "days_since": 25,
+      "d7": 0,
+      "d30": 23
+    },
+    "termherd": {
+      "status": "ok",
+      "last_commit": "2026-07-26",
+      "days_since": 0,
+      "d7": 7,
+      "d30": 80
+    },
+    "skills": {
+      "status": "ok",
+      "last_commit": "2026-07-15",
+      "days_since": 11,
+      "d7": 0,
+      "d30": 11
+    },
+    "ce site": {
+      "status": "ok",
+      "last_commit": "2026-07-01",
+      "days_since": 25,
+      "d7": 0,
+      "d30": 1
+    }
+  }
+}

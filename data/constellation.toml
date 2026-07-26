@@ -1,0 +1,107 @@
+# constellation.toml — inventaire éditorial des astres.
+#
+# Source unique de VÉRITÉ ÉDITORIALE, tenue à la main : quel projet existe,
+# à quelle famille il appartient, quel rôle il joue. Rien ici n'est calculé.
+#
+# Le pendant mesuré vit dans `data/activity.json`, régénéré par
+# `just now-releve` (scripts/constellation.py) depuis les dépôts locaux.
+# Séparation volontaire : ce que j'affirme (ici) doit pouvoir être contredit
+# par ce qui est mesuré (là-bas). Cf. `/now`.
+#
+# `path` est relatif à `root` et vaut pour MA machine : le script est
+# local-only, son produit (`activity.json`) est commité et suffit au build CI.
+
+root = "~/Dev"
+
+# Les trois seuils de la page, réunis ici pour qu'aucun ne traîne en dur dans
+# un template. Chacun répond à une question différente :
+[thresholds]
+
+# « L'astre bouge-t-il encore ? » — au-delà, la ligne est grisée (classe
+# `is-dormant`) et l'astre devient candidat au death match. C'est ce seuil qui
+# grise rhetorix.
+dormant_days = 60
+
+# « Ma prose a-t-elle vieilli ? » — au-delà, la page affiche elle-même un avis
+# de péremption, calculé depuis `last_update` du front-matter.
+prose_stale_days = 45
+
+# « La mesure a-t-elle vieilli ? » — au-delà, `just releve-check` sort en
+# erreur. Seul seuil qui casse quelque chose ; les deux autres se contentent
+# de le dire au lecteur.
+survey_stale_days = 10
+
+# Familles — deux surfaces d'une même métrique, la charge cognitive, plus le
+# substrat. Tableau et non table : l'ordre d'affichage est un choix éditorial
+# (le lecteur d'abord, c'est la thèse du site), une table TOML ressortirait
+# triée alphabétiquement côté Tera.
+[[families]]
+key = "reader"
+label = "charge cognitive du lecteur"
+
+[[families]]
+key = "maker"
+label = "charge cognitive du praticien"
+
+[[families]]
+key = "substrate"
+label = "substrat — la couche par laquelle les autres se branchent"
+
+[[astres]]
+name = "faceto"
+path = "oss/faceto"
+family = "reader"
+url = "https://github.com/bastien-gallay/faceto"
+question = "quelle structure ?"
+
+[[astres]]
+name = "lucid-lint"
+path = "oss/lucid-lint"
+family = "reader"
+url = "https://github.com/bastien-gallay/lucid-lint"
+question = "est-ce digeste ?"
+
+[[astres]]
+name = "rhetorix"
+path = "experiments/ai/rhetorix"
+family = "reader"
+url = "https://rhetorix.lovable.app"
+question = "est-ce solide ?"
+
+[[astres]]
+name = "roadmark"
+path = "oss/roadmark"
+family = "maker"
+url = "https://github.com/bastien-gallay/roadmark"
+question = "la roadmap dit-elle encore vrai ?"
+
+[[astres]]
+name = "daily-ops"
+path = "oss/daily-ops"
+family = "maker"
+url = "https://github.com/bastien-gallay/daily-ops"
+question = "où en étais-je ?"
+
+# Co-maintenu : cité parce qu'il occupe des semaines réelles, pas promu
+# astre — il ne porte pas la thèse à lui seul et ce n'est pas mon dépôt seul.
+[[astres]]
+name = "termherd"
+path = "oss/termherd"
+family = "maker"
+url = "https://github.com/Termherd/termherd"
+question = "quelle session, où, dans quel état ?"
+shared = "co-maintenu"
+
+[[astres]]
+name = "skills"
+path = "oss/skills-hub"
+family = "substrate"
+url = "https://bastien-gallay.github.io/skills/"
+question = "par quoi les outils se branchent-ils ?"
+
+[[astres]]
+name = "ce site"
+path = "personal/bastiengallay.com"
+family = "substrate"
+url = "https://bastiengallay.com"
+question = "qu'est-ce qui est encore vrai ici ?"

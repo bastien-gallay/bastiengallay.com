@@ -71,6 +71,17 @@ rebuild *ARGS:
 check:
     zola check --drafts --skip-external-links 2>&1 | tail -20
 
+# Relève l'activité git des astres → data/activity.json (à commiter).
+# LOCAL-ONLY : lit les dépôts du disque. Le CI se sert du JSON commité.
+[group('now')]
+releve:
+    @uv run scripts/constellation.py
+
+# Le relevé commité est-il encore frais ? (exit 1 au-delà du seuil)
+[group('now')]
+releve-check:
+    @uv run scripts/constellation.py --check
+
 # Tue le serveur zola de CE port s'il tourne
 kill:
     @pids=$(lsof -tiTCP:{{port}} -sTCP:LISTEN 2>/dev/null || true); \

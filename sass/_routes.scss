@@ -901,3 +901,270 @@
     gap: var(--space-md);
   }
 }
+
+// ──────────────────────────────────────────────────────────────────
+// /now — relevé d'activité (généré) et avis de péremption
+//
+// Registre : tableau de relevé imprimé, mono partout, filets fins entre
+// lignes. Tokens uniquement — pas de sélecteur dark écrit à la main.
+// La mesure est volontairement plus austère que la prose voisine : elle
+// n'argumente pas, elle constate.
+// ──────────────────────────────────────────────────────────────────
+
+// Avis de péremption : encadré en encre, pas en accent. Le rouge reste
+// au lien (règle Un Accent) ; ici c'est un constat, pas une alerte.
+.now-perime {
+  max-width: var(--measure-base);
+  border-left: 3px solid var(--rule-strong);
+  padding: var(--space-2xs) 0 var(--space-2xs) var(--space-sm);
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.now-releve {
+  // Colonnes en rem et non en ch : les lignes mélangent mono et sans, et `ch`
+  // ne vaut pas la même largeur d'une fonte à l'autre. Une seule déclaration,
+  // partagée par la ligne d'entêtes et les lignes de données — sinon elles
+  // désalignent au premier ajustement.
+  --releve-cols: 11rem 1fr 9.5rem 6.5rem;
+
+  max-width: var(--measure-base);
+  border-top: 2px solid var(--surface-ink);
+  padding-top: var(--space-xs);
+}
+
+// Ligne d'entêtes : nomme la fenêtre de mesure UNE fois, au-dessus de la
+// colonne qu'elle qualifie. C'est ce qui dispense les lignes de répéter
+// « commits » et rend l'échelle lisible sans la relire.
+//
+// `max-width: none` obligatoire : `p` porte `max-width: --measure-base` en
+// global (_typography.scss), ce qui rendrait l'entête plus étroite que les
+// lignes de données `<li>` — et donc désalignée colonne par colonne.
+.now-releve__colonnes {
+  display: grid;
+  max-width: none;
+  grid-template-columns: var(--releve-cols);
+  gap: 0 var(--space-xs);
+  margin: 0 0 var(--space-2xs);
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--rule-strong);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.now-releve__col-mesure,
+.now-releve__col-delai { text-align: right; }
+
+// Entête du relevé : pill + intitulé + date de la mesure.
+.now-releve__head {
+  display: flex;
+  max-width: none;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6em;
+  margin: 0 0 var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.now-releve__pill {
+  background: var(--surface-ink);
+  color: var(--surface);
+  padding: 0.18em 0.6em;
+  font-weight: 600;
+}
+
+.now-releve__date { margin-left: auto; }
+
+.now-releve__famille + .now-releve__famille {
+  margin-top: var(--space-md);
+}
+
+// Titre de famille : en encre, pas de hiérarchie visuelle forte — le
+// relevé ne doit pas concurrencer le h1 de la page.
+.now-releve__famille-titre {
+  margin: 0 0 var(--space-2xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--surface-ink);
+}
+
+.now-releve__liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+// Ligne = 4 colonnes sur large (nom · question · chiffre · délai),
+// repliées en deux blocs sous 40rem.
+.now-releve__ligne {
+  display: grid;
+  grid-template-columns: var(--releve-cols);
+  align-items: baseline;
+  gap: 0 var(--space-xs);
+  padding-block: 0.45rem;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+// Dormant : mesuré à zéro depuis longtemps, ou hors relevé. Estompé, jamais
+// masqué — l'absence de mouvement est une information, pas une honte.
+.now-releve__ligne.is-dormant {
+  color: var(--ink-mute);
+}
+
+// Cellule d'identité : nom + éventuelle mention de partage, empilés pour ne
+// jamais empiéter sur la colonne question.
+.now-releve__ident {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1em;
+  min-width: 0;
+}
+
+.now-releve__nom {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.now-releve__partage {
+  font-size: var(--text-xs);
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+}
+
+.now-releve__question {
+  color: var(--ink-soft);
+  font-style: italic;
+  min-width: 0;
+}
+
+// Cellule de mesure : barre de proportion + chiffre, alignés à droite.
+.now-releve__mesure {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.55em;
+  min-width: 0;
+}
+
+// Marque fine, ancrée à gauche, extrémité arrondie côté donnée. Une seule
+// teinte (encre) : mesure unique, pas de série — et le rouge reste au lien.
+.now-releve__barre {
+  flex: 1 1 auto;
+  min-width: 0;
+  block-size: 4px;
+  background: var(--rule);
+  border-radius: 2px;
+  overflow: hidden;
+
+  i {
+    display: block;
+    block-size: 100%;
+    min-inline-size: 2px;   // un dépôt à 0 garde un trait visible
+    background: var(--surface-ink);
+    border-radius: 2px;
+  }
+}
+
+.is-dormant .now-releve__barre i { background: var(--rule-strong); }
+
+// `nowrap` : « il y a 218 j » se replierait sur deux lignes et désalignerait
+// toute la ligne du relevé.
+.now-releve__chiffre,
+.now-releve__delai {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.now-releve__delai {
+  text-align: right;
+  color: var(--ink-mute);
+  font-size: var(--text-xs);
+}
+
+.now-releve__chiffre {
+  color: var(--surface-ink);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  flex: 0 0 2.6rem;
+  text-align: right;
+}
+
+.is-dormant .now-releve__chiffre { color: inherit; }
+
+// Note d'échelle : la barre est incontestable seulement si son maximum est dit.
+.now-releve__echelle {
+  max-width: none;
+  margin: var(--space-xs) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-mute);
+}
+
+// ──────────────────────────────────────────────────────────────────
+// Death match — provocation désignée par le script, pas par la prose.
+// ──────────────────────────────────────────────────────────────────
+.now-defi {
+  display: flex;
+  max-width: none;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6em;
+  margin: var(--space-md) 0 0;
+  padding: var(--space-2xs) 0;
+  border-block: 1px solid var(--rule-strong);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.now-defi__pill {
+  background: var(--surface-ink);
+  color: var(--surface);
+  padding: 0.18em 0.6em;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  white-space: nowrap;
+}
+
+.now-defi__texte {
+  flex: 1 1 20rem;
+  min-width: 0;
+}
+
+.now-defi strong { color: var(--surface-ink); }
+
+@media (max-width: 40rem) {
+  // Les entêtes ne survivent pas au repli : la ligne se lit alors verticalement
+  // et l'échelle est portée par la note sous le tableau.
+  .now-releve__colonnes { display: none; }
+
+  .now-releve__ligne {
+    grid-template-columns: 1fr auto;
+  }
+  .now-releve__question {
+    grid-column: 1 / -1;
+    margin-top: 0.15em;
+  }
+  .now-releve__mesure {
+    grid-column: 1;
+    justify-content: flex-start;
+  }
+  .now-releve__barre { max-inline-size: 6rem; }
+  .now-releve__chiffre { flex: 0 0 auto; }
+}

@@ -4,13 +4,29 @@
 {% block description %}Ce sur quoi je travaille en ce moment, mis à jour ponctuellement.{% endblock %}
 
 {% block content %}
+{# Deux sources, deux natures : l'identité tenue à la main, la mesure générée.
+   Cf. scripts/constellation.py — l'écart entre les deux EST le contenu.
+   Les trois seuils vivent dans le TOML, aucun n'est en dur ici. #}
+{% set constellation = load_data(path="data/constellation.toml") %}
+{% set activity = load_data(path="data/activity.json") %}
+{% set seuils = constellation.thresholds %}
+
+{# Péremption : `last_update` est en ISO dans le front-matter, formaté ici.
+   Tera n'accepte pas de filtre dans une expression arithmétique parenthésée :
+   chaque étape a son propre `set`. #}
+{% set updated = section.extra.last_update %}
+{% set updated_ts = updated | date(format="%s") | int %}
+{% set age_secs = now(timestamp=true) - updated_ts %}
+{% set age_frac = age_secs / 86400 %}
+{% set age_days = age_frac | round(method="floor") %}
+
 <article class="now ecrit-page section--cyan" aria-labelledby="now-title">
   <p class="issue-bar">
     <span class="issue-bar__left">
       <span class="issue-bar__pill">NUMÉRO §05</span>
       <span>MAINTENANT</span>
     </span>
-    <span class="issue-bar__mid">MIS À JOUR {{ section.extra.last_update | default(value="21/05/2026") }}</span>
+    <span class="issue-bar__mid">MIS À JOUR {{ updated | date(format="%d/%m/%Y") }}</span>
     <span class="issue-bar__right">SUR L'ÉTABLI</span>
   </p>
 
@@ -23,9 +39,104 @@
     {% endif %}
   </header>
 
+  {% if age_days > seuils.prose_stale_days %}
+  <p class="now-perime" role="status">
+    Cette page n'a pas été relue depuis {{ age_days }} jours. Le relevé
+    ci-dessous, lui, date du {{ activity.surveyed_on | date(format="%d/%m/%Y") }} —
+    croyez-le plutôt que la prose.
+  </p>
+  {% endif %}
+
   <div class="ecrit-page__content prose">
     {{ section.content | safe }}
   </div>
+
+  <section class="now-releve" aria-labelledby="now-releve-title">
+    <p class="now-releve__head">
+      <span class="now-releve__pill">RELEVÉ</span>
+      <span id="now-releve-title">Activité par dépôt</span>
+      <span class="now-releve__date">au {{ activity.surveyed_on | date(format="%d/%m/%Y") }}</span>
+    </p>
+
+    {# Ligne d'entêtes : c'est ici que la fenêtre de mesure est nommée, une
+       seule fois, au-dessus de la colonne qu'elle qualifie. Les lignes ne
+       répètent donc plus le mot « commits ». #}
+    <p class="now-releve__colonnes" aria-hidden="true">
+      <span>dépôt</span>
+      <span>question posée</span>
+      <span class="now-releve__col-mesure">
+        commits · {{ activity.main_window }} j
+      </span>
+      <span class="now-releve__col-delai">dernier</span>
+    </p>
+
+    {% for famille in constellation.families %}
+    <div class="now-releve__famille">
+      <h2 class="now-releve__famille-titre">{{ famille.label }}</h2>
+      <ul class="now-releve__liste">
+        {% for astre in constellation.astres %}
+        {% if astre.family == famille.key %}
+        {% set mesure = activity.repos[astre.name] %}
+        {% set dormant = mesure.status != "ok" or mesure.days_since > seuils.dormant_days %}
+        <li class="now-releve__ligne{% if dormant %} is-dormant{% endif %}">
+          {# nom et mention de partage dans UNE seule cellule : sinon le badge
+             occupe la colonne question et décale toute la ligne. #}
+          <span class="now-releve__ident">
+            <a class="now-releve__nom" href="{{ astre.url }}" rel="noopener">{{ astre.name }}</a>
+            {% if astre.shared %}<span class="now-releve__partage">{{ astre.shared }}</span>{% endif %}
+          </span>
+          <span class="now-releve__question">{{ astre.question }}</span>
+
+          {% if mesure.status == "ok" %}
+          {# Barre de proportion : une seule mesure, une seule teinte, en encre —
+             la règle Un Accent réserve le rouge aux liens. Échelle commune
+             calculée par le script (le plus actif = largeur pleine), pas
+             normalisée par ligne, sinon les lignes ne se comparent plus. #}
+          {% if activity.scale_max > 0 %}
+          {% set part = mesure.d30 * 100 / activity.scale_max %}
+          {% else %}
+          {% set part = 0 %}
+          {% endif %}
+          <span class="now-releve__mesure">
+            <span class="now-releve__barre" aria-hidden="true">
+              <i style="inline-size: {{ part | round }}%"></i>
+            </span>
+            <b class="now-releve__chiffre"
+               title="{{ mesure.d30 }} commits sur {{ activity.main_window }} jours, dont {{ mesure.d7 }} sur les 7 derniers">{{ mesure.d30 }}</b>
+          </span>
+          <span class="now-releve__delai">
+            {% if mesure.days_since == 0 %}aujourd'hui
+            {% elif mesure.days_since == 1 %}hier
+            {% else %}il y a {{ mesure.days_since }} j{% endif %}
+          </span>
+          {% else %}
+          <span class="now-releve__mesure"><b class="now-releve__chiffre">—</b></span>
+          <span class="now-releve__delai">hors relevé</span>
+          {% endif %}
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+
+    <p class="now-releve__echelle">
+      Barres à l'échelle commune — pleine largeur = {{ activity.scale_max }} commits.
+      Au-delà de {{ seuils.dormant_days }} jours sans commit, la ligne est estompée.
+    </p>
+    {# Death match : désigné par le script (l'astre le plus longtemps silencieux
+       passé le seuil), formulé en question. Disparaît de lui-même si plus aucun
+       astre n'est dormant — le seul état où la page n'a rien à demander. #}
+    {% if activity.challenger %}
+    <p class="now-defi">
+      <span class="now-defi__pill">DEATH MATCH</span>
+      <span class="now-defi__texte">
+        <strong>{{ activity.challenger.name }}</strong> n'a rien commité depuis
+        {{ activity.challenger.days_since }} jours. Passera-t-il le prochain ?
+      </span>
+    </p>
+    {% endif %}
+  </section>
 
   <p class="ecrit-page__back">
     <a href="{{ config.base_url | safe }}">← Retour à l'accueil</a>
