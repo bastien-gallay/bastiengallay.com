@@ -102,3 +102,15 @@ Conséquences à connaître avant toute session :
 - Diagnostic : `just cron-status`, `just cron-log`, `just cron-run` (déclenche tout de suite).
 
 Le plist n'est pas versionné — il contient des chemins absolus et doit viser la copie principale, pas un worktree. `just cron-install` le régénère et le recharge ; c'est idempotent.
+
+### Le hook design lit aussi les commentaires
+
+`impeccable` scanne les templates par motifs textuels, sans distinguer le code
+du commentaire. Écrire `<img>` ou `border-left: 3px` dans un commentaire Tera
+`{# … #}` déclenche un faux positif (`broken-image`, `side-tab`) sur une ligne
+qui ne rend rien.
+
+Réflexe : vérifier si la ligne signalée est du code avant de la « corriger ».
+Si c'est un commentaire, **reformuler le commentaire** plutôt que poser un
+ignore — c'est plus étroit, et un ignore posé pour un faux positif masque les
+vrais. Instance : `templates/now.html`, 2026-07-26.
