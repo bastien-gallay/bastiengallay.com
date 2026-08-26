@@ -1,13 +1,12 @@
 {
   "_comment": "Généré par scripts/constellation.py — ne pas éditer à la main.",
-  "surveyed_on": "2026-08-25",
+  "surveyed_on": "2026-08-26",
   "windows": [
     7,
     30
   ],
   "main_window": 30,
   "calendar": [
-    "2026-07-27",
     "2026-07-28",
     "2026-07-29",
     "2026-07-30",
@@ -36,22 +35,22 @@
     "2026-08-22",
     "2026-08-23",
     "2026-08-24",
-    "2026-08-25"
+    "2026-08-25",
+    "2026-08-26"
   ],
-  "scale_max": 55,
-  "series_max": 35,
+  "scale_max": 27,
+  "series_max": 18,
   "challenger": {
     "name": "rhetorix",
-    "days_since": 248
+    "days_since": 249
   },
   "repos": {
     "faceto": {
       "status": "ok",
       "last_commit": "2026-08-11",
-      "days_since": 14,
+      "days_since": 15,
       "state": "ralenti",
       "series": [
-        6,
         0,
         0,
         0,
@@ -80,15 +79,16 @@
         0,
         0,
         0,
+        0,
         0
       ],
       "d7": 0,
-      "d30": 32
+      "d30": 26
     },
     "lucid-lint": {
       "status": "ok",
       "last_commit": "2026-07-13",
-      "days_since": 43,
+      "days_since": 44,
       "state": "ralenti",
       "series": [
         0,
@@ -128,7 +128,7 @@
     "rhetorix": {
       "status": "ok",
       "last_commit": "2025-12-20",
-      "days_since": 248,
+      "days_since": 249,
       "state": "dormant",
       "series": [
         0,
@@ -168,12 +168,12 @@
     "roadmark": {
       "status": "ok",
       "last_commit": "2026-07-29",
-      "days_since": 27,
+      "days_since": 28,
       "state": "ralenti",
       "series": [
-        35,
         9,
         11,
+        0,
         0,
         0,
         0,
@@ -203,12 +203,12 @@
         0
       ],
       "d7": 0,
-      "d30": 55
+      "d30": 20
     },
     "daily-ops": {
       "status": "ok",
       "last_commit": "2026-07-01",
-      "days_since": 55,
+      "days_since": 56,
       "state": "ralenti",
       "series": [
         0,
@@ -248,10 +248,9 @@
     "termherd": {
       "status": "ok",
       "last_commit": "2026-08-24",
-      "days_since": 1,
+      "days_since": 2,
       "state": "actif",
       "series": [
-        3,
         0,
         0,
         3,
@@ -280,15 +279,16 @@
         0,
         0,
         3,
+        0,
         0
       ],
       "d7": 3,
-      "d30": 30
+      "d30": 27
     },
     "skills": {
       "status": "ok",
       "last_commit": "2026-08-02",
-      "days_since": 23,
+      "days_since": 24,
       "state": "ralenti",
       "series": [
         0,
@@ -296,8 +296,8 @@
         0,
         0,
         0,
-        0,
         1,
+        0,
         0,
         0,
         0,
@@ -327,11 +327,10 @@
     },
     "ce site": {
       "status": "ok",
-      "last_commit": "2026-08-24",
+      "last_commit": "2026-08-25",
       "days_since": 1,
       "state": "actif",
       "series": [
-        4,
         1,
         1,
         1,
@@ -347,6 +346,7 @@
         0,
         1,
         0,
+        1,
         1,
         1,
         1,
@@ -363,7 +363,7 @@
         0
       ],
       "d7": 6,
-      "d30": 29
+      "d30": 26
     }
   }
 }
