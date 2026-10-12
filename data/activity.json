@@ -1,13 +1,12 @@
 {
   "_comment": "Généré par scripts/constellation.py — ne pas éditer à la main.",
-  "surveyed_on": "2026-10-11",
+  "surveyed_on": "2026-10-12",
   "windows": [
     7,
     30
   ],
   "main_window": 30,
   "calendar": [
-    "2026-09-12",
     "2026-09-13",
     "2026-09-14",
     "2026-09-15",
@@ -36,19 +35,20 @@
     "2026-10-08",
     "2026-10-09",
     "2026-10-10",
-    "2026-10-11"
+    "2026-10-11",
+    "2026-10-12"
   ],
   "scale_max": 35,
   "series_max": 15,
   "challenger": {
     "name": "rhetorix",
-    "days_since": 295
+    "days_since": 296
   },
   "repos": {
     "faceto": {
       "status": "ok",
       "last_commit": "2026-09-07",
-      "days_since": 34,
+      "days_since": 35,
       "state": "ralenti",
       "series": [
         0,
@@ -88,7 +88,7 @@
     "lucid-lint": {
       "status": "ok",
       "last_commit": "2026-07-13",
-      "days_since": 90,
+      "days_since": 91,
       "state": "dormant",
       "series": [
         0,
@@ -128,7 +128,7 @@
     "rhetorix": {
       "status": "ok",
       "last_commit": "2025-12-20",
-      "days_since": 295,
+      "days_since": 296,
       "state": "dormant",
       "series": [
         0,
@@ -168,7 +168,7 @@
     "roadmark": {
       "status": "ok",
       "last_commit": "2026-07-29",
-      "days_since": 74,
+      "days_since": 75,
       "state": "dormant",
       "series": [
         0,
@@ -208,7 +208,7 @@
     "daily-ops": {
       "status": "ok",
       "last_commit": "2026-07-01",
-      "days_since": 102,
+      "days_since": 103,
       "state": "dormant",
       "series": [
         0,
@@ -248,10 +248,9 @@
     "termherd": {
       "status": "ok",
       "last_commit": "2026-10-08",
-      "days_since": 3,
+      "days_since": 4,
       "state": "actif",
       "series": [
-        0,
         0,
         0,
         0,
@@ -280,18 +279,18 @@
         15,
         0,
         0,
+        0,
         0
       ],
-      "d7": 19,
+      "d7": 18,
       "d30": 35
     },
     "skills": {
       "status": "ok",
       "last_commit": "2026-10-06",
-      "days_since": 5,
+      "days_since": 6,
       "state": "actif",
       "series": [
-        0,
         0,
         0,
         0,
@@ -320,6 +319,7 @@
         0,
         0,
         0,
+        0,
         0
       ],
       "d7": 10,
@@ -327,7 +327,7 @@
     },
     "ce site": {
       "status": "ok",
-      "last_commit": "2026-10-10",
+      "last_commit": "2026-10-11",
       "days_since": 1,
       "state": "actif",
       "series": [
@@ -341,9 +341,9 @@
         1,
         1,
         1,
+        0,
+        0,
         1,
-        0,
-        0,
         1,
         1,
         1,
